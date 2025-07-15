@@ -61,7 +61,7 @@
     </form>
     <button onclick="validateAnswers()">Validar Respuestas</button>
     <div id="score"></div>
-
+    <div id="bottom"></div>
     <script>
         const questions = [
             {
@@ -204,6 +204,12 @@
             }
         ];
 
+        const messages = [
+            "Estoy muy orgulloso de ti. Sigue esforzándote, porque tú puedes lograr lo que te propongas. ¡Te amo muchísimo!",
+            "Confío en ti. ¡Eres increíble y te amo con todo mi corazón!",
+            "Siempre estaremos contigo, porque el amor de papá y mamá nunca se rompe."
+        ]
+
         const form = document.getElementById("quizForm");
 
         questions.forEach((q, index) => {
@@ -219,6 +225,13 @@
             `;
             form.appendChild(div);
         });
+
+
+        function mostrarMensaje() {
+            const indice = Math.floor(Math.random() * messages.length);
+            const msjSeleccionada = messages[indice];
+            document.getElementById("bottom").innerHTML = `<h2>${msjSeleccionada}</h2>`;
+        }
 
         function validateAnswers() {
             let score = 0;
@@ -238,6 +251,8 @@
                 }
             });
             document.getElementById("score").textContent = `Puntaje final: ${score} / ${questions.length}`;
+
+            mostrarMensaje();
         }
     </script>
 </body>
