@@ -39,6 +39,47 @@
         }
 
     </style>
+    
+<style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+    }
+    h2 {
+      color: #2c3e50;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #e0f7fa;
+    }
+    input[type="text"] {
+      padding: 5px;
+      width: 200px;
+    }
+    button {
+      padding: 8px 16px;
+      margin-left: 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+
 </head>
 <body>
     <h1>Examen de Matemáticas - 2° Grado</h1>
@@ -98,7 +139,7 @@
                 <input type="radio" name="q13" value="7">7
                 <input type="radio" name="q13" value="12">12
             </div>
-            <div class="question">14. Si 3 niños tienen 1 juguete y 2 niños tienen 2 juguetes, ¿cuántos juguetes hay? <br>
+            <div class="question">14. Si 3 niños tienen 1 juguete cada uno y 2 niños tienen 2 juguetes cada uno, ¿cuántos juguetes hay en total? <br>
                 <input type="radio" name="q14" value="7">7
                 <input type="radio" name="q14" value="5">5
                 <input type="radio" name="q14" value="6">6
@@ -146,50 +187,50 @@
 
     
 <script>
-    const canvas = document.getElementById("plano");
+    
+const canvas = document.getElementById("plano");
     const ctx = canvas.getContext("2d");
 
     const width = canvas.width;
     const height = canvas.height;
-    const centerX = width / 2;
-    const centerY = height / 2;
-    const unit = 25; // 1 unidad = 25 píxeles
+    const margin = 40;
+    const unit = (width - 2 * margin) / 10;
 
     // Dibujar ejes
     ctx.beginPath();
-    ctx.moveTo(0, centerY);
-    ctx.lineTo(width, centerY); // eje X
-    ctx.moveTo(centerX, 0);
-    ctx.lineTo(centerX, height); // eje Y
+    ctx.moveTo(margin, height - margin); // eje X
+    ctx.lineTo(width - margin + 10, height - margin);
+    ctx.moveTo(margin, height - margin); // eje Y
+    ctx.lineTo(margin, margin - 10);
     ctx.strokeStyle = "#000";
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Dibujar marcas y números
+    // Dibujar marcas y números en X
     ctx.font = "12px Arial";
     ctx.fillStyle = "#000";
-
-    for (let i = -10; i <= 10; i++) {
-      if (i !== 0) {
-        // Eje X
-        ctx.beginPath();
-        ctx.moveTo(centerX + i * unit, centerY - 5);
-        ctx.lineTo(centerX + i * unit, centerY + 5);
-        ctx.stroke();
-        ctx.fillText(i, centerX + i * unit - 5, centerY + 15);
-
-        // Eje Y
-        ctx.beginPath();
-        ctx.moveTo(centerX - 5, centerY - i * unit);
-        ctx.lineTo(centerX + 5, centerY - i * unit);
-        ctx.stroke();
-        ctx.fillText(i, centerX + 8, centerY - i * unit + 4);
-      }
+    for (let i = 0; i <= 10; i++) {
+      const x = margin + i * unit;
+      ctx.beginPath();
+      ctx.moveTo(x, height - margin - 5);
+      ctx.lineTo(x, height - margin + 5);
+      ctx.stroke();
+      ctx.fillText(i, x - 4, height - margin + 20);
     }
 
-    // Dibujar origen
+    // Dibujar marcas y números en Y
+    for (let i = 0; i <= 10; i++) {
+      const y = height - margin - i * unit;
+      ctx.beginPath();
+      ctx.moveTo(margin - 5, y);
+      ctx.lineTo(margin + 5, y);
+      ctx.stroke();
+      ctx.fillText(i, margin - 25, y + 4);
+    }
+
+    // Dibujar punto de origen
     ctx.beginPath();
-    ctx.arc(centerX, centerY, 3, 0, 2 * Math.PI);
+    ctx.arc(margin, height - margin, 3, 0, 2 * Math.PI);
     ctx.fillStyle = "red";
     ctx.fill();
   </script>
