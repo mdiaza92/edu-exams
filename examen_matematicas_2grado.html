@@ -186,8 +186,8 @@
     </form>
 
     
-<script>
-    
+    <script>
+        
 const canvas = document.getElementById("plano");
     const ctx = canvas.getContext("2d");
 
@@ -206,35 +206,53 @@ const canvas = document.getElementById("plano");
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Dibujar marcas y números en X
+    // Dibujar marcas, números y líneas punteadas
     ctx.font = "12px Arial";
     ctx.fillStyle = "#000";
+    ctx.setLineDash([4, 4]); // línea punteada
+
     for (let i = 0; i <= 10; i++) {
       const x = margin + i * unit;
+      const y = height - margin - i * unit;
+
+      // Marcas y números en X
       ctx.beginPath();
       ctx.moveTo(x, height - margin - 5);
       ctx.lineTo(x, height - margin + 5);
       ctx.stroke();
       ctx.fillText(i, x - 4, height - margin + 20);
-    }
 
-    // Dibujar marcas y números en Y
-    for (let i = 0; i <= 10; i++) {
-      const y = height - margin - i * unit;
+      // Línea punteada vertical desde X hasta arriba
+      if (i > 0) {
+        ctx.beginPath();
+        ctx.moveTo(x, height - margin);
+        ctx.lineTo(x, margin);
+        ctx.stroke();
+      }
+
+      // Marcas y números en Y
       ctx.beginPath();
       ctx.moveTo(margin - 5, y);
       ctx.lineTo(margin + 5, y);
       ctx.stroke();
       ctx.fillText(i, margin - 25, y + 4);
+
+      // Línea punteada horizontal desde Y hasta la derecha
+      if (i > 0) {
+        ctx.beginPath();
+        ctx.moveTo(margin, y);
+        ctx.lineTo(width - margin, y);
+        ctx.stroke();
+      }
     }
 
-    // Dibujar punto de origen
+    // Punto de origen
+    ctx.setLineDash([]);
     ctx.beginPath();
     ctx.arc(margin, height - margin, 3, 0, 2 * Math.PI);
     ctx.fillStyle = "red";
     ctx.fill();
-  </script>
-
+    </script>
 
     <script>
         const messages = [
