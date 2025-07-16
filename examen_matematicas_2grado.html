@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Examen de Matemáticas - 2° Grado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2e8b57;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .question {
+            margin: 10px 0;
+        }
+        .plano-section {
+            display: flex;
+            justify-content: space-between;
+        }
+        .plano-image {
+            margin-left: 20px;
+        }
+        .result {
+            font-weight: bold;
+            color: #000080;
+            margin-top: 20px;
+        }
+        
+        canvas {
+            border: 1px solid #000;
+            background-color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Examen de Matemáticas - 2° Grado</h1>
+
+    <form id="examForm">
+        <div class="section">
+            <h2>1. Adición y Multiplicación</h2>
+            <div class="question">1. ¿5 + 3 = 8? <input type="radio" name="q1" value="true">Verdadero <input type="radio" name="q1" value="false">Falso</div>
+            <div class="question">2. ¿4 × 2 = 6? <input type="radio" name="q2" value="false">Verdadero <input type="radio" name="q2" value="true">Falso</div>
+            <div class="question">3. ¿7 + 2 = 9? <input type="radio" name="q3" value="true">Verdadero <input type="radio" name="q3" value="false">Falso</div>
+            <div class="question">4. ¿6 × 3 = 18? <input type="radio" name="q4" value="true">Verdadero <input type="radio" name="q4" value="false">Falso</div>
+            <div class="question">5. ¿9 + 1 = 11? <input type="radio" name="q5" value="false">Verdadero <input type="radio" name="q5" value="true">Falso</div>
+        </div>
+
+        <div class="section">
+            <h2>2. Problemas de Multiplicación Simple</h2>
+            <div class="question">6. Si tengo 3 cajas con 4 manzanas cada una, ¿cuántas manzanas tengo? <br>
+                <input type="radio" name="q6" value="12">12
+                <input type="radio" name="q6" value="9">9
+                <input type="radio" name="q6" value="7">7
+            </div>
+            <div class="question">7. Si hay 5 días y cada día estudio 2 horas, ¿cuántas horas estudio en total? <br>
+                <input type="radio" name="q7" value="10">10
+                <input type="radio" name="q7" value="7">7
+                <input type="radio" name="q7" value="12">12
+            </div>
+            <div class="question">8. Si tengo 2 paquetes con 6 lápices cada uno, ¿cuántos lápices tengo? <br>
+                <input type="radio" name="q8" value="12">12
+                <input type="radio" name="q8" value="10">10
+                <input type="radio" name="q8" value="8">8
+            </div>
+            <div class="question">9. Si hay 4 niños y cada uno tiene 3 globos, ¿cuántos globos hay en total? <br>
+                <input type="radio" name="q9" value="12">12
+                <input type="radio" name="q9" value="16">16
+                <input type="radio" name="q9" value="8">8
+            </div>
+            <div class="question">10. Si tengo 10 paquetes con 1 galleta cada uno, ¿cuántas galletas tengo? <br>
+                <input type="radio" name="q10" value="10">10
+                <input type="radio" name="q10" value="5">5
+                <input type="radio" name="q10" value="20">20
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Tabla de Frecuencia</h2>
+            <div class="question">11. Si 3 niños tienen pelotas rojas y 2 tienen pelotas azules, ¿cuántos niños hay en total? <br>
+                <input type="radio" name="q11" value="5">5
+                <input type="radio" name="q11" value="6">6
+                <input type="radio" name="q11" value="4">4
+            </div>
+            <div class="question">12. En una encuesta, 4 niños prefieren manzanas y 6 prefieren plátanos. ¿Cuál fruta es más popular? <br>
+                <input type="radio" name="q12" value="plátanos">Plátanos
+                <input type="radio" name="q12" value="manzanas">Manzanas
+            </div>
+            <div class="question">13. Si 5 niños tienen 2 lápices cada uno, ¿cuántos lápices hay? <br>
+                <input type="radio" name="q13" value="10">10
+                <input type="radio" name="q13" value="7">7
+                <input type="radio" name="q13" value="12">12
+            </div>
+            <div class="question">14. Si 3 niños tienen 1 juguete y 2 niños tienen 2 juguetes, ¿cuántos juguetes hay? <br>
+                <input type="radio" name="q14" value="7">7
+                <input type="radio" name="q14" value="5">5
+                <input type="radio" name="q14" value="6">6
+            </div>
+            <div class="question">15. Si 4 niños tienen 3 caramelos cada uno, ¿cuántos caramelos hay? <br>
+                <input type="radio" name="q15" value="12">12
+                <input type="radio" name="q15" value="8">8
+                <input type="radio" name="q15" value="10">10
+            </div>
+        </div>
+
+        <div class="section plano-section">
+            <div>
+                <h2>4. Desplazamiento en el Plano</h2>
+                <div class="question">16. Si me muevo 3 pasos a la derecha desde (0,0), ¿dónde estoy? <br>
+                    <input type="radio" name="q16" value="(3,0)">(3,0)
+                    <input type="radio" name="q16" value="(0,3)">(0,3)
+                </div>
+                <div class="question">17. Si estoy en (2,2) y subo 2 pasos, ¿dónde estoy? <br>
+                    <input type="radio" name="q17" value="(2,4)">(2,4)
+                    <input type="radio" name="q17" value="(4,2)">(4,2)
+                </div>
+                <div class="question">18. Si bajo 1 paso desde (3,3), ¿dónde estoy? <br>
+                    <input type="radio" name="q18" value="(3,2)">(3,2)
+                    <input type="radio" name="q18" value="(2,3)">(2,3)
+                </div>
+                <div class="question">19. Si me muevo 2 pasos a la izquierda desde (4,0), ¿dónde estoy? <br>
+                    <input type="radio" name="q19" value="(2,0)">(2,0)
+                    <input type="radio" name="q19" value="(4,2)">(4,2)
+                </div>
+                <div class="question">20. Si estoy en (1,1) y subo 1 paso y luego voy a la derecha 1 paso, ¿dónde estoy? <br>
+                    <input type="radio" name="q20" value="(2,2)">(2,2)
+                    <input type="radio" name="q20" value="(1,2)">(1,2)
+                </div>
+            </div>
+            <div class="plano-image">
+                <canvas id="plano" width="500" height="500"></canvas>
+            </div>
+        </div>
+
+        <button type="button" onclick="calificar()">Enviar Examen</button>
+        <div class="result" id="resultado"></div>
+        <div id="bottom"></div>
+    </form>
+
+    
+<script>
+    const canvas = document.getElementById("plano");
+    const ctx = canvas.getContext("2d");
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const unit = 25; // 1 unidad = 25 píxeles
+
+    // Dibujar ejes
+    ctx.beginPath();
+    ctx.moveTo(0, centerY);
+    ctx.lineTo(width, centerY); // eje X
+    ctx.moveTo(centerX, 0);
+    ctx.lineTo(centerX, height); // eje Y
+    ctx.strokeStyle = "#000";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Dibujar marcas y números
+    ctx.font = "12px Arial";
+    ctx.fillStyle = "#000";
+
+    for (let i = -10; i <= 10; i++) {
+      if (i !== 0) {
+        // Eje X
+        ctx.beginPath();
+        ctx.moveTo(centerX + i * unit, centerY - 5);
+        ctx.lineTo(centerX + i * unit, centerY + 5);
+        ctx.stroke();
+        ctx.fillText(i, centerX + i * unit - 5, centerY + 15);
+
+        // Eje Y
+        ctx.beginPath();
+        ctx.moveTo(centerX - 5, centerY - i * unit);
+        ctx.lineTo(centerX + 5, centerY - i * unit);
+        ctx.stroke();
+        ctx.fillText(i, centerX + 8, centerY - i * unit + 4);
+      }
+    }
+
+    // Dibujar origen
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 3, 0, 2 * Math.PI);
+    ctx.fillStyle = "red";
+    ctx.fill();
+  </script>
+
+
+    <script>
+        const messages = [
+            "Estoy muy orgulloso de ti. Sigue esforzándote, porque tú puedes lograr lo que te propongas. ¡Te amo muchísimo!",
+            "Confío en ti. ¡Eres increíble y te amo con todo mi corazón!",
+            "Siempre estaremos contigo, porque el amor de papá y mamá nunca se rompe."
+        ]
+
+        function mostrarMensaje() {
+            const indice = Math.floor(Math.random() * messages.length);
+            const msjSeleccionada = messages[indice];
+            document.getElementById("bottom").innerHTML = `<h2>${msjSeleccionada}</h2>`;
+        }
+
+        function calificar() {
+            const respuestas = {
+                q1: "true", q2: "true", q3: "true", q4: "true", q5: "true",
+                q6: "12", q7: "10", q8: "12", q9: "12", q10: "10",
+                q11: "5", q12: "plátanos", q13: "10", q14: "7", q15: "12",
+                q16: "(3,0)", q17: "(2,4)", q18: "(3,2)", q19: "(2,0)", q20: "(2,2)"
+            };
+            let score = 0;
+            for (let key in respuestas) {
+                const radios = document.getElementsByName(key);
+                for (let i = 0; i < radios.length; i++) {
+                    if (radios[i].checked && radios[i].value === respuestas[key]) {
+                        score++;
+                    }
+                }
+            }
+            document.getElementById("resultado").innerText = "Tu puntaje es: " + score + " de 20.";
+
+            mostrarMensaje();
+        }
+    </script>
+</body>
+</html>
