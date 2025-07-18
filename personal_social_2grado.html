@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Examen de Historia del Perú</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f0f8ff; margin-bottom: 100px; /* espacio para el botón flotante */}
+        h1, h2 { color: #2e6da4; }
+        .section { margin-bottom: 30px; padding: 15px; border: 1px solid #ccc; background-color: #ffffff; }
+        .question { margin-bottom: 10px; }
+
+        .floating-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f0f8ff;
+            border-top: 2px solid #ccc;
+            padding: 10px;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .floating-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .floating-container button:hover {
+            background-color: #45a049;
+        }
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Examen de Historia del Perú</h1>
+    <form id="quizForm">
+        <div class="section"><h2>Cultura MOCHICA</h2><div class="question"><p>¿Dónde se desarrolló la cultura Mochica?</p><label><input type="radio" name="q1" value="En la costa norte del Perú"> En la costa norte del Perú</label><br><label><input type="radio" name="q1" value="En la selva"> En la selva</label><br><label><input type="radio" name="q1" value="En la sierra"> En la sierra</label><br></div><div class="question"><p>¿Qué construyeron los mochicas?</p><label><input type="radio" name="q2" value="Templos y pirámides"> Templos y pirámides</label><br><label><input type="radio" name="q2" value="Rascacielos"> Rascacielos</label><br><label><input type="radio" name="q2" value="Castillos"> Castillos</label><br></div><div class="question"><p>¿Qué representaban en su cerámica?</p><label><input type="radio" name="q3" value="Animales y personas"> Animales y personas</label><br><label><input type="radio" name="q3" value="Autos"> Autos</label><br><label><input type="radio" name="q3" value="Computadoras"> Computadoras</label><br></div><div class="question"><p>¿Qué idioma hablaban los mochicas?</p><label><input type="radio" name="q4" value="Muchik"> Muchik</label><br><label><input type="radio" name="q4" value="Quechua"> Quechua</label><br><label><input type="radio" name="q4" value="Español"> Español</label><br></div><div class="question"><p>¿Qué actividad era importante para los mochicas?</p><label><input type="radio" name="q5" value="Agricultura"> Agricultura</label><br><label><input type="radio" name="q5" value="Pesca en hielo"> Pesca en hielo</label><br><label><input type="radio" name="q5" value="Minería"> Minería</label><br></div><div class="question"><p>¿Qué usaban para regar sus campos?</p><label><input type="radio" name="q6" value="Canales"> Canales</label><br><label><input type="radio" name="q6" value="Mangueras"> Mangueras</label><br><label><input type="radio" name="q6" value="Lluvia artificial"> Lluvia artificial</label><br></div><div class="question"><p>¿Qué animales criaban los mochicas?</p><label><input type="radio" name="q7" value="Llamas y cuyes"> Llamas y cuyes</label><br><label><input type="radio" name="q7" value="Tigres"> Tigres</label><br><label><input type="radio" name="q7" value="Elefantes"> Elefantes</label><br></div><div class="question"><p>¿Qué metales usaban los mochicas?</p><label><input type="radio" name="q8" value="Oro y cobre"> Oro y cobre</label><br><label><input type="radio" name="q8" value="Hierro y acero"> Hierro y acero</label><br><label><input type="radio" name="q8" value="Plomo y zinc"> Plomo y zinc</label><br></div><div class="question"><p>¿Qué tipo de gobierno tenían?</p><label><input type="radio" name="q9" value="Gobierno teocrático"> Gobierno teocrático</label><br><label><input type="radio" name="q9" value="Democracia"> Democracia</label><br><label><input type="radio" name="q9" value="Monarquía"> Monarquía</label><br></div><div class="question"><p>¿Qué destacaba en su arte?</p><label><input type="radio" name="q10" value="Cerámica y pintura mural"> Cerámica y pintura mural</label><br><label><input type="radio" name="q10" value="Fotografía"> Fotografía</label><br><label><input type="radio" name="q10" value="Escultura moderna"> Escultura moderna</label><br></div></div><div class="section"><h2>Conquista del Perú</h2><div class="question"><p>¿Quién lideró la conquista del Perú?</p><label><input type="radio" name="q11" value="Francisco Pizarro"> Francisco Pizarro</label><br><label><input type="radio" name="q11" value="Simón Bolívar"> Simón Bolívar</label><br><label><input type="radio" name="q11" value="Cristóbal Colón"> Cristóbal Colón</label><br></div><div class="question"><p>¿A qué imperio conquistaron los españoles?</p><label><input type="radio" name="q12" value="Imperio Inca"> Imperio Inca</label><br><label><input type="radio" name="q12" value="Imperio Azteca"> Imperio Azteca</label><br><label><input type="radio" name="q12" value="Imperio Maya"> Imperio Maya</label><br></div><div class="question"><p>¿Cómo se llamaba el emperador inca capturado?</p><label><input type="radio" name="q13" value="Atahualpa"> Atahualpa</label><br><label><input type="radio" name="q13" value="Pachacútec"> Pachacútec</label><br><label><input type="radio" name="q13" value="Manco Cápac"> Manco Cápac</label><br></div><div class="question"><p>¿Qué buscaban los conquistadores?</p><label><input type="radio" name="q14" value="Oro y riquezas"> Oro y riquezas</label><br><label><input type="radio" name="q14" value="Paz"> Paz</label><br><label><input type="radio" name="q14" value="Amistad"> Amistad</label><br></div><div class="question"><p>¿Qué ciudad fundaron los españoles?</p><label><input type="radio" name="q15" value="Lima"> Lima</label><br><label><input type="radio" name="q15" value="Cusco"> Cusco</label><br><label><input type="radio" name="q15" value="Arequipa"> Arequipa</label><br></div><div class="question"><p>¿Qué trajeron los españoles?</p><label><input type="radio" name="q16" value="Caballos y armas"> Caballos y armas</label><br><label><input type="radio" name="q16" value="Juguetes"> Juguetes</label><br><label><input type="radio" name="q16" value="Computadoras"> Computadoras</label><br></div><div class="question"><p>¿Qué religión impusieron?</p><label><input type="radio" name="q17" value="Cristianismo"> Cristianismo</label><br><label><input type="radio" name="q17" value="Islam"> Islam</label><br><label><input type="radio" name="q17" value="Budismo"> Budismo</label><br></div><div class="question"><p>¿Qué idioma impusieron?</p><label><input type="radio" name="q18" value="Español"> Español</label><br><label><input type="radio" name="q18" value="Quechua"> Quechua</label><br><label><input type="radio" name="q18" value="Inglés"> Inglés</label><br></div><div class="question"><p>¿Qué enfermedades trajeron?</p><label><input type="radio" name="q19" value="Viruela"> Viruela</label><br><label><input type="radio" name="q19" value="Gripe aviar"> Gripe aviar</label><br><label><input type="radio" name="q19" value="Covid-19"> Covid-19</label><br></div><div class="question"><p>¿Qué pasó con el imperio inca?</p><label><input type="radio" name="q20" value="Fue destruido"> Fue destruido</label><br><label><input type="radio" name="q20" value="Creció"> Creció</label><br><label><input type="radio" name="q20" value="Se mudó"> Se mudó</label><br></div></div><div class="section"><h2>Virreinato de Perú</h2><div class="question"><p>¿Qué era el virreinato?</p><label><input type="radio" name="q21" value="Gobierno español en América"> Gobierno español en América</label><br><label><input type="radio" name="q21" value="Un país"> Un país</label><br><label><input type="radio" name="q21" value="Una ciudad"> Una ciudad</label><br></div><div class="question"><p>¿Quién gobernaba el virreinato?</p><label><input type="radio" name="q22" value="El virrey"> El virrey</label><br><label><input type="radio" name="q22" value="El presidente"> El presidente</label><br><label><input type="radio" name="q22" value="El alcalde"> El alcalde</label><br></div><div class="question"><p>¿Cuál era la capital del virreinato?</p><label><input type="radio" name="q23" value="Lima"> Lima</label><br><label><input type="radio" name="q23" value="Cusco"> Cusco</label><br><label><input type="radio" name="q23" value="Trujillo"> Trujillo</label><br></div><div class="question"><p>¿Qué se extraía en las minas?</p><label><input type="radio" name="q24" value="Oro y plata"> Oro y plata</label><br><label><input type="radio" name="q24" value="Petróleo"> Petróleo</label><br><label><input type="radio" name="q24" value="Carbón"> Carbón</label><br></div><div class="question"><p>¿Quiénes trabajaban en las minas?</p><label><input type="radio" name="q25" value="Indígenas"> Indígenas</label><br><label><input type="radio" name="q25" value="Reyes"> Reyes</label><br><label><input type="radio" name="q25" value="Soldados"> Soldados</label><br></div><div class="question"><p>¿Qué construyeron los españoles?</p><label><input type="radio" name="q26" value="Iglesias y caminos"> Iglesias y caminos</label><br><label><input type="radio" name="q26" value="Rascacielos"> Rascacielos</label><br><label><input type="radio" name="q26" value="Puentes colgantes"> Puentes colgantes</label><br></div><div class="question"><p>¿Qué religión se enseñaba?</p><label><input type="radio" name="q27" value="Católica"> Católica</label><br><label><input type="radio" name="q27" value="Judía"> Judía</label><br><label><input type="radio" name="q27" value="Musulmana"> Musulmana</label><br></div><div class="question"><p>¿Qué idioma se hablaba?</p><label><input type="radio" name="q28" value="Español"> Español</label><br><label><input type="radio" name="q28" value="Inglés"> Inglés</label><br><label><input type="radio" name="q28" value="Francés"> Francés</label><br></div><div class="question"><p>¿Qué productos se cultivaban?</p><label><input type="radio" name="q29" value="Maíz y papa"> Maíz y papa</label><br><label><input type="radio" name="q29" value="Café y cacao"> Café y cacao</label><br><label><input type="radio" name="q29" value="Trigo y arroz"> Trigo y arroz</label><br></div><div class="question"><p>¿Qué institución educaba a los niños?</p><label><input type="radio" name="q30" value="Escuelas coloniales"> Escuelas coloniales</label><br><label><input type="radio" name="q30" value="Universidades modernas"> Universidades modernas</label><br><label><input type="radio" name="q30" value="Academias militares"> Academias militares</label><br></div></div><div class="section"><h2>Independencia del Perú</h2><div class="question"><p>¿Qué se logró con la independencia?</p><label><input type="radio" name="q31" value="Libertad del dominio español"> Libertad del dominio español</label><br><label><input type="radio" name="q31" value="Un nuevo rey"> Un nuevo rey</label><br><label><input type="radio" name="q31" value="Más impuestos"> Más impuestos</label><br></div><div class="question"><p>¿Quién proclamó la independencia?</p><label><input type="radio" name="q32" value="José de San Martín"> José de San Martín</label><br><label><input type="radio" name="q32" value="Francisco Pizarro"> Francisco Pizarro</label><br><label><input type="radio" name="q32" value="Simón Bolívar"> Simón Bolívar</label><br></div><div class="question"><p>¿En qué año se proclamó la independencia?</p><label><input type="radio" name="q33" value="1821"> 1821</label><br><label><input type="radio" name="q33" value="1492"> 1492</label><br><label><input type="radio" name="q33" value="1776"> 1776</label><br></div><div class="question"><p>¿Dónde se proclamó la independencia?</p><label><input type="radio" name="q34" value="En Lima"> En Lima</label><br><label><input type="radio" name="q34" value="En Cusco"> En Cusco</label><br><label><input type="radio" name="q34" value="En Trujillo"> En Trujillo</label><br></div><div class="question"><p>¿Qué bandera se usó?</p><label><input type="radio" name="q35" value="La bandera del Perú"> La bandera del Perú</label><br><label><input type="radio" name="q35" value="La bandera de España"> La bandera de España</label><br><label><input type="radio" name="q35" value="La bandera de México"> La bandera de México</label><br></div><div class="question"><p>¿Qué himno se cantó?</p><label><input type="radio" name="q36" value="Himno Nacional del Perú"> Himno Nacional del Perú</label><br><label><input type="radio" name="q36" value="Himno de España"> Himno de España</label><br><label><input type="radio" name="q36" value="Himno de América"> Himno de América</label><br></div><div class="question"><p>¿Qué pasó con los virreyes?</p><label><input type="radio" name="q37" value="Fueron expulsados"> Fueron expulsados</label><br><label><input type="radio" name="q37" value="Fueron premiados"> Fueron premiados</label><br><label><input type="radio" name="q37" value="Fueron elegidos"> Fueron elegidos</label><br></div><div class="question"><p>¿Qué se celebraba el 28 de julio?</p><label><input type="radio" name="q38" value="La independencia"> La independencia</label><br><label><input type="radio" name="q38" value="El cumpleaños del rey"> El cumpleaños del rey</label><br><label><input type="radio" name="q38" value="La navidad"> La navidad</label><br></div><div class="question"><p>¿Qué héroe luchó en Junín y Ayacucho?</p><label><input type="radio" name="q39" value="Simón Bolívar"> Simón Bolívar</label><br><label><input type="radio" name="q39" value="Cristóbal Colón"> Cristóbal Colón</label><br><label><input type="radio" name="q39" value="José de San Martín"> José de San Martín</label><br></div><div class="question"><p>¿Qué se formó después de la independencia?</p><label><input type="radio" name="q40" value="La República del Perú"> La República del Perú</label><br><label><input type="radio" name="q40" value="Un nuevo virreinato"> Un nuevo virreinato</label><br><label><input type="radio" name="q40" value="Un imperio"> Un imperio</label><br></div></div>
+    </form>
+
+    <div class="floating-container">
+        <button type="button" onclick="evaluateQuiz()">Enviar respuestas</button>
+        <div class="feedback" id="result"></div>
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <script>
+        const correctAnswers = [
+            "En la costa norte del Perú", "Templos y pirámides", "Animales y personas", "Muchik", "Agricultura",
+            "Canales", "Llamas y cuyes", "Oro y cobre", "Gobierno teocrático", "Cerámica y pintura mural",
+            "Francisco Pizarro", "Imperio Inca", "Atahualpa", "Oro y riquezas", "Lima",
+            "Caballos y armas", "Cristianismo", "Español", "Viruela", "Fue destruido",
+            "Gobierno español en América", "El virrey", "Lima", "Oro y plata", "Indígenas",
+            "Iglesias y caminos", "Católica", "Español", "Maíz y papa", "Escuelas coloniales",
+            "Libertad del dominio español", "José de San Martín", "1821", "En Lima", "La bandera del Perú",
+            "Himno Nacional del Perú", "Fueron expulsados", "La independencia", "Simón Bolívar", "La República del Perú"
+        ];
+
+        function evaluateQuiz() {
+            let score = 0;
+            for (let i = 1; i <= 40; i++) {
+                const radios = document.getElementsByName("q" + i);
+                for (let radio of radios) {
+                    if (radio.checked && radio.value === correctAnswers[i - 1]) {
+                        score++;
+                    }
+                }
+            }
+            let feedback = "";
+            if (score === 40) {
+                feedback = "¡Excelente! ¡Has respondido todas las preguntas correctamente!";
+            } else if (score >= 30) {
+                feedback = "¡Muy bien! Has obtenido " + score + " respuestas correctas.";
+            } else if (score >= 20) {
+                feedback = "¡Buen intento! Has obtenido " + score + " respuestas correctas. ¡Sigue estudiando!";
+            } else {
+                feedback = "Has obtenido " + score + " respuestas correctas. ¡No te desanimes, puedes mejorar!";
+            }
+            document.getElementById("result").innerText = feedback;
+        }
+    </script>
+</body>
+</html>
