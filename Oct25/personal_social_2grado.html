@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Examen sobre Regiones del Perú y Funciones de la Familia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .question h3 {
+            margin: 0 0 10px 0;
+        }
+        .answers label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        #evaluate {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Examen sobre Regiones del Perú y Funciones de la Familia</h1>
+    <form id="examForm">
+        <div id="questions">
+            <!-- Preguntas de verdadero/falso y selección única -->
+            <div class="question">
+        <h3>1. La Costa del Perú se ubica al oeste del país.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q1" value="true"> Verdadero</label>
+            <label><input type="radio" name="q1" value="false"> Falso</label>
+        </div>
+        <div id="feedback1"></div>
+    </div>
+    
+    <div class="question">
+        <h3>2. La Sierra se caracteriza por tener un clima tropical húmedo.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q2" value="true"> Verdadero</label>
+            <label><input type="radio" name="q2" value="false"> Falso</label>
+        </div>
+        <div id="feedback2"></div>
+    </div>
+    
+    <div class="question">
+        <h3>3. La Selva es conocida por su biodiversidad.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q3" value="true"> Verdadero</label>
+            <label><input type="radio" name="q3" value="false"> Falso</label>
+        </div>
+        <div id="feedback3"></div>
+    </div>
+    
+    <div class="question">
+        <h3>4. La Costa tiene como actividad económica principal la agricultura de altura.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q4" value="true"> Verdadero</label>
+            <label><input type="radio" name="q4" value="false"> Falso</label>
+        </div>
+        <div id="feedback4"></div>
+    </div>
+    
+    <div class="question">
+        <h3>5. La Sierra celebra la fiesta de la Virgen de la Candelaria.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q5" value="true"> Verdadero</label>
+            <label><input type="radio" name="q5" value="false"> Falso</label>
+        </div>
+        <div id="feedback5"></div>
+    </div>
+    
+    <div class="question">
+        <h3>6. La Selva tiene platos típicos como el juane.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q6" value="true"> Verdadero</label>
+            <label><input type="radio" name="q6" value="false"> Falso</label>
+        </div>
+        <div id="feedback6"></div>
+    </div>
+    
+    <div class="question">
+        <h3>7. La danza típica de la Costa es la marinera.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q7" value="true"> Verdadero</label>
+            <label><input type="radio" name="q7" value="false"> Falso</label>
+        </div>
+        <div id="feedback7"></div>
+    </div>
+    
+    <div class="question">
+        <h3>8. La fauna de la Sierra incluye el cóndor.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q8" value="true"> Verdadero</label>
+            <label><input type="radio" name="q8" value="false"> Falso</label>
+        </div>
+        <div id="feedback8"></div>
+    </div>
+    
+    <div class="question">
+        <h3>9. La flora de la Selva incluye árboles como la caoba.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q9" value="true"> Verdadero</label>
+            <label><input type="radio" name="q9" value="false"> Falso</label>
+        </div>
+        <div id="feedback9"></div>
+    </div>
+    
+    <div class="question">
+        <h3>10. La Costa tiene una gran variedad de peces debido a la corriente de Humboldt.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q10" value="true"> Verdadero</label>
+            <label><input type="radio" name="q10" value="false"> Falso</label>
+        </div>
+        <div id="feedback10"></div>
+    </div>
+    
+    <div class="question">
+        <h3>11. La familia cumple funciones de protección y socialización.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q11" value="true"> Verdadero</label>
+            <label><input type="radio" name="q11" value="false"> Falso</label>
+        </div>
+        <div id="feedback11"></div>
+    </div>
+    
+    <div class="question">
+        <h3>12. La Sierra se ubica entre la Costa y la Selva.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q12" value="true"> Verdadero</label>
+            <label><input type="radio" name="q12" value="false"> Falso</label>
+        </div>
+        <div id="feedback12"></div>
+    </div>
+    
+    <div class="question">
+        <h3>13. La Selva no tiene acceso a ríos navegables.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q13" value="true"> Verdadero</label>
+            <label><input type="radio" name="q13" value="false"> Falso</label>
+        </div>
+        <div id="feedback13"></div>
+    </div>
+    
+    <div class="question">
+        <h3>14. La Costa tiene platos típicos como el ceviche.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q14" value="true"> Verdadero</label>
+            <label><input type="radio" name="q14" value="false"> Falso</label>
+        </div>
+        <div id="feedback14"></div>
+    </div>
+    
+    <div class="question">
+        <h3>15. La Sierra tiene como actividad económica la minería.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q15" value="true"> Verdadero</label>
+            <label><input type="radio" name="q15" value="false"> Falso</label>
+        </div>
+        <div id="feedback15"></div>
+    </div>
+    
+    <div class="question">
+        <h3>16. La Selva celebra la fiesta de San Juan.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q16" value="true"> Verdadero</label>
+            <label><input type="radio" name="q16" value="false"> Falso</label>
+        </div>
+        <div id="feedback16"></div>
+    </div>
+    
+    <div class="question">
+        <h3>17. La danza típica de la Sierra es el huayno.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q17" value="true"> Verdadero</label>
+            <label><input type="radio" name="q17" value="false"> Falso</label>
+        </div>
+        <div id="feedback17"></div>
+    </div>
+    
+    <div class="question">
+        <h3>18. La familia no tiene influencia en la educación de los hijos.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q18" value="true"> Verdadero</label>
+            <label><input type="radio" name="q18" value="false"> Falso</label>
+        </div>
+        <div id="feedback18"></div>
+    </div>
+    
+    <div class="question">
+        <h3>19. La Costa tiene clima frío todo el año.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q19" value="true"> Verdadero</label>
+            <label><input type="radio" name="q19" value="false"> Falso</label>
+        </div>
+        <div id="feedback19"></div>
+    </div>
+    
+    <div class="question">
+        <h3>20. La Selva tiene fauna como el jaguar y el mono.</h3>
+        <div class="answers">
+            <label><input type="radio" name="q20" value="true"> Verdadero</label>
+            <label><input type="radio" name="q20" value="false"> Falso</label>
+        </div>
+        <div id="feedback20"></div>
+    </div>
+            <!-- Preguntas de selección múltiple -->
+            <div class="question">
+                <h3>21. Selecciona las danzas típicas de la Sierra:</h3><br>
+                <label></label><input type="checkbox" name="q21" value="Huayno"> Huayno</label><br>
+                <label></label><input type="checkbox" name="q21" value="Marinera"> Marinera</label><br>
+                <label></label><input type="checkbox" name="q21" value="Wititi"> Wititi</label>
+            </div>
+            <div class="question">
+                <h3>22. ¿Qué platos típicos pertenecen a la Costa?</h3><br>
+                <label></label><input type="checkbox" name="q22" value="Ceviche"> Ceviche</label><br>
+                <label></label><input type="checkbox" name="q22" value="Pachamanca"> Pachamanca</label><br>
+                <label></label><input type="checkbox" name="q22" value="Anticuchos"> Anticuchos</label>
+            </div>
+            <!-- Más preguntas de selección múltiple hasta la 30 -->
+        </div>
+        <button type="button" class="submit-btn" onclick="evaluateExam()">Evaluar</button>
+        <br>
+        <div id="correctCount" style="font-weight: bold; margin-top: 20px;"></div>
+    </form>
+    <script>
+        const correctAnswers = {
+            q1: 'true',
+            q2: 'false',
+            q3: 'true',
+            q4: 'false',
+            q5: 'true',
+            q6: 'true',
+            q7: 'true',
+            q8: 'true',
+            q9: 'true',
+            q10: 'true',
+            q11: 'true',
+            q12: 'true',
+            q13: 'false',
+            q14: 'true',
+            q15: 'true',
+            q16: 'true',
+            q17: 'true',
+            q18: 'false',
+            q19: 'false',
+            q20: 'true',
+            q21: ["Huayno", "Wititi"],
+            q22: ["Ceviche", "Anticuchos"]
+            // Agregar respuestas correctas para las demás preguntas
+        };
+        
+        
+
+function removeDivById(divId) {
+    const element = document.getElementById(divId);
+    if (element) {
+      element.remove(); // Removes the element from the DOM
+    }
+  }
+
+        function evaluateExam() {
+            const form = document.getElementById("examForm");
+            const questions = document.querySelectorAll(".question");
+            let allAnswered = true;
+            let correctCounter = 0;
+
+            questions.forEach((q, index) => {
+                const inputs = q.querySelectorAll("input");
+                const name = inputs[0].name;
+                let answered = false;
+
+                if (inputs[0].type === "radio") {
+                    answered = Array.from(inputs).some(input => input.checked);
+                } else if (inputs[0].type === "checkbox") {
+                    answered = Array.from(inputs).some(input => input.checked);
+                }
+
+                if (!answered) {
+                    allAnswered = false;
+                    q.style.border = "1px solid red";
+                } else {
+                    q.style.border = "none";
+                }
+            });
+
+            if (!allAnswered) {
+                alert("Por favor responde todas las preguntas antes de evaluar.");
+                return;
+            }
+
+            questions.forEach((q, index) => {
+                const inputs = q.querySelectorAll("input");
+                const name = inputs[0].name;
+                const correct = correctAnswers[name];
+                
+                        idn = "in"+name;
+                        removeDivById(idn);
+
+                if (inputs[0].type === "radio") {
+                    inputs.forEach(input => {
+                        if (input.checked && input.value !== correct) {
+                            input.parentElement.innerHTML += `<div class="incorrect" id="in${name}"">Respuesta incorrecta. La correcta es: <span class="correct-answer">${correct}</span></div>`;
+                        }
+                    });
+                } else if (inputs[0].type === "checkbox") {
+                    const selected = Array.from(inputs).filter(i => i.checked).map(i => i.value);
+                    const correctSet = new Set(correct);
+                    const selectedSet = new Set(selected);
+                    const isCorrect = selected.length === correct.length && selected.every(val => correctSet.has(val));
+                    
+                    if (!isCorrect) {
+                        q.innerHTML += `<div class="incorrect" id="in${name}">Respuesta incorrecta. Las respuestas correctas son: <span class="correct-answer">${correct.join(", ")}</span></div>`;
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
