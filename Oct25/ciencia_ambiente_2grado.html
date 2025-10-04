@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Examen de Ciencia y Ambiente - 2° Grado</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e6f7ff;
+      padding: 20px;
+      padding-top: 150px;
+    }
+    h1 {
+      text-align: center;
+      color: #007acc;
+    }
+    .question {
+      margin-bottom: 20px;
+      background-color: #ffffff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question h3 {
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #007acc;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #result {
+      font-size: 18px;
+      margin-top: 20px;
+      text-align: center;
+      color: green;
+    }
+    #header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #e6f7ff;
+        padding: 10px 0;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+<div id="header">
+  <h1>Examen de Ciencia y Ambiente - III Bimestre</h1>
+  <div id="timer" style="text-align:center; font-size:18px; margin-bottom:20px; color:#cc0000;"></div>
+</div>
+
+  <form id="quizForm">
+    <div id="quizContainer"></div>
+    <button type="button" onclick="calcularResultado()">Enviar respuestas</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    let tiempoRestante = 900; // 15 minutos en segundos
+
+    const preguntas = [
+      // Tema 1: Mezclas homogéneas y heterogéneas
+      { pregunta: "¿Cuál es una mezcla homogénea?", opciones: ["Agua con sal", "Agua con arena", "Frutas picadas", "Arroz con lentejas"], respuesta: 0 },
+      { pregunta: "¿Cuál es una mezcla heterogénea?", opciones: ["Jugo de naranja", "Leche", "Ensalada de frutas", "Agua con azúcar"], respuesta: 2 },
+      { pregunta: "¿Qué mezcla no se puede distinguir fácilmente?", opciones: ["Agua con sal", "Arroz con frijoles", "Arena con piedras", "Frutas picadas"], respuesta: 0 },
+      { pregunta: "¿Qué mezcla se puede separar fácilmente?", opciones: ["Agua con sal", "Leche", "Arroz con lentejas", "Jugo de manzana"], respuesta: 2 },
+      { pregunta: "¿Cuál de estas es homogénea?", opciones: ["Leche", "Ensalada", "Sopa con verduras", "Frutas picadas"], respuesta: 0 },
+      { pregunta: "El agua con azúcar es una mezcla homogénea.", opciones: ["Verdadero", "Falso"], respuesta: 0 },
+      { pregunta: "La ensalada de frutas es una mezcla homogénea.", opciones: ["Verdadero", "Falso"], respuesta: 1 },
+      { pregunta: "Las mezclas heterogéneas se pueden separar fácilmente.", opciones: ["Verdadero", "Falso"], respuesta: 0 },
+      { pregunta: "La leche es una mezcla heterogénea.", opciones: ["Verdadero", "Falso"], respuesta: 1 },
+      { pregunta: "Las mezclas homogéneas tienen partes que se distinguen fácilmente.", opciones: ["Verdadero", "Falso"], respuesta: 1 },
+
+      // Tema 2: Fuentes de energía
+      { pregunta: "¿Cuál es una fuente de energía renovable?", opciones: ["Sol", "Gas", "Petróleo", "Carbón"], respuesta: 0 },
+      { pregunta: "¿Qué fuente de energía usamos para los molinos de viento?", opciones: ["Agua", "Sol", "Aire", "Fuego"], respuesta: 2 },
+      { pregunta: "¿Qué fuente de energía usamos para paneles solares?", opciones: ["Agua", "Sol", "Aire", "Gas"], respuesta: 1 },
+      { pregunta: "¿Cuál de estas no es renovable?", opciones: ["Sol", "Agua", "Petróleo", "Viento"], respuesta: 2 },
+      { pregunta: "¿Qué fuente de energía ayuda a mover barcos?", opciones: ["Sol", "Agua", "Aire", "Gas"], respuesta: 1 },
+      { pregunta: "El sol es una fuente de energía renovable.", opciones: ["Verdadero", "Falso"], respuesta: 0 },
+      { pregunta: "El petróleo es una fuente de energía renovable.", opciones: ["Verdadero", "Falso"], respuesta: 1 },
+      { pregunta: "El aire puede generar energía para mover molinos.", opciones: ["Verdadero", "Falso"], respuesta: 0 },
+      { pregunta: "La energía del agua no se puede usar en la comunidad.", opciones: ["Verdadero", "Falso"], respuesta: 1 },
+      { pregunta: "La energía renovable contamina menos que la no renovable.", opciones: ["Verdadero", "Falso"], respuesta: 0 },
+
+      // Tema 3: Características del agua, aire y sol
+      { pregunta: "¿Qué necesitamos para respirar?", opciones: ["Agua", "Sol", "Aire", "Tierra"], respuesta: 2 },
+      { pregunta: "¿Qué líquido es vital para los seres vivos?", opciones: ["Aceite", "Agua", "Jugo", "Leche"], respuesta: 1 },
+      { pregunta: "¿Qué nos da luz y calor?", opciones: ["Luna", "Sol", "Estrellas", "Fuego"], respuesta: 1 },
+      { pregunta: "¿Qué ayuda a las plantas a crecer?", opciones: ["Sol", "Aire", "Agua", "Todas las anteriores"], respuesta: 3 },
+      { pregunta: "¿Qué cubre todo el planeta y no se ve?", opciones: ["Agua", "Aire", "Sol", "Nubes"], respuesta: 1 },
+      { pregunta: "El aire es invisible pero necesario para vivir.", opciones: ["Verdadero", "Falso"], respuesta: 0 },
+      { pregunta: "El sol ayuda a las plantas a crecer.", opciones: ["Verdadero", "Falso"], respuesta: 0 },
+      { pregunta: "El agua no es importante para los animales.", opciones: ["Verdadero", "Falso"], respuesta: 1 },
+      { pregunta: "El aire está presente solo en las montañas.", opciones: ["Verdadero", "Falso"], respuesta: 1 },
+      { pregunta: "El sol nos da luz y calor.", opciones: ["Verdadero", "Falso"], respuesta: 0 },
+
+      // Tema 4: Energía en la comunidad
+      { pregunta: "¿Qué energía se usa en casas con paneles solares?", opciones: ["Gas", "Sol", "Carbón", "Petróleo"], respuesta: 1 },
+      { pregunta: "¿Qué energía usan los autos eléctricos?", opciones: ["Gasolina", "Electricidad", "Carbón", "Viento"], respuesta: 1 },
+      { pregunta: "¿Qué energía contamina menos?", opciones: ["Petróleo", "Gas", "Sol", "Carbón"], respuesta: 2 },
+      { pregunta: "¿Qué energía se usa en represas?", opciones: ["Aire", "Agua", "Sol", "Fuego"], respuesta: 1 },
+      { pregunta: "¿Cuál es una fuente no renovable?", opciones: ["Sol", "Viento", "Petróleo", "Agua"], respuesta: 2 },
+      { pregunta: "La energía solar se puede usar en casas.", opciones: ["Verdadero", "Falso"], respuesta: 0 },
+      { pregunta: "La electricidad no se usa en la comunidad.", opciones: ["Verdadero", "Falso"], respuesta: 1 },
+      { pregunta: "Los autos eléctricos usan energía renovable.", opciones: ["Verdadero", "Falso"], respuesta: 0 },
+      { pregunta: "El carbón es una fuente de energía renovable.", opciones: ["Verdadero", "Falso"], respuesta: 1 },
+      { pregunta: "La energía renovable ayuda a cuidar el planeta.", opciones: ["Verdadero", "Falso"], respuesta: 0 }
+    ];
+
+    function iniciarTemporizador() {
+        const timerDiv = document.getElementById("timer");
+        const intervalo = setInterval(() => {
+        const minutos = Math.floor(tiempoRestante / 60);
+        const segundos = tiempoRestante % 60;
+        timerDiv.innerText = `⏳ Tiempo restante: ${minutos}:${segundos < 10 ? "0" : ""}${segundos}`;
+        tiempoRestante--;
+
+        if (tiempoRestante < 0) {
+            clearInterval(intervalo);
+            calcularResultado();
+            document.querySelector("button").disabled = true;
+            timerDiv.innerText = "⏰ ¡Tiempo terminado!";
+        }
+        }, 1000);
+    }
+
+    function mostrarRetroalimentacion() {
+        preguntas.forEach((p, i) => {
+        const seleccionada = document.querySelector(`input[name="q${i}"]:checked`);
+        const preguntaDiv = document.querySelectorAll(".question")[i];
+        if (seleccionada) {
+        if (parseInt(seleccionada.value) === p.respuesta) {
+            preguntaDiv.style.border = "2px solid green";
+        } else {
+            preguntaDiv.style.border = "2px solid red";
+        }
+        } else {
+            preguntaDiv.style.border = "2px solid orange";
+        }
+        });
+    }
+
+    function cargarPreguntas() {
+      const container = document.getElementById("quizContainer");
+      preguntas.forEach((p, i) => {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `<h3>${i + 1}. ${p.pregunta}</h3>` +
+          p.opciones.map((op, j) =>
+            `<label><input type="radio" name="q${i}" value="${j}"> ${op}</label><br>`
+          ).join("");
+        container.appendChild(div);
+      });
+    }
+
+    function calcularResultado() {
+        let correctas = 0;
+        preguntas.forEach((p, i) => {
+        const seleccionada = document.querySelector(`input[name="q${i}"]:checked`);
+        if (seleccionada && parseInt(seleccionada.value) === p.respuesta) {
+            correctas++;
+        }
+        });
+
+        mostrarRetroalimentacion();
+
+        let mensaje = `¡Obtuviste ${correctas} de ${preguntas.length} respuestas correctas!`;
+        if (correctas >= 35) {
+            mensaje += " 🏅 ¡Excelente trabajo!";
+        } else if (correctas >= 25) {
+            mensaje += " 😊 ¡Muy bien!";
+        } else {
+            mensaje += " 😅 ¡Sigue practicando!";
+        }
+
+          document.getElementById("result").innerText = mensaje;
+    }
+
+    cargarPreguntas();
+    iniciarTemporizador();
+  </script>
+</body>
+</html>
