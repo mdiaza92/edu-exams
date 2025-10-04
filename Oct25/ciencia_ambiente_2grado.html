@@ -8,7 +8,7 @@
       font-family: Arial, sans-serif;
       background-color: #e6f7ff;
       padding: 20px;
-      padding-top: 150px;
+      padding-top: 160px;
     }
     h1 {
       text-align: center;
@@ -38,23 +38,50 @@
       text-align: center;
       color: green;
     }
+    
     #header {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         background-color: #e6f7ff;
-        padding: 10px 0;
-        text-align: center;
+        padding: 10px 20px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         z-index: 1000;
     }
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-right: 40px;
+}
+
+#nombreEstudiante {
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 250px;
+}
+
+#timer {
+  text-align:center; 
+  font-size:18px; 
+  margin-bottom:20px; 
+  color:#cc0000;
+}
+
   </style>
 </head>
 <body>
 <div id="header">
+    <div class="header-content">
+        <input type="text" id="nombreEstudiante" placeholder="Escribe tu nombre" required>
+        <div id="timer"></div>    
+    </div>
   <h1>Examen de Ciencia y Ambiente - III Bimestre</h1>
-  <div id="timer" style="text-align:center; font-size:18px; margin-bottom:20px; color:#cc0000;"></div>
 </div>
 
   <form id="quizForm">
@@ -65,6 +92,7 @@
 
   <script>
     let tiempoRestante = 900; // 15 minutos en segundos
+    let intervaloTemporizador;
 
     const preguntas = [
       // Tema 1: Mezclas homogéneas y heterogéneas
@@ -118,14 +146,14 @@
 
     function iniciarTemporizador() {
         const timerDiv = document.getElementById("timer");
-        const intervalo = setInterval(() => {
+        intervaloTemporizador = setInterval(() => {
         const minutos = Math.floor(tiempoRestante / 60);
         const segundos = tiempoRestante % 60;
         timerDiv.innerText = `⏳ Tiempo restante: ${minutos}:${segundos < 10 ? "0" : ""}${segundos}`;
         tiempoRestante--;
 
         if (tiempoRestante < 0) {
-            clearInterval(intervalo);
+            clearInterval(intervaloTemporizador);
             calcularResultado();
             document.querySelector("button").disabled = true;
             timerDiv.innerText = "⏰ ¡Tiempo terminado!";
@@ -172,6 +200,7 @@
         });
 
         mostrarRetroalimentacion();
+        clearInterval(intervaloTemporizador);
 
         let mensaje = `¡Obtuviste ${correctas} de ${preguntas.length} respuestas correctas!`;
         if (correctas >= 35) {
@@ -183,6 +212,38 @@
         }
 
           document.getElementById("result").innerText = mensaje;
+    }
+
+    function enviarFormularioGoogle(nombre, respuestas) {
+        const formURL = "https://docs.google.com/forms/u/0/d/e/FORM_ID/formResponse"; // reemplaza FORM_ID
+
+        const formData = new FormData();
+        formData.append("entry.1111111111", nombre); // ID del campo de nombre
+
+        respuestas.forEach((respuesta, index) => {
+            formData.append(`entry.${2222222222 + index}`, respuesta); // reemplaza con los IDs reales
+        });
+
+        fetch(formURL, {
+            method: "POST",
+            mode: "no-cors",
+            body: formData
+        }).then(() => {
+            alert("¡Respuestas enviadas correctamente!");
+        });
+    }
+
+    function procesarYEnviar() {
+        const nombre = document.getElementById("nombreEstudiante").value;
+        const respuestas = [];
+
+        preguntas.forEach((p, i) => {
+            const seleccionada = document.querySelector(`input[name="q${i}"]:checked`);
+            respuestas.push(seleccionada ? seleccionada.value : "Sin respuesta");
+        });
+
+        calcularResultado();
+        enviarFormularioGoogle(nombre, respuestas);
     }
 
     cargarPreguntas();
