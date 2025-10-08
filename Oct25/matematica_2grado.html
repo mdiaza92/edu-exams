@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Examen de Matemática - Segundo de Primaria</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fefefe;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .section {
+      margin-top: 30px;
+    }
+    .question {
+      margin-bottom: 15px;
+      padding: 10px;
+      background-color: #eaf2f8;
+      border-radius: 5px;
+    }
+    .question label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .question input[type="radio"] {
+      margin-right: 10px;
+    }
+    #submitBtn {
+      display: block;
+      margin: 30px auto;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #result {
+      text-align: center;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Examen de Matemática</h1>
+<div id="quizForm"></div>
+<button id="submitBtn">Enviar respuestas</button>
+<div id="result"></div>
+
+<script>
+  const quizForm = document.getElementById("quizForm");
+  const resultDiv = document.getElementById("result");
+
+  const sections = ["Suma", "Resta", "Multiplicación", "División", "Problemas con pictogramas", "Problemas de multiplicación con contexto"];
+  const questions = [];
+
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function generateQuestion(type) {
+    let a, b, questionText, correctAnswer, options;
+
+    switch (type) {
+      case "Suma":
+        a = getRandomInt(100, 999);
+        b = getRandomInt(100, 999);
+        questionText = `${a} + ${b} = `;
+        correctAnswer = a + b;
+        break;
+      case "Resta":
+        a = getRandomInt(100, 999);
+        b = getRandomInt(100, a);
+        questionText = `${a} - ${b} = `;
+        correctAnswer = a - b;
+        break;
+      case "Multiplicación":
+        a = getRandomInt(1, 9);
+        b = getRandomInt(1, 9);
+        questionText = `${a} × ${b} = `;
+        correctAnswer = a * b;
+        break;
+      case "División":
+        b = getRandomInt(3, 9);
+        correctAnswer = getRandomInt(1, 10);
+        a = b * correctAnswer;
+        questionText = `${a} ÷ ${b} = `;
+        break;
+      case "Problemas con pictogramas":
+        const frutas = getRandomInt(3, 6);
+        const manz = getRandomInt(2, 7);
+        questionText = `Si cada 🍎 representa ${manz} manzanas y hay ${frutas} 🍎, ¿cuántas manzanas hay en total?`;
+        correctAnswer = frutas * manz;
+        break;
+      case "Problemas de multiplicación con contexto":
+        const niños = getRandomInt(2, 5);
+        const lápices = getRandomInt(3, 6);
+        correctAnswer = niños * lápices;
+        questionText = `Hay ${niños} niños y cada uno tiene ${lápices} lápices. ¿Cuántos lápices hay en total?`;
+        break;
+    }
+
+    // Opciones múltiples
+    options = new Set([correctAnswer]);
+    while (options.size < 3) {
+      options.add(correctAnswer + getRandomInt(-10, 10));
+    }
+
+    return {
+      type,
+      questionText,
+      correctAnswer,
+      options: Array.from(options).sort(() => Math.random() - 0.5)
+    };
+  }
+
+  let questionIndex = 0;
+  sections.forEach(section => {
+    const sectionDiv = document.createElement("div");
+    sectionDiv.className = "section";
+    sectionDiv.innerHTML = `<h2>${section}</h2>`;
+    quizForm.appendChild(sectionDiv);
+
+    let count = 5;
+    // if (section === "Problemas con pictogramas") count = 5;
+    // if (section === "Problemas de multiplicación con contexto") count = 5;
+
+    for (let i = 0; i < count; i++) {
+      const q = generateQuestion(section);
+      questions.push(q);
+
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `<label>Pregunta ${questionIndex + 1}: ${q.questionText}</label>`;
+      q.options.forEach(opt => {
+        let texto = opt;
+        if (section === "Problemas de multiplicación con contexto") {
+          texto += ` (${opt} lápices)`;
+        }
+        div.innerHTML += `
+          <label>
+            <input type="radio" name="q${questionIndex}" value="${opt}">
+            ${texto}
+          </label><br>`;
+      });
+
+      sectionDiv.appendChild(div);
+      questionIndex++;
+    }
+  });
+
+  const casosMultiplicacion = [
+    {
+      pregunta: "En un restaurante hay 52 mesas. Si cada mesa se puede sentar hasta 5 personas, ¿cuántos clientes tiene capacidad el restaurante?",
+      respuesta: 260
+    },
+    {
+      pregunta: "En una escuela hay 18 salones. Si cada salón tiene 7 estudiantes, ¿cuántos estudiantes hay en total en la escuela?",
+      respuesta: 126
+    },
+    {
+      pregunta: "Una biblioteca tiene 12 estantes. Si cada estante tiene 8 libros, ¿cuántos libros hay en total?",
+      respuesta: 96
+    },
+    {
+      pregunta: "En una granja hay 16 corrales. Si en cada corral hay 7 ovejas, ¿cuántas ovejas hay en total?",
+      respuesta: 112
+    },
+    {
+      pregunta: "Un cine tiene 9 salas. Si cada sala tiene 100 asientos, ¿cuántas personas pueden ver películas al mismo tiempo?",
+      respuesta: 900
+    }
+  ];
+
+  const casosDiv = document.createElement("div");
+  casosDiv.className = "section";
+  casosDiv.innerHTML = `<h2>Problemas de multiplicación con casos reales</h2>`;
+  quizForm.appendChild(casosDiv);
+
+  casosMultiplicacion.forEach((caso, i) => {
+    const opciones = new Set([caso.respuesta]);
+    while (opciones.size < 3) {
+      opciones.add(caso.respuesta + getRandomInt(-50, 50));
+    }
+
+    const div = document.createElement("div");
+    div.className = "question";
+    div.innerHTML = `<label>Pregunta ${questionIndex + 1}: ${caso.pregunta}</label>`;
+    Array.from(opciones).sort(() => Math.random() - 0.5).forEach(opt => {
+      div.innerHTML += `
+        <label>
+          <input type="radio" name="q${questionIndex}" value="${opt}">
+          ${opt} personas
+        </label><br>`;
+    });
+
+    questions.push({
+      type: "Problemas con casos reales",
+      questionText: caso.pregunta,
+      correctAnswer: caso.respuesta
+    });
+
+    casosDiv.appendChild(div);
+    questionIndex++;
+  });
+
+  document.getElementById("submitBtn").addEventListener("click", () => {
+    let score = 0;
+
+    questions.forEach((q, i) => {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selected && parseInt(selected.value) === q.correctAnswer) {
+        score++;
+      }
+    });
+
+    let feedback = "";
+    if (score === questions.length) {
+      feedback = "¡Excelente trabajo! ¡Todas las respuestas son correctas!";
+    } else if (score >= questions.length * 0.75) {
+      feedback = "¡Muy bien! Solo faltaron algunas.";
+    } else if (score >= questions.length * 0.5) {
+      feedback = "Buen intento, pero puedes mejorar.";
+    } else {
+      feedback = "Sigue practicando, ¡tú puedes hacerlo!";
+    }
+
+    resultDiv.innerHTML = `Tu puntaje es: ${score}/${questions.length}<br>${feedback}`;
+  });
+</script>
+
+</body>
+</html>
