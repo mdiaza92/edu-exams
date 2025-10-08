@@ -29,6 +29,18 @@
     .question input[type="radio"] {
       margin-right: 10px;
     }
+    .correct {
+      color: green;
+      font-weight: bold;
+    }
+    .incorrect {
+      color: red;
+      font-weight: bold;
+    }
+    .mark {
+      font-weight: bold;
+      margin-left: 10px;
+    }
     #submitBtn {
       display: block;
       margin: 30px auto;
@@ -107,7 +119,6 @@
         break;
     }
 
-    // Opciones múltiples
     options = new Set([correctAnswer]);
     while (options.size < 3) {
       options.add(correctAnswer + getRandomInt(-10, 10));
@@ -129,8 +140,6 @@
     quizForm.appendChild(sectionDiv);
 
     let count = 5;
-    // if (section === "Problemas con pictogramas") count = 5;
-    // if (section === "Problemas de multiplicación con contexto") count = 5;
 
     for (let i = 0; i < count; i++) {
       const q = generateQuestion(section);
@@ -148,6 +157,7 @@
           <label>
             <input type="radio" name="q${questionIndex}" value="${opt}">
             ${texto}
+            <span class="mark" id="mark${questionIndex}_${opt}"></span>
           </label><br>`;
       });
 
@@ -198,6 +208,7 @@
         <label>
           <input type="radio" name="q${questionIndex}" value="${opt}">
           ${opt} personas
+          <span class="mark" id="mark${questionIndex}_${opt}"></span>
         </label><br>`;
     });
 
@@ -216,6 +227,26 @@
 
     questions.forEach((q, i) => {
       const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      const inputs = document.querySelectorAll(`input[name="q${i}"]`);
+      inputs.forEach(input => {
+        const markSpan = document.getElementById(`mark${i}_${input.value}`);
+        if (parseInt(input.value) === q.correctAnswer) {
+          if (selected && input === selected) {
+            markSpan.textContent = "✔️";
+            markSpan.className = "mark correct";
+          } else {
+            markSpan.textContent = "";
+          }
+        } else {
+          if (selected && input === selected) {
+            markSpan.textContent = "❌";
+            markSpan.className = "mark incorrect";
+          } else {
+            markSpan.textContent = "";
+          }
+        }
+      });
+
       if (selected && parseInt(selected.value) === q.correctAnswer) {
         score++;
       }
