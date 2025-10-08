@@ -8,6 +8,7 @@
       font-family: Arial, sans-serif;
       background-color: #fefefe;
       padding: 20px;
+      padding-bottom: 80px; /* espacio extra para que el contenido no quede oculto */
     }
     h1, h2 {
       text-align: center;
@@ -57,13 +58,31 @@
       font-size: 20px;
       margin-top: 20px;
     }
+    
+.floating-button {
+    position: fixed;
+    bottom: 20px; /* distancia desde el fondo */
+    right: 20px;  /* distancia desde el borde derecho */
+    z-index: 1000; /* asegura que esté por encima de otros elementos */
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .floating-button:hover {
+    background-color: #45a049;
+  }
   </style>
 </head>
 <body>
 
 <h1>Examen de Matemática</h1>
 <div id="quizForm"></div>
-<button id="submitBtn">Enviar respuestas</button>
+<button id="submitBtn" class="floating-button">Enviar respuestas</button>
 <div id="result"></div>
 
 <script>
