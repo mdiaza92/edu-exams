@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación Final de Ciencia: Los 5 Sentidos</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f0f8ff;
+            padding: 20px;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 850px;
+            background: white;
+            margin: auto;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 4px solid #3498db;
+        }
+        h1 { text-align: center; color: #2980b9; text-transform: uppercase; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.2em; margin-bottom: 30px; }
+        
+        .section { 
+            margin-bottom: 25px; 
+            padding: 20px; 
+            border: 2px solid #ecf0f1; 
+            border-radius: 15px;
+            background-color: #fdfefe;
+        }
+        .question-title { font-weight: bold; margin-bottom: 15px; color: #d35400; font-size: 1.1em; }
+        
+        /* Arrastrar y Soltar */
+        .drag-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; background: #eef2f3; padding: 15px; border-radius: 10px; }
+        .draggable { padding: 10px 18px; background: #3498db; color: white; border-radius: 8px; cursor: grab; font-weight: bold; }
+        .drop-zone { display: inline-block; width: 160px; height: 32px; border-bottom: 3px dashed #3498db; vertical-align: middle; margin: 0 5px; text-align: center; font-weight: bold; color: #2980b9; }
+        
+        .options-list { list-style: none; padding: 0; }
+        .options-list li { margin: 12px 0; padding: 8px; border-radius: 5px; transition: 0.3s; }
+        .options-list li:hover { background-color: #f1f9ff; }
+        
+        select, input[type="text"] {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #bdc3c7;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        button { 
+            display: block; 
+            width: 250px; 
+            height: 60px; 
+            margin: 40px auto; 
+            background: #27ae60; 
+            color: white; 
+            border: none; 
+            border-radius: 30px; 
+            font-size: 20px; 
+            font-weight: bold;
+            cursor: pointer; 
+            box-shadow: 0 5px #1e8449;
+        }
+        button:active { transform: translateY(4px); box-shadow: 0 2px #1e8449; }
+        
+        #result-box { 
+            display: none;
+            text-align: center; 
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        .feedback-correct { color: #27ae60; }
+        .feedback-error { color: #e74c3c; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Examen de Ciencia y Tecnología</h1>
+    <h2>Tema: Los Sentidos (3ero de Primaria)</h2>
+
+    <div class="section">
+        <p class="question-title">1. Arrastra las partes del OÍDO según el recorrido del sonido:</p>
+        <div class="drag-container">
+            <div class="draggable" draggable="true" id="p1">Oreja</div>
+            <div class="draggable" draggable="true" id="p2">Tímpano</div>
+            <div class="draggable" draggable="true" id="p3">Caracol</div>
+            <div class="draggable" draggable="true" id="p4">Nervio Auditivo</div>
+        </div>
+        <p>El sonido entra por la <span class="drop-zone" data-answer="Oreja"></span>, vibra en el <span class="drop-zone" data-answer="Tímpano"></span>, pasa al <span class="drop-zone" data-answer="Caracol"></span> y llega al cerebro por el <span class="drop-zone" data-answer="Nervio Auditivo"></span>.</p>
+    </div>
+
+    <div class="section">
+        <p class="question-title">2. ¿Cuál es el órgano que nos permite percibir los sonidos?</p>
+        <ul class="options-list">
+            <li><input type="radio" name="q2" value="a"> La Nariz</li>
+            <li><input type="radio" name="q2" value="correct"> El Oído</li>
+            <li><input type="radio" name="q2" value="c"> La Lengua</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <p class="question-title">3. Selecciona las 3 capas de la piel en orden (de afuera hacia adentro):</p>
+        <ul class="options-list">
+            <li><input type="radio" name="q3" value="a"> Dermis, Hipodermis, Epidermis</li>
+            <li><input type="radio" name="q3" value="correct"> Epidermis, Dermis e Hipodermis</li>
+            <li><input type="radio" name="q3" value="c"> Piel, Músculo y Hueso</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <p class="question-title">4. Con el sentido del TACTO podemos percibir (Marca todas las correctas):</p>
+        <input type="checkbox" class="q4" value="v"> La temperatura (frío/calor)<br>
+        <input type="checkbox" class="q4" value="v"> La textura (suave/áspero)<br>
+        <input type="checkbox" class="q4" value="f"> El color de los objetos<br>
+        <input type="checkbox" class="q4" value="v"> La forma y dureza
+    </div>
+
+    <div class="section">
+        <p class="question-title">5. ¿Cómo se llaman los dos agujeros de la nariz por donde entra el aire?</p>
+        <input type="text" id="q5" placeholder="Escribe aquí..."> (Pista: F... N...)
+    </div>
+
+    <div class="section">
+        <p class="question-title">6. El sentido del OLFATO nos permite distinguir:</p>
+        <select id="q6">
+            <option value="">--Selecciona--</option>
+            <option value="correct">Olores agradables y desagradables</option>
+            <option value="x">Sonidos fuertes y débiles</option>
+            <option value="y">Sabores dulces y salados</option>
+        </select>
+    </div>
+
+    <div class="section">
+        <p class="question-title">7. Son partes PROTECTORAS del ojo (impiden que entre sudor o polvo):</p>
+        <ul class="options-list">
+            <li><input type="radio" name="q7" value="correct"> Cejas, pestañas y párpados</li>
+            <li><input type="radio" name="q7" value="b"> Iris, pupila y retina</li>
+            <li><input type="radio" name="q7" value="c"> Cristalino y nervio óptico</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <p class="question-title">8. ¿Qué parte del ojo le da el color (marrón, verde, azul)?</p>
+        <input type="radio" name="q8" value="a"> La Pupila | 
+        <input type="radio" name="q8" value="correct"> El Iris | 
+        <input type="radio" name="q8" value="c"> La Córnea
+    </div>
+
+    <div class="section">
+        <p class="question-title">9. ¿Dónde se encuentran las PAPILAS GUSTATIVAS?</p>
+        <ul class="options-list">
+            <li><input type="radio" name="q9" value="a"> En los labios</li>
+            <li><input type="radio" name="q9" value="correct"> En la lengua</li>
+            <li><input type="radio" name="q9" value="c"> En los dientes</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <p class="question-title">10. ¿Cuál de estos NO es un sabor básico que detectamos?</p>
+        <select id="q10">
+            <option value="">--Selecciona--</option>
+            <option value="x">Umami</option>
+            <option value="correct">Picante (es una sensación de dolor/calor)</option>
+            <option value="y">Amargo</option>
+        </select>
+    </div>
+
+    <div class="section">
+        <p class="question-title">11. Verdadero (V) o Falso (F):</p>
+        <p>a) Debemos leer con buena luz para cuidar la vista. <select id="q11a"><option value="V">V</option><option value="F">F</option></select></p>
+        <p>b) Es bueno introducir hisopos al fondo del oído. <select id="q11b"><option value="V">V</option><option value="F">F</option></select></p>
+    </div>
+
+    <div class="section">
+        <p class="question-title">12. El órgano del sentido del GUSTO es:</p>
+        <input type="radio" name="q12" value="correct"> La lengua y el paladar | 
+        <input type="radio" name="q12" value="b"> Solo los dientes
+    </div>
+
+    <div class="section">
+        <p class="question-title">13. ¿Qué parte del cuerpo envía la información de los sentidos al cerebro?</p>
+        <input type="radio" name="q13" value="a"> Los huesos | 
+        <input type="radio" name="q13" value="correct"> Los nervios | 
+        <input type="radio" name="q13" value="c"> Los pulmones
+    </div>
+
+    <div class="section">
+        <p class="question-title">14. ¿Qué capa de la piel contiene la grasa que nos ayuda a conservar el calor?</p>
+        <input type="radio" name="q14" value="a"> Epidermis | 
+        <input type="radio" name="q14" value="b"> Dermis | 
+        <input type="radio" name="q14" value="correct"> Hipodermis
+    </div>
+
+    <div class="section">
+        <p class="question-title">15. Para cuidar el sentido del OLFATO debo:</p>
+        <ul class="options-list">
+            <li><input type="radio" name="q15" value="correct"> Sonarme la nariz con cuidado usando un pañuelo limpio.</li>
+            <li><input type="radio" name="q15" value="b"> Oler sustancias muy fuertes y peligrosas.</li>
+        </ul>
+    </div>
+
+    <button onclick="calificar()">¡Ver mi resultado!</button>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <p id="message-text"></p>
+    </div>
+</div>
+
+<script>
+    // Configuración de Draggables
+    const draggables = document.querySelectorAll('.draggable');
+    const dropZones = document.querySelectorAll('.drop-zone');
+
+    draggables.forEach(d => {
+        d.addEventListener('dragstart', () => d.classList.add('dragging'));
+        d.addEventListener('dragend', () => d.classList.remove('dragging'));
+    });
+
+    dropZones.forEach(zone => {
+        zone.addEventListener('dragover', e => e.preventDefault());
+        zone.addEventListener('drop', e => {
+            const draggable = document.querySelector('.dragging');
+            zone.innerText = draggable.innerText;
+            zone.style.background = "#d4edda";
+        });
+        zone.addEventListener('click', () => { zone.innerText = ""; zone.style.background = "transparent"; });
+    });
+
+    function calificar() {
+        let nota = 0;
+
+        // 1. Oído (4 puntos internos)
+        dropZones.forEach(z => { if(z.innerText.trim() === z.getAttribute('data-answer')) nota++; });
+        
+        // 2. Oído Opción
+        if (document.querySelector('input[name="q2"]:checked')?.value === "correct") nota++;
+        
+        // 3. Piel Capas
+        if (document.querySelector('input[name="q3"]:checked')?.value === "correct") nota++;
+        
+        // 4. Checkboxes Tacto (Consideramos 1 punto si marca las 3 correctas y no la incorrecta)
+        const checks = document.querySelectorAll('.q4');
+        if(checks[0].checked && checks[1].checked && !checks[2].checked && checks[3].checked) nota++;
+
+        // 5. Fosas Nasales
+        if (document.getElementById('q5').value.toLowerCase().includes("fosas")) nota++;
+
+        // 6. Olfato select
+        if (document.getElementById('q6').value === "correct") nota++;
+
+        // 7. Vista protectores
+        if (document.querySelector('input[name="q7"]:checked')?.value === "correct") nota++;
+
+        // 8. Iris
+        if (document.querySelector('input[name="q8"]:checked')?.value === "correct") nota++;
+
+        // 9. Lengua
+        if (document.querySelector('input[name="q9"]:checked')?.value === "correct") nota++;
+
+        // 10. Picante
+        if (document.getElementById('q10').value === "correct") nota++;
+
+        // 11. V/F
+        if (document.getElementById('q11a').value === "V") nota++;
+        if (document.getElementById('q11b').value === "F") nota++;
+
+        // 12. Gusto
+        if (document.querySelector('input[name="q12"]:checked')?.value === "correct") nota++;
+
+        // 13. Nervios
+        if (document.querySelector('input[name="q13"]:checked')?.value === "correct") nota++;
+
+        // 14. Hipodermis
+        if (document.querySelector('input[name="q14"]:checked')?.value === "correct") nota++;
+
+        // 15. Cuidado olfato
+        if (document.querySelector('input[name="q15"]:checked')?.value === "correct") nota++;
+
+        const resultBox = document.getElementById('result-box');
+        const scoreText = document.getElementById('score-text');
+        const msgText = document.getElementById('message-text');
+
+        resultBox.style.display = "block";
+        scoreText.innerText = `Lograste ${nota} de 20 puntos`; // Escala sobre 20 por ser estándar escolar
+
+        if (nota >= 15) {
+            resultBox.className = "feedback-correct";
+            msgText.innerText = "¡Increíble Edward! Eres un experto en los sentidos. ¡A por 4to grado!";
+        } else {
+            resultBox.className = "feedback-error";
+            msgText.innerText = "Buen intento. Dale una revisada extra a las capas de la piel y las partes del ojo.";
+        }
+        
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+
+</body>
+</html>
