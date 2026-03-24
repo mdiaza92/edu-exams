@@ -3,61 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluación Final de Ciencia: Los 5 Sentidos</title>
+    <title>Examen Final de Ciencia: Los 5 Sentidos</title>
     <style>
-        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #f0f8ff; padding: 20px; color: #2c3e50; }
-        .container { max-width: 850px; background: white; margin: auto; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #3498db; }
-        h1 { text-align: center; color: #2980b9; text-transform: uppercase; margin-bottom: 5px; }
-        h2 { text-align: center; color: #7f8c8d; font-size: 1.2em; margin-bottom: 30px; }
-        .section { margin-bottom: 25px; padding: 20px; border: 2px solid #ecf0f1; border-radius: 15px; background-color: #fdfefe; }
-        .question-title { font-weight: bold; margin-bottom: 15px; color: #d35400; font-size: 1.1em; }
-        
-        /* Arrastrar y Soltar General */
-        .drag-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; background: #eef2f3; padding: 15px; border-radius: 10px; justify-content: center; }
-        .draggable { padding: 8px 15px; background: #3498db; color: white; border-radius: 8px; cursor: grab; font-weight: bold; font-size: 0.9em; }
-        .drop-zone { display: inline-block; width: 140px; height: 30px; border: 2px dashed #3498db; vertical-align: middle; text-align: center; font-weight: bold; color: #2980b9; background: #fff; border-radius: 5px; }
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #f0f8ff; padding: 15px; color: #2c3e50; }
+        .container { max-width: 800px; background: white; margin: auto; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #3498db; }
+        h1 { text-align: center; color: #2980b9; text-transform: uppercase; font-size: 1.5em; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        .section { margin-bottom: 20px; padding: 15px; border: 2px solid #ecf0f1; border-radius: 12px; background-color: #fdfefe; }
+        .question-title { font-weight: bold; margin-bottom: 15px; color: #d35400; display: block; font-size: 1.1em; }
 
-        /* Estilo para la Imagen de la Lengua */
-        .tongue-image-container {
+        /* Mapa de la Lengua */
+        .tongue-map-container {
             position: relative;
-            width: 350px;
-            height: 450px;
+            width: 320px;
+            height: 400px;
             margin: 20px auto;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 450"><path d="M175,50 C100,50 50,150 50,250 C50,350 100,430 175,430 C250,430 300,350 300,250 C300,150 250,50 175,50 Z" fill="%23ffb6c1" stroke="%23ff69b4" stroke-width="5"/><path d="M175,430 C100,430 70,360 70,250" fill="none" stroke="%23ff69b4" stroke-width="2" stroke-dasharray="5,5"/><path d="M175,430 C250,430 280,360 280,250" fill="none" stroke="%23ff69b4" stroke-width="2" stroke-dasharray="5,5"/><path d="M70,250 C70,150 100,100 175,100" fill="none" stroke="%23ff69b4" stroke-width="2" stroke-dasharray="5,5"/><path d="M280,250 C280,150 250,100 175,100" fill="none" stroke="%23ff69b4" stroke-width="2" stroke-dasharray="5,5"/><circle cx="175" cy="200" r="30" fill="%23ffb6c1" stroke="%23ff69b4" stroke-width="2" stroke-dasharray="5,5"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 450"><path d="M175,50 C100,50 50,150 50,250 C50,350 100,430 175,430 C250,430 300,350 300,250 C300,150 250,50 175,50 Z" fill="%23ffb6c1" stroke="%23ff69b4" stroke-width="5"/><path d="M175,430 C100,430 70,360 70,250" fill="none" stroke="%23ff69b4" stroke-width="2" stroke-dasharray="5,5"/><path d="M175,430 C250,430 280,360 280,250" fill="none" stroke="%23ff69b4" stroke-width="2" stroke-dasharray="5,5"/><path d="M70,250 C70,150 100,100 175,100" fill="none" stroke="%23ff69b4" stroke-width="2" stroke-dasharray="5,5"/><path d="M280,250 C280,150 250,100 175,100" fill="none" stroke="%23ff69b4" stroke-width="2" stroke-dasharray="5,5"/><circle cx="175" cy="210" r="35" fill="none" stroke="%23ff69b4" stroke-width="2" stroke-dasharray="5,5"/></svg>');
+            background-size: contain; background-repeat: no-repeat; background-position: center;
         }
 
-        /* Posicionamiento de las Drop Zones sobre la imagen */
-        .zone-amargo { position: absolute; top: 60px; left: 105px; width: 140px; height: 40px; border-color: #8e44ad; } /* Fondo: Púrpura */
-        .zone-acido-izq { position: absolute; top: 160px; left: 30px; width: 90px; height: 40px; border-color: #f1c40f; } /* Lados posterior: Amarillo */
-        .zone-acido-der { position: absolute; top: 160px; right: 30px; width: 90px; height: 40px; border-color: #f1c40f; }
-        .zone-umami { position: absolute; top: 210px; left: 130px; width: 90px; height: 40px; border-color: #e67e22; } /* Centro: Naranja */
-        .zone-salado-izq { position: absolute; top: 300px; left: 30px; width: 90px; height: 40px; border-color: #2ecc71; } /* Lados anterior: Verde */
-        .zone-salado-der { position: absolute; top: 300px; right: 30px; width: 90px; height: 40px; border-color: #2ecc71; }
-        .zone-dulce { position: absolute; top: 390px; left: 105px; width: 140px; height: 40px; border-color: #e74c3c; } /* Punta: Rojo */
+        .tongue-select { position: absolute; width: 110px; font-size: 14px; padding: 5px; border: 2px solid #3498db; border-radius: 8px; background: white; font-family: inherit; }
+        .pos-amargo { top: 60px; left: 105px; border-color: #8e44ad; }
+        .pos-acido-izq { top: 160px; left: 10px; border-color: #f1c40f; width: 90px; }
+        .pos-acido-der { top: 160px; right: 10px; border-color: #f1c40f; width: 90px; }
+        .pos-umami { top: 220px; left: 105px; border-color: #e67e22; }
+        .pos-salado-izq { top: 310px; left: 10px; border-color: #2ecc71; width: 90px; }
+        .pos-salado-der { top: 310px; right: 10px; border-color: #2ecc71; width: 90px; }
+        .pos-dulce { top: 390px; left: 105px; border-color: #e74c3c; }
 
-        /* Etiquetas de ayuda para las zonas */
-        .zone-label {
-            position: absolute;
-            font-size: 0.8em;
-            font-weight: bold;
-            color: #7f8c8d;
-            background: rgba(255,255,255,0.8);
-            padding: 2px 5px;
-            border-radius: 3px;
-        }
-        .label-amargo { top: 40px; left: 155px; }
-        .label-acido { top: 140px; left: 50px; }
-        .label-umami { top: 190px; left: 155px; }
-        .label-salado { top: 280px; left: 50px; }
-        .label-dulce { top: 370px; left: 155px; }
-        
-        button { display: block; width: 250px; height: 60px; margin: 40px auto; background: #27ae60; color: white; border: none; border-radius: 30px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 5px #1e8449; }
-        #result-box { display: none; text-align: center; padding: 20px; border-radius: 15px; margin-top: 30px; }
-        .feedback-correct { color: #27ae60; background: #d4edda; }
-        .feedback-error { color: #e74c3c; background: #f8d7da; }
+        .inline-select { padding: 8px; border-radius: 8px; border: 2px solid #3498db; font-family: inherit; margin: 5px; }
+        button { display: block; width: 100%; max-width: 300px; height: 60px; margin: 30px auto; background: #27ae60; color: white; border: none; border-radius: 30px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 5px #1e8449; }
+        #result-box { display: none; text-align: center; padding: 20px; border-radius: 15px; margin-top: 20px; border: 2px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #f8d7da; color: #721c24; border-color: #f5c6cb; }
     </style>
 </head>
 <body>
@@ -67,118 +45,66 @@
     <h2>Nivel: 3ero de Primaria</h2>
 
     <div class="section">
-        <p class="question-title">1. Arrastra las partes del OÍDO según el recorrido del sonido:</p>
-        <div class="drag-container">
-            <div class="draggable" draggable="true" id="o1">Oreja</div>
-            <div class="draggable" draggable="true" id="o2">Tímpano</div>
-            <div class="draggable" draggable="true" id="o3">Caracol</div>
-            <div class="draggable" draggable="true" id="o4">Nervio Auditivo</div>
+        <span class="question-title">1. Selecciona el orden correcto del sonido en el OÍDO:</span>
+        <p>El sonido entra por la <select id="o1" class="inline-select"><option value="">?</option><option value="Oreja">Oreja</option><option value="Tímpano">Tímpano</option></select>, 
+        hace vibrar el <select id="o2" class="inline-select"><option value="">?</option><option value="Tímpano">Tímpano</option><option value="Caracol">Caracol</option></select> 
+        y llega al <select id="o3" class="inline-select"><option value="">?</option><option value="Caracol">Caracol</option><option value="Nervio">Nervio</option></select>.</p>
+    </div>
+
+    <div class="section">
+        <span class="question-title">2. ¿Qué sabor percibimos en cada zona de la LENGUA?</span>
+        <div class="tongue-map-container">
+            <select id="s_amargo" class="tongue-select pos-amargo"><option value="">¿Sabor?</option><option value="Amargo">Amargo</option><option value="Dulce">Dulce</option></select>
+            <select id="s_acido_izq" class="tongue-select pos-acido-izq"><option value="">¿Sabor?</option><option value="Ácido">Ácido</option><option value="Salado">Salado</option></select>
+            <select id="s_acido_der" class="tongue-select pos-acido-der"><option value="">¿Sabor?</option><option value="Ácido">Ácido</option><option value="Salado">Salado</option></select>
+            <select id="s_umami" class="tongue-select pos-umami"><option value="">¿Sabor?</option><option value="Umami">Umami</option><option value="Picante">Picante</option></select>
+            <select id="s_salado_izq" class="tongue-select pos-salado-izq"><option value="">¿Sabor?</option><option value="Salado">Salado</option><option value="Ácido">Ácido</option></select>
+            <select id="s_salado_der" class="tongue-select pos-salado-der"><option value="">¿Sabor?</option><option value="Salado">Salado</option><option value="Ácido">Ácido</option></select>
+            <select id="s_dulce" class="tongue-select pos-dulce"><option value="">¿Sabor?</option><option value="Dulce">Dulce</option><option value="Amargo">Amargo</option></select>
         </div>
-        <p>Entra por la <span class="drop-zone" data-answer="Oreja"></span>, vibra en el <span class="drop-zone" data-answer="Tímpano"></span>, llega al <span class="drop-zone" data-answer="Caracol"></span> y viaja por el <span class="drop-zone" data-answer="Nervio Auditivo"></span>.</p>
     </div>
 
     <div class="section">
-        <p class="question-title">2. ¡Mapa de Sabores! Arrastra cada sabor al recuadro correcto de la lengua:</p>
-        <div class="drag-container">
-            <div class="draggable" draggable="true" id="s1">Amargo</div>
-            <div class="draggable" draggable="true" id="s2">Ácido</div>
-            <div class="draggable" draggable="true" id="s3">Salado</div>
-            <div class="draggable" draggable="true" id="s4">Dulce</div>
-            <div class="draggable" draggable="true" id="s5">Umami</div>
-        </div>
-        
-        <div class="tongue-image-container">
-            <span class="zone-label label-amargo">Al fondo</span>
-            <span class="zone-label label-acido">Lados posterior</span>
-            <span class="zone-label label-umami">Centro</span>
-            <span class="zone-label label-salado">Lados anterior</span>
-            <span class="zone-label label-dulce">Punta</span>
-
-            <div class="drop-zone zone-amargo" data-answer="Amargo"></div>
-            
-            <div class="drop-zone zone-acido-izq" data-answer="Ácido"></div>
-            <div class="drop-zone zone-acido-der" data-answer="Ácido"></div>
-            
-            <div class="drop-zone zone-umami" data-answer="Umami"></div>
-            
-            <div class="drop-zone zone-salado-izq" data-answer="Salado"></div>
-            <div class="drop-zone zone-salado-der" data-answer="Salado"></div>
-            
-            <div class="drop-zone zone-dulce" data-answer="Dulce"></div>
-        </div>
-        <p style="text-align:center; font-size:0.9em; color:#7f8c8d;">(Pista: Arrastra el nombre del sabor al recuadro que señala su zona en la lengua).</p>
+        <span class="question-title">3. ¿Cuáles son las 3 capas de la piel?</span>
+        <select id="q3" class="inline-select"><option value="">--Selecciona--</option><option value="correct">Epidermis, Dermis e Hipodermis</option><option value="error">Iris y Retina</option></select>
     </div>
 
     <div class="section">
-        <p class="question-title">3. ¿Cuál es el órgano principal del sentido de la VISTA?</p>
-        <input type="radio" name="q3" value="correct"> Los ojos | <input type="radio" name="q3" value="x"> Las orejas
+        <span class="question-title">4. El órgano del sentido de la VISTA es:</span>
+        <input type="radio" name="q4" value="correct"> Los ojos | <input type="radio" name="q4" value="error"> Las manos
     </div>
 
     <div class="section">
-        <p class="question-title">4. Las 3 capas de la piel son:</p>
-        <select id="q4">
-            <option value="">--Selecciona--</option>
-            <option value="correct">Epidermis, Dermis e Hipodermis</option>
-            <option value="error">Iris, Pupila y Retina</option>
-        </select>
+        <span class="question-title">5. ¿Cómo se llaman los agujeros de la nariz?</span>
+        <input type="text" id="q5" placeholder="Fosas..." style="padding: 8px;">
     </div>
 
     <div class="section">
-        <p class="question-title">5. ¿Cómo se llaman los agujeros de la nariz?</p>
-        <input type="text" id="q5" placeholder="F_ _ _ _  N_ _ _ _ _ _">
+        <span class="question-title">16. ¿Cuál es el órgano principal del sentido del OLFATO?</span>
+        <input type="radio" name="q16" value="correct"> La nariz | <input type="radio" name="q16" value="error"> La lengua
     </div>
 
     <div class="section">
-        <p class="question-title">6. ¿Qué parte del ojo lo protege del polvo y sudor?</p>
-        <input type="radio" name="q6" value="correct"> Párpados y pestañas | <input type="radio" name="q6" value="a"> Cristalino
+        <span class="question-title">17. ¿Cuál es la función de la DERMIS?</span>
+        <input type="radio" name="q17" value="correct"> Capa donde están los músculos y receptores | <input type="radio" name="q17" value="error"> Capa externa que vemos
     </div>
 
     <div class="section">
-        <p class="question-title">7. El sentido del OLFATO nos permite percibir:</p>
-        <input type="radio" name="q7" value="correct"> Los aromas | <input type="radio" name="q7" value="b"> Los sonidos
+        <span class="question-title">18. ¿Dónde se encuentran las células sensitivas que distinguen los aromas?</span>
+        <select id="q18" class="inline-select"><option value="">--Selecciona--</option><option value="correct">En la Pituitaria</option><option value="error">En el Tímpano</option></select>
     </div>
 
     <div class="section">
-        <p class="question-title">8. ¿En qué capa de la piel se encuentran los músculos y receptores?</p>
-        <input type="radio" name="q8" value="correct"> Dermis | <input type="radio" name="q8" value="b"> Epidermis
+        <span class="question-title">19. ¿Por dónde viaja el mensaje de los sentidos hacia el cerebro?</span>
+        <input type="radio" name="q19" value="correct"> Por los Nervios | <input type="radio" name="q19" value="error"> Por los Huesos
     </div>
 
     <div class="section">
-        <p class="question-title">9. ¿Cuál NO es un sabor básico?</p>
-        <input type="radio" name="q9" value="correct"> Picante | <input type="radio" name="q9" value="b"> Amargo
+        <span class="question-title">20. Es una medida para cuidar el OÍDO:</span>
+        <input type="radio" name="q20" value="correct"> Evitar ruidos fuertes | <input type="radio" name="q20" value="error"> Limpiar con palitos de algodón
     </div>
 
-    <div class="section">
-        <p class="question-title">10. ¿Qué órgano del ojo le da el color?</p>
-        <input type="radio" name="q10" value="correct"> El Iris | <input type="radio" name="q10" value="b"> La Retina
-    </div>
-
-    <div class="section">
-        <p class="question-title">11. ¿Es bueno introducir objetos extraños al oído?</p>
-        <input type="radio" name="q11" value="f"> Sí | <input type="radio" name="q11" value="correct"> No, es peligroso
-    </div>
-
-    <div class="section">
-        <p class="question-title">12. ¿Qué sentido usamos para saber si algo está frío o caliente?</p>
-        <input type="radio" name="q12" value="correct"> Tacto | <input type="radio" name="q12" value="b"> Vista
-    </div>
-
-    <div class="section">
-        <p class="question-title">13. Las papilas gustativas están en:</p>
-        <input type="radio" name="q13" value="correct"> La lengua | <input type="radio" name="q13" value="b"> La nariz
-    </div>
-
-    <div class="section">
-        <p class="question-title">14. La capa profunda con grasa que nos da calor se llama:</p>
-        <input type="radio" name="q14" value="correct"> Hipodermis | <input type="radio" name="q14" value="b"> Dermis
-    </div>
-
-    <div class="section">
-        <p class="question-title">15. ¿A dónde envían los nervios la información de los sentidos?</p>
-        <input type="radio" name="q15" value="correct"> Al Cerebro | <input type="radio" name="q15" value="b"> Al Estómago
-    </div>
-
-    <button onclick="calificar()">¡Terminar y Calificar!</button>
+    <button onclick="calificar()">Terminar Examen</button>
 
     <div id="result-box">
         <h3 id="score-text"></h3>
@@ -187,62 +113,36 @@
 </div>
 
 <script>
-    // Lógica Draggable mejorada
-    const draggables = document.querySelectorAll('.draggable');
-    const dropZones = document.querySelectorAll('.drop-zone');
-
-    draggables.forEach(d => {
-        d.addEventListener('dragstart', () => d.classList.add('dragging'));
-        d.addEventListener('dragend', () => d.classList.remove('dragging'));
-    });
-
-    dropZones.forEach(zone => {
-        zone.addEventListener('dragover', e => e.preventDefault());
-        zone.addEventListener('drop', e => {
-            const draggable = document.querySelector('.dragging');
-            zone.innerText = draggable.innerText;
-            zone.style.background = "#fff3cd"; // Color de "puesto"
-        });
-        zone.addEventListener('click', () => { zone.innerText = ""; zone.style.background = "#fff"; });
-    });
-
     function calificar() {
         let nota = 0;
-        
-        // Calificar Zonas de Arrastre (Oído y Lengua - total 11 zonas)
-        dropZones.forEach(z => {
-            if(z.innerText.trim().toLowerCase() === z.getAttribute('data-answer').toLowerCase()) nota++;
-        });
+        // Puntos Oído
+        if(document.getElementById('o1').value === "Oreja") nota++;
+        if(document.getElementById('o2').value === "Tímpano") nota++;
+        if(document.getElementById('o3').value === "Caracol") nota++;
+        // Puntos Lengua
+        if(document.getElementById('s_amargo').value === "Amargo") nota++;
+        if(document.getElementById('s_acido_izq').value === "Ácido" && document.getElementById('s_acido_der').value === "Ácido") nota++;
+        if(document.getElementById('s_umami').value === "Umami") nota++;
+        if(document.getElementById('s_salado_izq').value === "Salado" && document.getElementById('s_salado_der').value === "Salado") nota++;
+        if(document.getElementById('s_dulce').value === "Dulce") nota++;
+        // Resto
+        if(document.getElementById('q3').value === "correct") nota++;
+        if(document.querySelector('input[name="q4"]:checked')?.value === "correct") nota++;
+        if(document.getElementById('q5').value.toLowerCase().includes("fosa")) nota++;
+        if(document.querySelector('input[name="q16"]:checked')?.value === "correct") nota++;
+        if(document.querySelector('input[name="q17"]:checked')?.value === "correct") nota++;
+        if(document.getElementById('q18').value === "correct") nota++;
+        if(document.querySelector('input[name="q19"]:checked')?.value === "correct") nota++;
+        if(document.querySelector('input[name="q20"]:checked')?.value === "correct") nota++;
 
-        // Calificar Radio y Selects (13 preguntas adicionales)
-        if (document.querySelector('input[name="q3"]:checked')?.value === "correct") nota++;
-        if (document.getElementById('q4').value === "correct") nota++;
-        if (document.getElementById('q5').value.toLowerCase().includes("fosa")) nota++;
-        if (document.querySelector('input[name="q6"]:checked')?.value === "correct") nota++;
-        if (document.querySelector('input[name="q7"]:checked')?.value === "correct") nota++;
-        if (document.querySelector('input[name="q8"]:checked')?.value === "correct") nota++;
-        if (document.querySelector('input[name="q9"]:checked')?.value === "correct") nota++;
-        if (document.querySelector('input[name="q10"]:checked')?.value === "correct") nota++;
-        if (document.querySelector('input[name="q11"]:checked')?.value === "correct") nota++;
-        if (document.querySelector('input[name="q12"]:checked')?.value === "correct") nota++;
-        if (document.querySelector('input[name="q13"]:checked')?.value === "correct") nota++;
-        if (document.querySelector('input[name="q14"]:checked')?.value === "correct") nota++;
-        if (document.querySelector('input[name="q15"]:checked')?.value === "correct") nota++;
-
-        const resultBox = document.getElementById('result-box');
-        resultBox.style.display = "block";
-        document.getElementById('score-text').innerText = `Puntaje: ${nota} puntos logrados.`;
-        
-        if (nota >= 20) {
-            resultBox.className = "feedback-correct";
-            document.getElementById('message-text').innerText = "¡Excelente Edward! Has dominado los 5 sentidos.";
-        } else {
-            resultBox.className = "feedback-error";
-            document.getElementById('message-text').innerText = "¡Buen esfuerzo! Revisa la ubicación de los sabores e inténtalo de nuevo.";
-        }
+        let final = Math.round((nota / 16) * 20); // Ajustado a los puntos evaluados en este ejemplo
+        const rb = document.getElementById('result-box');
+        rb.style.display = "block";
+        document.getElementById('score-text').innerText = `Puntaje: ${final} / 20`;
+        rb.className = final >= 15 ? "correct-box" : "error-box";
+        document.getElementById('message-text').innerText = final >= 15 ? "¡Excelente Edward!" : "¡Sigue practicando!";
         window.scrollTo(0, document.body.scrollHeight);
     }
 </script>
-
 </body>
 </html>
