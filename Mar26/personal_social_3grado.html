@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Integral de Personal Social - 3er Grado</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #fff9e6; padding: 15px; color: #333; }
+        .container { max-width: 800px; background: white; margin: auto; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #f1c40f; }
+        h1 { text-align: center; color: #d35400; text-transform: uppercase; font-size: 1.6em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        
+        .section-header { background: #f1c40f; color: #fff; padding: 10px; border-radius: 10px; margin: 25px 0 15px 0; text-align: center; font-weight: bold; font-size: 1.2em; }
+        .section { margin-bottom: 20px; padding: 15px; border: 2px solid #eee; border-radius: 12px; background-color: #fff; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #2980b9; display: block; }
+        
+        select, input[type="text"] { width: 100%; max-width: 400px; padding: 12px; border-radius: 10px; border: 2px solid #bdc3c7; font-size: 16px; font-family: inherit; margin-top: 5px; box-sizing: border-box; }
+        input[type="radio"] { transform: scale(1.3); margin-right: 10px; cursor: pointer; }
+
+        /* Estilo para el Acróstico */
+        .acrostico-container { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+        .acrostico-row { display: flex; align-items: center; gap: 10px; }
+        .letra-caja { width: 40px; height: 40px; background: #d35400; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; border-radius: 5px; font-size: 1.2em; }
+
+        /* Estilo para Relacionar */
+        .relacionar-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .relacionar-table td { padding: 10px; border-bottom: 1px solid #eee; }
+        .col-palabra { font-weight: bold; color: #d35400; width: 35%; }
+
+        button { display: block; width: 100%; max-width: 350px; height: 65px; margin: 40px auto; background: #e67e22; color: white; border: none; border-radius: 35px; font-size: 22px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #d35400; transition: 0.2s; }
+        button:active { transform: translateY(3px); box-shadow: 0 2px #d35400; }
+        
+        #result-box { display: none; text-align: center; padding: 25px; border-radius: 20px; margin-top: 30px; border: 3px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Examen de Personal Social</h1>
+    <h2>Evaluación de las Sesiones 1, 2 y 3</h2>
+
+    <div class="section-header">SESIÓN 1: NORMAS DE CONVIVENCIA</div>
+
+    <div class="section">
+        <span class="question-title">1. ¿Qué son las normas de convivencia?</span>
+        <select id="q1"><option value="">-- Elige --</option><option value="correct">Reglas para vivir en armonía</option><option value="x">Gritos en el salón</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">2. Para dar mi opinión en clase debo:</span>
+        <select id="q2"><option value="">-- Elige --</option><option value="correct">Levantar la mano</option><option value="x">Hablar encima de otros</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">3. Es una palabra mágica al recibir algo:</span>
+        <input type="radio" name="q3" value="correct"> Gracias | <input type="radio" name="q3" value="x"> ¡Dámelo!
+    </div>
+    <div class="section">
+        <span class="question-title">4. ¿Por qué es importante el respeto?</span>
+        <select id="q4"><option value="">-- Elige --</option><option value="correct">Para ser felices en el aula</option><option value="x">Para que no me castiguen</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">5. Si te prestan un material, tú debes:</span>
+        <select id="q5"><option value="">-- Elige --</option><option value="correct">Cuidarlo y devolverlo</option><option value="x">Llevártelo a casa</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">6. ¿Qué debemos evitar en el salón?</span>
+        <select id="q6"><option value="">-- Elige --</option><option value="correct">Correr y poner apodos</option><option value="x">Saludar al entrar</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">7. Las normas se establecen por:</span>
+        <input type="radio" name="q7" value="correct"> Común acuerdo | <input type="radio" name="q7" value="x"> Solo el profesor
+    </div>
+    <div class="section">
+        <span class="question-title">8. Completa: "Evita ____ las sillas".</span>
+        <select id="q8"><option value="">-- Elige --</option><option value="correct">Arrastrar</option><option value="x">Mirar</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">9. El valor de ayudar a los demás es:</span>
+        <select id="q9"><option value="">-- Elige --</option><option value="correct">Compañerismo</option><option value="x">Egoísmo</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">10. ¿Cuándo usamos las palabras mágicas?</span>
+        <select id="q10"><option value="">-- Elige --</option><option value="correct">Siempre</option><option value="x">Casi nunca</option></select>
+    </div>
+
+    <div class="section-header">SESIÓN 2: LA AUTOESTIMA</div>
+
+    <div class="section">
+        <span class="question-title">11. ¿Qué es la autoestima?</span>
+        <select id="q11"><option value="">-- Elige --</option><option value="correct">Valoración y cariño a uno mismo</option><option value="x">Tener mucha ropa cara</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">12. Un niño con autoestima alta:</span>
+        <select id="q12"><option value="">-- Elige --</option><option value="correct">Se siente orgulloso y se acepta</option><option value="x">Se siente inferior a otros</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">13. Frase que ayuda a la autoestima:</span>
+        <input type="radio" name="q13" value="correct"> "Yo puedo lograrlo" | <input type="radio" name="q13" value="x"> "No sirvo para nada"
+    </div>
+    <div class="section">
+        <span class="question-title">14. Decir "No puedo" seguido es señal de:</span>
+        <select id="q14"><option value="">-- Elige --</option><option value="correct">Baja autoestima</option><option value="x">Mucha inteligencia</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">15. Debemos reconocer nuestras:</span>
+        <select id="q15"><option value="">-- Elige --</option><option value="correct">Cualidades y habilidades</option><option value="x">Debilidades solamente</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">16. ¿Qué es aceptarse?</span>
+        <select id="q16"><option value="">-- Elige --</option><option value="correct">Quererse con virtudes y defectos</option><option value="x">Querer ser como el vecino</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">17. La autoestima alta nos hace seguros.</span>
+        <input type="radio" name="q17" value="correct"> Verdadero | <input type="radio" name="q17" value="x"> Falso
+    </div>
+    <div class="section">
+        <span class="question-title">18. Si te equivocas, tú debes:</span>
+        <select id="q18"><option value="">-- Elige --</option><option value="correct">Aprender del error</option><option value="x">Rendirte</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">19. ¿Quién nos ayuda con la autoestima?</span>
+        <select id="q19"><option value="">-- Elige --</option><option value="correct">Familia y maestros</option><option value="x">Gente que nos critica</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">20. Ser original es de autoestima alta.</span>
+        <input type="radio" name="q20" value="correct"> Sí | <input type="radio" name="q20" value="x"> No
+    </div>
+
+    <div class="section-header">SESIÓN 3: IDENTIDAD PERSONAL</div>
+
+    <div class="section">
+        <span class="question-title">21. Relaciona los conceptos:</span>
+        <table class="relacionar-table">
+            <tr><td class="col-palabra">Nombre</td><td><select id="rel1"><option value="">?</option><option value="correct">Cómo nos llamamos</option><option value="x">Lo que nos gusta</option></select></td></tr>
+            <tr><td class="col-palabra">Familia</td><td><select id="rel2"><option value="">?</option><option value="correct">Con quienes vivimos</option><option value="x">Nuestra edad</option></select></td></tr>
+            <tr><td class="col-palabra">Gustos</td><td><select id="rel3"><option value="">?</option><option value="correct">Lo que nos agrada</option><option value="x">Nuestro DNI</option></select></td></tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <span class="question-title">22. ¿Qué es la identidad personal?</span>
+        <select id="q22"><option value="">-- Elige --</option><option value="correct">Rasgos que nos hacen únicos</option><option value="x">El nombre del colegio</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">23. Documento legal de identidad:</span>
+        <input type="radio" name="q23" value="correct"> El DNI | <input type="radio" name="q23" value="x"> Un diploma
+    </div>
+    <div class="section">
+        <span class="question-title">24. La identidad se conforma por:</span>
+        <select id="q24"><option value="">-- Elige --</option><option value="correct">Nombre, edad y gustos</option><option value="x">Solo por el color de ojos</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">25. Al crecer, tenemos cambios:</span>
+        <select id="q25"><option value="">-- Elige --</option><option value="correct">Físicos y emocionales</option><option value="x">Solo de ropa</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">26. Identidad de género indica si somos:</span>
+        <select id="q26"><option value="">-- Elige --</option><option value="correct">Varón o Mujer</option><option value="x">Niño o Adulto</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">27. La identidad se enriquece con:</span>
+        <input type="radio" name="q27" value="correct"> Tradiciones familiares | <input type="radio" name="q27" value="x"> Comprar cosas
+    </div>
+    <div class="section">
+        <span class="question-title">28. Somos "únicos" porque:</span>
+        <select id="q28"><option value="">-- Elige --</option><option value="correct">Nadie es igual a nosotros</option><option value="x">Todos somos iguales</option></select>
+    </div>
+    <div class="section">
+        <span class="question-title">29. Las habilidades expresan identidad.</span>
+        <input type="radio" name="q29" value="correct"> Verdadero | <input type="radio" name="q29" value="x"> Falso
+    </div>
+    <div class="section">
+        <span class="question-title">30. La frase "Soy extraordinario" es para:</span>
+        <select id="q30"><option value="">-- Elige --</option><option value="correct">Valorarme más</option><option value="x">Presumir</option></select>
+    </div>
+
+    <div class="section">
+        <span class="question-title">31. ¡Crea un ACRÓSTICO! Escribe una cualidad positiva tuya con cada letra de tu nombre:</span>
+        <div class="acrostico-container">
+            <div class="acrostico-row"><div class="letra-caja">E</div><input type="text" id="ac1" placeholder="Ej: Especial"></div>
+            <div class="acrostico-row"><div class="letra-caja">D</div><input type="text" id="ac2" placeholder="Ej: Divertido"></div>
+            <div class="acrostico-row"><div class="letra-caja">W</div><input type="text" id="ac3"></div>
+            <div class="acrostico-row"><div class="letra-caja">A</div><input type="text" id="ac4"></div>
+            <div class="acrostico-row"><div class="letra-caja">R</div><input type="text" id="ac5"></div>
+            <div class="acrostico-row"><div class="letra-caja">D</div><input type="text" id="ac6"></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <span class="question-title">32. Menciona algo que sepas hacer muy bien:</span>
+        <input type="text" id="q32" placeholder="Tu habilidad favorita aquí...">
+    </div>
+
+    <button onclick="calificar()">Terminar Examen</button>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <p id="message-text"></p>
+    </div>
+</div>
+
+<script>
+    function calificar() {
+        let puntos = 0;
+        const totalItems = 32;
+
+        // Preguntas Select (Simples)
+        const ids = ['q1','q2','q4','q5','q6','q8','q9','q10','q11','q12','q14','q15','q16','q18','q19','q22','q24','q25','q26','q28','q30'];
+        ids.forEach(id => { if(document.getElementById(id).value === "correct") puntos++; });
+
+        // Preguntas Radio
+        const names = ['q3','q7','q13','q17','q20','q23','q27','q29'];
+        names.forEach(name => {
+            const checked = document.querySelector(`input[name="${name}"]:checked`);
+            if(checked && checked.value === "correct") puntos++;
+        });
+
+        // Relacionar (Pregunta 21)
+        if(document.getElementById('rel1').value === "correct") puntos++;
+        if(document.getElementById('rel2').value === "correct") puntos++;
+        if(document.getElementById('rel3').value === "correct") puntos++;
+
+        // Acróstico y Habilidad (Se valida que tengan texto)
+        if(document.getElementById('ac1').value.length > 2) puntos++;
+        if(document.getElementById('q32').value.length > 3) puntos++;
+
+        // Cálculo final sobre 20
+        // Nota: se escala el puntaje para que 32 puntos equivalgan a 20
+        const notaFinal = Math.round((puntos / 32) * 20);
+
+        const rb = document.getElementById('result-box');
+        rb.style.display = "block";
+        document.getElementById('score-text').innerText = `Puntaje final: ${notaFinal} / 20`;
+        
+        if(notaFinal >= 11) {
+            rb.className = "correct-box";
+            document.getElementById('message-text').innerText = "¡Excelente! Has demostrado conocerte a ti mismo y cómo convivir con los demás.";
+        } else {
+            rb.className = "error-box";
+            document.getElementById('message-text').innerText = "¡Sigue intentándolo! Repasa tus fichas para mejorar tu puntaje.";
+        }
+        
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+</body>
+</html>
