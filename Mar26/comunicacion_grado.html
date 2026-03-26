@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Final de Comunicación - Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #fdfcf0; color: #333; padding: 20px; line-height: 1.6; }
+        .container { max-width: 950px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 5px solid #64b5f6; }
+        h1 { text-align: center; color: #1565c0; text-transform: uppercase; margin-bottom: 5px; }
+        .session-block { border-left: 8px solid #ff9800; margin-bottom: 40px; padding-left: 20px; }
+        .session-title { background: #fff3e0; padding: 10px; border-radius: 5px; color: #e65100; font-size: 1.4em; border-bottom: 2px solid #ffcc80; }
+        .question { margin: 20px 0; padding: 15px; background: #f9f9f9; border-radius: 10px; border: 1px solid #eee; }
+        .options label { display: block; margin: 8px 0; cursor: pointer; padding: 8px; border-radius: 5px; transition: 0.2s; }
+        .options label:hover { background: #e3f2fd; }
+        input[type="text"] { width: 90%; padding: 12px; margin-top: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; outline: none; }
+        input[type="text"]:focus { border-color: #64b5f6; }
+        button { display: block; width: 100%; padding: 20px; background: #4caf50; color: white; border: none; border-radius: 15px; font-size: 1.5em; cursor: pointer; transition: 0.3s; margin-top: 30px; font-weight: bold; }
+        button:hover { background: #388e3c; transform: scale(1.02); }
+        #result-final { text-align: center; display: none; margin-top: 40px; padding: 30px; border-top: 5px dashed #4caf50; background: #f1f8e9; border-radius: 20px; }
+        .sub-text { text-align: center; color: #666; margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📝 Examen de las 8 Sesiones</h1>
+    <p class="sub-text">¡Hola Edward! Responde estas 40 preguntas para demostrar todo lo que has aprendido.</p>
+
+    <form id="quizForm">
+        <div class="session-block">
+            <h2 class="session-title">Sesión 1: La Comunicación</h2>
+            <div class="question"><p>1. ¿Quién envía el mensaje?</p>
+                <div class="options"><label><input type="radio" name="q1" value="emisor"> Emisor</label><label><input type="radio" name="q1" value="receptor"> Receptor</label></div>
+            </div>
+            <div class="question"><p>2. ¿Cuál es el canal si hablamos por teléfono?</p>
+                <div class="options"><label><input type="radio" name="q2" value="hilo"> El hilo telefónico / Ondas</label><label><input type="radio" name="q2" value="papel"> Papel</label></div>
+            </div>
+            <div class="question"><p>3. ¿Qué elemento es la información enviada?</p><input type="text" id="q3"></div>
+            <div class="question"><p>4. Los gestos son comunicación...</p>
+                <div class="options"><label><input type="radio" name="q4" value="no verbal"> No verbal</label><label><input type="radio" name="q4" value="verbal"> Verbal</label></div>
+            </div>
+            <div class="question"><p>5. ¿Quién recibe el mensaje?</p><input type="text" id="q5"></div>
+        </div>
+
+        <div class="session-block">
+            <h2 class="session-title">Sesión 2: La Mayúscula</h2>
+            <div class="question"><p>6. Escribe tu país con mayúscula:</p><input type="text" id="q6"></div>
+            <div class="question"><p>7. ¿Los nombres propios llevan mayúscula?</p>
+                <div class="options"><label><input type="radio" name="q7" value="si"> Sí</label><label><input type="radio" name="q7" value="no"> No</label></div>
+            </div>
+            <div class="question"><p>8. Corrige: "el gato toma leche"</p><input type="text" id="q8"></div>
+            <div class="question"><p>9. ¿Después de un punto se usa mayúscula?</p>
+                <div class="options"><label><input type="radio" name="q9" value="si"> Sí</label><label><input type="radio" name="q9" value="no"> No</label></div>
+            </div>
+            <div class="question"><p>10. Escribe correctamente: "renzo vive en lima"</p><input type="text" id="q10"></div>
+        </div>
+
+        <div class="session-block">
+            <h2 class="session-title">Sesión 3: Sinónimos y Antónimos</h2>
+            <div class="question"><p>11. Escribe un sinónimo de "feliz":</p><input type="text" id="q11"></div>
+            <div class="question"><p>12. Escribe el antónimo de "frío":</p><input type="text" id="q12"></div>
+            <div class="question"><p>13. Sinónimo de "rápido":</p><input type="text" id="q13"></div>
+            <div class="question"><p>14. Antónimo de "triste":</p><input type="text" id="q14"></div>
+            <div class="question"><p>15. ¿Qué son palabras con significado opuesto?</p>
+                <div class="options"><label><input type="radio" name="q15" value="antonimos"> Antónimos</label><label><input type="radio" name="q15" value="sinonimos"> Sinónimos</label></div>
+            </div>
+        </div>
+
+        <div class="session-block">
+            <h2 class="session-title">Sesión 4: El Punto</h2>
+            <div class="question"><p>16. ¿Qué punto termina todo el texto?</p>
+                <div class="options"><label><input type="radio" name="q16" value="final"> Punto Final</label><label><input type="radio" name="q16" value="seguido"> Punto y seguido</label></div>
+            </div>
+            <div class="question"><p>17. ¿Para qué sirve el punto?</p><input type="text" id="q17"></div>
+            <div class="question"><p>18. El punto que separa párrafos es:</p>
+                <div class="options"><label><input type="radio" name="q18" value="aparte"> Punto y aparte</label><label><input type="radio" name="q18" value="seguido"> Punto y seguido</label></div>
+            </div>
+            <div class="question"><p>19. ¿Qué hacemos al leer un punto?</p><input type="text" id="q19"></div>
+            <div class="question"><p>20. Separa oraciones en el mismo párrafo:</p>
+                <div class="options"><label><input type="radio" name="q20" value="seguido"> Punto y seguido</label><label><input type="radio" name="q20" value="final"> Punto final</label></div>
+            </div>
+        </div>
+
+        <div class="session-block">
+            <h2 class="session-title">Sesión 5: Cruz Categorial</h2>
+            <div class="question"><p>21. ¿Qué va en el centro de la cruz?</p><input type="text" id="q21"></div>
+            <div class="question"><p>22. ¿Dónde van las consecuencias?</p>
+                <div class="options"><label><input type="radio" name="q22" value="derecha"> Brazo derecho</label><label><input type="radio" name="q22" value="arriba"> Brazo superior</label></div>
+            </div>
+            <div class="question"><p>23. ¿Qué se pone en la parte de abajo?</p><input type="text" id="q23"></div>
+            <div class="question"><p>24. ¿Es un organizador visual?</p>
+                <div class="options"><label><input type="radio" name="q24" value="si"> Sí</label><label><input type="radio" name="q24" value="no"> No</label></div>
+            </div>
+            <div class="question"><p>25. ¿Qué va en el brazo superior?</p><input type="text" id="q25"></div>
+        </div>
+
+        <div class="session-block">
+            <h2 class="session-title">Sesión 6: Uso de B y V</h2>
+            <div class="question"><p>26. Escribe correctamente: "el __arco es azul"</p><input type="text" id="q26"></div>
+            <div class="question"><p>27. Las palabras terminadas en -aba van con:</p>
+                <div class="options"><label><input type="radio" name="q27" value="B"> B</label><label><input type="radio" name="q27" value="V"> V</label></div>
+            </div>
+            <div class="question"><p>28. "Vaca" se escribe con:</p><input type="text" id="q28"></div>
+            <div class="question"><p>29. ¿Cómo se escribe "escribir"?</p><input type="text" id="q29"></div>
+            <div class="question"><p>30. Los verbos que terminan en -bir van con:</p>
+                <div class="options"><label><input type="radio" name="q30" value="B"> B</label><label><input type="radio" name="q30" value="V"> V</label></div>
+            </div>
+        </div>
+
+        <div class="session-block">
+            <h2 class="session-title">Sesión 7: El Cuento</h2>
+            <div class="question"><p>31. ¿Cómo se llama el inicio de la historia?</p><input type="text" id="q31"></div>
+            <div class="question"><p>32. ¿En qué parte ocurre el problema?</p>
+                <div class="options"><label><input type="radio" name="q32" value="nudo"> El Nudo</label><label><input type="radio" name="q32" value="desenlace"> El Desenlace</label></div>
+            </div>
+            <div class="question"><p>33. Lugar donde ocurre el cuento:</p><input type="text" id="q33"></div>
+            <div class="question"><p>34. ¿Quiénes participan en el cuento?</p>
+                <div class="options"><label><input type="radio" name="q34" value="personajes"> Personajes</label><label><input type="radio" name="q34" value="lectores"> Lectores</label></div>
+            </div>
+            <div class="question"><p>35. ¿Cómo se llama el final de la historia?</p><input type="text" id="q35"></div>
+        </div>
+
+        <div class="session-block">
+            <h2 class="session-title">Sesión 8: El Crucigrama</h2>
+            <div class="question"><p>36. ¿Cómo se leen las palabras de arriba a abajo?</p>
+                <div class="options"><label><input type="radio" name="q36" value="vertical"> Vertical</label><label><input type="radio" name="q36" value="horizontal"> Horizontal</label></div>
+            </div>
+            <div class="question"><p>37. ¿Cómo se llama la cuadrícula con cuadritos?</p><input type="text" id="q37"></div>
+            <div class="question"><p>38. ¿Qué indican los números en los cuadritos?</p>
+                <div class="options"><label><input type="radio" name="q38" value="palabra"> Dónde empieza la palabra</label><label><input type="radio" name="q38" value="cuento"> El número de cuentos</label></div>
+            </div>
+            <div class="question"><p>39. ¿En qué sentido se lee de izquierda a derecha?</p><input type="text" id="q39"></div>
+            <div class="question"><p>40. ¿El crucigrama ayuda a la ortografía?</p>
+                <div class="options"><label><input type="radio" name="q40" value="si"> Sí</label><label><input type="radio" name="q40" value="no"> No</label></div>
+            </div>
+        </div>
+
+        <button type="button" onclick="evaluarExamen()">¡Terminé mi examen! ✨</button>
+    </form>
+
+    <div id="result-final">
+        <h2 id="final-score"></h2>
+        <p id="final-msg"></p>
+    </div>
+</div>
+
+<script>
+    function normalizar(texto) {
+        return texto.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function evaluarExamen() {
+        let nota = 0;
+        const check = (id, keywords) => {
+            let val = normalizar(document.getElementById(id).value);
+            return keywords.some(k => val.includes(normalizar(k)));
+        };
+
+        // S1
+        if (document.querySelector('input[name="q1"]:checked')?.value === "emisor") nota++;
+        if (document.querySelector('input[name="q2"]:checked')?.value === "hilo") nota++;
+        if (check('q3', ['mensaje'])) nota++;
+        if (document.querySelector('input[name="q4"]:checked')?.value === "no verbal") nota++;
+        if (check('q5', ['receptor'])) nota++;
+        // S2
+        if (document.getElementById('q6').value.trim() === "Perú") nota++;
+        if (document.querySelector('input[name="q7"]:checked')?.value === "si") nota++;
+        if (document.getElementById('q8').value.trim() === "El gato toma leche") nota++;
+        if (document.querySelector('input[name="q9"]:checked')?.value === "si") nota++;
+        if (check('q10', ['Renzo vive en Lima'])) nota++;
+        // S3
+        if (check('q11', ['feliz', 'contento', 'alegre'])) nota++;
+        if (check('q12', ['calor', 'caliente'])) nota++;
+        if (check('q13', ['veloz', 'presuroso'])) nota++;
+        if (check('q14', ['alegre', 'feliz'])) nota++;
+        if (document.querySelector('input[name="q15"]:checked')?.value === "antonimos") nota++;
+        // S4
+        if (document.querySelector('input[name="q16"]:checked')?.value === "final") nota++;
+        if (check('q17', ['separar', 'final', 'pausa'])) nota++;
+        if (document.querySelector('input[name="q18"]:checked')?.value === "aparte") nota++;
+        if (check('q19', ['pausa', 'parar', 'stop'])) nota++;
+        if (document.querySelector('input[name="q20"]:checked')?.value === "seguido") nota++;
+        // S5
+        if (check('q21', ['tema', 'tesis', 'idea'])) nota++;
+        if (document.querySelector('input[name="q22"]:checked')?.value === "derecha") nota++;
+        if (check('q23', ['solucion', 'alternativa'])) nota++;
+        if (document.querySelector('input[name="q24"]:checked')?.value === "si") nota++;
+        if (check('q25', ['argumento'])) nota++;
+        // S6
+        if (check('q26', ['barco'])) nota++;
+        if (document.querySelector('input[name="q27"]:checked')?.value === "B") nota++;
+        if (check('q28', ['v'])) nota++;
+        if (check('q29', ['escribir'])) nota++;
+        if (document.querySelector('input[name="q30"]:checked')?.value === "B") nota++;
+        // S7
+        if (check('q31', ['inicio'])) nota++;
+        if (document.querySelector('input[name="q32"]:checked')?.value === "nudo") nota++;
+        if (check('q33', ['escenario', 'lugar', 'bosque'])) nota++;
+        if (document.querySelector('input[name="q34"]:checked')?.value === "personajes") nota++;
+        if (check('q35', ['desenlace', 'final'])) nota++;
+        // S8
+        if (document.querySelector('input[name="q36"]:checked')?.value === "vertical") nota++;
+        if (check('q37', ['grilla', 'cuadricula'])) nota++;
+        if (document.querySelector('input[name="q38"]:checked')?.value === "palabra") nota++;
+        if (check('q39', ['horizontal'])) nota++;
+        if (document.querySelector('input[name="q40"]:checked')?.value === "si") nota++;
+
+        document.getElementById('result-final').style.display = 'block';
+        document.getElementById('final-score').textContent = `¡Puntaje: ${nota} de 40!`;
+        document.getElementById('final-msg').textContent = nota > 30 ? "¡Excelente Edward, eres un experto!" : "¡Buen trabajo! Sigue practicando.";
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+</body>
+</html>
