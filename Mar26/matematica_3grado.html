@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen de Matemática - Edward (40 Preguntas Corregido)</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #f0fdf4; color: #1e293b; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 5px solid #4ade80; }
+        h1 { text-align: center; color: #166534; text-transform: uppercase; }
+        .session-block { border-left: 8px solid #22c55e; margin-bottom: 30px; padding: 15px; background: #f9fafb; border-radius: 0 15px 15px 0; }
+        .session-title { color: #15803d; font-size: 1.3em; font-weight: bold; margin-bottom: 10px; border-bottom: 2px solid #bbf7d0; }
+        
+        .question { margin-bottom: 20px; padding: 15px; background: white; border: 1px solid #e2e8f0; border-radius: 10px; transition: all 0.3s ease; }
+        .incomplete { border: 3px solid #f87171 !important; background-color: #fef2f2 !important; }
+        
+        .question-text { font-weight: bold; display: block; margin-bottom: 10px; }
+        .options label { display: block; margin: 8px 0; cursor: pointer; padding: 10px; border-radius: 8px; border: 1px solid #f1f5f9; }
+        .options label:hover { background: #dcfce7; }
+        
+        input[type="text"] { width: 95%; padding: 12px; margin-top: 10px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 16px; font-family: inherit; }
+        button { display: block; width: 100%; padding: 20px; background: #16a34a; color: white; border: none; border-radius: 15px; font-size: 1.4em; font-weight: bold; cursor: pointer; margin-top: 30px; box-shadow: 0 5px #14532d; }
+        
+        #result-area { display: none; margin-top: 40px; padding: 30px; border-radius: 20px; background: #ecfdf5; border: 4px solid #059669; }
+        .error-item { margin-bottom: 15px; padding: 10px; border-bottom: 1px dashed #f87171; background: white; border-radius: 8px; }
+        .correct-ans { color: #15803d; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📐 Examen de Matemática</h1>
+    <p style="text-align: center;">Edward, ¡asegúrate de que ninguna pregunta esté en rojo antes de terminar!</p>
+
+    <form id="mathExam">
+        <div class="session-block">
+            <div class="session-title">Conjuntos y Determinación</div>
+            <div class="question" id="f_q1"><span class="question-text">1. ¿Qué es un conjunto?</span><div class="options">
+                <label><input type="radio" name="q1" value="A" onchange="limpiar('f_q1')"> Elementos sueltos.</label>
+                <label><input type="radio" name="q1" value="correct" onchange="limpiar('f_q1')"> Agrupación de elementos con características comunes.</label>
+            </div></div>
+            <div class="question" id="f_q2"><span class="question-text">2. ¿Cómo se llama el gráfico de curva cerrada de los conjuntos?</span><input type="text" id="q2" oninput="limpiar('f_q2')" placeholder="Diagrama de..."></div>
+            <div class="question" id="f_q3"><span class="question-text">3. El nombre de un conjunto es una letra:</span><div class="options">
+                <label><input type="radio" name="q3" value="correct" onchange="limpiar('f_q3')"> Mayúscula</label>
+                <label><input type="radio" name="q3" value="A" onchange="limpiar('f_q3')"> Minúscula</label>
+            </div></div>
+            <div class="question" id="f_q4"><span class="question-text">4. Determinar por EXTENSIÓN es:</span><div class="options">
+                <label><input type="radio" name="q4" value="correct" onchange="limpiar('f_q4')"> Mencionar cada elemento.</label>
+                <label><input type="radio" name="q4" value="A" onchange="limpiar('f_q4')"> Decir la característica.</label>
+            </div></div>
+            <div class="question" id="f_q5"><span class="question-text">5. Determina por COMPRENSIÓN: A = {a, e, i, o, u}</span><input type="text" id="q5" oninput="limpiar('f_q5')"></div>
+            <div class="question" id="f_q6"><span class="question-text">6. ¿Qué significa el símbolo | ?</span><div class="options">
+                <label><input type="radio" name="q6" value="correct" onchange="limpiar('f_q6')"> Tal que</label>
+                <label><input type="radio" name="q6" value="A" onchange="limpiar('f_q6')"> Igual</label>
+            </div></div>
+            <div class="question" id="f_q7"><span class="question-text">7. "Los meses del año" es determinación por:</span><div class="options">
+                <label><input type="radio" name="q7" value="correct" onchange="limpiar('f_q7')"> Comprensión</label>
+                <label><input type="radio" name="q7" value="A" onchange="limpiar('f_q7')"> Extensión</label>
+            </div></div>
+            <div class="question" id="f_q8"><span class="question-text">8. Determina por EXTENSIÓN: B = {Números menores que 3}</span><input type="text" id="q8" oninput="limpiar('f_q8')"></div>
+            <div class="question" id="f_q9"><span class="question-text">9. ¿Cómo se llama el gráfico de Venn?</span><input type="text" id="q9" oninput="limpiar('f_q9')"></div>
+            <div class="question" id="f_q10"><span class="question-text">10. Los elementos se separan por:</span><input type="text" id="q10" oninput="limpiar('f_q10')" placeholder="punto y coma"></div>
+        </div>
+
+        <div class="session-block">
+            <div class="session-title">Clases y Pertenencia</div>
+            <div class="question" id="f_q11"><span class="question-text">11. El conjunto sin elementos es:</span><input type="radio" name="q11" value="correct" onchange="limpiar('f_q11')"> Vacío | <input type="radio" name="q11" value="A" onchange="limpiar('f_q11')"> Unitario</div>
+            <div class="question" id="f_q12"><span class="question-text">12. El conjunto F = { El Sol } es:</span><input type="radio" name="q12" value="correct" onchange="limpiar('f_q12')"> Unitario | <input type="radio" name="q12" value="A" onchange="limpiar('f_q12')"> Vacío</div>
+            <div class="question" id="f_q13"><span class="question-text">13. Elementos que se pueden contar:</span><input type="radio" name="q13" value="correct" onchange="limpiar('f_q13')"> Finito | <input type="radio" name="q13" value="A" onchange="limpiar('f_q13')"> Infinito</div>
+            <div class="question" id="f_q14"><span class="question-text">14. Los números naturales son un conjunto:</span><input type="text" id="q14" oninput="limpiar('f_q14')"></div>
+            <div class="question" id="f_q15"><span class="question-text">15. Símbolo de conjunto vacío:</span><input type="radio" name="q15" value="correct" onchange="limpiar('f_q15')"> Ø | <input type="radio" name="q15" value="A" onchange="limpiar('f_q15')"> U</div>
+            <div class="question" id="f_q16"><span class="question-text">16. Símbolo de PERTENENCIA:</span><input type="radio" name="q16" value="correct" onchange="limpiar('f_q16')"> ∈ | <input type="radio" name="q16" value="A" onchange="limpiar('f_q16')"> ∉</div>
+            <div class="question" id="f_q17"><span class="question-text">17. ¿Cuándo usamos ∉?</span><input type="radio" name="q17" value="correct" onchange="limpiar('f_q17')"> No pertenece | <input type="radio" name="q17" value="A" onchange="limpiar('f_q17')"> Sí pertenece</div>
+            <div class="question" id="f_q18"><span class="question-text">18. Pertenencia se da entre:</span><input type="radio" name="q18" value="correct" onchange="limpiar('f_q18')"> Elemento-Conjunto | <input type="radio" name="q18" value="A" onchange="limpiar('f_q18')"> Conjunto-Conjunto</div>
+            <div class="question" id="f_q19"><span class="question-text">19. Si A = {2, 4}, ¿el 3 ∈ A?</span><input type="radio" name="q19" value="A" onchange="limpiar('f_q19')"> Sí | <input type="radio" name="q19" value="correct" onchange="limpiar('f_q19')"> No</div>
+            <div class="question" id="f_q20"><span class="question-text">20. El Universal se grafica con un:</span><input type="text" id="q20" oninput="limpiar('f_q20')"></div>
+        </div>
+
+        <div class="session-block">
+            <div class="session-title">Sucesiones Gráficas</div>
+            <div class="question" id="f_q21"><span class="question-text">21. ¿Qué sigue en: 🔵, 🔴, 🔵, 🔴...?</span><input type="radio" name="q21" value="correct" onchange="limpiar('f_q21')"> 🔵 | <input type="radio" name="q21" value="A" onchange="limpiar('f_q21')"> 🟢</div>
+            <div class="question" id="f_q22"><span class="question-text">22. La regla de la serie se llama:</span><input type="text" id="q22" oninput="limpiar('f_q22')"></div>
+            <div class="question" id="f_q23"><span class="question-text">23. Puede cambiar el:</span><input type="radio" name="q23" value="correct" onchange="limpiar('f_q23')"> Color, forma o tamaño | <input type="radio" name="q23" value="A" onchange="limpiar('f_q23')"> Solo color</div>
+            <div class="question" id="f_q24"><span class="question-text">24. ¿Qué sigue: ▲, ■, ▲, ■...?</span><input type="radio" name="q24" value="correct" onchange="limpiar('f_q24')"> ▲ | <input type="radio" name="q24" value="A" onchange="limpiar('f_q24')"> ●</div>
+            <div class="question" id="f_q25"><span class="question-text">25. Las sucesiones son figuras:</span><input type="radio" name="q25" value="correct" onchange="limpiar('f_q25')"> Ordenadas | <input type="radio" name="q25" value="A" onchange="limpiar('f_q25')"> Al azar</div>
+        </div>
+
+        <div class="session-block">
+            <div class="session-title">Sucesiones Numéricas</div>
+            <div class="question" id="f_q26"><span class="question-text">26. Sigue: 2, 4, 6, 8...</span><input type="text" id="q26" oninput="limpiar('f_q26')"></div>
+            <div class="question" id="f_q27"><span class="question-text">27. Patrón de 5, 10, 15:</span><input type="radio" name="q27" value="correct" onchange="limpiar('f_q27')"> +5 | <input type="radio" name="q27" value="A" onchange="limpiar('f_q27')"> -5</div>
+            <div class="question" id="f_q28"><span class="question-text">28. Sigue: 100, 90, 80...</span><input type="text" id="q28" oninput="limpiar('f_q28')"></div>
+            <div class="question" id="f_q29"><span class="question-text">29. Serie que baja:</span><input type="radio" name="q29" value="correct" onchange="limpiar('f_q29')"> Regresiva | <input type="radio" name="q29" value="A" onchange="limpiar('f_q29')"> Progresiva</div>
+            <div class="question" id="f_q30"><span class="question-text">30. 10 con patrón +7 es:</span><input type="text" id="q30" oninput="limpiar('f_q30')"></div>
+            <div class="question" id="f_q31"><span class="question-text">31. Sigue: 1, 3, 5, 7...</span><input type="text" id="q31" oninput="limpiar('f_q31')"></div>
+            <div class="question" id="f_q32"><span class="question-text">32. Serie que sube:</span><input type="radio" name="q32" value="correct" onchange="limpiar('f_q32')"> Progresiva | <input type="radio" name="q32" value="A" onchange="limpiar('f_q32')"> Regresiva</div>
+            <div class="question" id="f_q33"><span class="question-text">33. Patrón de 30, 28, 26:</span><input type="radio" name="q33" value="correct" onchange="limpiar('f_q33')"> -2 | <input type="radio" name="q33" value="A" onchange="limpiar('f_q33')"> +2</div>
+            <div class="question" id="f_q34"><span class="question-text">34. Sigue: 10, 20, 30, 40...</span><input type="text" id="q34" oninput="limpiar('f_q34')"></div>
+            <div class="question" id="f_q35"><span class="question-text">35. Elementos del unitario:</span><input type="text" id="q35" oninput="limpiar('f_q35')"></div>
+            <div class="question" id="f_q36"><span class="question-text">36. Si A={1} y B={1} son:</span><input type="radio" name="q36" value="correct" onchange="limpiar('f_q36')"> Iguales | <input type="radio" name="q36" value="A" onchange="limpiar('f_q36')"> Vacíos</div>
+            <div class="question" id="f_q37"><span class="question-text">37. Símbolo del Universal:</span><input type="text" id="q37" oninput="limpiar('f_q37')"></div>
+            <div class="question" id="f_q38"><span class="question-text">38. Elementos de {m,a,m,a}:</span><input type="radio" name="q38" value="correct" onchange="limpiar('f_q38')"> 2 | <input type="radio" name="q38" value="A" onchange="limpiar('f_q38')"> 4</div>
+            <div class="question" id="f_q39"><span class="question-text">39. {Perro que vuela} es:</span><input type="radio" name="q39" value="correct" onchange="limpiar('f_q39')"> Vacío | <input type="radio" name="q39" value="A" onchange="limpiar('f_q39')"> Infinito</div>
+            <div class="question" id="f_q40"><span class="question-text">40. ¿Patrón puede ser resta?</span><input type="radio" name="q40" value="correct" onchange="limpiar('f_q40')"> Sí | <input type="radio" name="q40" value="A" onchange="limpiar('f_q40')"> No</div>
+        </div>
+
+        <button type="button" onclick="evaluar()">✨ CALIFICAR EXAMEN</button>
+    </form>
+
+    <div id="result-area">
+        <h2 id="final-score" style="text-align: center;"></h2>
+        <div id="error-review" class="review-box">
+            <h3>📖 Repaso Detallado:</h3>
+            <div id="error-details"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function limpiar(id) {
+        document.getElementById(id).classList.remove('incomplete');
+    }
+
+    function normalizar(t) {
+        return t ? t.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "";
+    }
+
+    function evaluar() {
+        let nota = 0;
+        let reporte = "";
+        let faltantes = 0;
+
+        // Lista de las 40 preguntas
+        const clave = [
+            {id: 'q1', t: 'r', c: 'correct', p: 'Pregunta 1'}, {id: 'q2', t: 'x', c: 'venn', p: 'Pregunta 2'},
+            {id: 'q3', t: 'r', c: 'correct', p: 'Pregunta 3'}, {id: 'q4', t: 'r', c: 'correct', p: 'Pregunta 4'},
+            {id: 'q5', t: 'x', c: 'vocales', p: 'Pregunta 5'}, {id: 'q6', t: 'r', c: 'correct', p: 'Pregunta 6'},
+            {id: 'q7', t: 'r', c: 'correct', p: 'Pregunta 7'}, {id: 'q8', t: 'x', c: '0, 1, 2', p: 'Pregunta 8'},
+            {id: 'q9', t: 'x', c: 'venn', p: 'Pregunta 9'}, {id: 'q10', t: 'x', c: 'punto y coma', p: 'Pregunta 10'},
+            {id: 'q11', t: 'r', c: 'correct', p: 'Pregunta 11'}, {id: 'q12', t: 'r', c: 'correct', p: 'Pregunta 12'},
+            {id: 'q13', t: 'r', c: 'correct', p: 'Pregunta 13'}, {id: 'q14', t: 'x', c: 'infinito', p: 'Pregunta 14'},
+            {id: 'q15', t: 'r', c: 'correct', p: 'Pregunta 15'}, {id: 'q16', t: 'r', c: 'correct', p: 'Pregunta 16'},
+            {id: 'q17', t: 'r', c: 'correct', p: 'Pregunta 17'}, {id: 'q18', t: 'r', c: 'correct', p: 'Pregunta 18'},
+            {id: 'q19', t: 'r', c: 'correct', p: 'Pregunta 19'}, {id: 'q20', t: 'x', c: 'rectangulo', p: 'Pregunta 20'},
+            {id: 'q21', t: 'r', c: 'correct', p: 'Pregunta 21'}, {id: 'q22', t: 'x', c: 'patron', p: 'Pregunta 22'},
+            {id: 'q23', t: 'r', c: 'correct', p: 'Pregunta 23'}, {id: 'q24', t: 'r', c: 'correct', p: 'Pregunta 24'},
+            {id: 'q25', t: 'r', c: 'correct', p: 'Pregunta 25'}, {id: 'q26', t: 'x', c: '10', p: 'Pregunta 26'},
+            {id: 'q27', t: 'r', c: 'correct', p: 'Pregunta 27'}, {id: 'q28', t: 'x', c: '70', p: 'Pregunta 28'},
+            {id: 'q29', t: 'r', c: 'correct', p: 'Pregunta 29'}, {id: 'q30', t: 'x', c: '17', p: 'Pregunta 30'},
+            {id: 'q31', t: 'x', c: '9', p: 'Pregunta 31'}, {id: 'q32', t: 'r', c: 'correct', p: 'Pregunta 32'},
+            {id: 'q33', t: 'r', c: 'correct', p: 'Pregunta 33'}, {id: 'q34', t: 'x', c: '50', p: 'Pregunta 34'},
+            {id: 'q35', t: 'x', c: '1', p: 'Pregunta 35'}, {id: 'q36', t: 'r', c: 'correct', p: 'Pregunta 36'},
+            {id: 'q37', t: 'x', c: 'u', p: 'Pregunta 37'}, {id: 'q38', t: 'r', c: 'correct', p: 'Pregunta 38'},
+            {id: 'q39', t: 'r', c: 'correct', p: 'Pregunta 39'}, {id: 'q40', t: 'r', c: 'correct', p: 'Pregunta 40'}
+        ];
+
+        clave.forEach(item => {
+            let uVal = "";
+            let responded = false;
+            if(item.t === 'r') {
+                let r = document.querySelector(`input[name="${item.id}"]:checked`);
+                if(r) { uVal = r.value; responded = true; }
+            } else {
+                uVal = document.getElementById(item.id).value.trim();
+                if(uVal !== "") responded = true;
+            }
+
+            if(!responded) {
+                faltantes++;
+                document.getElementById('f_' + item.id).classList.add('incomplete');
+            } else {
+                let ok = (item.t === 'r') ? (uVal === item.c) : normalizar(uVal).includes(normalizar(item.c));
+                if(ok) nota++;
+                else reporte += `<div class="error-item"><p class="error-q">❌ Pregunta ${item.id.replace('q','')}</p><p>Tu respuesta: ${uVal}</p><p class="correct-ans">Correcta: ${item.c === 'correct' ? 'La otra opción' : item.c}</p></div>`;
+            }
+        });
+
+        if(faltantes > 0) {
+            alert("¡Edward! Faltan " + faltantes + " preguntas. Revisa las que están en rojo.");
+            document.querySelector('.incomplete').scrollIntoView({ behavior: 'smooth' });
+            return;
+        }
+
+        document.getElementById('result-area').style.display = 'block';
+        document.getElementById('final-score').innerText = `¡Nota: ${nota} / 40!`;
+        document.getElementById('error-details').innerHTML = reporte || "<p style='color:green'>¡Perfecto!</p>";
+        window.scrollTo({ top: document.getElementById('result-area').offsetTop, behavior: 'smooth' });
+    }
+</script>
+</body>
+</html>
