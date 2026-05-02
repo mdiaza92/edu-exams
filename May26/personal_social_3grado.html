@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen de Personal Social - Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #fff9e6; padding: 15px; color: #333; }
+        .container { max-width: 850px; background: white; margin: auto; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 4px solid #f1c40f; }
+        h1 { text-align: center; color: #d35400; text-transform: uppercase; font-size: 1.6em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        
+        .section-header { background: #f1c40f; color: #fff; padding: 12px; border-radius: 10px; margin: 25px 0 15px 0; text-align: center; font-weight: bold; font-size: 1.2em; text-transform: uppercase; }
+        .section { margin-bottom: 20px; padding: 18px; border: 2px solid #eee; border-radius: 12px; background-color: #fff; transition: 0.3s; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #2c3e50; display: block; line-height: 1.4; }
+        
+        .incomplete { border: 2px solid #e74c3c !important; background-color: #fdf2f2 !important; }
+        
+        select, input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #bdc3c7; font-size: 16px; font-family: inherit; margin-top: 5px; box-sizing: border-box; }
+        .options label { display: block; margin: 10px 0; cursor: pointer; padding: 8px; border-radius: 8px; }
+        .options label:hover { background: #fef9e7; }
+        input[type="radio"], input[type="checkbox"] { transform: scale(1.2); margin-right: 10px; }
+
+        button { display: block; width: 100%; max-width: 350px; height: 65px; margin: 40px auto; background: #e67e22; color: white; border: none; border-radius: 35px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #d35400; transition: 0.2s; }
+        button:active { transform: translateY(3px); box-shadow: 0 2px #d35400; }
+        
+        #result-box { display: none; padding: 25px; border-radius: 20px; margin-top: 30px; border: 4px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+        
+        .feedback-item { margin-bottom: 15px; padding: 10px; border-bottom: 1px dashed #ccc; }
+        .session-ref { font-weight: bold; color: #2980b9; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Personal Social: Mis Retos</h1>
+    <h2>Evaluación Semanas 4, 5, 6 y 7</h2>
+
+    <form id="examenEdward">
+        <div class="section-header">Semana 4: Mis Súper Habilidades</div>
+        <div class="section" id="sec_q1">
+            <span class="question-title">1. Si Edward se da cuenta que es muy bueno armando legos rápidamente, ¿cómo llamamos a esa capacidad especial que tiene?</span>
+            <select name="q1" onchange="removeRed('sec_q1')">
+                <option value="">-- Elige --</option>
+                <option value="correct">Habilidad</option>
+                <option value="error">Una suerte</option>
+                <option value="error">Una emoción</option>
+            </select>
+        </div>
+        <div class="section" id="sec_q2">
+            <span class="question-title">2. ¿Por qué es importante identificar las cosas que "queremos mejorar"?</span>
+            <div class="options">
+                <label><input type="radio" name="q2" value="error" onclick="removeRed('sec_q2')"> Porque significa que no somos buenos en nada.</label>
+                <label><input type="radio" name="q2" value="correct" onclick="removeRed('sec_q2')"> Porque así nos esforzamos para aprender cosas nuevas.</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q3">
+            <span class="question-title">3. Menciona una actividad que realices BIEN y que te haga sentir orgulloso (Ej: leer, dibujar, fútbol):</span>
+            <input type="text" name="q3" id="q3" oninput="removeRed('sec_q3')" placeholder="Escribe aquí tu habilidad...">
+        </div>
+
+        <div class="section-header">Semana 5: El Mundo de mis Emociones</div>
+        <div class="section" id="sec_q4">
+            <span class="question-title">4. Estás jugando y un compañero rompe tu dibujo favorito sin querer. Sientes que tu corazón late rápido y te dan ganas de gritar. ¿Qué emoción es?</span>
+            <select name="q4" onchange="removeRed('sec_q4')">
+                <option value="">-- Elige --</option>
+                <option value="correct">Enojo</option>
+                <option value="error">Miedo</option>
+                <option value="error">Alegría</option>
+            </select>
+        </div>
+        <div class="section" id="sec_q5">
+            <span class="question-title">5. Según lo aprendido, ¿qué técnica es mejor para calmar el ENOJO antes de actuar?</span>
+            <div class="options">
+                <label><input type="radio" name="q5" value="error" onclick="removeRed('sec_q5')"> Gritar muy fuerte para que se me pase.</label>
+                <label><input type="radio" name="q5" value="correct" onclick="removeRed('sec_q5')"> Respirar profundo y contar hasta diez.</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q6">
+            <span class="question-title">6. ¿Qué emoción aparece cuando sentimos que estamos solos o algo nos duele?</span>
+            <input type="text" name="q6" id="q6" oninput="removeRed('sec_q6')" placeholder="Escribe la emoción...">
+        </div>
+        <div class="section" id="sec_q7">
+            <span class="question-title">7. Si sientes MIEDO ante una situación nueva, ¿qué deberías hacer según tu ficha?</span>
+            <select name="q7" onchange="removeRed('sec_q7')">
+                <option value="">-- Elige --</option>
+                <option value="correct">Pedir ayuda a un adulto de confianza.</option>
+                <option value="error">Esconderte y no decir nada a nadie.</option>
+            </select>
+        </div>
+
+        <div class="section-header">Semana 6: Mi Familia es Única</div>
+        <div class="section" id="sec_q8">
+            <span class="question-title">8. María vive con su mamá, su papá y sus dos hermanos. ¿A qué tipo de familia pertenece?</span>
+            <select name="q8" onchange="removeRed('sec_q8')">
+                <option value="">-- Elige --</option>
+                <option value="correct">Familia Nuclear</option>
+                <option value="error">Familia Extensa</option>
+                <option value="error">Familia Monoparental</option>
+            </select>
+        </div>
+        <div class="section" id="sec_q9">
+            <span class="question-title">9. Juan vive con su mamá, sus abuelos y un tío en la misma casa. ¿Qué tipo de familia es?</span>
+            <div class="options">
+                <label><input type="radio" name="q9" value="correct" onclick="removeRed('sec_q9')"> Familia Extensa</label>
+                <label><input type="radio" name="q9" value="error" onclick="removeRed('sec_q9')"> Familia Adoptiva</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q10">
+            <span class="question-title">10. ¿Por qué decimos que la familia es la "célula fundamental de la sociedad"?</span>
+            <select name="q10" onchange="removeRed('sec_q10')">
+                <option value="">-- Elige --</option>
+                <option value="correct">Porque es donde aprendemos valores y convivencia.</option>
+                <option value="error">Porque todas las familias tienen los mismos apellidos.</option>
+            </select>
+        </div>
+        <div class="section" id="sec_q11">
+            <span class="question-title">11. Si un niño es acogido por padres que no son sus padres biológicos pero lo aman y protegen, es una familia:</span>
+            <input type="text" name="q11" id="q11" oninput="removeRed('sec_q11')" placeholder="Tipo de familia...">
+        </div>
+
+        <div class="section-header">Semana 7: Mis Derechos y Deberes</div>
+        <div class="section" id="sec_q12">
+            <span class="question-title">12. "Recibir atención médica cuando estoy enfermo" es un:</span>
+            <select name="q12" onchange="removeRed('sec_q12')">
+                <option value="">-- Elige --</option>
+                <option value="correct">Derecho</option>
+                <option value="error">Deber</option>
+            </select>
+        </div>
+        <div class="section" id="sec_q13">
+            <span class="question-title">13. Si Edward tiene el derecho de ir a la escuela a estudiar, ¿cuál es su DEBER relacionado?</span>
+            <div class="options">
+                <label><input type="radio" name="q13" value="error" onclick="removeRed('sec_q13')"> Exigir que le compren juguetes nuevos.</label>
+                <label><input type="radio" name="q13" value="correct" onclick="removeRed('sec_q13')"> Hacer sus tareas y esforzarse en clase.</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q14">
+            <span class="question-title">14. ¿Cuál de estos es un DEBER del niño en el hogar? (Puedes marcar varias)</span>
+            <div class="options">
+                <label><input type="checkbox" name="q14" value="correct"> Ayudar en los quehaceres de la casa según mi edad.</label>
+                <label><input type="checkbox" name="q14" value="correct"> Respetar a mis padres y abuelos.</label>
+                <label><input type="checkbox" name="q14" value="error"> Trabajar para ganar dinero para la comida.</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q15">
+            <span class="question-title">15. Completa la idea: "Tengo derecho a jugar y recrearme, pero tengo el deber de cuidar mis..."</span>
+            <input type="text" name="q15" id="q15" oninput="removeRed('sec_q15')" placeholder="Completa la frase...">
+        </div>
+
+        <button type="button" onclick="validarExamen()">Terminar Examen</button>
+    </form>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+    </div>
+</div>
+
+<script>
+    function removeRed(id) {
+        document.getElementById(id).classList.remove('incomplete');
+    }
+
+    function validarExamen() {
+        const form = document.getElementById('examenEdward');
+        const sections = document.querySelectorAll('.section');
+        let totalValidas = 0;
+        let incompletas = [];
+
+        // Validar selects y text
+        const inputs = form.querySelectorAll('select, input[type="text"]');
+        inputs.forEach(input => {
+            if (input.value.trim() === "") {
+                input.closest('.section').classList.add('incomplete');
+                incompletas.push(input.closest('.section').id);
+            }
+        });
+
+        // Validar radios
+        const radioGroups = ['q2', 'q5', 'q9', 'q13'];
+        radioGroups.forEach(group => {
+            if (!form.querySelector(`input[name="${group}"]:checked`)) {
+                document.getElementById(`sec_${group}`).classList.add('incomplete');
+                incompletas.push(`sec_${group}`);
+            }
+        });
+
+        // Validar checkbox (q14)
+        if (!form.querySelector('input[name="q14"]:checked')) {
+            document.getElementById('sec_q14').classList.add('incomplete');
+            incompletas.push('sec_q14');
+        }
+
+        if (incompletas.length > 0) {
+            alert("¡Edward! Te faltan responder algunas preguntas. Revisa las que están en rojo.");
+            document.getElementById(incompletas[0]).scrollIntoView({ behavior: 'smooth' });
+            return;
+        }
+
+        procesarResultados();
+    }
+
+    function procesarResultados() {
+        const form = document.getElementById('examenEdward');
+        let puntos = 0;
+        let errores = [];
+        let aciertos = [];
+
+        // Lógica de calificación
+        const respuestas = [
+            {id: 'q1', val: form.q1.value, correct: 'correct', sem: 'Semana 4: Habilidades'},
+            {id: 'q2', val: form.querySelector('input[name="q2"]:checked').value, correct: 'correct', sem: 'Semana 4: Habilidades'},
+            {id: 'q4', val: form.q4.value, correct: 'correct', sem: 'Semana 5: Emociones'},
+            {id: 'q5', val: form.querySelector('input[name="q5"]:checked').value, correct: 'correct', sem: 'Semana 5: Emociones'},
+            {id: 'q7', val: form.q7.value, correct: 'correct', sem: 'Semana 5: Emociones'},
+            {id: 'q8', val: form.q8.value, correct: 'correct', sem: 'Semana 6: Familia'},
+            {id: 'q9', val: form.querySelector('input[name="q9"]:checked').value, correct: 'correct', sem: 'Semana 6: Familia'},
+            {id: 'q10', val: form.q10.value, correct: 'correct', sem: 'Semana 6: Familia'},
+            {id: 'q12', val: form.q12.value, correct: 'correct', sem: 'Semana 7: Derechos y Deberes'},
+            {id: 'q13', val: form.querySelector('input[name="q13"]:checked').value, correct: 'correct', sem: 'Semana 7: Derechos y Deberes'}
+        ];
+
+        respuestas.forEach(r => {
+            if (r.val === r.correct) {
+                puntos += 2;
+                aciertos.push(r.sem);
+            } else {
+                errores.push(r.sem);
+            }
+        });
+
+        // Validaciones de texto libre (simples para el demo)
+        if (document.getElementById('q3').value.length > 3) puntos += 2; else errores.push('Semana 4: Habilidades');
+        if (document.getElementById('q6').value.toLowerCase().includes('triste')) puntos += 2; else errores.push('Semana 5: Emociones');
+        if (document.getElementById('q11').value.toLowerCase().includes('adoptiva')) puntos += 2; else errores.push('Semana 6: Familia');
+        if (document.getElementById('q15').value.toLowerCase().includes('juguete')) puntos += 2; else errores.push('Semana 7: Derechos y Deberes');
+
+        // Checkbox q14
+        const checks = form.querySelectorAll('input[name="q14"]:checked');
+        let checkCorrect = true;
+        checks.forEach(c => { if(c.value === 'error') checkCorrect = false; });
+        if(checks.length >= 2 && checkCorrect) puntos += 2; else errores.push('Semana 7: Deberes');
+
+        const notaFinal = Math.min(20, puntos);
+        const resultBox = document.getElementById('result-box');
+        const scoreText = document.getElementById('score-text');
+        const feedbackContent = document.getElementById('feedback-content');
+
+        resultBox.style.display = "block";
+        scoreText.innerText = `Puntaje Final: ${notaFinal} / 20`;
+        resultBox.className = notaFinal >= 11 ? "correct-box" : "error-box";
+
+        // Feedback inteligente
+        let feedbackHTML = `<h4>¡Análisis de tu examen, Edward!</h4>`;
+        
+        // Lo que hizo bien
+        const temasUnicosAciertos = [...new Set(aciertos)];
+        if (temasUnicosAciertos.length > 0) {
+            feedbackHTML += `<p>🌟 <strong>Lo que hiciste excelente:</strong> Has demostrado que conoces muy bien los temas de: ${temasUnicosAciertos.join(', ')}.</p>`;
+        }
+
+        // Lo que falló
+        const temasUnicosErrores = [...new Set(errores)];
+        if (temasUnicosErrores.length > 0) {
+            feedbackHTML += `<p>📖 <strong>Para mejorar:</strong> Tuviste algunas dudas en: ${temasUnicosErrores.join(', ')}.</p>`;
+            feedbackHTML += `<p>💡 <strong>Consejo del Profe:</strong> Edward, te recomiendo darles una mirada extra a las fichas de las siguientes sesiones:</p><ul>`;
+            temasUnicosErrores.forEach(t => {
+                feedbackHTML += `<li>Vuelve a leer la <span class="session-ref">${t}</span>. ¡Tú puedes lograrlo!</li>`;
+            });
+            feedbackHTML += `</ul>`;
+        } else {
+            feedbackHTML += `<p>🎉 ¡Perfecto! No tienes temas por reforzar. ¡Eres un experto en Personal Social!</p>`;
+        }
+
+        feedbackContent.innerHTML = feedbackHTML;
+        window.scrollTo({ top: resultBox.offsetTop, behavior: 'smooth' });
+    }
+</script>
+</body>
+</html>
