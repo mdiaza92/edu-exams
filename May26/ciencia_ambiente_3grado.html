@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Maestro de Ciencia - Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #f0fdf4; padding: 15px; color: #2c3e50; }
+        .container { max-width: 850px; background: white; margin: auto; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 5px solid #27ae60; }
+        h1 { text-align: center; color: #2ecc71; text-transform: uppercase; font-size: 1.5em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        
+        /* ENCABEZADOS FLOTANTES (STICKY) */
+        .section-header { 
+            position: -webkit-sticky; 
+            position: sticky; 
+            top: 0; 
+            background: #27ae60; 
+            color: #fff; 
+            padding: 15px; 
+            border-radius: 10px; 
+            margin: 25px 0 15px 0; 
+            text-align: center; 
+            font-weight: bold; 
+            font-size: 1.1em; 
+            text-transform: uppercase; 
+            z-index: 100; /* Para que pase por encima de las preguntas */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .repaso-header { background: #8e44ad !important; }
+        
+        .section { margin-bottom: 20px; padding: 18px; border: 2px solid #ecf0f1; border-radius: 12px; background-color: #ffffff; transition: 0.3s; }
+        .incomplete { border: 3px solid #e74c3c !important; background-color: #fdf2f2 !important; }
+        
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #d35400; display: block; line-height: 1.4; }
+        
+        select, input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #bdc3c7; font-size: 16px; font-family: inherit; margin-top: 5px; box-sizing: border-box; }
+        .options label { display: block; margin: 10px 0; cursor: pointer; padding: 10px; border-radius: 8px; transition: 0.2s; border: 1px solid #eee; }
+        .options label:hover { background: #f0fdf4; border-color: #27ae60; }
+        
+        button { display: block; width: 100%; max-width: 350px; height: 65px; margin: 40px auto; background: #2ecc71; color: white; border: none; border-radius: 35px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #27ae60; transition: 0.2s; }
+        button:active { transform: translateY(3px); box-shadow: 0 2px #27ae60; }
+        
+        #result-box { display: none; padding: 25px; border-radius: 20px; margin-top: 30px; border: 4px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+        
+        .feedback-title { border-bottom: 2px solid; margin-bottom: 15px; padding-bottom: 5px; font-size: 1.2em; font-weight: bold; }
+        .duda-nota { font-size: 0.9em; color: #d35400; font-weight: bold; background: #fff; padding: 10px; border-radius: 5px; margin-top: 10px; border: 1px solid #ffcc80; }
+        .missing-alert { color: #e74c3c; font-weight: bold; text-align: center; margin-bottom: 15px; display: none; padding: 10px; background: #fdf2f2; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Ciencia y Tecnología</h1>
+    <h2>Reto de Razonamiento - Edward</h2>
+
+    <div id="missing-msg" class="missing-alert">⚠️ Edward, ¡falta responder algunas preguntas! Revisa las que están en rojo.</div>
+
+    <form id="examenCiencia">
+        
+        <div class="section-header repaso-header">🎯 Repaso: Sentidos (Examen Anterior)</div>
+        
+        <div class="section" id="sec_r1">
+            <span class="question-title">1. Si pasas por un jardín y sientes el aroma de las flores, ¿qué nervio lleva esa información al cerebro?</span>
+            <select name="r1" onchange="track('r1'); clearRed('sec_r1')">
+                <option value="">-- Elige --</option>
+                <option value="correct">Nervio Olfativo</option>
+                <option value="error">Nervio Óptico</option>
+                <option value="error">Nervio Auditivo</option>
+            </select>
+        </div>
+
+        <div class="section" id="sec_r2">
+            <span class="question-title">2. ¿Qué parte del ojo se encarga de "abrirse o cerrarse" para dejar pasar la luz necesaria?</span>
+            <div class="options">
+                <label><input type="radio" name="r2" value="error" onclick="track('r2'); clearRed('sec_r2')"> La retina</label>
+                <label><input type="radio" name="r2" value="correct" onclick="track('r2'); clearRed('sec_r2')"> El iris (y la pupila)</label>
+            </div>
+        </div>
+
+        <div class="section" id="sec_r3">
+            <span class="question-title">3. Menciona el órgano del sentido que nos permite saber si algo está frío, caliente, liso o áspero:</span>
+            <input type="text" id="r3" oninput="track('r3'); clearRed('sec_r3')" placeholder="Escribe el órgano...">
+        </div>
+
+        <div class="section" id="sec_r4">
+            <span class="question-title">4. En el OÍDO, ¿cómo se llaman los 3 huesecillos que ayudan a transmitir el sonido?</span>
+            <select name="r4" onchange="track('r4'); clearRed('sec_r4')">
+                <option value="">-- Elige --</option>
+                <option value="correct">Martillo, Yunque y Estribo</option>
+                <option value="error">Fémur, Radio y Cúbito</option>
+            </select>
+        </div>
+
+        <div class="section" id="sec_r5">
+            <span class="question-title">5. ¿Cuál es el sentido que nos permite identificar si un alimento está salado o dulce?</span>
+            <div class="options">
+                <label><input type="radio" name="r5" value="correct" onclick="track('r5'); clearRed('sec_r5')"> El sentido del Gusto</label>
+                <label><input type="radio" name="r5" value="error" onclick="track('r5'); clearRed('sec_r5')"> El sentido del Olfato</label>
+            </div>
+        </div>
+
+        <div class="section-header">🔋 Semana 4: Funciones Vitales</div>
+        
+        <div class="section" id="sec_q1">
+            <span class="question-title">6. Edward, si ves que una planta crece buscando la luz del sol, ¿qué función vital está realizando?</span>
+            <select name="q1" onchange="track('q1'); clearRed('sec_q1')">
+                <option value="">-- Elige --</option>
+                <option value="correct">Función de Relación</option>
+                <option value="error">Función de Nutrición</option>
+            </select>
+        </div>
+
+        <div class="section" id="sec_q2">
+            <span class="question-title">7. ¿Cuál es el objetivo principal de la función de NUTRICIÓN?</span>
+            <div class="options">
+                <label><input type="radio" name="q2" value="correct" onclick="track('q2'); clearRed('sec_q2')"> Obtener energía de los alimentos para vivir.</label>
+                <label><input type="radio" name="q2" value="error" onclick="track('q2'); clearRed('sec_q2')"> Tener hijos para que la especie no desaparezca.</label>
+            </div>
+        </div>
+
+        <div class="section" id="sec_q3">
+            <span class="question-title">8. ¿A qué función vital pertenece el proceso de la RESPIRACIÓN?</span>
+            <input type="text" id="q3" oninput="track('q3'); clearRed('sec_q3')" placeholder="Nutrición, Relación o Reproducción...">
+        </div>
+
+        <div class="section" id="sec_q4">
+            <span class="question-title">9. Los seres vivos originan nuevos seres parecidos a ellos mediante la función de:</span>
+            <select name="q4" onchange="track('q4'); clearRed('sec_q4')">
+                <option value="">-- Elige --</option>
+                <option value="correct">Reproducción</option>
+                <option value="error">Relación</option>
+            </select>
+        </div>
+
+        <div class="section" id="sec_q5">
+            <span class="question-title">10. Cuando sientes hambre o sed, tu cuerpo te está enviando una señal. Esto es parte de la función de:</span>
+            <div class="options">
+                <label><input type="radio" name="q5" value="correct" onclick="track('q5'); clearRed('sec_q5')"> Relación</label>
+                <label><input type="radio" name="q5" value="error" onclick="track('q5'); clearRed('sec_q5')"> Nutrición (el proceso de comer)</label>
+            </div>
+        </div>
+
+        <div class="section-header">🦴 Semana 5: Aparato Locomotor</div>
+        
+        <div class="section" id="sec_q6">
+            <span class="question-title">11. ¿Cómo se llama el conjunto de todos los huesos de nuestro cuerpo?</span>
+            <input type="text" id="q6" oninput="track('q6'); clearRed('sec_q6')" placeholder="Escribe el nombre...">
+        </div>
+
+        <div class="section" id="sec_q7">
+            <span class="question-title">12. Edward, ¿qué pasaría si tus huesos fueran elásticos como ligas?</span>
+            <select name="q7" onchange="track('q7'); clearRed('sec_q7')">
+                <option value="">-- Elige --</option>
+                <option value="correct">No podríamos estar de pie, nuestro cuerpo se caería.</option>
+                <option value="error">Seríamos más fuertes y duros.</option>
+            </select>
+        </div>
+
+        <div class="section" id="sec_q8">
+            <span class="question-title">13. Las ARTICULACIONES son importantes porque:</span>
+            <div class="options">
+                <label><input type="radio" name="q8" value="correct" onclick="track('q8'); clearRed('sec_q8')"> Permiten que los huesos se doblen y nos movamos.</label>
+                <label><input type="radio" name="q8" value="error" onclick="track('q8'); clearRed('sec_q8')"> Hacen que los huesos crezcan más largos.</label>
+            </div>
+        </div>
+
+        <div class="section" id="sec_q9">
+            <span class="question-title">14. ¿Cuál de estos es un músculo que usamos para sonreír o masticar?</span>
+            <select name="q9" onchange="track('q9'); clearRed('sec_q9')">
+                <option value="">-- Elige --</option>
+                <option value="correct">Músculos de la cara (Maseteros)</option>
+                <option value="error">Bíceps (brazo)</option>
+            </select>
+        </div>
+
+        <div class="section" id="sec_q10">
+            <span class="question-title">15. Para cuidar tu aparato locomotor, debes comer alimentos ricos en:</span>
+            <div class="options">
+                <label><input type="radio" name="q10" value="correct" onclick="track('q10'); clearRed('sec_q10')"> Calcio (leche, queso).</label>
+                <label><input type="radio" name="q10" value="error" onclick="track('q10'); clearRed('sec_q10')"> Azúcar y dulces.</label>
+            </div>
+        </div>
+
+        <div class="section-header">🍎 Semana 6: Aparato Digestivo</div>
+        
+        <div class="section" id="sec_q11">
+            <span class="question-title">16. ¿Qué glándulas en la boca ayudan a mojar la comida para formar el 'bolo alimenticio'?</span>
+            <select name="q11" onchange="track('q11'); clearRed('sec_q11')">
+                <option value="">-- Elige --</option>
+                <option value="correct">Glándulas Salivales</option>
+                <option value="error">Glándulas de Sudor</option>
+            </select>
+        </div>
+
+        <div class="section" id="sec_q12">
+            <span class="question-title">17. ¿Cómo se llama el órgano que parece una bolsa donde se mezcla la comida con jugos gástricos?</span>
+            <input type="text" id="q12" oninput="track('q12'); clearRed('sec_q12')" placeholder="Escribe el nombre...">
+        </div>
+
+        <div class="section" id="sec_q13">
+            <span class="question-title">18. ¿Qué órgano es más largo y se encarga de absorber los nutrientes para la sangre?</span>
+            <div class="options">
+                <label><input type="radio" name="r13" value="correct" onclick="track('q13'); clearRed('sec_q13')"> Intestino Delgado</label>
+                <label><input type="radio" name="r13" value="error" onclick="track('q13'); clearRed('sec_q13')"> Intestino Grueso</label>
+            </div>
+        </div>
+
+        <div class="section" id="sec_q14">
+            <span class="question-title">19. ¿Cuál es el proceso final de la digestión (cuando vamos al baño)?</span>
+            <select name="q14" onchange="track('q14'); clearRed('sec_q14')">
+                <option value="">-- Elige --</option>
+                <option value="correct">Expulsión de desechos (Egestión)</option>
+                <option value="error">Masticación</option>
+            </select>
+        </div>
+
+        <div class="section" id="sec_q15">
+            <span class="question-title">20. El HÍGADO y el PÁNCREAS ayudan a la digestión produciendo:</span>
+            <div class="options">
+                <label><input type="radio" name="r15" value="correct" onclick="track('q15'); clearRed('sec_q15')"> Líquidos/Jugos que ayudan a deshacer la comida.</label>
+                <label><input type="radio" name="r15" value="error" onclick="track('q15'); clearRed('sec_q15')"> Aire para los pulmones.</label>
+            </div>
+        </div>
+
+        <button type="button" onclick="validar()">✨ Ver mis Resultados</button>
+    </form>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+    </div>
+</div>
+
+<script>
+    let dudas = {};
+
+    function track(id) {
+        dudas[id] = (dudas[id] || 0) + 1;
+    }
+
+    function clearRed(id) {
+        document.getElementById(id).classList.remove('incomplete');
+        // Si no hay más rojos, ocultar alerta
+        if (document.querySelectorAll('.incomplete').length === 0) {
+            document.getElementById('missing-msg').style.display = 'none';
+        }
+    }
+
+    function validar() {
+        const f = document.getElementById('examenCiencia');
+        let vacios = [];
+
+        // IDs de preguntas para validación
+        const qIds = ['r1','r2','r3','r4','r5','q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','q13','q14','q15'];
+
+        qIds.forEach(id => {
+            let container = document.getElementById('sec_' + id);
+            let respondido = false;
+
+            // Verificar si es input/select o radio
+            let input = document.getElementById(id) || f[id];
+            if (input && input.tagName !== undefined) {
+                if (input.value.trim() !== "") respondido = true;
+            } else {
+                // Es radio group
+                let radioName = id.startsWith('q13') || id.startsWith('q15') ? 'r' + id.substring(1) : id;
+                if (f.querySelector(`input[name="${radioName}"]:checked`)) respondido = true;
+            }
+
+            if (!respondido) {
+                container.classList.add('incomplete');
+                vacios.push(container);
+            }
+        });
+
+        if (vacios.length > 0) {
+            document.getElementById('missing-msg').style.display = 'block';
+            vacios[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+
+        calificar();
+    }
+
+    function calificar() {
+        const f = document.getElementById('examenCiencia');
+        let nota = 0;
+        let fallos = [];
+        let dudasDetectadas = [];
+
+        const check = (id, tipo, correcta, semana) => {
+            let val = "";
+            let radioName = id.startsWith('q13') || id.startsWith('q15') ? 'r' + id.substring(1) : id;
+            
+            if(tipo === 'r') val = f.querySelector(`input[name="${radioName}"]:checked`).value;
+            else if(tipo === 's') val = f[id].value;
+            else val = document.getElementById(id).value.toLowerCase();
+
+            let esOk = (val === correcta || (tipo === 't' && val.includes(correcta)));
+            
+            if(esOk) nota++; 
+            else fallos.push(semana);
+
+            if(dudas[id] > 2) dudasDetectadas.push(semana);
+        };
+
+        // Calificaciones
+        check('r1', 's', 'correct', 'Repaso Sentidos');
+        check('r2', 'r', 'correct', 'Repaso Sentidos');
+        check('r3', 't', 'piel', 'Repaso Sentidos');
+        check('r4', 's', 'correct', 'Repaso Sentidos');
+        check('r5', 'r', 'correct', 'Repaso Sentidos');
+        
+        check('q1', 's', 'correct', 'Semana 4 (Funciones Vitales)');
+        check('q2', 'r', 'correct', 'Semana 4 (Funciones Vitales)');
+        check('q3', 't', 'nutricion', 'Semana 4 (Funciones Vitales)');
+        check('q4', 's', 'correct', 'Semana 4 (Funciones Vitales)');
+        check('q5', 'r', 'correct', 'Semana 4 (Funciones Vitales)');
+
+        check('q6', 't', 'esqueleto', 'Semana 5 (Aparato Locomotor)');
+        check('q7', 's', 'correct', 'Semana 5 (Aparato Locomotor)');
+        check('q8', 'r', 'correct', 'Semana 5 (Aparato Locomotor)');
+        check('q9', 's', 'correct', 'Semana 5 (Aparato Locomotor)');
+        check('q10', 'r', 'correct', 'Semana 5 (Aparato Locomotor)');
+
+        check('q11', 's', 'correct', 'Semana 6 (Aparato Digestivo)');
+        check('q12', 't', 'estomago', 'Semana 6 (Aparato Digestivo)');
+        check('q13', 'r', 'correct', 'Semana 6 (Aparato Digestivo)');
+        check('q14', 's', 'correct', 'Semana 6 (Aparato Digestivo)');
+        check('q15', 'r', 'correct', 'Semana 6 (Aparato Digestivo)');
+
+        const finalScore = Math.round((nota / 20) * 20);
+        const rb = document.getElementById('result-box');
+        rb.style.display = "block";
+        document.getElementById('score-text').innerText = `Puntaje Final: ${finalScore} / 20`;
+        rb.className = finalScore >= 11 ? "correct-box" : "error-box";
+
+        let html = `<div class="feedback-title">📋 Mi Reporte Final</div>`;
+        
+        // Temas bien logrados
+        let temas = ['Repaso Sentidos', 'Semana 4 (Funciones Vitales)', 'Semana 5 (Aparato Locomotor)', 'Semana 6 (Aparato Digestivo)'];
+        let logrados = temas.filter(t => !fallos.includes(t));
+        
+        if(logrados.length > 0) {
+            html += `<p>✅ <strong>¡Lo hiciste genial en:</strong> ${logrados.join(', ')}.</p>`;
+        }
+
+        if(fallos.length > 0) {
+            html += `<p>📚 <strong>Edward, te recomiendo repasar:</strong></p><ul>`;
+            [...new Set(fallos)].forEach(s => html += `<li>La ficha de la <strong>${s}</strong>. ¡Tú puedes hacerlo mejor!</li>`);
+            html += `</ul>`;
+        }
+
+        if(dudasDetectadas.length > 0) {
+            html += `<div class="duda-nota">🤔 Noté que dudaste un poquito en <strong>${[...new Set(dudasDetectadas)].join(', ')}</strong>. ¡No tengas miedo, confía en lo que sabes!</div>`;
+        }
+
+        document.getElementById('feedback-content').innerHTML = html;
+        window.scrollTo({ top: rb.offsetTop, behavior: 'smooth' });
+    }
+</script>
+</body>
+</html>
