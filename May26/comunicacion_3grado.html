@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Maestro de Comunicación - Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #fff5f8; padding: 15px; color: #2c3e50; }
+        .container { max-width: 850px; background: white; margin: auto; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 5px solid #ff4757; }
+        h1 { text-align: center; color: #ff4757; text-transform: uppercase; font-size: 1.5em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        
+        .section-header { 
+            position: -webkit-sticky; position: sticky; top: 0; 
+            background: #ff4757; color: #fff; padding: 15px; 
+            border-radius: 10px; margin: 25px 0 15px 0; 
+            text-align: center; font-weight: bold; z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+        }
+
+        .section { margin-bottom: 20px; padding: 18px; border: 2px solid #f1f2f6; border-radius: 12px; background-color: #ffffff; transition: 0.3s; }
+        .incomplete { border: 3px solid #e74c3c !important; background-color: #fff5f5 !important; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #2f3542; display: block; line-height: 1.4; }
+        
+        .audio-btn { background: #54a0ff; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; margin-bottom: 10px; font-size: 1em; display: flex; align-items: center; gap: 8px; font-weight: bold; }
+        .audio-btn:hover { background: #2e86de; transform: scale(1.02); }
+
+        input[type="text"], select { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #ced4da; font-size: 16px; font-family: inherit; box-sizing: border-box; }
+        .options label { display: block; margin: 10px 0; cursor: pointer; padding: 10px; border-radius: 8px; border: 1px solid #eee; transition: 0.2s; }
+        .options label:hover { background: #fff5f8; border-color: #ff4757; }
+        
+        .map-container { display: flex; flex-direction: column; align-items: center; gap: 15px; background: #f8f9fa; padding: 20px; border-radius: 15px; border: 2px dashed #ff4757; }
+        .map-node { background: #fff; border: 2px solid #ff4757; padding: 10px; border-radius: 8px; width: 220px; text-align: center; }
+
+        button#btn-evaluar { display: block; width: 100%; max-width: 350px; height: 65px; margin: 40px auto; background: #ff4757; color: white; border: none; border-radius: 35px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #c0392b; }
+        
+        #result-box { display: none; padding: 25px; border-radius: 20px; margin-top: 30px; border: 4px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+        
+        .revision-container { margin-top: 20px; background: white; border-radius: 10px; padding: 15px; border: 1px solid #ccc; }
+        .item-revision { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; text-align: left; }
+        .resp-correcta { color: #27ae60; font-weight: bold; }
+        .resp-usuario { font-style: italic; color: #555; }
+        .duda-alerta { color: #e67e22; font-weight: bold; font-size: 0.85em; margin-top: 5px; background: #fff8e1; padding: 5px; border-radius: 4px; border-left: 3px solid #ffb300; }
+        .missing-alert { color: #e74c3c; font-weight: bold; text-align: center; margin-bottom: 15px; display: none; padding: 10px; background: #fdf2f2; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Gran Desafío de Comunicación</h1>
+    <h2>Edward, ¡concéntrate en cada sonido y cada tilde!</h2>
+
+    <div id="missing-msg" class="missing-alert">⚠️ ¡Todavía te faltan preguntas! Busca las que están en rojo.</div>
+
+    <form id="examenComu">
+        
+        <div class="section-header">1. Dictado y Uso de la H</div>
+        <div class="section" id="sec_q1">
+            <button type="button" class="audio-btn" onclick="speak('Había una vez un pequeño huevo en el nido.')">👂 Escuchar Oración</button>
+            <span class="question-title">1. Escribe la oración que escuchaste (Usa correctamente la H y las tildes):</span>
+            <input type="text" id="q1" oninput="track('q1'); clearRed('sec_q1')">
+        </div>
+        <div class="section" id="sec_q2">
+            <span class="question-title">2. ¿Qué palabra completa la frase: "La gallina puso un ___ muy grande"?</span>
+            <div class="options">
+                <label><input type="radio" name="q2" value="uevo" onclick="track('q2'); clearRed('sec_q2')"> uevo</label>
+                <label><input type="radio" name="q2" value="huevo" onclick="track('q2'); clearRed('sec_q2')"> huevo</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q3">
+            <button type="button" class="audio-btn" onclick="speak('Hielo')">👂 Escuchar Palabra</button>
+            <span class="question-title">3. Escribe la palabra que acabas de escuchar:</span>
+            <input type="text" id="q3" oninput="track('q3'); clearRed('sec_q3')" placeholder="Escribe aquí...">
+        </div>
+        <div class="section" id="sec_q4">
+            <span class="question-title">4. ¿Cuál de estos animales es un pariente del perro que se escribe con H?</span>
+            <div class="options">
+                <label><input type="radio" name="q4" value="Iguana" onclick="track('q4'); clearRed('sec_q4')"> Iguana</label>
+                <label><input type="radio" name="q4" value="Hiena" onclick="track('q4'); clearRed('sec_q4')"> Hiena</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q5">
+            <span class="question-title">5. ¿Cómo se escribe la palabra que significa "encontrar algo" (verbo hallar)?</span>
+            <input type="text" id="q5" oninput="track('q5'); clearRed('sec_q5')" placeholder="h_ _ _ _ _">
+        </div>
+        <div class="section" id="sec_q6">
+            <span class="question-title">6. ¿Qué palabra está escrita SIN errores?</span>
+            <div class="options">
+                <label><input type="radio" name="q6" value="Hermano" onclick="track('q6'); clearRed('sec_q6')"> Hermano</label>
+                <label><input type="radio" name="q6" value="Ermano" onclick="track('q6'); clearRed('sec_q6')"> Ermano</label>
+            </div>
+        </div>
+
+        <div class="section-header">2. El Ritmo de las Palabras (SEGA)</div>
+        <div class="section" id="sec_q7">
+            <button type="button" class="audio-btn" onclick="speak('Papá')">👂 Escuchar Sonido</button>
+            <span class="question-title">7. En la palabra que escuchaste, ¿dónde está la fuerza de voz?</span>
+            <div class="options">
+                <label><input type="radio" name="q7" value="Ultima" onclick="track('q7'); clearRed('sec_q7')"> En la última sílaba (Aguda)</label>
+                <label><input type="radio" name="q7" value="Penultima" onclick="track('q7'); clearRed('sec_q7')"> En la penúltima (Grave)</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q8">
+            <span class="question-title">8. Escribe "BRUGULA" correctamente:</span>
+            <input type="text" id="q8" oninput="track('q8'); clearRed('sec_q8')">
+        </div>
+        <div class="section" id="sec_q9">
+            <span class="question-title">9. ¿Cuál de estas palabras es GRAVE y termina en vocal, por eso no lleva tilde?</span>
+            <div class="options">
+                <label><input type="radio" name="q9" value="Cocinero" onclick="track('q9'); clearRed('sec_q9')"> Cocinero</label>
+                <label><input type="radio" name="q9" value="Jardin" onclick="track('q9'); clearRed('sec_q9')"> Jardín</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q10">
+            <button type="button" class="audio-btn" onclick="speak('Botón')">👂 Escuchar Palabra</button>
+            <span class="question-title">10. Escribe la palabra que escuchaste (es aguda y termina en N, ponle la tilde):</span>
+            <input type="text" id="q10" oninput="track('q10'); clearRed('sec_q10')">
+        </div>
+        <div class="section" id="sec_q11">
+            <span class="question-title">11. Si la mayor fuerza de voz está en la antepenúltima sílaba, ¿qué nombre recibe?</span>
+            <select id="q11" onchange="track('q11'); clearRed('sec_q11')">
+                <option value="">-- Selecciona --</option>
+                <option value="Esdrújula">Esdrújula</option>
+                <option value="Grave">Grave</option>
+                <option value="Aguda">Aguda</option>
+            </select>
+        </div>
+        <div class="section" id="sec_q12">
+            <span class="question-title">12. Marca la palabra que está correctamente tildada por ser grave:</span>
+            <div class="options">
+                <label><input type="radio" name="q12" value="Lapiz" onclick="track('q12'); clearRed('sec_q12')"> Lapiz</label>
+                <label><input type="radio" name="q12" value="Lápiz" onclick="track('q12'); clearRed('sec_q12')"> Lápiz</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q13">
+            <span class="question-title">13. Separa en sílabas "MÚSICA" e indica la tónica:</span>
+            <input type="text" id="q13" oninput="track('q13'); clearRed('sec_q13')">
+        </div>
+        <div class="section" id="sec_q14">
+            <span class="question-title">14. ¿Cuál de estas palabras es Aguda y NO lleva tilde porque termina en J?</span>
+            <div class="options">
+                <label><input type="radio" name="q14" value="Reloj" onclick="track('q14'); clearRed('sec_q14')"> Reloj</label>
+                <label><input type="radio" name="q14" value="Avión" onclick="track('q14'); clearRed('sec_q14')"> Avión</label>
+            </div>
+        </div>
+
+        <div class="section-header">3. Pausas y Signos (La Coma)</div>
+        <div class="section" id="sec_q15">
+            <span class="question-title">15. Falta una coma para llamar a Edward. Escríbela bien: "Edward trae tus colores."</span>
+            <input type="text" id="q15" oninput="track('q15'); clearRed('sec_q15')">
+        </div>
+        <div class="section" id="sec_q16">
+            <span class="question-title">16. ¿Cómo se llama la coma que separa las cosas que compramos en el mercado?</span>
+            <input type="text" id="q16" oninput="track('q16'); clearRed('sec_q16')" placeholder="E_ _ _ _ _ _ _ _ _ _">
+        </div>
+        <div class="section" id="sec_q17">
+            <span class="question-title">17. ¿Qué letra reemplaza a la coma al final de una lista?</span>
+            <input type="text" id="q17" oninput="track('q17'); clearRed('sec_q17')" maxlength="1">
+        </div>
+        <div class="section" id="sec_q18">
+            <span class="question-title">18. En: "Mila, mi gatita, es muy tierna", ¿qué tipo de coma es?</span>
+            <select id="q18" onchange="track('q18'); clearRed('sec_q18')">
+                <option value="">-- Elige --</option>
+                <option value="Explicativa">Explicativa (aclara quién es Mila)</option>
+                <option value="Vocativa">Vocativa</option>
+            </select>
+        </div>
+        <div class="section" id="sec_q19">
+            <span class="question-title">19. Escribe una lista de 3 frutas usando la coma correctamente:</span>
+            <input type="text" id="q19" oninput="track('q19'); clearRed('sec_q19')">
+        </div>
+        <div class="section" id="sec_q20">
+            <span class="question-title">20. Signo que sirve para marcar el final de lo que escribimos:</span>
+            <input type="text" id="q20" oninput="track('q20'); clearRed('sec_q20')" placeholder="P_ _ _ _">
+        </div>
+
+        <div class="section-header">4. Sustantivos y Artículos</div>
+        <div class="section" id="sec_q21">
+            <span class="question-title">21. Escribe el artículo indeterminado para "____ nubes blancas" (femenino plural):</span>
+            <input type="text" id="q21" oninput="track('q21'); clearRed('sec_q21')">
+        </div>
+        <div class="section" id="sec_q22">
+            <span class="question-title">22. ¿Cómo se le dice a un grupo de soldados?</span>
+            <select id="q22" onchange="track('q22'); clearRed('sec_q22')">
+                <option value="">-- Selecciona --</option>
+                <option value="Ejército">Ejército</option>
+                <option value="Cardumen">Cardumen</option>
+            </select>
+        </div>
+        <div class="section" id="sec_q23">
+            <span class="question-title">23. ¿Cuál es el sustantivo base (primitivo) de "PECERÍA"?</span>
+            <input type="text" id="q23" oninput="track('q23'); clearRed('sec_q23')">
+        </div>
+        <div class="section" id="sec_q24">
+            <span class="question-title">24. Escribe el nombre de tu colegio (es un sustantivo propio):</span>
+            <input type="text" id="q24" oninput="track('q24'); clearRed('sec_q24')">
+        </div>
+        <div class="section" id="sec_q25">
+            <span class="question-title">25. El artículo y el sustantivo deben tener el mismo:</span>
+            <div class="options">
+                <label><input type="radio" name="q25" value="correct" onclick="track('q25'); clearRed('sec_q25')"> Género y Número</label>
+                <label><input type="radio" name="q25" value="error" onclick="track('q25'); clearRed('sec_q25')"> Color y tamaño</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q26">
+            <span class="question-title">26. Femenino del sustantivo "EL CABALLO":</span>
+            <input type="text" id="q26" oninput="track('q26'); clearRed('sec_q26')">
+        </div>
+        <div class="section" id="sec_q27">
+            <span class="question-title">27. Sustantivo individual de "ARCHIPIÉLAGO":</span>
+            <input type="text" id="q27" oninput="track('q27'); clearRed('sec_q27')" placeholder="I_ _ _">
+        </div>
+
+        <div class="section-header">5. Sílabas y Palabras Compuestas</div>
+        <div class="section" id="sec_q28">
+            <span class="question-title">28. Una palabra que no se puede separar (una sílaba) se llama:</span>
+            <div class="options">
+                <label><input type="radio" name="q28" value="Monosilaba" onclick="track('q28'); clearRed('sec_q28')"> Monosílaba</label>
+                <label><input type="radio" name="q28" value="Bisilaba" onclick="track('q28'); clearRed('sec_q28')"> Bisílaba</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q29">
+            <span class="question-title">29. Forma la palabra compuesta: PARA + RAYOS =</span>
+            <input type="text" id="q29" oninput="track('q29'); clearRed('sec_q29')">
+        </div>
+        <div class="section" id="sec_q30">
+            <span class="question-title">30. Separa en sílabas la palabra "CARAMELO":</span>
+            <input type="text" id="q30" oninput="track('q30'); clearRed('sec_q30')">
+        </div>
+        <div class="section" id="sec_q31">
+            <span class="question-title">31. ¿Qué palabra está formada por dos palabras simples?</span>
+            <div class="options">
+                <label><input type="radio" name="q31" value="Cumpleaños" onclick="track('q31'); clearRed('sec_q31')"> Cumpleaños</label>
+                <label><input type="radio" name="q31" value="Zapato" onclick="track('q31'); clearRed('sec_q31')"> Zapato</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q32">
+            <span class="question-title">32. Sílaba tónica (la que suena fuerte) en "VENTANA":</span>
+            <input type="text" id="q32" oninput="track('q32'); clearRed('sec_q32')">
+        </div>
+        <div class="section" id="sec_q33">
+            <span class="question-title">33. La palabra "GATO" por su número de sílabas es:</span>
+            <div class="options">
+                <label><input type="radio" name="q33" value="Bisilaba" onclick="track('q33'); clearRed('sec_q33')"> Bisílaba</label>
+                <label><input type="radio" name="q33" value="Monosilaba" onclick="track('q33'); clearRed('sec_q33')"> Monosílaba</label>
+            </div>
+        </div>
+
+        <div class="section-header">6. Campos Semánticos</div>
+        <div class="section" id="sec_q34">
+            <span class="question-title">34. Campo semántico de: "Pantalón, Camisa, Polo, Casaca":</span>
+            <input type="text" id="q34" oninput="track('q34'); clearRed('sec_q34')">
+        </div>
+        <div class="section" id="sec_q35">
+            <span class="question-title">35. Escribe un elemento del campo semántico "PLANETAS":</span>
+            <input type="text" id="q35" oninput="track('q35'); clearRed('sec_q35')">
+        </div>
+        <div class="section" id="sec_q36">
+            <span class="question-title">36. Palabra intrusa en "Cama, Sofá, Silla, Arroz":</span>
+            <input type="text" id="q36" oninput="track('q36'); clearRed('sec_q36')">
+        </div>
+        <div class="section" id="sec_q37">
+            <span class="question-title">37. ¿A qué grupo pertenecen "Vista, Olfato, Tacto"?</span>
+            <input type="text" id="q37" oninput="track('q37'); clearRed('sec_q37')">
+        </div>
+        <div class="section" id="sec_q38">
+            <span class="question-title">38. Campo semántico de "Perro, Vaca, Gato, Caballo":</span>
+            <input type="text" id="q38" oninput="track('q38'); clearRed('sec_q38')">
+        </div>
+        <div class="section" id="sec_q39">
+            <span class="question-title">39. El intruso en "Lunes, Martes, Abril, Sábado" es:</span>
+            <input type="text" id="q39" oninput="track('q39'); clearRed('sec_q39')">
+        </div>
+
+        <div class="section-header">7. Organizadores Visuales</div>
+        <div class="section" id="sec_q40">
+            <span class="question-title">40. Completa el Mapa Conceptual sobre "EL CUERPO HUMANO":</span>
+            <div class="map-container">
+                <div class="map-node">CUERPO HUMANO</div>
+                <div class="map-row">
+                    <div class="map-node">Huesos: <br><input type="text" id="m1" oninput="track('m1'); clearRed('sec_q40')" placeholder="¿Para que sirve? S..."></div>
+                    <div class="map-node">Músculos: <br><input type="text" id="m2" oninput="track('m2'); clearRed('sec_q40')" placeholder="¿Para que sirve? M..."></div>
+                </div>
+            </div>
+        </div>
+        <div class="section" id="sec_q41">
+            <span class="question-title">41. En un mapa conceptual, encerramos las palabras clave en:</span>
+            <div class="options">
+                <label><input type="radio" name="q41" value="Recuadros" onclick="track('q41'); clearRed('sec_q41')"> Recuadros o elipses</label>
+                <label><input type="radio" name="q41" value="Nubes" onclick="track('q41'); clearRed('sec_q41')"> Nubes gigantes con dibujos</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q42">
+            <span class="question-title">42. Un mapa mental usa flechas, colores y sobre todo muchos:</span>
+            <input type="text" id="q42" oninput="track('q42'); clearRed('sec_q42')" placeholder="D_ _ _ _ _ _">
+        </div>
+        <div class="section" id="sec_q43">
+            <span class="question-title">43. La idea principal de un Mapa Mental se coloca siempre en:</span>
+            <div class="options">
+                <label><input type="radio" name="q43" value="Centro" onclick="track('q43'); clearRed('sec_q43')"> El centro</label>
+                <label><input type="radio" name="q43" value="Abajo" onclick="track('q43'); clearRed('sec_q43')"> La parte de abajo</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q44">
+            <span class="question-title">44. ¿Qué organizador usa "palabras de enlace" entre las ideas?</span>
+            <input type="text" id="q44" oninput="track('q44'); clearRed('sec_q44')" placeholder="M_ _ _ C_ _ _ _ _ _ _ _ _">
+        </div>
+        <div class="section" id="sec_q45">
+            <span class="question-title">45. Los organizadores sirven para resumir textos largos:</span>
+            <div class="options">
+                <label><input type="radio" name="q45" value="V" onclick="track('q45'); clearRed('sec_q45')"> Verdadero</label>
+                <label><input type="radio" name="q45" value="F" onclick="track('q45'); clearRed('sec_q45')"> Falso</label>
+            </div>
+        </div>
+
+        <div class="section-header">8. Miscelánea de Repaso</div>
+        <div class="section" id="sec_q46">
+            <button type="button" class="audio-btn" onclick="speak('La manzana es una fruta dulce.')">👂 Escuchar Dictado</button>
+            <span class="question-title">46. Escribe exactamente lo que escuchaste (Mayúscula y punto final):</span>
+            <input type="text" id="q46" oninput="track('q46'); clearRed('sec_q46')">
+        </div>
+        <div class="section" id="sec_q47">
+            <span class="question-title">47. Escribe el sustantivo derivado de "PAN" (persona que lo hace):</span>
+            <input type="text" id="q47" oninput="track('q47'); clearRed('sec_q47')">
+        </div>
+        <div class="section" id="sec_q48">
+            <span class="question-title">48. ¿Cuántas sílabas tiene la palabra "SOL"?</span>
+            <input type="text" id="q48" oninput="track('q48'); clearRed('sec_q48')">
+        </div>
+        <div class="section" id="sec_q49">
+            <span class="question-title">49. La palabra "CAFÉ" lleva tilde porque es:</span>
+            <div class="options">
+                <label><input type="radio" name="q49" value="correct" onclick="track('q49'); clearRed('sec_q49')"> Aguda terminada en vocal</label>
+                <label><input type="radio" name="q49" value="error" onclick="track('q49'); clearRed('sec_q49')"> Esdrújula</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q50">
+            <span class="question-title">50. ¿Cuál es tu sustantivo propio (tu nombre)? Escríbelo con mayúscula:</span>
+            <input type="text" id="q50" oninput="track('q50'); clearRed('sec_q50')">
+        </div>
+
+        <button type="button" id="btn-evaluar" onclick="validar()">✨ CALIFICAR EXAMEN</button>
+    </form>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+        <div id="revision-lista" class="revision-container">
+            <h4>🔍 Revisión de tus respuestas:</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function speak(t) {
+        const m = new SpeechSynthesisUtterance();
+        m.text = t; m.lang = 'es-PE'; window.speechSynthesis.speak(m);
+    }
+
+    let logDudas = {};
+    function track(id) { logDudas[id] = (logDudas[id] || 0) + 1; }
+    function clearRed(id) { 
+        document.getElementById(id).classList.remove('incomplete'); 
+        if(document.querySelectorAll('.incomplete').length === 0) document.getElementById('missing-msg').style.display='none';
+    }
+
+    const clave = [
+        {id:'q1', t:'t', c:'Había una vez un pequeño huevo en el nido.', p:'Dictado Oración H'},
+        {id:'q2', t:'r', c:'huevo', p:'Gallina huevo'},
+        {id:'q3', t:'t', c:'hielo', p:'Dictado Hielo'},
+        {id:'q4', t:'r', c:'Hiena', p:'Animal con H'},
+        {id:'q5', t:'t', c:'hallar', p:'Verbo encontrar'},
+        {id:'q6', t:'r', c:'Hermano', p:'Ortografía Hermano'},
+        {id:'q7', t:'r', c:'Ultima', p:'Fuerza de voz Papá'},
+        {id:'q8', t:'t', c:'brújula', p:'Ortografía Brújula'},
+        {id:'q9', t:'r', c:'Cocinero', p:'Grave sin tilde'},
+        {id:'q10', t:'t', c:'camión', p:'Dictado Camión'},
+        {id:'q11', t:'s', c:'Esdrújula', p:'Posición antepenúltima'},
+        {id:'q12', t:'r', c:'Lápiz', p:'Tilde Lápiz'},
+        {id:'q13', t:'t', c:'mú', p:'Tónica Música'},
+        {id:'q14', t:'r', c:'Reloj', p:'Aguda sin tilde'},
+        {id:'q15', t:'t', c:',', p:'Coma llamar'},
+        {id:'q16', t:'t', c:'enumerativa', p:'Nombre coma lista'},
+        {id:'q17', t:'t', c:'y', p:'Letra final lista'},
+        {id:'q18', t:'s', c:'Explicativa', p:'Tipo coma Mila'},
+        {id:'q19', t:'t', c:',', p:'Lista de frutas'},
+        {id:'q20', t:'t', c:'punto', p:'Final oración'},
+        {id:'q21', t:'t', c:'unas', p:'Art. nubes'},
+        {id:'q22', t:'s', c:'Ejército', p:'Colectivo soldado'},
+        {id:'q23', t:'t', c:'pez', p:'Primitivo pecería'},
+        {id:'q24', t:'t', c:'perú', p:'Nombre país'},
+        {id:'q25', t:'r', c:'correct', p:'Concordancia art-sust'},
+        {id:'q26', t:'t', c:'yegua', p:'Femenino caballo'},
+        {id:'q27', t:'t', c:'isla', p:'Individual archipiélago'},
+        {id:'q28', t:'r', c:'Monosilaba', p:'Clase palabra 1 sílaba'},
+        {id:'q29', t:'t', c:'pararrayos', p:'Compuesta para+rayos'},
+        {id:'q30', t:'t', c:'ca-ra-me-lo', p:'Sílaba Caramelo'},
+        {id:'q31', t:'r', c:'Cumpleaños', p:'Palabra compuesta'},
+        {id:'q32', t:'t', c:'ta', p:'Tónica Ventana'},
+        {id:'q33', t:'r', c:'Bisilaba', p:'Clase palabra Gato'},
+        {id:'q34', t:'t', c:'ropa', p:'Campo vestimenta'},
+        {id:'q35', t:'t', c:'tierra', p:'Ejemplo Planeta'},
+        {id:'q36', t:'t', c:'arroz', p:'Intruso muebles'},
+        {id:'q37', t:'t', c:'sentidos', p:'Campo sentidos'},
+        {id:'q38', t:'t', c:'animales', p:'Campo mamíferos'},
+        {id:'q39', t:'t', c:'abril', p:'Intruso días'},
+        {id:'m1', t:'t', c:'sosten', p:'Mapa: Sostiene'},
+        {id:'m2', t:'t', c:'movimiento', p:'Mapa: Movimiento'},
+        {id:'q41', t:'r', c:'Recuadros', p:'Encerramos ideas'},
+        {id:'q42', t:'t', c:'dibujos', p:'Mapa mental usa'},
+        {id:'q43', t:'r', c:'Centro', p:'Centro Mapa Mental'},
+        {id:'q44', t:'t', c:'conceptual', p:'Mapa con enlaces'},
+        {id:'q45', t:'r', c:'V', p:'Función organizador'},
+        {id:'q46', t:'t', c:'La manzana es una fruta dulce.', p:'Dictado Manzana'},
+        {id:'q47', t:'t', c:'panadero', p:'Derivado Pan'},
+        {id:'q48', t:'t', c:'1', p:'Sílabas Sol'},
+        {id:'q49', t:'r', c:'correct', p:'Tilde Café'},
+        {id:'q50', t:'t', c:'edward', p:'Nombre propio Edward'}
+    ];
+
+    function validar() {
+        const f = document.getElementById('examenComu');
+        let vacios = [];
+        clave.forEach(c => {
+            let val = "";
+            let el = document.getElementById(c.id);
+            if(c.t === 'r') { if(f.querySelector(`input[name="${c.id}"]:checked`)) val = "ok"; } 
+            else if(el && el.value.trim() !== "") val = "ok";
+
+            if(val === "") {
+                let secId = c.id.startsWith('m') ? 'sec_q40' : (el ? el.closest('.section').id : 'sec_'+c.id);
+                document.getElementById(secId).classList.add('incomplete');
+                vacios.push(document.getElementById(secId));
+            }
+        });
+
+        if(vacios.length > 0) {
+            document.getElementById('missing-msg').style.display='block';
+            vacios[0].scrollIntoView({behavior:'smooth', block:'center'});
+            return;
+        }
+        calificar();
+    }
+
+    function calificar() {
+        const f = document.getElementById('examenComu');
+        let nota = 0;
+        let itemsHTML = "";
+
+        clave.forEach(c => {
+            let uVal = "";
+            if(c.t === 'r') uVal = f.querySelector(`input[name="${c.id}"]:checked`).value;
+            else if(c.t === 's') uVal = f[c.id].value;
+            else uVal = document.getElementById(c.id).value;
+
+            let strictVal = uVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            let strictCorrect = c.c.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+            let esOk = (c.t === 't') ? strictVal.includes(strictCorrect) : (uVal === c.c);
+            
+            if(esOk) nota++;
+
+            itemsHTML += `<div class="item-revision">
+                <p><strong>${c.p}</strong></p>
+                <p>Tu respuesta: <span class="resp-usuario">${uVal}</span> ${esOk ? '✅' : '❌'}</p>
+                ${!esOk ? `<p class="resp-correcta">Correcta: ${c.c === 'correct' ? 'La primera opción' : c.c}</p>` : ''}
+                ${logDudas[c.id] > 2 ? `<p class="duda-alerta">🤔 Edward, cambiaste mucho de respuesta aquí.</p>` : ''}
+            </div>`;
+        });
+
+        const finalVal = Math.round((nota / clave.length) * 20);
+        document.getElementById('result-box').style.display = 'block';
+        document.getElementById('score-text').innerText = `Puntaje Final: ${finalVal} / 20`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        document.getElementById('feedback-content').innerHTML = `<h4>¡Análisis del examen!</h4><p>Edward, repasa los errores marcados con la X para aprender más.</p>`;
+        window.scrollTo({top: document.getElementById('result-box').offsetTop, behavior:'smooth'});
+    }
+</script>
+</body>
+</html>
