@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafío Matemático de Edward - 3er Grado</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #f0f4f8; padding: 15px; color: #2c3e50; }
+        .container { max-width: 900px; background: white; margin: auto; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 6px solid #3498db; }
+        h1 { text-align: center; color: #2980b9; text-transform: uppercase; font-size: 1.8em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        
+        .section-header { 
+            position: -webkit-sticky; position: sticky; top: 0; 
+            background: #3498db; color: #fff; padding: 15px; 
+            border-radius: 12px; margin: 30px 0 15px 0; 
+            text-align: center; font-weight: bold; z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+        }
+
+        .section { margin-bottom: 20px; padding: 20px; border: 2px solid #e1e8ed; border-radius: 15px; background-color: #ffffff; transition: 0.3s; }
+        .incomplete { border: 3px solid #e74c3c !important; background-color: #fff5f5 !important; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #2c3e50; display: block; line-height: 1.5; font-size: 1.1em; }
+        
+        input[type="text"], input[type="number"] { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #ced4da; font-size: 16px; font-family: inherit; box-sizing: border-box; }
+        .options label { display: block; margin: 10px 0; cursor: pointer; padding: 12px; border-radius: 10px; border: 1px solid #eee; transition: 0.2s; }
+        .options label:hover { background: #eef7ff; border-color: #3498db; }
+        
+        /* Pirámide Estilo */
+        .pyramid { display: flex; flex-direction: column; align-items: center; gap: 5px; background: #f9f9f9; padding: 15px; border-radius: 10px; }
+        .pyr-row { display: flex; gap: 5px; }
+        .pyr-box { width: 60px; height: 40px; border: 2px solid #2980b9; display: flex; align-items: center; justify-content: center; background: white; border-radius: 5px; font-weight: bold; }
+        .pyr-input { width: 50px !important; padding: 5px !important; text-align: center; height: 30px; }
+
+        button#btn-evaluar { display: block; width: 100%; max-width: 400px; height: 70px; margin: 40px auto; background: #27ae60; color: white; border: none; border-radius: 35px; font-size: 22px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #1e8449; transition: 0.2s; }
+        button:active { transform: translateY(3px); box-shadow: 0 2px #1e8449; }
+        
+        #result-box { display: none; padding: 25px; border-radius: 20px; margin-top: 30px; border: 4px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+        
+        .revision-container { margin-top: 20px; background: white; border-radius: 15px; padding: 20px; border: 1px solid #ccc; }
+        .item-revision { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed #bbb; text-align: left; }
+        .resp-correcta { color: #27ae60; font-weight: bold; background: #f0fff0; padding: 5px; border-radius: 5px; display: inline-block; margin-top: 5px; }
+        .explicacion { color: #2980b9; font-size: 0.95em; margin-top: 8px; font-style: italic; border-left: 3px solid #3498db; padding-left: 10px; }
+        .missing-alert { color: #e74c3c; font-weight: bold; text-align: center; margin-bottom: 15px; display: none; padding: 10px; background: #fdf2f2; border-radius: 10px; border: 1px solid #e74c3c; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚀 Mega Desafío Matemático</h1>
+    <h2>Edward, ¡demuestra que eres un experto con los números!</h2>
+
+    <div id="missing-msg" class="missing-alert">⚠️ ¡Atención Edward! Te faltan responder algunas preguntas. Revisa las que están en rojo.</div>
+
+    <form id="examenMate">
+        
+        <div class="section-header">1. El Valor de los Números</div>
+        <div class="section" id="sec_q1">
+            <span class="question-title">1. Si tengo el número 458, ¿cuántas DECENAS hay en total en ese número?</span>
+            <input type="number" id="q1" oninput="track('q1'); clearRed('sec_q1')" placeholder="Piensa bien...">
+        </div>
+        <div class="section" id="sec_q2">
+            <span class="question-title">2. Descompón 3,407 según su valor posicional:</span>
+            <input type="text" id="q2" oninput="track('q2'); clearRed('sec_q2')" placeholder="Ej: 3UM + 4C...">
+        </div>
+        <div class="section" id="sec_q3">
+            <span class="question-title">3. ¿Qué número se forma con 5 Centenas, 12 Decenas y 8 Unidades?</span>
+            <input type="number" id="q3" oninput="track('q3'); clearRed('sec_q3')">
+        </div>
+        <div class="section" id="sec_q4">
+            <span class="question-title">4. En el número 8,921, ¿qué posición ocupa el dígito 9?</span>
+            <div class="options">
+                <label><input type="radio" name="q4" value="Centenas" onclick="track('q4'); clearRed('sec_q4')"> Centenas</label>
+                <label><input type="radio" name="q4" value="Decenas" onclick="track('q4'); clearRed('sec_q4')"> Decenas</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q5">
+            <span class="question-title">5. ¿Cuántas UNIDADES equivalen a 15 Decenas?</span>
+            <input type="number" id="q5" oninput="track('q5'); clearRed('sec_q5')">
+        </div>
+        <div class="section" id="sec_q6">
+            <span class="question-title">6. Si cambio la cifra de las centenas del número 1,245 por un 7, ¿qué número obtengo?</span>
+            <input type="number" id="q6" oninput="track('q6'); clearRed('sec_q6')">
+        </div>
+        <div class="section" id="sec_q7">
+            <span class="question-title">7. ¿Cuál es el valor del dígito 5 en el número 5,612?</span>
+            <div class="options">
+                <label><input type="radio" name="q7" value="5000" onclick="track('q7'); clearRed('sec_q7')"> 5,000 unidades</label>
+                <label><input type="radio" name="q7" value="500" onclick="track('q7'); clearRed('sec_q7')"> 500 unidades</label>
+            </div>
+        </div>
+
+        <div class="section-header">2. Escritura, Anterior y Posterior</div>
+        <div class="section" id="sec_q8">
+            <span class="question-title">8. Escribe en letras el número 4,025:</span>
+            <input type="text" id="q8" oninput="track('q8'); clearRed('sec_q8')">
+        </div>
+        <div class="section" id="sec_q9">
+            <span class="question-title">9. ¿Cuál es el número ANTERIOR a 7,000?</span>
+            <input type="number" id="q9" oninput="track('q9'); clearRed('sec_q9')">
+        </div>
+        <div class="section" id="sec_q10">
+            <span class="question-title">10. ¿Cuál es el número POSTERIOR a 3,999?</span>
+            <input type="number" id="q10" oninput="track('q10'); clearRed('sec_q10')">
+        </div>
+        <div class="section" id="sec_q11">
+            <span class="question-title">11. Si un número es el posterior de 5,420, ¿qué número es?</span>
+            <input type="number" id="q11" oninput="track('q11'); clearRed('sec_q11')">
+        </div>
+        <div class="section" id="sec_q12">
+            <span class="question-title">12. Escribe con números: "Ocho mil quinientos dos"</span>
+            <input type="number" id="q12" oninput="track('q12'); clearRed('sec_q12')">
+        </div>
+        <div class="section" id="sec_q13">
+            <span class="question-title">13. Ordena de MAYOR a MENOR: 4,501 - 4,510 - 4,150</span>
+            <input type="text" id="q13" oninput="track('q13'); clearRed('sec_q13')">
+        </div>
+        <div class="section" id="sec_q14">
+            <span class="question-title">14. ¿Qué número está entre 8,109 y 8,111?</span>
+            <input type="number" id="q14" oninput="track('q14'); clearRed('sec_q14')">
+        </div>
+
+        <div class="section-header">3. Sumas y Restas (Llevando y Prestando)</div>
+        <div class="section" id="sec_q15">
+            <span class="question-title">15. Resuelve: 458 + 275</span>
+            <input type="number" id="q15" oninput="track('q15'); clearRed('sec_q15')">
+        </div>
+        <div class="section" id="sec_q16">
+            <span class="question-title">16. Resuelve: 900 - 456 (Cuidado con los ceros del vecino)</span>
+            <input type="number" id="q16" oninput="track('q16'); clearRed('sec_q16')">
+        </div>
+        <div class="section" id="sec_q17">
+            <span class="question-title">17. En una tienda había 1,200 galletas. Si se vendieron 350, ¿cuántas quedan?</span>
+            <input type="number" id="q17" oninput="track('q17'); clearRed('sec_q17')">
+        </div>
+        <div class="section" id="sec_q18">
+            <span class="question-title">18. Edward tiene 45 soles y su papá le regala 38 soles más. ¿Cuánto tiene ahora?</span>
+            <input type="number" id="q18" oninput="track('q18'); clearRed('sec_q18')">
+        </div>
+        <div class="section" id="sec_q19">
+            <span class="question-title">19. ¿Cuánto le falta a 670 para llegar a 1,000?</span>
+            <input type="number" id="q19" oninput="track('q19'); clearRed('sec_q19')">
+        </div>
+        <div class="section" id="sec_q20">
+            <span class="question-title">20. Suma: 2,345 + 1,890</span>
+            <input type="number" id="q20" oninput="track('q20'); clearRed('sec_q20')">
+        </div>
+        <div class="section" id="sec_q21">
+            <span class="question-title">21. Si a un número le resto 150 y me queda 300, ¿qué número era?</span>
+            <input type="number" id="q21" oninput="track('q21'); clearRed('sec_q21')">
+        </div>
+
+        <div class="section-header">4. Propiedades de la Adición</div>
+        <div class="section" id="sec_q22">
+            <span class="question-title">22. Si sabemos que 15 + 20 = 35, ¿cuánto es 20 + 15?</span>
+            <input type="number" id="q22" oninput="track('q22'); clearRed('sec_q22')">
+        </div>
+        <div class="section" id="sec_q23">
+            <span class="question-title">23. ¿Cómo se llama la propiedad que dice que el orden de los números no cambia la suma?</span>
+            <div class="options">
+                <label><input type="radio" name="q23" value="Conmutativa" onclick="track('q23'); clearRed('sec_q23')"> Conmutativa</label>
+                <label><input type="radio" name="q23" value="Asociativa" onclick="track('q23'); clearRed('sec_q23')"> Asociativa</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q24">
+            <span class="question-title">24. ¿Cuánto es 456 + 0?</span>
+            <input type="number" id="q24" oninput="track('q24'); clearRed('sec_q24')">
+        </div>
+        <div class="section" id="sec_q25">
+            <span class="question-title">25. ¿Cómo se llama la propiedad cuando sumamos un número con CERO?</span>
+            <input type="text" id="q25" oninput="track('q25'); clearRed('sec_q25')" placeholder="Elemento ...">
+        </div>
+        <div class="section" id="sec_q26">
+            <span class="question-title">26. Completa para que sea Asociativa: (5 + 10) + 2 = 5 + (___ + 2)</span>
+            <input type="number" id="q26" oninput="track('q26'); clearRed('sec_q26')">
+        </div>
+        <div class="section" id="sec_q27">
+            <span class="question-title">27. Si Edward suma (2 + 8) primero y luego le suma 5, obtiene 15. ¿Obtendrá lo mismo si suma 2 + (8 + 5)?</span>
+            <div class="options">
+                <label><input type="radio" name="q27" value="Si" onclick="track('q27'); clearRed('sec_q27')"> Sí, es la propiedad asociativa.</label>
+                <label><input type="radio" name="q27" value="No" onclick="track('q27'); clearRed('sec_q27')"> No, el resultado cambia.</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q28">
+            <span class="question-title">28. ¿Cuál es el elemento neutro de la adición?</span>
+            <input type="number" id="q28" oninput="track('q28'); clearRed('sec_q28')">
+        </div>
+
+        <div class="section-header">5. Razonamiento Lógico</div>
+        <div class="section" id="sec_q29">
+            <span class="question-title">29. Completa la cima de la pirámide (Suma los dos de abajo):</span>
+            <div class="pyramid">
+                <div class="pyr-row"><div class="pyr-box"><input type="number" id="p1" class="pyr-input" oninput="track('p1'); clearRed('sec_q29')"></div></div>
+                <div class="pyr-row"><div class="pyr-box">15</div><div class="pyr-box">25</div></div>
+                <div class="pyr-row"><div class="pyr-box">7</div><div class="pyr-box">8</div><div class="pyr-box">17</div></div>
+            </div>
+        </div>
+        <div class="section" id="sec_q30">
+            <span class="question-title">30. ¿Qué número sigue en el patrón: 2 - 5 - 8 - 11 - ___?</span>
+            <input type="number" id="q30" oninput="track('q30'); clearRed('sec_q30')">
+        </div>
+        <div class="section" id="sec_q31">
+            <span class="question-title">31. Patrón de repetición: 🔴 - 🟦 - 🔴 - 🔴 - 🟦 - 🔴 - ___?</span>
+            <div class="options">
+                <label><input type="radio" name="q31" value="rojo" onclick="track('q31'); clearRed('sec_q31')"> 🔴 (Círculo rojo)</label>
+                <label><input type="radio" name="q31" value="azul" onclick="track('q31'); clearRed('sec_q31')"> 🟦 (Cuadrado azul)</label>
+            </div>
+        </div>
+        <div class="section" id="sec_q32">
+            <span class="question-title">32. ¿Qué número falta en el patrón: 100 - 90 - ___ - 70 - 60?</span>
+            <input type="number" id="q32" oninput="track('q32'); clearRed('sec_q32')">
+        </div>
+        <div class="section" id="sec_q33">
+            <span class="question-title">33. Sucesión con salto doble: 2 - 10 - 4 - 20 - 6 - ___?</span>
+            <input type="number" id="q33" oninput="track('q33'); clearRed('sec_q33')">
+        </div>
+        <div class="section" id="sec_q50">
+            <span class="question-title">50. Si una pirámide tiene en su base 10, 20 y 30. ¿Cuál es el número del tercer nivel (la punta)?</span>
+            <input type="number" id="q50" oninput="track('q50'); clearRed('sec_q50')">
+        </div>
+
+        <button type="button" id="btn-evaluar" onclick="validar()">✨ EVALUAR MI EXAMEN</button>
+    </form>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+        <div id="revision-lista" class="revision-container">
+            <h4>🔍 Lista de Revisión (Aprende de tus resultados):</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let logDudas = {};
+    function track(id) { logDudas[id] = (logDudas[id] || 0) + 1; }
+    function clearRed(id) { 
+        document.getElementById(id).classList.remove('incomplete'); 
+        if(document.querySelectorAll('.incomplete').length === 0) document.getElementById('missing-msg').style.display='none';
+    }
+
+    // Base de datos de 50 preguntas (Simplificada para el ejemplo pero funcional)
+    const baseDatos = [
+        {id:'q1', t:'n', c:45, p:'Decenas en 458', e:'Recuerda que 4 centenas son 40 decenas, más las 5 que ya tienes, son 45 en total.'},
+        {id:'q2', t:'t', c:'3um+4c+0d+7u', p:'Descomposición 3,407', e:'Debes mencionar cada posición: Unidades de Millar, Centenas, Decenas y Unidades.'},
+        {id:'q3', t:'n', c:628, p:'Formar número 5C, 12D, 8U', e:'¡Ojo! 12 decenas es igual a 1 Centena y 2 decenas. Por eso 5C + 1C = 6C.'},
+        {id:'q4', t:'r', c:'Centenas', p:'Posición del 9 en 8,921', e:'El 9 está en el tercer lugar de derecha a izquierda.'},
+        {id:'q5', t:'n', c:150, p:'Unidades en 15 Decenas', e:'Cada decena tiene 10 unidades. 15 veces 10 es 150.'},
+        {id:'q6', t:'n', c:1745, p:'Cambiar centena en 1,245', e:'Solo debías cambiar el 2 por el 7 en el lugar de las centenas.'},
+        {id:'q7', t:'r', c:'5000', p:'Valor del 5 en 5,612', e:'Como el 5 está en las Unidades de Millar, vale 5,000.'},
+        {id:'q8', t:'t', c:'cuatro mil veinticinco', p:'Escritura de 4,025', e:'Se escribe cuatro mil (espacio) veinticinco.'},
+        {id:'q9', t:'n', c:6999, p:'Anterior a 7,000', e:'A 7,000 le quitamos 1 y nos queda 6,999.'},
+        {id:'q10', t:'n', c:4000, p:'Posterior a 3,999', e:'Después del 999 sigue el mil. 3,000 + 1,000 = 4,000.'},
+        {id:'q11', t:'n', c:5421, p:'Posterior de 5,420', e:'Solo sumamos 1 a la unidad.'},
+        {id:'q12', t:'n', c:8502, p:'Escribir número 8,502', e:'Ocho mil (8) quinientos (5) dos (02).'},
+        {id:'q13', t:'t', c:'4510, 4501, 4150', p:'Ordenar mayor a menor', e:'Comparamos centenas y luego decenas.'},
+        {id:'q14', t:'n', c:8110, p:'Número entre 8,109 y 8,111', e:'Es el número que sigue de 109.'},
+        {id:'q15', t:'n', c:733, p:'Suma 458 + 275', e:'Recuerda llevar: 8+5=13 (llevo 1), 5+7+1=13 (llevo 1), 4+2+1=7.'},
+        {id:'q16', t:'n', c:444, p:'Resta 900 - 456', e:'Edward, al restar a cero, pide prestado al vecino. El 9 presta al 0, y ese 10 presta al último 0.'},
+        {id:'q17', t:'n', c:850, p:'Problema galletas 1200 - 350', e:'Es una resta prestando. 10 - 5 = 5.'},
+        {id:'q18', t:'n', c:83, p:'Edward soles 45 + 38', e:'Sumamos 5+8=13, llevas 1 a las decenas.'},
+        {id:'q19', t:'n', c:330, p:'Falta para llegar a 1000', e:'Restamos 1000 - 670.'},
+        {id:'q20', t:'n', c:4235, p:'Suma 2,345 + 1,890', e:'Cuidado al sumar las centenas 3+8=11.'},
+        {id:'q21', t:'n', c:450, p:'Número misterioso resta', e:'Si te quedó 300 después de quitar 150, sumamos 300+150 para saber el total.'},
+        {id:'q22', t:'n', c:35, p:'Propiedad Conmutativa', e:'El orden no cambia la suma.'},
+        {id:'q23', t:'r', c:'Conmutativa', p:'Nombre de propiedad de orden', e:'Conmutar significa cambiar de lugar.'},
+        {id:'q24', t:'n', c:456, p:'Suma con cero', e:'Cualquier número más cero es el mismo número.'},
+        {id:'q25', t:'t', c:'elemento neutro', p:'Nombre propiedad del cero', e:'El cero es el elemento neutro porque no afecta la suma.'},
+        {id:'q26', t:'n', c:10, p:'Completar Asociativa', e:'Los números dentro del paréntesis son los mismos, solo cambia quién se junta con quién.'},
+        {id:'q27', t:'r', c:'Si', p:'Caso propiedad asociativa', e:'Sí, agrupar de diferentes formas no cambia el resultado.'},
+        {id:'q28', t:'n', c:0, p:'¿Quién es el neutro?', e:'Es el cero.'},
+        {id:'p1', t:'n', c:40, p:'Cima pirámide 15+25', e:'Sumamos los dos ladrillos de abajo para obtener el de arriba.'},
+        {id:'q30', t:'n', c:14, p:'Patrón 2, 5, 8...', e:'El patrón es sumar 3 en cada paso.'},
+        {id:'q31', t:'r', c:'rojo', p:'Patrón colores', e:'La serie se repite: Rojo, Azul, Rojo.'},
+        {id:'q32', t:'n', c:80, p:'Patrón 100, 90...', e:'Estamos restando 10 cada vez.'},
+        {id:'q33', t:'n', c:30, p:'Salto doble 2, 10, 4, 20...', e:'Los números en posición par (10, 20) van de 10 en 10. Sigue el 30.'},
+        {id:'q50', t:'n', c:90, p:'Pirámide base 10-20-30', e:'Nivel 1: 10, 20, 30. Nivel 2: 30, 50. Nivel 3: 80.'}
+    ];
+
+    function validar() {
+        const f = document.getElementById('examenMate');
+        let vacios = [];
+        
+        baseDatos.forEach(c => {
+            let res = false;
+            let el = document.getElementById(c.id);
+            if(c.t === 'r') {
+                if(f.querySelector(`input[name="${c.id}"]:checked`)) res = true;
+            } else if(el && el.value.trim() !== "") res = true;
+
+            if(!res) {
+                let container = el ? el.closest('.section') : document.getElementById('sec_'+c.id);
+                container.classList.add('incomplete');
+                vacios.push(container);
+            }
+        });
+
+        if(vacios.length > 0) {
+            document.getElementById('missing-msg').style.display='block';
+            vacios[0].scrollIntoView({behavior:'smooth', block:'center'});
+            return;
+        }
+        calificar();
+    }
+
+    function calificar() {
+        const f = document.getElementById('examenMate');
+        let nota = 0;
+        let itemsHTML = "";
+
+        baseDatos.forEach(c => {
+            let uVal = "";
+            if(c.t === 'r') uVal = f.querySelector(`input[name="${c.id}"]:checked`).value;
+            else uVal = document.getElementById(c.id).value;
+
+            // Comparación flexible
+            let esOk = false;
+            if(c.t === 't') {
+                let sv = uVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+                let sc = c.c.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+                esOk = sv === sc || sv.includes(sc);
+            } else {
+                esOk = (uVal.toString() === c.c.toString());
+            }
+
+            if(esOk) nota++;
+
+            itemsHTML += `<div class="item-revision">
+                <p><strong>Pregunta: ${c.p}</strong></p>
+                <p>Tu respuesta: <span class="resp-usuario">${uVal}</span> ${esOk ? '✅ (¡Muy bien!)' : '❌'}</p>
+                ${!esOk ? `<p class="resp-correcta">Respuesta correcta: ${c.c}</p>` : ''}
+                <p class="explicacion">${esOk ? 'Refuerzo: ' + c.e : 'Explicación: ' + c.e}</p>
+            </div>`;
+        });
+
+        const finalScore = Math.round((nota / baseDatos.length) * 20);
+        document.getElementById('result-box').style.display = 'block';
+        document.getElementById('score-text').innerText = `Puntaje Final: ${finalScore} / 20`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        
+        let fb = finalScore >= 15 ? "🌟 ¡Eres un genio matemático!" : "📚 ¡Buen esfuerzo! Repasa las explicaciones en azul.";
+        document.getElementById('feedback-content').innerHTML = `<h4>${fb}</h4>`;
+        window.scrollTo({top: document.getElementById('result-box').offsetTop, behavior:'smooth'});
+    }
+</script>
+</body>
+</html>
