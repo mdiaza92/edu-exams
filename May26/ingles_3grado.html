@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Final Exam - Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #eef2f3; padding: 15px; color: #2c3e50; }
+        .container { max-width: 850px; background: white; margin: auto; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 5px solid #3498db; }
+        h1 { text-align: center; color: #2980b9; text-transform: uppercase; font-size: 1.5em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        
+        .section-header { 
+            position: -webkit-sticky; position: sticky; top: 0; 
+            background: #3498db; color: #fff; padding: 15px; 
+            border-radius: 10px; margin: 25px 0 15px 0; 
+            text-align: center; font-weight: bold; z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .section { margin-bottom: 20px; padding: 18px; border: 2px solid #f1f2f6; border-radius: 12px; background-color: #ffffff; transition: 0.3s; }
+        .incomplete { border: 3px solid #e74c3c !important; background-color: #fff5f5 !important; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #2f3542; display: block; line-height: 1.4; }
+        
+        .audio-btn { background: #9b59b6; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; margin-bottom: 10px; font-size: 1em; display: flex; align-items: center; gap: 8px; font-weight: bold; }
+        .audio-btn:hover { background: #8e44ad; transform: scale(1.02); }
+
+        input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #ced4da; font-size: 16px; font-family: inherit; box-sizing: border-box; }
+        .options label { display: block; margin: 10px 0; cursor: pointer; padding: 10px; border-radius: 8px; border: 1px solid #eee; }
+        .options label:hover { background: #ebf5fb; border-color: #3498db; }
+        
+        button#btn-evaluar { display: block; width: 100%; max-width: 350px; height: 65px; margin: 40px auto; background: #27ae60; color: white; border: none; border-radius: 35px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #1e8449; }
+        
+        #result-box { display: none; padding: 25px; border-radius: 20px; margin-top: 30px; border: 4px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+        
+        .revision-container { margin-top: 20px; background: white; border-radius: 10px; padding: 15px; border: 1px solid #ccc; }
+        .item-revision { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; text-align: left; }
+        .resp-correcta { color: #27ae60; font-weight: bold; }
+        .explicacion { color: #2980b9; font-size: 0.9em; font-style: italic; margin-top: 5px; }
+        .missing-alert { color: #e74c3c; font-weight: bold; text-align: center; margin-bottom: 15px; display: none; padding: 10px; background: #fdf2f2; border-radius: 10px; border: 2px solid #e74c3c; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🇬🇧 English Challenge: 20 Levels</h1>
+    <h2>Edward, listen to the teacher and write the answers!</h2>
+
+    <div id="missing-msg" class="missing-alert">⚠️ Edward, you missed some questions! Check the red boxes.</div>
+
+    <form id="englishExam">
+        
+        <div class="section-header">1. Listen and Write 👂</div>
+        
+        <div class="section" id="sec_q1">
+            <button type="button" class="audio-btn" onclick="speak('Do you play football?')">👂 Listen (Slow)</button>
+            <span class="question-title">1. Listen and write the question (Use "?" and Capital letter):</span>
+            <input type="text" id="q1" oninput="track('q1'); clearRed('sec_q1')">
+        </div>
+
+        <div class="section" id="sec_q2">
+            <button type="button" class="audio-btn" onclick="speak('Sit on the floor.')">👂 Listen (Slow)</button>
+            <span class="question-title">2. Listen and write the yoga instruction:</span>
+            <input type="text" id="q2" oninput="track('q2'); clearRed('sec_q2')">
+        </div>
+
+        <div class="section" id="sec_q3">
+            <button type="button" class="audio-btn" onclick="speak('I play hockey on grass.')">👂 Listen (Slow)</button>
+            <span class="question-title">3. Listen and write Amy's sentence:</span>
+            <input type="text" id="q3" oninput="track('q3'); clearRed('sec_q3')">
+        </div>
+
+        <div class="section" id="sec_q4">
+            <button type="button" class="audio-btn" onclick="speak('Don\'t stand on one leg.')">👂 Listen (Slow)</button>
+            <span class="question-title">4. Listen and write the negative instruction:</span>
+            <input type="text" id="q4" oninput="track('q4'); clearRed('sec_q4')">
+        </div>
+
+        <div class="section" id="sec_q5">
+            <button type="button" class="audio-btn" onclick="speak('I watch baseball on TV.')">👂 Listen (Slow)</button>
+            <span class="question-title">5. Listen and write Ellie's hobby:</span>
+            <input type="text" id="q5" oninput="track('q5'); clearRed('sec_q5')">
+        </div>
+
+        <div class="section-header">2. Yoga Instructions 🧘</div>
+        
+        <div class="section" id="sec_q6">
+            <span class="question-title">6. Look at the photo in your mind. To touch your feet, you say: "___ your toes".</span>
+            <input type="text" id="q6" oninput="track('q6'); clearRed('sec_q6')" placeholder="T _ _ _ _">
+        </div>
+
+        <div class="section" id="sec_q7">
+            <span class="question-title">7. Change "Look left" to NEGATIVE:</span>
+            <input type="text" id="q7" oninput="track('q7'); clearRed('sec_q7')" placeholder="Don't ...">
+        </div>
+
+        <div class="section" id="sec_q8">
+            <span class="question-title">8. When you go down to the floor, you "___ down":</span>
+            <div class="options">
+                <label><input type="radio" name="q8" value="Bend" onclick="track('q8'); clearRed('sec_q8')"> Bend</label>
+                <label><input type="radio" name="q8" value="Play" onclick="track('q8'); clearRed('sec_q8')"> Play</label>
+            </div>
+        </div>
+
+        <div class="section" id="sec_q9">
+            <span class="question-title">9. The teacher says: "___ right" (To see to the right side):</span>
+            <input type="text" id="q9" oninput="track('q9'); clearRed('sec_q9')" placeholder="L _ _ _">
+        </div>
+
+        <div class="section" id="sec_q10">
+            <span class="question-title">10. "Stand on one ___" (Is it arm or leg?):</span>
+            <input type="text" id="q10" oninput="track('q10'); clearRed('sec_q10')">
+        </div>
+
+        <div class="section-header">3. Sports Vocabulary 🏀</div>
+        
+        <div class="section" id="sec_q11">
+            <span class="question-title">11. In Canada, it's very cold. You play hockey on:</span>
+            <div class="options">
+                <label><input type="radio" name="q11" value="ice" onclick="track('q11'); clearRed('sec_q11')"> Ice (Hielo)</label>
+                <label><input type="radio" name="q11" value="grass" onclick="track('q11'); clearRed('sec_q11')"> Grass (Pasto)</label>
+            </div>
+        </div>
+
+        <div class="section" id="sec_q12">
+            <span class="question-title">12. What do you wear on your feet to play hockey on ICE?</span>
+            <input type="text" id="q12" oninput="track('q12'); clearRed('sec_q12')" placeholder="S _ _ _ _ _">
+        </div>
+
+        <div class="section" id="sec_q13">
+            <span class="question-title">13. Many children "learn to ___" in the water at school:</span>
+            <input type="text" id="q13" oninput="track('q13'); clearRed('sec_q13')">
+        </div>
+
+        <div class="section" id="sec_q14">
+            <span class="question-title">14. Amy plays hockey, football and:</span>
+            <input type="text" id="q14" oninput="track('q14'); clearRed('sec_q14')" placeholder="B _ _ _ _ _ _ _ _">
+        </div>
+
+        <div class="section" id="sec_q15">
+            <span class="question-title">15. Where do you run at school? On the school running ___:</span>
+            <input type="text" id="q15" oninput="track('q15'); clearRed('sec_q15')">
+        </div>
+
+        <div class="section-header">4. Questions & Answers ❓</div>
+        
+        <div class="section" id="sec_q16">
+            <span class="question-title">16. Complete the question: "___ you do judo on Thursday?"</span>
+            <input type="text" id="q16" oninput="track('q16'); clearRed('sec_q16')" maxlength="2">
+        </div>
+
+        <div class="section" id="sec_q17">
+            <span class="question-title">17. Answer with a Tick (✅): "Do you like baseball?"</span>
+            <div class="options">
+                <label><input type="radio" name="q17" value="Yes" onclick="track('q17'); clearRed('sec_q17')"> Yes, I do.</label>
+                <label><input type="radio" name="q17" value="No" onclick="track('q17'); clearRed('sec_q17')"> No, I don't.</label>
+            </div>
+        </div>
+
+        <div class="section" id="sec_q18">
+            <span class="question-title">18. Answer with a Cross (❌): "Do you play tennis?"</span>
+            <input type="text" id="q18" oninput="track('q18'); clearRed('sec_q18')" placeholder="No, ...">
+        </div>
+
+        <div class="section" id="sec_q19">
+            <span class="question-title">19. Make a question for this answer: "Yes, I do. (football)"</span>
+            <input type="text" id="q19" oninput="track('q19'); clearRed('sec_q19')" placeholder="Do you ... ?">
+        </div>
+
+        <div class="section" id="sec_q20">
+            <span class="question-title">20. What is your favourite sport? Write: "_____ is my favourite sport."</span>
+            <input type="text" id="q20" oninput="track('q20'); clearRed('sec_q20')">
+        </div>
+
+        <button type="button" id="btn-evaluar" onclick="validar()">✨ Finish Exam</button>
+    </form>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+        <div id="revision-lista" class="revision-container">
+            <h4>🔍 Review (Correction List):</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function speak(t) {
+        window.speechSynthesis.cancel();
+        const m = new SpeechSynthesisUtterance();
+        m.text = t; 
+        m.lang = 'en-US'; 
+        m.rate = 0.7; // VELOCIDAD LENTA PARA EDWARD
+        window.speechSynthesis.speak(m);
+    }
+
+    let logDudas = {};
+    function track(id) { logDudas[id] = (logDudas[id] || 0) + 1; }
+    function clearRed(id) { 
+        document.getElementById(id).classList.remove('incomplete'); 
+        if(document.querySelectorAll('.incomplete').length === 0) document.getElementById('missing-msg').style.display='none';
+    }
+
+    const clave = [
+        {id:'q1', t:'t', c:'Do you play football?', p:'1. Listening', e:'Usa "Do" para preguntar y "?" al final.'},
+        {id:'q2', t:'t', c:'Sit on the floor', p:'2. Listening', e:'"Sit" es sentarse.'},
+        {id:'q3', t:'t', c:'I play hockey on grass', p:'3. Listening', e:'En el Reino Unido (UK) juegan sobre pasto (grass).'},
+        {id:'q4', t:'t', c:'Don\'t stand on one leg', p:'4. Listening', e:'"Don\'t" se usa para instrucciones negativas.'},
+        {id:'q5', t:'t', c:'I watch baseball on TV', p:'5. Listening', e:'"Watch" es el verbo mirar.'},
+        {id:'q6', t:'t', c:'touch', p:'6. Yoga Verb', e:'"Touch your toes" es tocarse los pies.'},
+        {id:'q7', t:'t', c:'Don\'t look left', p:'7. Negative', e:'Para negar una orden usamos "Don\'t".'},
+        {id:'q8', t:'r', c:'Bend', p:'8. Vocabulary', e:'"Bend down" es agacharse.'},
+        {id:'q9', t:'t', c:'look', p:'9. Vocabulary', e:'"Look" es mirar.'},
+        {id:'q10', t:'t', c:'leg', p:'10. Body', e:'"Leg" es pierna.'},
+        {id:'q11', t:'r', c:'ice', p:'11. Canada', e:'En Canadá el hockey es sobre hielo (ice).'},
+        {id:'q12', t:'t', c:'skates', p:'12. Equipment', e:'Para el hielo se usan patines (skates).'},
+        {id:'q13', t:'t', c:'swim', p:'13. Verb', e:'"Swim" es nadar.'},
+        {id:'q14', t:'t', c:'badminton', p:'14. Sports', e:'Amy menciona el Badminton.'},
+        {id:'q15', t:'t', c:'track', p:'15. Places', e:'Se corre en la pista (running track).'},
+        {id:'q16', t:'t', c:'Do', p:'16. Grammar', e:'Las preguntas empiezan con "Do".'},
+        {id:'q17', t:'r', c:'Yes', p:'17. Short Answer', e:'Respuesta corta: Yes, I do.'},
+        {id:'q18', t:'t', c:'No, I don\'t', p:'18. Negative Answer', e:'Respuesta negativa: No, I don\'t.'},
+        {id:'q19', t:'t', c:'Do you play football?', p:'19. Question', e:'Recuerda la estructura Do + you + verb + ?'},
+        {id:'q20', t:'t', c:'favourite sport', p:'20. Personal', e:'Menciona tu deporte favorito.'}
+    ];
+
+    function validar() {
+        const f = document.getElementById('englishExam');
+        let vacios = [];
+        clave.forEach(c => {
+            let res = false;
+            let el = document.getElementById(c.id);
+            if(c.t === 'r') {
+                if(f.querySelector(`input[name="${c.id}"]:checked`)) res = true;
+            } else if(el && el.value.trim() !== "") res = true;
+
+            if(!res) {
+                let container = el ? el.closest('.section') : document.getElementById('sec_'+c.id);
+                container.classList.add('incomplete');
+                vacios.push(container);
+            }
+        });
+
+        if(vacios.length > 0) {
+            document.getElementById('missing-msg').style.display='block';
+            vacios[0].scrollIntoView({behavior:'smooth', block:'center'});
+            return;
+        }
+        calificar();
+    }
+
+    function calificar() {
+        const f = document.getElementById('englishExam');
+        let nota = 0;
+        let itemsHTML = "";
+
+        clave.forEach(c => {
+            let uVal = "";
+            if(c.t === 'r') uVal = f.querySelector(`input[name="${c.id}"]:checked`).value;
+            else uVal = document.getElementById(c.id).value.trim();
+
+            let cleanU = uVal.toLowerCase().replace(/[.?!,]/g, "");
+            let cleanC = c.c.toLowerCase().replace(/[.?!,]/g, "");
+            
+            let esOk = false;
+            if(c.t === 't') esOk = cleanU.includes(cleanC);
+            else esOk = uVal.includes(c.c);
+
+            if(esOk) nota++;
+
+            itemsHTML += `<div class="item-revision">
+                <p><strong>Question ${c.p}</strong></p>
+                <p>Your answer: <span class="resp-usuario">${uVal}</span> ${esOk ? '✅' : '❌'}</p>
+                ${!esOk ? `<p class="resp-correcta">Correct: ${c.c}</p>` : ''}
+                <p class="explicacion">Edward: ${c.e}</p>
+                ${logDudas[c.id] > 2 ? `<p style="color:orange; font-weight:bold;">⚠️ You hesitated here.</p>` : ''}
+            </div>`;
+        });
+
+        const finalScore = Math.round((nota / clave.length) * 20);
+        const rb = document.getElementById('result-box');
+        rb.style.display = 'block';
+        document.getElementById('score-text').innerText = `Final Score: ${finalScore} / 20`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        rb.className = finalScore >= 11 ? "correct-box" : "error-box";
+        window.scrollTo({top: rb.offsetTop, behavior:'smooth'});
+    }
+</script>
+</body>
+</html>
