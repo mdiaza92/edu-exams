@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Bimestral de Comunicación - Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #fff9f0; padding: 15px; color: #2c3e50; }
+        .container { max-width: 950px; background: white; margin: auto; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 6px solid #ff793f; }
+        h1 { text-align: center; color: #e65f1c; text-transform: uppercase; font-size: 1.8em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        
+        .section-header { 
+            position: -webkit-sticky; position: sticky; top: 0; 
+            background: #ff793f; color: #fff; padding: 15px; 
+            border-radius: 12px; margin: 30px 0 15px 0; 
+            text-align: center; font-weight: bold; z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+        }
+
+        /* MAQUETACIÓN DE DOBLE COLUMNA PARA COMPATIBILIDAD CON TABLETS */
+        .main-layout { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 25px; }
+        .questions-column { flex: 1; }
+        
+        /* PANEL VISUAL LATERAL */
+        .visual-side-card { 
+            width: 220px; background: #fff1ed; border: 3px dashed #ff793f; 
+            border-radius: 18px; padding: 20px; text-align: center; 
+            position: sticky; top: 70px; box-sizing: border-box;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        }
+        .visual-emoji { font-size: 4.5em; margin-bottom: 10px; display: block; animation: floatAnim 3s ease-in-out infinite; }
+        .visual-tag { background: #ff793f; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.85em; font-weight: bold; display: inline-block; }
+        
+        @keyframes floatAnim {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .section { margin-bottom: 15px; padding: 18px; border: 2px solid #edf2f7; border-radius: 15px; background-color: #ffffff; transition: 0.3s; }
+        .incomplete { border: 3px solid #e74c3c !important; background-color: #fff5f5 !important; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #2f3542; display: block; line-height: 1.4; }
+        
+        input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #ced4da; font-size: 16px; font-family: inherit; box-sizing: border-box; }
+        .options label { display: block; margin: 10px 0; cursor: pointer; padding: 10px; border-radius: 8px; border: 1px solid #eee; transition: 0.2s; }
+        .options label:hover { background: #fff1ed; border-color: #ff793f; }
+        
+        button#btn-evaluar { display: block; width: 100%; max-width: 350px; height: 65px; margin: 40px auto; background: #27ae60; color: white; border: none; border-radius: 35px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #1e8449; }
+        
+        #result-box { display: none; padding: 25px; border-radius: 20px; margin-top: 30px; border: 4px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+        
+        .revision-container { margin-top: 20px; background: white; border-radius: 10px; padding: 15px; border: 1px solid #ccc; }
+        .item-revision { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; text-align: left; }
+        .resp-correcta { color: #27ae60; font-weight: bold; }
+        .resp-usuario { font-style: italic; color: #555; }
+        .explicacion { color: #2980b9; font-size: 0.9em; font-style: italic; margin-top: 5px; }
+        .missing-alert { color: #e74c3c; font-weight: bold; text-align: center; margin-bottom: 15px; display: none; padding: 10px; background: #fdf2f2; border-radius: 10px; border: 2px solid #e74c3c; }
+
+        @media (max-width: 768px) {
+            .main-layout { flex-direction: column-reverse; }
+            .visual-side-card { width: 100%; position: relative; top: 0; margin-bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📝 Examen Bimestral de Comunicación</h1>
+    <h2>Edward, ¡lee con atención, razona cada pregunta y demuestra tu talento!</h2>
+
+    <div id="missing-msg" class="missing-alert">⚠️ ¡Edward, te faltan responder algunas preguntas! Revisa los bloques marcados en rojo.</div>
+
+    <form id="quizForm">
+        <div id="quizContainer"></div>
+        <button type="button" id="btn-evaluar" onclick="validarExamen()">✨ Terminar Examen</button>
+    </form>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+        <div id="revision-lista" class="revision-container">
+            <h4>🔍 Lista de Revisión (Aprende de tus respuestas):</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // BASE DE DATOS ESTRUCTURADA EN UN OBJETO JSON PURO
+    const examData = {
+      "sections": [
+        {
+          "title": "Sección 1: La Fábula y sus Partes",
+          "emoji": "🐢",
+          "tag": "Comprensión Lectora",
+          "questions": [
+            {"id": "q1", "type": "choice", "question": "La fábula es una narración corta cuyos personajes suelen ser animales y siempre nos deja una...", "options": ["Moraleja", "Noticia", "Receta"], "correct": "Moraleja", "feedback": "Las fábulas se caracterizan por dejarnos una enseñanza llamada moraleja."},
+            {"id": "q2", "type": "write", "question": "Escribe el nombre de la última parte de la fábula donde viene la enseñanza: M _ _ _ L _ _ A", "correct": "moraleja", "feedback": "La moraleja es la lección de vida al final de la historia."},
+            {"id": "q3", "type": "choice", "question": "En la fábula 'La liebre y la tortuga', ¿qué valor le permitió ganar la carrera a la tortuga?", "options": ["La flojera", "La perseverancia y esfuerzo", "El orgullo"], "correct": "La perseverancia y esfuerzo", "feedback": "La tortuga avanzó lento pero sin detenerse gracias a su perseverancia."},
+            {"id": "q4", "type": "reorder", "question": "Reordena las palabras para formar el sentido correcto: [deja] [fábula] [La] [enseñanza] [una]", "correct": "La fábula deja una enseñanza", "feedback": "Estructura lógica: Sujeto + Verbo + Objeto."},
+            {"id": "q5", "type": "choice", "question": "Cuando los animales de las historias hablan y actúan como seres humanos, se llama:", "options": ["Personificación", "Exageración", "Sílaba"], "correct": "Personificación", "feedback": "Dar cualidades humanas a los animales u objetos es personificar."}
+          ]
+        },
+        {
+          "title": "Sección 2: Series Verbales y Término Excluido",
+          "emoji": "🍎",
+          "tag": "Razonamiento Verbal",
+          "questions": [
+            {"id": "q6", "type": "write", "question": "Completa la serie verbal lógica: Manzana, pera, plátano, m _ _ d _ r _ _ a.", "correct": "mandarina", "feedback": "La serie corresponde al campo semántico de las frutas."},
+            {"id": "q7", "type": "choice", "question": "Identifica el TÉRMINO EXCLUIDO (la palabra intrusa) en: Lápiz, borrador, tajador, helicóptero.", "options": ["Tajador", "Borrador", "Helicóptero"], "correct": "Helicóptero", "feedback": "Helicóptero es un medio de transporte, los demás son útiles escolares."},
+            {"id": "q8", "type": "write", "question": "Escribe el campo semántico general de: Rojo, azul, amarillo, verde.", "correct": "colores", "feedback": "Todos estos elementos pertenecen al grupo de los colores."},
+            {"id": "q9", "type": "choice", "question": "Marca el término excluido en la serie de prendas de vestir:", "options": ["Medias", "Pantalón", "Cuaderno"], "correct": "Cuaderno", "feedback": "El cuaderno pertenece a los útiles y no a la vestimenta."},
+            {"id": "q10", "type": "reorder", "question": "Reordena la serie lógica de números ordinales: [Tercero] [Primero] [Segundo]", "correct": "Primero Segundo Tercero", "feedback": "Las series verbales siguen una secuencia u orden numérico lógico."}
+          ]
+        },
+        {
+          "title": "Sección 3: El Texto Instructivo",
+          "emoji": "🍳",
+          "tag": "Tipos de Textos",
+          "questions": [
+            {"id": "q11", "type": "choice", "question": "Un texto instructivo sirve principalmente para:", "options": ["Contar un chiste largo", "Guiar paso a paso para realizar una actividad", "Dar una noticia de la televisión"], "correct": "Guiar paso a paso para realizar una actividad", "feedback": "Los instructivos nos dan indicaciones claras para armar o preparar algo."},
+            {"id": "q12", "type": "write", "question": "En una receta de cocina, la lista de insumos que necesitamos antes de cocinar se llama: I _ _ r _ d _ _ _ _ _ s.", "correct": "ingredientes", "feedback": "Los ingredientes muestran los elementos y cantidades que se van a usar."},
+            {"id": "q13", "type": "choice", "question": "Razona: ¿Qué pasaría si en un manual de instrucciones realizas los pasos en desorden?", "options": ["El resultado final saldrá mal.", "El resultado saldrá mucho más rápido.", "No pasa nada, es igual."], "correct": "El resultado final saldrá mal.", "feedback": "Los textos instructivos requieren seguir un orden secuencial estricto."},
+            {"id": "q14", "type": "choice", "question": "Un ejemplo muy claro de un texto instructivo en la vida diaria es:", "options": ["Un poema al colegio", "El reglamento o instrucciones de un juego de mesa", "Una fábula de animales"], "correct": "El reglamento o instrucciones de un juego de mesa", "feedback": "Las reglas del juego guían los pasos que los jugadores deben cumplir."},
+            {"id": "q15", "type": "reorder", "question": "Reordena las características de las instrucciones: [ser] [Instrucciones] [claras] [deben]", "correct": "Instrucciones deben ser claras", "feedback": "El lenguaje de las instrucciones debe ser directo y comprensible."}
+          ]
+        },
+        {
+          "title": "Sección 4: La Sílaba (Tónica y Átona)",
+          "emoji": "🔡",
+          "tag": "Gramática y Fonética",
+          "questions": [
+            {"id": "q16", "type": "choice", "question": "La sílaba que se pronuncia con la MAYOR fuerza de voz en una palabra se llama sílaba...", "options": ["Átona", "Tónica", "Esdrújula"], "correct": "Tónica", "feedback": "La sílaba con mayor intensidad siempre es la tónica."},
+            {"id": "q17", "type": "write", "question": "Identifica y escribe la sílaba ÁTONA (la que suena débil) en la palabra: MESA (me - sa). Si la tónica es 'me', la átona es...", "correct": "sa", "feedback": "En 'mesa', la fuerza está en 'me', por lo que 'sa' es la sílaba átona."},
+            {"id": "q18", "type": "choice", "question": "Por su número de sílabas, la palabra 'PAN' (un solo golpe de voz) se clasifica como:", "options": ["Monosílaba", "Bisílaba", "Trisílaba"], "correct": "Monosílaba", "feedback": "Las palabras de una sola sílaba son monosílabas."},
+            {"id": "q19", "type": "write", "question": "Separa correctamente en sílabas la palabra 'LUNA' usando guiones:", "correct": "lu-na", "feedback": "Lu-na tiene dos golpes de voz (es bisílaba)."},
+            {"id": "q20", "type": "reorder", "question": "Ordena las sílabas para descubrir la palabra polisílaba oculta: [ra] [ta] [pu] [com] [do]", "correct": "computadora", "feedback": "Computadora es una palabra polisílaba porque tiene 5 sílabas."}
+          ]
+        },
+        {
+          "title": "Sección 5: Reglas de Acentuación (Agudas, Graves, Esdrújulas)",
+          "emoji": "✍️",
+          "tag": "Ortografía Estricta",
+          "questions": [
+            {"id": "q21", "type": "choice", "question": "Las palabras que llevan la mayor fuerza de voz en el ÚLTIMO lugar se llaman:", "options": ["Agudas", "Graves", "Esdrújulas"], "correct": "Agudas", "feedback": "Las palabras agudas llevan el acento en la última sílaba."},
+            {"id": "q22", "type": "write", "question": "Escribe la palabra 'CAMIÓN' correctamente. Recuerda que es aguda y termina en N, por lo que debes ponerle...", "correct": "camión", "feedback": "Camión lleva tilde en la 'o' por la regla de las agudas."},
+            {"id": "q23", "type": "choice", "question": "Las palabras esdrújulas llevan la fuerza de voz en la antepenúltima sílaba. ¿Cuándo se les coloca tilde?", "options": ["Solo si terminan en vocal", "Todas se tildan sin excepción", "Nunca llevan tilde"], "correct": "Todas se tildan sin excepción", "feedback": "Una regla de oro en ortografía es que todas las esdrújulas llevan tilde."},
+            {"id": "q24", "type": "write", "question": "Escribe correctamente la palabra 'LÁPIZ'. Es grave y termina en Z, por eso lleva tilde en la...", "correct": "lápiz", "feedback": "Lápiz lleva tilde en la 'a' porque las graves se tildan si no terminan en N, S o vocal."},
+            {"id": "q25", "type": "choice", "question": "La palabra 'MÚSICA' lleva el acento en la antepenúltima sílaba. ¿Qué clase de palabra es?", "options": ["Aguda", "Grave", "Esdrújula"], "correct": "Esdrújula", "feedback": "Mú-si-ca es esdrújula y por eso va tildada obligatoriamente."}
+          ]
+        },
+        {
+          "title": "Sección 6: El Artículo y el Sustantivo",
+          "emoji": "🎨",
+          "tag": "Categorías Gramaticales",
+          "questions": [
+            {"id": "q26", "type": "write", "question": "Escribe el artículo determinado que concuerde correctamente con: '___ mochila azul'", "correct": "la", "feedback": "Mochila es femenino singular, le corresponde el artículo 'la'."},
+            {"id": "q27", "type": "write", "question": "Escribe un artículo indeterminado en plural para el sustantivo: '___ lápices nuevos'", "correct": "unos", "feedback": "El artículo indeterminado masculino plural es 'unos'."},
+            {"id": "q28", "type": "choice", "question": "El artículo y el sustantivo deben concordar (coincidir) siempre de forma obligatoria en:", "options": ["Tamaño y color", "Género y Número", "Forma y peso"], "correct": "Género y Número", "feedback": "Concordancia gramatical significa mantener el mismo género y número."},
+            {"id": "q29", "type": "choice", "question": "Identifica la clase de sustantivo. 'Norma' es el nombre propio de una abuela. Es un sustantivo...", "options": ["Común", "Propio", "Colectivo"], "correct": "Propio", "feedback": "Los nombres de personas y países son sustantivos propios y van con mayúscula."},
+            {"id": "q30", "type": "reorder", "question": "Reordena las palabras respetando la concordancia correcta: [manzanas] [Las] [rojas] [son]", "correct": "Las manzanas son rojas", "feedback": "Todos los elementos concuerdan en femenino plural."}
+          ]
+        },
+        {
+          "title": "Sección 7: Familias de Palabras (Primitivas y Derivadas)",
+          "emoji": "🏠",
+          "tag": "Morfología Lexical",
+          "questions": [
+            {"id": "q31", "type": "choice", "question": "La palabra original que no proviene de ninguna otra y sirve de base para crear una familia se llama palabra...", "options": ["Primitiva", "Derivada", "Compuesta"], "correct": "Primitiva", "feedback": "La palabra primitiva es la base u origen de la familia."},
+            {"id": "q32", "type": "write", "question": "Identifica la palabra primitiva común de la siguiente familia: Panadero, panadería, pancito. La base es...", "correct": "pan", "feedback": "Todas esas palabras se derivan de la palabra primitiva 'pan'."},
+            {"id": "q33", "type": "write", "question": "Escribe un sustantivo derivado directo de la palabra primitiva 'FLOR':", "correct": "florero", "feedback": "Florero, florería o florista son derivados válidos de 'flor'."},
+            {"id": "q34", "type": "choice", "question": "Las palabras que se forman agregando prefijos o sufijos a la raíz manteniendo un significado relacionado son palabras...", "options": ["Primitivas", "Derivadas", "Átonas"], "correct": "Derivadas", "feedback": "Se les llama derivadas porque nacen o derivan de la raíz original."},
+            {"id": "q35", "type": "reorder", "question": "Ordena los derivados de menor a mayor extensión partiendo de la raíz: [marino] [Mar] [marinero]", "correct": "Mar marino marinero", "feedback": "Evolución morfológica desde la palabra primitiva."}
+          ]
+        },
+        {
+          "title": "Sección 8: Organizadores Visuales (Mapa Conceptual y Mental)",
+          "emoji": "📊",
+          "tag": "Técnicas de Estudio",
+          "questions": [
+            {"id": "q36", "type": "choice", "question": "Para organizar las ideas principales de un texto de forma ordenada y visual usando elipses y conectores, elaboramos un...", "options": ["Mapa Conceptual", "Cuento", "Dictado"], "correct": "Mapa Conceptual", "feedback": "El mapa conceptual jerarquiza conceptos usando líneas y palabras enlace."},
+            {"id": "q37", "type": "choice", "question": "Antes de empezar a colocar los datos dentro de un organizador visual, ¿qué paso importante debemos hacer en el texto?", "options": ["Copiar todo igualito sin leer.", "Leer y subrayar las ideas más importantes.", "Borrar el texto con corrector."], "correct": "Leer y subrayar las ideas más importantes.", "feedback": "El subrayado es indispensable para extraer los conceptos clave."},
+            {"id": "q38", "type": "write", "question": "Completa el nodo vacío del Mapa Conceptual interactivo sobre el PERÚ: 'El Perú tiene 4 r _ g _ _ n _ s.'", "correct": "regiones", "feedback": "Según la ficha de clase, el Perú se divide en 4 regiones naturales."},
+            {"id": "q39", "type": "choice", "question": "A diferencia del mapa conceptual, un MAPA MENTAL se caracteriza principalmente por usar la idea central en el medio y muchos...", "options": ["Dibujos, ramas y colores divertidos", "Textos larguísimos sin espacio", "Números para multiplicar"], "correct": "Dibujos, ramas y colores divertidos", "feedback": "Los mapas mentales son asociativos, creativos y usan muchos gráficos."},
+            {"id": "q40", "type": "reorder", "question": "Reordena la utilidad de los mapas: [ayudan] [Los] [organizadores] [estudiar] [a]", "correct": "Los organizadores ayudan a estudiar", "feedback": "Los esquemas visuales facilitan la retención y comprensión de la información."}
+          ]
+        }
+      ]
+    };
+
+    // GENERADOR DINÁMICO DE CONTENIDO HTML BASADO EN EL MOTOR JSON
+    function renderQuiz() {
+        const container = document.getElementById('quizContainer');
+        let questionCounter = 1;
+        
+        examData.sections.forEach(section => {
+            // Cabecera flotante (sticky) por cada tema
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.innerText = section.title;
+            container.appendChild(header);
+            
+            // Layout de doble columna
+            const layoutDiv = document.createElement('div');
+            layoutDiv.className = 'main-layout';
+            
+            // Columna Izquierda: Bloque de preguntas estructuradas
+            const questionsColumn = document.createElement('div');
+            questionsColumn.className = 'questions-column';
+            
+            section.questions.forEach(q => {
+                const secDiv = document.createElement('div');
+                secDiv.className = 'section';
+                secDiv.id = 'sec_' + q.id;
+                
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'question-title';
+                titleSpan.innerText = `${questionCounter}. ${q.question}`;
+                secDiv.appendChild(titleSpan);
+                
+                if (q.type === 'choice') {
+                    const optDiv = document.createElement('div');
+                    optDiv.className = 'options';
+                    q.options.forEach(opt => {
+                        const lbl = document.createElement('label');
+                        lbl.innerHTML = `<input type="radio" name="${q.id}" value="${opt}" onclick="clearRed('sec_${q.id}')"> ${opt}`;
+                        optDiv.appendChild(lbl);
+                    });
+                    secDiv.appendChild(optDiv);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = q.id;
+                    input.placeholder = q.type === 'reorder' ? 'Escribe la oración ordenada aquí...' : 'Escribe las letras o palabras faltantes...';
+                    input.oninput = function() { clearRed('sec_' + q.id); };
+                    secDiv.appendChild(input);
+                }
+                
+                questionsColumn.appendChild(secDiv);
+                questionCounter++;
+            });
+            
+            // Columna Derecha: Tarjeta de apoyo visual fijo para dinamismo infantil
+            const visualCard = document.createElement('div');
+            visualCard.className = 'visual-side-card';
+            visualCard.innerHTML = `
+                <span class="visual-emoji">${section.emoji}</span>
+                <span class="visual-tag">${section.tag}</span>
+                <p style="font-size: 0.85em; color: #555; margin-top: 10px; line-height: 1.3;">
+                    ¡Edward, concéntrate en este tema para asegurar tus puntos!
+                </p>
+            `;
+            
+            layoutDiv.appendChild(questionsColumn);
+            layoutDiv.appendChild(visualCard);
+            container.appendChild(layoutDiv);
+        });
+    }
+
+    // Limpieza dinámica de alertas en rojo al interactuar
+    function clearRed(id) { 
+        document.getElementById(id).classList.remove('incomplete'); 
+        if(document.querySelectorAll('.incomplete').length === 0) document.getElementById('missing-msg').style.display='none';
+    }
+
+    // VALIDACIÓN ESTRICTA ANTI-VACÍOS CON AUTO-SCROLL
+    function validarExamen() {
+        let vacios = [];
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let respondido = false;
+                if (q.type === 'choice') {
+                    if (document.querySelector(`input[name="${q.id}"]:checked`)) respondido = true;
+                } else {
+                    if (document.getElementById(q.id).value.trim() !== "") respondido = true;
+                }
+                
+                if (!respondido) {
+                    const container = document.getElementById('sec_' + q.id);
+                    container.classList.add('incomplete');
+                    vacios.push(container);
+                }
+            });
+        });
+
+        if (vacios.length > 0) {
+            document.getElementById('missing-msg').style.display = 'block';
+            vacios[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+        calificarExamen();
+    }
+
+    // CALIFICACIÓN INTEGRAL Y DESPLIEGUE DE ERRORES/RESPUESTAS CORRECTAS
+    function calificarExamen() {
+        let nota = 0;
+        let totalPreguntas = 40;
+        let itemsHTML = "";
+        let questionIndex = 1;
+
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let uVal = "";
+                if (q.type === 'choice') {
+                    uVal = document.querySelector(`input[name="${q.id}"]:checked`).value;
+                } else {
+                    uVal = document.getElementById(q.id).value.trim();
+                }
+
+                // Normalización inteligente: elimina tildes, mayúsculas y signos para evitar penalizar tipeos simples
+                let cleanU = uVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let cleanC = q.correct.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                
+                // Validación flexible para permitir aproximaciones válidas en respuestas escritas comunes
+                let esOk = (cleanU === cleanC) || (q.type === 'write' && cleanU.includes(cleanC));
+                
+                // Penalización estricta por tildes omitidas en la sección de acentuación (Ortografía)
+                if (q.id === "q22" || q.id === "q24") {
+                    if (uVal.toLowerCase() !== q.correct.toLowerCase()) {
+                        esOk = false;
+                    }
+                }
+
+                if (esOk) nota++;
+
+                itemsHTML += `<div class="item-revision" style="border-left: 8px solid ${esOk ? '#27ae60' : '#e74c3c'}">
+                    <p><strong>Pregunta ${questionIndex}: ${q.question}</strong></p>
+                    <p>Tu respuesta: <span class="resp-usuario">${uVal}</span> ${esOk ? '✅' : '❌'}</p>
+                    ${!esOk ? `<p class="resp-correcta">Respuesta Correcta Esperada: ${q.correct}</p>` : ''}
+                    <p class="explicacion">💡 Explicación pedagógica: ${q.feedback}</p>
+                </div>`;
+                    
+                questionIndex++;
+            });
+        });
+
+        // Escala del sistema educativo peruano (0 a 20)
+        const finalScore = Math.round((nota / totalPreguntas) * 20);
+        const rb = document.getElementById('result-box');
+        
+        rb.style.display = 'block';
+        document.getElementById('score-text').innerText = `Puntaje Final: ${finalScore} / 20 (${nota} aciertos de 40)`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        
+        if(finalScore >= 11) {
+            rb.className = "correct-box";
+            document.getElementById('feedback-content').innerHTML = "<h4>🌟 ¡Excelente esfuerzo, Edward! Lograste aprobar tu examen bimestral con éxito.</h4>";
+        } else {
+            rb.className = "error-box";
+            document.getElementById('feedback-content').innerHTML = "<h4>📚 ¡Buen intento, Edward! Revisa la lista inferior junto a papá para reforzar las fichas de clase.</h4>";
+        }
+        
+        window.scrollTo({ top: rb.offsetTop, behavior: 'smooth' });
+    }
+
+    // Inicialización del motor
+    window.onload = renderQuiz;
+</script>
+</body>
+</html>
