@@ -3,53 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda de Julio 2026 - Edward</title>
+    <title>Calendario de Evaluaciones - Edward</title>
     <style>
         body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #f4f9ff; padding: 20px; margin: 0; color: #2c3e50; }
         .container { max-width: 900px; margin: auto; background: white; padding: 35px; border-radius: 30px; box-shadow: 0 12px 40px rgba(0,0,0,0.06); border: 6px solid #3498db; }
         
-        /* CABECERA TEMPORAL */
+        /* CABECERA CRONOGRAMA */
         .calendar-header { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 5px; }
         .calendar-badge { background: #e74c3c; color: white; padding: 5px 15px; border-radius: 12px; font-weight: bold; font-size: 0.9em; text-transform: uppercase; }
         h1 { text-align: center; color: #2980b9; text-transform: uppercase; font-size: 2.2em; margin: 10px 0 5px 0; }
         h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 35px; }
         
-        /* BARRA DE BÚSQUEDA EN TIEMPO REAL */
-        .search-container { margin-bottom: 30px; }
-        .search-bar { width: 100%; padding: 14px 25px; border-radius: 30px; border: 2.5px solid #cbd5e1; font-size: 16px; font-family: inherit; box-sizing: border-box; }
-        .search-bar:focus { outline: none; border-color: #3498db; background: #fdfefe; }
+        /* REJILLA CRONOLÓGICA (DÍA POR DÍA) */
+        .timeline-layout { display: flex; flex-direction: column; gap: 20px; margin-bottom: 30px; }
+        
+        .day-card { display: flex; background: #ffffff; border-radius: 20px; border: 3px solid #edf2f7; overflow: hidden; transition: 0.3s; }
+        .day-card:hover { transform: translateX(5px); box-shadow: 0 6px 15px rgba(0,0,0,0.04); }
+        
+        /* COLUMNA DEL DÍA DE LA SEMANA */
+        .day-indicator { width: 180px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-weight: bold; color: white; box-sizing: border-box; }
+        .day-name { font-size: 1.2em; text-transform: uppercase; }
+        .day-date { font-size: 1.5em; margin-top: 5px; }
 
-        /* REJILLA DE CURSOS DE JULIO */
-        .grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        /* COLUMNA DEL CONTENIDO DEL EXAMEN */
+        .day-content { flex: 1; padding: 22px; display: flex; flex-direction: column; justify-content: center; }
         
-        .course-card { background: #ffffff; border-radius: 20px; border: 3px solid #edf2f7; padding: 22px; transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between; }
-        .course-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+        /* COLORES Y ESTILOS POR CURSO */
+        .bg-ingles { background-color: #9b59b6; }
+        .border-ingles { border-color: #9b59b6; }
         
-        /* VARIACIONES ESTILO ASIGNATURAS */
-        .active-comu { border-color: #ff4757; background: #fff5f6; }
-        .active-ingles { border-color: #9b59b6; background: #fbf6fc; }
-        .locked-card { border-color: #cbd5e1; background: #f8fafc; filter: grayscale(15%); }
+        .bg-comu { background-color: #ff4757; }
+        .border-comu { border-color: #ff4757; }
+        
+        .bg-personal { background-color: #f1c40f; }
+        .border-personal { border-color: #f1c40f; }
+        
+        .bg-mate { background-color: #34495e; }
+        .border-mate { border-color: #34495e; }
 
-        .card-title { display: flex; align-items: center; gap: 10px; font-size: 1.25em; font-weight: bold; margin-bottom: 15px; }
-        .card-emoji { font-size: 1.4em; }
+        /* ESTILO PARA CURSOS AÚN NO DISPONIBLES */
+        .locked-day { filter: grayscale(15%); border-color: #cbd5e1; }
+        .bg-locked { background-color: #95a5a6; }
+
+        .card-title { display: flex; align-items: center; gap: 10px; font-size: 1.3em; font-weight: bold; color: #2c3e50; margin-bottom: 10px; }
+        .card-emoji { font-size: 1.3em; }
         
-        /* BOTONES DE EXAMEN DISPONIBLE */
+        /* ENLACES ACTIVOS */
         .exam-link { 
-            display: flex; align-items: center; justify-content: space-between; 
-            padding: 12px 15px; background: white; border-radius: 12px; 
+            display: inline-flex; align-items: center; justify-content: space-between; 
+            padding: 12px 20px; background: #f8fafc; border-radius: 12px; 
             text-decoration: none; color: #2c3e50; font-weight: bold; 
-            border: 2px solid #e2e8f0; transition: 0.2s; 
+            border: 2px solid #e2e8f0; transition: 0.2s; max-width: 320px;
         }
         .exam-link:hover { background: #2c3e50; color: white; border-color: #2c3e50; }
         
-        /* COMPONENTES DE ESTADO (BADGES) */
-        .status-badge { font-size: 0.75em; padding: 5px 10px; border-radius: 10px; font-weight: bold; text-align: center; }
+        /* BADGES */
+        .status-badge { font-size: 0.75em; padding: 5px 12px; border-radius: 10px; font-weight: bold; margin-left: 15px; }
         .badge-ready { background: #27ae60; color: white; }
         .badge-coming { background: #e2e8f0; color: #64748b; border: 1px dashed #cbd5e1; }
         
-        .coming-soon-text { font-size: 0.9em; color: #7f8c8d; font-style: italic; text-align: center; margin: 15px 0; }
+        .coming-text { font-size: 0.95em; color: #7f8c8d; font-style: italic; }
 
-        /* NOTA DE CONTROL: EXPOSICIÓN DE CIENCIA */
+        /* NOTA DE CIENCIA Y AMBIENTE */
         .note-box { background: #fff9db; border-left: 6px solid #f1c40f; padding: 20px; border-radius: 15px; margin-top: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .note-title { font-weight: bold; color: #b7791f; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 1.1em; }
     </style>
@@ -58,102 +73,92 @@
 
 <div class="container">
     <div class="calendar-header">
-        <span class="calendar-badge">Año Escolar 2026</span>
+        <span class="calendar-badge">Rol de Exámenes Bimestrales</span>
     </div>
-    <h1>📅 Agenda de Evaluaciones: Julio</h1>
-    <h2>Edward, ¡revisa tus evaluaciones de esta semana y demuestra lo que sabes!</h2>
+    <h1>📅 Calendario Escolar: Julio 2026</h1>
+    <h2>Edward, ¡revisa tus evaluaciones y prepárate paso a paso esta semana!</h2>
 
-    <div class="search-container">
-        <input type="text" class="search-bar" id="searchBox" oninput="buscarCurso()" placeholder="Escribe el nombre del curso que deseas resolver hoy...">
-    </div>
-
-    <div class="grid-layout" id="coursesGrid">
+    <div class="timeline-layout">
         
-        <div class="course-card active-comu" data-tags="comunicacion letras fabulas gramatica">
-            <div>
-                <div class="card-title">
-                    <span class="card-emoji">📝</span>
-                    <span>Comunicación</span>
-                </div>
-                <a href="comunicacion_3grado.html" class="exam-link">
-                    <span>Examen Bimestral</span>
-                    <span class="status-badge badge-ready">¡Listo!</span>
-                </a>
+        <div class="day-card border-ingles">
+            <div class="day-indicator bg-ingles">
+                <span class="day-name">Martes</span>
+                <span class="day-date">16</span>
+                <span style="font-size:0.8em; margin-top:5px;">Julio</span>
             </div>
-        </div>
-
-        <div class="course-card active-ingles" data-tags="ingles english test animals vocabulary">
-            <div>
+            <div class="day-content">
                 <div class="card-title">
                     <span class="card-emoji">🇬🇧</span>
                     <span>Inglés (English)</span>
                 </div>
-                <a href="ingles_3grado.html" class="exam-link">
-                    <span>Bimestral Exam</span>
-                    <span class="status-badge badge-ready">¡Listo!</span>
-                </a>
-            </div>
-        </div>
-
-        <div class="course-card locked-card" data-tags="matematica numeros calculo mate">
-            <div>
-                <div class="card-title" style="color: #7f8c8d;">
-                    <span class="card-emoji">🚀</span>
-                    <span>Matemática</span>
+                <div>
+                    <a href="ingles_3grado.html" class="exam-link">
+                        <span>🚀 Resolver Bimestral Exam</span>
+                    </a>
                 </div>
-                <div class="coming-soon-text">⏳ Preguntas preparándose...</div>
             </div>
-            <div style="text-align: right;"><span class="status-badge badge-coming">Próximamente</span></div>
         </div>
 
-        <div class="course-card locked-card" data-tags="personal social historia civica">
-            <div>
+        <div class="day-card border-comu">
+            <div class="day-indicator bg-comu">
+                <span class="day-name">Miércoles</span>
+                <span class="day-date">17</span>
+                <span style="font-size:0.8em; margin-top:5px;">Julio</span>
+            </div>
+            <div class="day-content">
+                <div class="card-title">
+                    <span class="card-emoji">📝</span>
+                    <span>Comunicación</span>
+                </div>
+                <div>
+                    <a href="comunicacion_3grado.html" class="exam-link">
+                        <span>🚀 Resolver Examen Bimestral</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card locked-day">
+            <div class="day-indicator bg-locked">
+                <span class="day-name">Jueves</span>
+                <span class="day-date">18</span>
+                <span style="font-size:0.8em; margin-top:5px;">Julio</span>
+            </div>
+            <div class="day-content">
                 <div class="card-title" style="color: #7f8c8d;">
                     <span class="card-emoji">🏠</span>
                     <span>Personal Social</span>
                 </div>
-                <div class="coming-soon-text">⏳ Temas en preparación...</div>
+                <div class="coming-text">⏳ El examen estará disponible para practicar el <strong>Miércoles 17</strong> (un día antes).</div>
+                <div style="margin-top: 10px;"><span class="status-badge badge-coming">Próximamente</span></div>
             </div>
-            <div style="text-align: right;"><span class="status-badge badge-coming">Próximamente</span></div>
+        </div>
+
+        <div class="day-card locked-day">
+            <div class="day-indicator bg-locked">
+                <span class="day-name">Viernes</span>
+                <span class="day-date">19</span>
+                <span style="font-size:0.8em; margin-top:5px;">Julio</span>
+            </div>
+            <div class="day-content">
+                <div class="card-title" style="color: #7f8c8d;">
+                    <span class="card-emoji">🚀</span>
+                    <span>Matemática</span>
+                </div>
+                <div class="coming-text">⏳ El examen estará disponible para practicar el <strong>Jueves 18</strong> (un día antes).</div>
+                <div style="margin-top: 10px;"><span class="status-badge badge-coming">Próximamente</span></div>
+            </div>
         </div>
 
     </div>
 
-    <div class="note-box" id="cienciaNote">
-        <div class="note-title">🚌 Nota de Ciencia y Ambiente 🌿</div>
+    <div class="note-box">
+        <div class="note-title">🚌 Nota Importante: Ciencia y Ambiente 🌿</div>
         <p style="margin: 0; line-height: 1.5; color: #744210; font-size: 0.95em;">
-            ¡Edward! En este mes de julio la nota de Ciencia y Ambiente se obtendrá mediante una <strong>exposición especial</strong> en el salón de clases. Esta actividad la realizaremos después de disfrutar y aprender muchísimo en nuestro próximo <strong>paseo escolar</strong>. ¡Prepárate para observar la naturaleza y recolectar tus datos!
+            ¡Edward! Recuerda que en este bloque bimestral de julio <strong>no habrá examen escrito</strong> en la tablet para Ciencia y Ambiente. Tu nota se obtendrá a través de una <strong>exposición especial</strong> en el salón de clases, después de divertirnos y observar la naturaleza en nuestro próximo <strong>paseo escolar</strong>. ¡A disfrutar la excursión!
         </p>
     </div>
 </div>
 
-<script>
-    // Sistema dinámico de filtrado en tiempo real para Edward
-    function buscarCurso() {
-        const query = document.getElementById('searchBox').value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        const cards = document.querySelectorAll('.course-card');
-        const notaCiencia = document.getElementById('cienciaNote');
-
-        cards.forEach(card => {
-            const tags = card.getAttribute('data-tags') || "";
-            const textContent = card.innerText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            
-            if (textContent.includes(query) || tags.includes(query)) {
-                card.style.display = "flex";
-            } else {
-                card.style.display = "none";
-            }
-        });
-
-        // La nota informativa reacciona si el usuario busca palabras del curso de ciencia
-        if ("ciencia y ambiente exposicion paseo naturaleza".includes(query)) {
-            notaCiencia.style.display = "block";
-        } else if (query !== "") {
-            notaCiencia.style.display = "none";
-        } else {
-            notaCiencia.style.display = "block";
-        }
-    }
-</script>
 </body>
 </html>
