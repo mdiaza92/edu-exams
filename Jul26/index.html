@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de Exámenes de Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #f0faf7; padding: 20px; margin: 0; color: #2c3e50; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 30px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 5px solid #1abc9c; }
+        
+        h1 { text-align: center; color: #16a085; text-transform: uppercase; font-size: 2em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 30px; }
+        
+        /* FILTROS Y CONTROLES */
+        .controls { display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+        .search-bar { flex: 1; min-width: 250px; padding: 12px 20px; border-radius: 30px; border: 2px solid #bdc3c7; font-size: 16px; font-family: inherit; }
+        .filter-btn { padding: 10px 20px; border-radius: 20px; border: 2px solid #bdc3c7; background: white; cursor: pointer; font-family: inherit; font-weight: bold; transition: 0.2s; }
+        .filter-btn.active, .filter-btn:hover { background: #1abc9c; color: white; border-color: #1abc9c; }
+
+        /* REJILLA DINÁMICA DE MESES */
+        .folder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        
+        .folder-card { background: #ffffff; border-radius: 18px; border: 3px solid #edf2f7; padding: 20px; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .folder-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.05); }
+        
+        /* COLORES DIVERTIDOS POR MES */
+        .month-marzo { border-color: #e67e22; background: #fff5ee; }
+        .month-abril { border-color: #3498db; background: #f0f7fc; }
+        .month-mayo { border-color: #9b59b6; background: #fbf5fc; }
+        .month-junio { border-color: #27ae60; background: #f0fdf4; }
+        .month-old { border-color: #7f8c8d; background: #f8fafc; border-style: dashed; }
+
+        .folder-title { display: flex; align-items: center; gap: 10px; font-size: 1.2em; font-weight: bold; margin-bottom: 15px; }
+        .folder-emoji { font-size: 1.5em; }
+        
+        .exam-list { list-style: none; padding: 0; margin: 0; }
+        .exam-item { margin-bottom: 10px; }
+        
+        .exam-link { 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 12px 15px; background: white; border-radius: 10px; 
+            text-decoration: none; color: #34495e; font-weight: 500; 
+            border: 1px solid #e2e8f0; transition: 0.2s; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .exam-link:hover { background: #1abc9c; color: white; border-color: #1abc9c; }
+        
+        /* MINI BADGES TEMÁTICOS PARA SABER QUÉ CURSO ES */
+        .badge { font-size: 0.75em; padding: 4px 10px; border-radius: 10px; font-weight: bold; color: white; }
+        .bg-ciencia { background: #27ae60; }
+        .bg-comu { background: #ff4757; }
+        .bg-personal { background: #f1c40f; color: #2c3e50; }
+        .bg-ingles { background: #3498db; }
+        .bg-mate { background: #9b59b6; }
+        .bg-old { background: #7f8c8d; }
+
+        @media (max-width: 600px) {
+            .controls { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📅 Agenda Mensual de Exámenes</h1>
+    <h2>Edward, ¡busca el mes actual y supera tus retos de la semana!</h2>
+
+    <div class="controls">
+        <input type="text" class="search-bar" id="searchBox" oninput="filtrarExamenes()" placeholder="Escribe el nombre de un curso o tema (ej: 'Inglés' o 'Sentidos')...">
+        <button class="filter-btn active" id="btn-all" onclick="filtrarMes('all')">Ver Todo</button>
+        <button class="filter-btn" id="btn-marzo" onclick="filtrarMes('marzo')">Marzo</button>
+        <button class="filter-btn" id="btn-abril" onclick="filtrarMes('abril')">Abril</button>
+        <button class="filter-btn" id="btn-mayo" onclick="filtrarMes('mayo')">Mayo</button>
+        <button class="filter-btn" id="btn-junio" onclick="filtrarMes('junio')">Junio</button>
+        <button class="filter-btn" id="btn-old" onclick="filtrarMes('old')">Año Anterior 📁</button>
+    </div>
+
+    <div class="folder-grid" id="gridContainer"></div>
+</div>
+
+<script>
+    // BASE DE DATOS JSON - ORGANIZADA POR MESES Y LISTA PARA GITHUB PAGES
+    const cronograma = [
+        {
+            "mes": "marzo",
+            "clase": "month-marzo",
+            "emoji": "🎒",
+            "nombre": "Exámenes de Marzo",
+            "examenes": [
+                {"titulo": "Examen Mensual: Los Sentidos", "archivo": "ciencia_ambiente_3grado.html", "curso": "Ciencia", "badge": "bg-ciencia"},
+                {"titulo": "Examen Mensual: Familia y Emociones", "archivo": "personal_social_3grado.html", "curso": "P. Social", "badge": "bg-personal"}
+            ]
+        },
+        {
+            "mes": "abril",
+            "clase": "month-abril",
+            "emoji": "🌧️",
+            "nombre": "Exámenes de Abril",
+            "examenes": [
+                {"titulo": "English Challenger: Yoga & Imperatives", "archivo": "english_final_exam.html", "curso": "Inglés", "badge": "bg-ingles"}
+            ]
+        },
+        {
+            "mes": "mayo",
+            "clase": "month-mayo",
+            "emoji": "☀️",
+            "nombre": "Exámenes de Mayo",
+            "examenes": [
+                {"titulo": "Mega Desafío Matemático: 50 Niveles", "archivo": "examen_matematica_3ergrado.html", "curso": "Matemática", "badge": "bg-mate"}
+            ]
+        },
+        {
+            "mes": "junio",
+            "clase": "month-junio",
+            "emoji": "🌱",
+            "nombre": "Exámenes de Junio (Bimestrales)",
+            "examenes": [
+                {"titulo": "Examen Bimestral: Gramática y Fábulas", "archivo": "comunicacion_edward_bimestral.html", "curso": "Comu", "badge": "bg-comu"},
+                {"titulo": "English Bimestral Exam: 40 Levels", "archivo": "english_bimestral_exam.html", "curso": "Inglés", "badge": "bg-ingles"},
+                {"titulo": "Examen Bimestral: Locomotor e Intestinos", "archivo": "examen_ciencia_maestro.html", "curso": "Ciencia", "badge": "bg-ciencia"}
+            ]
+        },
+        {
+            "mes": "old",
+            "clase": "month-old",
+            "emoji": "📁",
+            "nombre": "Historial (Año Anterior)",
+            "examenes": [
+                {"titulo": "Examen Antiguo de Prueba 1", "archivo": "old/examen_viejo_1.html", "curso": "Pasado", "badge": "bg-old"},
+                {"titulo": "Examen Antiguo de Prueba 2", "archivo": "old/examen_viejo_2.html", "curso": "Pasado", "badge": "bg-old"}
+            ]
+        }
+    ];
+
+    let mesFiltro = 'all';
+
+    function cargarDashboard() {
+        const container = document.getElementById('gridContainer');
+        container.innerHTML = '';
+        const keyword = document.getElementById('searchBox').value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        cronograma.forEach(folder => {
+            // Validar filtro por mes seleccionado
+            if (mesFiltro !== 'all' && folder.mes !== mesFiltro) return;
+
+            // Filtrar las pruebas internas según la barra de búsqueda (cruza título o curso)
+            const pruebasFiltradas = folder.examenes.filter(ex => {
+                let txtTitulo = ex.titulo.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                let txtCurso = ex.curso.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                return txtTitulo.includes(keyword) || txtCurso.includes(keyword);
+            });
+
+            // Si se busca y este mes no tiene nada, no se renderiza la tarjeta
+            if (keyword !== "" && pruebasFiltradas.length === 0) return;
+
+            const card = document.createElement('div');
+            card.className = `folder-card ${folder.clase}`;
+
+            let html = `
+                <div class="folder-title">
+                    <span class="folder-emoji">${folder.emoji}</span>
+                    <span>${folder.nombre}</span>
+                </div>
+                <ul class="exam-list">
+            `;
+
+            const listaExamenes = keyword !== "" ? pruebasFiltradas : folder.examenes;
+            listaExamenes.forEach(ex => {
+                html += `
+                    <li class="exam-item">
+                        <a href="${ex.archivo}" class="exam-link">
+                            <span>${ex.titulo}</span>
+                            <span class="badge ${ex.badge}">${ex.curso}</span>
+                        </a>
+                    </li>
+                `;
+            });
+
+            html += `</ul>`;
+            card.innerHTML = html;
+            container.appendChild(card);
+        });
+    }
+
+    function filtrarMes(mes) {
+        mesFiltro = mes;
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`btn-${mes}`).classList.add('active');
+        cargarDashboard();
+    }
+
+    function filtrarExamenes() {
+        cargarDashboard();
+    }
+
+    window.onload = cargarDashboard;
+</script>
+</body>
+</html>
