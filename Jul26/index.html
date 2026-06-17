@@ -35,8 +35,8 @@
         .bg-comu { background-color: #ff4757; }
         .border-comu { border-color: #ff4757; }
         
-        .bg-personal { background-color: #f1c40f; }
-        .border-personal { border-color: #f1c40f; }
+        .bg-personal { background-color: #16a085; }
+        .border-personal { border-color: #16a085; }
         
         .bg-mate { background-color: #34495e; }
         .border-mate { border-color: #34495e; }
@@ -78,8 +78,10 @@
     <h1>📅 Calendario Escolar: Julio 2026</h1>
     <h2>Edward, ¡revisa tus evaluaciones y prepárate paso a paso esta semana!</h2>
 
+    <!-- LÍNEA DE TIEMPO DÍA POR DÍA -->
     <div class="timeline-layout">
         
+        <!-- MARTES 16: INGLÉS -->
         <div class="day-card border-ingles">
             <div class="day-indicator bg-ingles">
                 <span class="day-name">Martes</span>
@@ -99,6 +101,7 @@
             </div>
         </div>
 
+        <!-- MIÉRCOLES 17: COMUNICACIÓN -->
         <div class="day-card border-comu">
             <div class="day-indicator bg-comu">
                 <span class="day-name">Miércoles</span>
@@ -118,22 +121,27 @@
             </div>
         </div>
 
-        <div class="day-card locked-day">
-            <div class="day-indicator bg-locked">
+        <!-- JUEVES 18: PERSONAL SOCIAL (¡AHORA DISPONIBLE!) -->
+        <div class="day-card border-personal">
+            <div class="day-indicator bg-personal">
                 <span class="day-name">Jueves</span>
                 <span class="day-date">18</span>
                 <span style="font-size:0.8em; margin-top:5px;">Julio</span>
             </div>
             <div class="day-content">
-                <div class="card-title" style="color: #7f8c8d;">
+                <div class="card-title">
                     <span class="card-emoji">🏠</span>
                     <span>Personal Social</span>
                 </div>
-                <div class="coming-text">⏳ El examen estará disponible para practicar el <strong>Miércoles 17</strong> (un día antes).</div>
-                <div style="margin-top: 10px;"><span class="status-badge badge-coming">Próximamente</span></div>
+                <div>
+                    <a href="personal_social_3grado.html" class="exam-link">
+                        <span>🚀 Resolver Examen Bimestral</span>
+                    </a>
+                </div>
             </div>
         </div>
 
+        <!-- VIERNES 19: MATEMÁTICA (PRÓXIMAMENTE) -->
         <div class="day-card locked-day">
             <div class="day-indicator bg-locked">
                 <span class="day-name">Viernes</span>
@@ -152,6 +160,7 @@
 
     </div>
 
+    <!-- RECORDATORIO DE CIENCIA Y AMBIENTE -->
     <div class="note-box">
         <div class="note-title">🚌 Nota Importante: Ciencia y Ambiente 🌿</div>
         <p style="margin: 0; line-height: 1.5; color: #744210; font-size: 0.95em;">

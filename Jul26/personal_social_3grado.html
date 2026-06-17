@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Bimestral de Personal Social - Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #fcf8f2; padding: 15px; color: #2c3e50; }
+        .container { max-width: 950px; margin: auto; background: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 6px solid #16a085; }
+        h1 { text-align: center; color: #16a085; text-transform: uppercase; font-size: 1.8em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        
+        .section-header { 
+            position: -webkit-sticky; position: sticky; top: 0; 
+            background: #16a085; color: #fff; padding: 15px; 
+            border-radius: 12px; margin: 30px 0 15px 0; 
+            text-align: center; font-weight: bold; z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+        }
+
+        /* MAQUETACIÓN DE DOBLE COLUMNA */
+        .main-layout { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 25px; }
+        .questions-column { flex: 1; }
+        
+        /* PANEL VISUAL LATERAL */
+        .visual-side-card { 
+            width: 220px; background: #e8f8f5; border: 3px dashed #16a085; 
+            border-radius: 18px; padding: 20px; text-align: center; 
+            position: sticky; top: 70px; box-sizing: border-box;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        }
+        .visual-emoji { font-size: 4.5em; margin-bottom: 10px; display: block; animation: floatAnim 3s ease-in-out infinite; }
+        .visual-tag { background: #16a085; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.85em; font-weight: bold; display: inline-block; }
+        
+        @keyframes floatAnim {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .section { margin-bottom: 15px; padding: 18px; border: 2px solid #edf2f7; border-radius: 15px; background-color: #ffffff; transition: 0.3s; }
+        .incomplete { border: 3px solid #e74c3c !important; background-color: #fff5f5 !important; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #2f3542; display: block; line-height: 1.4; }
+        
+        input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #ced4da; font-size: 16px; font-family: inherit; box-sizing: border-box; }
+        .options label { display: block; margin: 10px 0; cursor: pointer; padding: 10px; border-radius: 8px; border: 1px solid #eee; transition: 0.2s; }
+        .options label:hover { background: #e8f8f5; border-color: #16a085; }
+        
+        button#btn-evaluar { display: block; width: 100%; max-width: 350px; height: 65px; margin: 40px auto; background: #27ae60; color: white; border: none; border-radius: 35px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #1e8449; }
+        
+        #result-box { display: none; padding: 25px; border-radius: 20px; margin-top: 30px; border: 4px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+        
+        .revision-container { margin-top: 20px; background: white; border-radius: 10px; padding: 15px; border: 1px solid #ccc; }
+        .item-revision { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; text-align: left; }
+        .resp-correcta { color: #27ae60; font-weight: bold; }
+        .resp-usuario { font-style: italic; color: #555; }
+        .explicacion { color: #2980b9; font-size: 0.9em; font-style: italic; margin-top: 5px; }
+        .missing-alert { color: #e74c3c; font-weight: bold; text-align: center; margin-bottom: 15px; display: none; padding: 10px; background: #fdf2f2; border-radius: 10px; border: 2px solid #e74c3c; }
+
+        @media (max-width: 768px) {
+            .main-layout { flex-direction: column-reverse; }
+            .visual-side-card { width: 100%; position: relative; top: 0; margin-bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌍 Examen Bimestral de Personal Social</h1>
+    <h2>Edward, ¡lee cada pregunta con calma y demuestra todo lo que has aprendido!</h2>
+
+    <div id="missing-msg" class="missing-alert">⚠️ ¡Edward, te faltan responder algunas preguntas! Revisa los bloques marcados en rojo.</div>
+
+    <form id="quizForm">
+        <div id="quizContainer"></div>
+        <button type="button" id="btn-evaluar" onclick="validarExamen()">✨ Terminar Examen</button>
+    </form>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+        <div id="revision-lista" class="revision-container">
+            <h4>🔍 Lista de Revisión (Repasa tus respuestas):</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // BASE DE DATOS JSON - PERSONAL SOCIAL 3ERO GRADO
+    const examData = {
+      "sections": [
+        {
+          "title": "Sección 1: Mi Comunidad y sus Instituciones",
+          "emoji": "🏢",
+          "tag": "Nuestra Comunidad",
+          "questions": [
+            {"id": "q1", "type": "choice", "question": "¿A qué llamamos comunidad?", "options": ["Al lugar donde vivimos junto con otras personas compartiendo espacios.", "A una casa donde vive una sola persona en el campo.", "A un salón de clases vacío."], "correct": "Al lugar donde vivimos junto con otras personas compartiendo espacios.", "feedback": "La comunidad es el espacio geográfico donde habitamos y compartimos servicios con otros vecinos."},
+            {"id": "q2", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'La comisaría atiende enfermedades.'", "options": ["Verdadero", "Falso"], "correct": "Falso", "feedback": "La comisaría cuida nuestra seguridad; quien atiende las enfermedades es el centro de salud o posta médica."},
+            {"id": "q3", "type": "write", "question": "Completa el nombre de la institución: Es el lugar donde estudias y recibes educación de tus profesores: E _ C _ _ _ A.", "correct": "escuela", "feedback": "La escuela es la institución que nos brinda educación, nos enseña a leer, escribir y desarrollar valores."},
+            {"id": "q4", "type": "choice", "question": "¿Cuál es la función principal de la Compañía de Bomberos?", "options": ["Mantener limpias las calles y parques.", "Apagar incendios, rescatar personas y atender accidentes.", "Vender medicamentos a los vecinos."], "correct": "Apagar incendios, rescatar personas y atender accidentes.", "feedback": "Los bomberos atienden emergencias y brindan primeros auxilios protegiendo a los ciudadanos."},
+            {"id": "q5", "type": "write", "question": "Institución encargada de organizar la comunidad, limpiar las calles y cuidar los parques: M _ _ _ C _ _ _ L _ _ _ D.", "correct": "municipalidad", "feedback": "La municipalidad organiza los servicios públicos y mejora la infraestructura local."},
+            {"id": "q6", "type": "choice", "question": "Pedro se enfermó en su casa y necesita atención médica urgente. ¿A qué institución debe acudir?", "options": ["A la Comisaría PNP", "Al Centro de Salud (Posta médica u Hospital)", "A la Escuela"], "correct": "Al Centro de Salud (Posta médica u Hospital)", "feedback": "Los médicos y enfermeras atienden nuestra salud en los hospitales o postas médicas."},
+            {"id": "q7", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'Los bomberos apagan incendios.'", "options": ["Verdadero", "Falso"], "correct": "Verdadero", "feedback": "Los bomberos arriesgan sus vidas para controlar el fuego y ayudar en emergencias."},
+            {"id": "q8", "type": "reorder", "question": "Reordena la frase sobre la importancia institucional: [seguridad] [La] [comisaría] [nuestra] [protege]", "correct": "La comisaría protege nuestra seguridad", "feedback": "Los policías trabajan en la comisaría manteniendo el orden público y cuidándonos."}
+          ]
+        },
+        {
+          "title": "Sección 2: Las Líneas Imaginarias de la Tierra",
+          "emoji": "🌐",
+          "tag": "Líneas de la Tierra",
+          "questions": [
+            {"id": "q9", "type": "choice", "question": "¿Para qué sirven las líneas imaginarias que aparecen en mapas y globos terráqueos?", "options": ["Para adornar el planeta con trazos de colores.", "Para facilitar la ubicación exacta de lugares en la Tierra.", "Para dividir las carreteras del mundo."], "correct": "Para facilitar la ubicación exacta de lugares en la Tierra.", "feedback": "Las líneas imaginarias fueron creadas por el hombre para poder orientarnos y cartografiar el planeta."},
+            {"id": "q10", "type": "choice", "question": "¿Cuál es la línea imaginaria más importante que divide la Tierra en Hemisferio Norte y Hemisferio Sur?", "options": ["El Meridiano de Greenwich", "La Línea del Ecuador", "El Trópico de Cáncer"], "correct": "La Línea del Ecuador", "feedback": "La Línea del Ecuador es la línea horizontal central que parte la Tierra en Norte y Sur."},
+            {"id": "q11", "type": "write", "question": "Completa el nombre: La línea vertical que divide la Tierra en Hemisferio Este y Oeste es el Meridiano de G _ _ _ _ w _ _ h.", "correct": "greenwich", "feedback": "El Meridiano de Greenwich corre de polo a polo dividiendo los lados Este y Oeste del planeta."},
+            {"id": "q12", "type": "choice", "question": "¿Las líneas imaginarias se pueden ver físicamente desde el espacio exterior?", "options": ["Sí, son líneas de color azul pintadas en el suelo.", "No, no se pueden ver en la realidad, solo aparecen en mapas y globos."], "correct": "No, no se pueden ver en la realidad, solo aparecen en mapas y globos.", "feedback": "Se llaman 'imaginarias' porque son trazos ficticios que sirven de guía matemática en la cartografía."},
+            {"id": "q13", "type": "choice", "question": "Las líneas horizontales que rodean la Tierra de forma paralela al Ecuador se llaman:", "options": ["Paralelos", "Meridianos", "Ejes polares"], "correct": "Paralelos", "feedback": "Los paralelos son círculos horizontales; el principal es el Ecuador."},
+            {"id": "q14", "type": "write", "question": "Las líneas verticales que van de polo a polo se llaman M _ _ _ d _ _ _ _ s.", "correct": "meridianos", "feedback": "Los meridianos cruzan el planeta verticalmente de norte a sur."},
+            {"id": "q15", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'El Meridiano de Greenwich divide la Tierra en Norte y Sur.'", "options": ["Verdadero", "Falso"], "correct": "Falso", "feedback": "Greenwich divide la Tierra en Este y Oeste; el Ecuador la divide en Norte y Sur."},
+            {"id": "q16", "type": "reorder", "question": "Reordena las palabras: [ubicar] [ayudan] [líneas] [Las] [lugares] [a]", "correct": "Las líneas ayudan a ubicar lugares", "feedback": "Esa es la principal utilidad de la red de paralelos y meridianos."}
+          ]
+        },
+        {
+          "title": "Sección 3: Límites y División Política del Perú",
+          "emoji": "🇵🇪",
+          "tag": "Geografía del Perú",
+          "questions": [
+            {"id": "q17", "type": "choice", "question": "¿Qué son los límites de un país?", "options": ["Las carreteras principales por donde viajan los autos.", "Las fronteras que marcan hasta dónde llega el territorio de un país.", "Los nombres de los ríos más grandes."], "correct": "Las fronteras que marcan hasta dónde llega el territorio de un país.", "feedback": "Los límites indican con precisión matemática dónde termina nuestro país y empieza otro vecino."},
+            {"id": "q18", "type": "write", "question": "Por el OESTE, el territorio peruano limita con el Océano P _ _ _ _ _ c _ .", "correct": "pacifico", "feedback": "Nuestra costa peruana colinda directamente con las aguas del Océano Pacífico."},
+            {"id": "q19", "type": "choice", "question": "¿Con qué países limita el Perú por el NORTE?", "options": ["Chile y Bolivia", "Ecuador y Colombia", "Brasil y Argentina"], "correct": "Ecuador y Colombia", "feedback": "Nuestros vecinos norteños según los mapas oficiales son Ecuador y Colombia."},
+            {"id": "q20", "type": "choice", "question": "Por el SUR, el Perú limita únicamente con el país de:", "options": ["Chile", "Brasil", "Bolivia"], "correct": "Chile", "feedback": "La frontera sur del territorio peruano limita directamente con Chile."},
+            {"id": "q21", "type": "write", "question": "Por el ESTE, el Perú comparte fronteras con Bolivia y el país más grande de Sudamérica: B _ _ s _ l.", "correct": "brasil", "feedback": "Por el flanco oriental limitamos con Brasil y el altiplano de Bolivia."},
+            {"id": "q22", "type": "choice", "question": "¿En cuántos departamentos políticos está dividido actualmente el territorio del Perú?", "options": ["24 departamentos y el Callao", "15 departamentos", "10 departamentos"], "correct": "24 departamentos y el Callao", "feedback": "Nuestra división administrativa consta de 24 departamentos y la Provincia Constitucional del Callao."},
+            {"id": "q23", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'Los distritos forman parte de las provincias.'", "options": ["Verdadero", "Falso"], "correct": "Verdadero", "feedback": "El territorio se organiza jerárquicamente en departamentos, provincias y finalmente distritos."},
+            {"id": "q24", "type": "reorder", "question": "Reordena para descubrir la importancia de organizarse: [país] [división] [organiza] [La] [el] [política]", "correct": "La división política organiza el país", "feedback": "Dividir el país en partes pequeñas ayuda a construir escuelas, hospitales y brindar mejores servicios."}
+          ]
+        },
+        {
+          "title": "Sección 4: Los Derechos Humanos y del Niño",
+          "emoji": "❤️",
+          "tag": "Derechos del Niño",
+          "questions": [
+            {"id": "q25", "type": "choice", "question": "¿Qué son los derechos humanos?", "options": ["Leyes que sirven solo para proteger a las personas adultas que trabajan.", "Normas que protegen a todas las personas para vivir con dignidad, respeto y libertad.", "Tareas difíciles que los niños deben hacer obligatoriamente."], "correct": "Normas que protegen a todas las personas para vivir con dignidad, respeto y libertad.", "feedback": "Los derechos protegen nuestra vida e integridad desde que nacemos sin distinción alguna."},
+            {"id": "q26", "type": "choice", "question": "Cuando un niño asiste al colegio a aprender a leer y escribir, está ejerciendo su derecho a la...", "options": ["Salud", "Educación", "Alimentación"], "correct": "Educación", "feedback": "Ir a la escuela y recibir formación es parte fundamental del derecho a la educación."},
+            {"id": "q27", "type": "write", "question": "Si te sientes enfermo y tus papás te llevan al doctor para recibir atención médica, ejerces tu derecho a la S _ _ _ d.", "correct": "salud", "feedback": "Recibir medicinas, vacunas y atención médica forma parte del derecho a la salud."},
+            {"id": "q28", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'Los niños tienen derecho a trabajar en las calles.'", "options": ["Verdadero", "Falso"], "correct": "Falso", "feedback": "Los niños tienen derecho a no trabajar; su deber es estudiar y su derecho es jugar felizmente."},
+            {"id": "q29", "type": "choice", "question": "¿Qué institución internacional se encarga exclusivamente de defender los derechos de los niños en el mundo?", "options": ["UNICEF", "Defensoría del Pueblo", "DEMUNA"], "correct": "UNICEF", "feedback": "UNICEF es la agencia mundial que vela por la infancia y sus derechos en todo el planeta."},
+            {"id": "q30", "type": "write", "question": "Institución en el Perú que ayuda directamente en las municipalidades a proteger los derechos de niños y adolescentes: D _ M _ _ A.", "correct": "demuna", "feedback": "La DEMUNA funciona en cada distrito para resguardar legalmente a los menores de edad."},
+            {"id": "q31", "type": "choice", "question": "Tener un nombre, un apellido y una patria significa que tienes derecho a una...", "options": ["Identidad", "Alimentación", "Discriminación"], "correct": "Identidad", "feedback": "El derecho a la identidad nos otorga un nombre y una nacionalidad al nacer."},
+            {"id": "q32", "type": "reorder", "question": "Reordena la frase sobre igualdad: [derechos] [Todos] [los] [tienen] [niños]", "correct": "Todos los niños tienen derechos", "feedback": "Los derechos se aplican a todos por igual, sin importar idioma, color de piel o procedencia."}
+          ]
+        },
+        {
+          "title": "Sección 5: Cuidado del Medio Ambiente y Defensa Civil",
+          "emoji": "🌱",
+          "tag": "Prevención y Ambiente",
+          "questions": [
+            {"id": "q33", "type": "choice", "question": "¿Qué acción ayuda directamente a cuidar el medio ambiente de nuestra comunidad?", "options": ["Dejar los caños abiertos desperdiciando agua.", "Sembrar árboles y plantas porque nos brindan aire puro.", "Quemar la basura en los parques."], "correct": "Sembrar árboles y plantas porque nos brindan aire puro.", "feedback": "Las plantas purifican el oxígeno y reforestar ayuda a combatir la contaminación urbana."},
+            {"id": "q34", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'Reciclar botellas y cartón daña el planeta.'", "options": ["Verdadero", "Falso"], "correct": "Falso", "feedback": "Reciclar disminuye la acumulación de desperdicios ayudando al planeta."},
+            {"id": "q35", "type": "write", "question": "Completar: El lema oficial de la prevención ante sismos e inundaciones dice: 'Defensa Civil es tarea de t _ _ _ s'.", "correct": "todos", "feedback": "La prevención y ayuda mutua involucra a cada ciudadano sin excepción."},
+            {"id": "q36", "type": "choice", "question": "¿Por qué es de vital importancia participar responsablemente en los simulacros de sismo de la escuela?", "options": ["Para salir del aula a jugar con los compañeros.", "Para aprender a evacuar ordenadamente y ubicar zonas seguras ante emergencias.", "Para perder tiempo de clases."], "correct": "Para aprender a evacuar ordenadamente y ubicar zonas seguras ante emergencias.", "feedback": "Los simulacros nos entrenan para reaccionar con calma y ponernos a salvo ante desastres reales."},
+            {"id": "q37", "type": "choice", "question": "¿Qué elemento indispensable debemos tener listo en casa para afrontar las primeras horas de un desastre natural?", "options": ["Una caja de juguetes nuevos.", "Una mochila de emergencia con alimentos no perecibles, agua y linterna.", "Un libro de cuentos de la escuela."], "correct": "Una mochila de emergencia con alimentos no perecibles, agua y linterna.", "feedback": "La mochila de emergencia contiene insumos de primera necesidad básicos para la supervivencia."},
+            {"id": "q38", "type": "write", "question": "Acción que consiste en clasificar el plástico, vidrio y papel para volver a usarlo: R _ c _ c _ _ r.", "correct": "reciclar", "feedback": "El reciclaje permite procesar materiales reduciendo la contaminación ambiental."},
+            {"id": "q39", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'Durante un sismo debemos correr velozmente y usar los ascensores.'", "options": ["Verdadero", "Falso"], "correct": "Falso", "feedback": "Durante un sismo se debe mantener la calma, caminar hacia las zonas seguras y jamás usar ascensores."},
+            {"id": "q40", "type": "reorder", "question": "Reordena la medida de prevención básica: [identificar] [Es] [seguras] [necesario] [zonas]", "correct": "Es necesario identificar zonas seguras", "feedback": "Reconocer las zonas seguras estructurales en casa o el colegio salva vidas."}
+          ]
+        }
+      ]
+    };
+
+    // GENERADOR DINÁMICO DE CONTENIDO HTML
+    function renderQuiz() {
+        const container = document.getElementById('quizContainer');
+        let questionCounter = 1;
+        
+        examData.sections.forEach(section => {
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.innerText = section.title;
+            container.appendChild(header);
+            
+            const layoutDiv = document.createElement('div');
+            layoutDiv.className = 'main-layout';
+            
+            const questionsColumn = document.createElement('div');
+            questionsColumn.className = 'questions-column';
+            
+            section.questions.forEach(q => {
+                const secDiv = document.createElement('div');
+                secDiv.className = 'section';
+                secDiv.id = 'sec_' + q.id;
+                
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'question-title';
+                titleSpan.innerText = `${questionCounter}. ${q.question}`;
+                secDiv.appendChild(titleSpan);
+                
+                if (q.type === 'choice') {
+                    const optDiv = document.createElement('div');
+                    optDiv.className = 'options';
+                    q.options.forEach(opt => {
+                        const lbl = document.createElement('label');
+                        lbl.innerHTML = `<input type="radio" name="${q.id}" value="${opt}" onclick="clearRed('sec_${q.id}')"> ${opt}`;
+                        optDiv.appendChild(lbl);
+                    });
+                    secDiv.appendChild(optDiv);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = q.id;
+                    input.placeholder = q.type === 'reorder' ? 'Escribe la oración ordenada aquí...' : 'Escribe las letras o palabras faltantes...';
+                    input.oninput = function() { clearRed('sec_' + q.id); };
+                    secDiv.appendChild(input);
+                }
+                
+                questionsColumn.appendChild(secDiv);
+                questionCounter++;
+            });
+            
+            const visualCard = document.createElement('div');
+            visualCard.className = 'visual-side-card';
+            visualCard.innerHTML = `
+                <span class="visual-emoji">${section.emoji}</span>
+                <span class="visual-tag">${section.tag}</span>
+                <p style="font-size: 0.85em; color: #555; margin-top: 10px; line-height: 1.3;">
+                    ¡Vamos Edward, concéntrate en este tema para lograr la nota más alta!
+                </p>
+            `;
+            
+            layoutDiv.appendChild(questionsColumn);
+            layoutDiv.appendChild(visualCard);
+            container.appendChild(layoutDiv);
+        });
+    }
+
+    function clearRed(id) { 
+        document.getElementById(id).classList.remove('incomplete'); 
+        if(document.querySelectorAll('.incomplete').length === 0) document.getElementById('missing-msg').style.display='none';
+    }
+
+    function validarExamen() {
+        let vacios = [];
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let respondido = false;
+                if (q.type === 'choice') {
+                    if (document.querySelector(`input[name="${q.id}"]:checked`)) respondido = true;
+                } else {
+                    if (document.getElementById(q.id).value.trim() !== "") respondido = true;
+                }
+                
+                if (!respondido) {
+                    const container = document.getElementById('sec_' + q.id);
+                    container.classList.add('incomplete');
+                    vacios.push(container);
+                }
+            });
+        });
+
+        if (vacios.length > 0) {
+            document.getElementById('missing-msg').style.display = 'block';
+            vacios[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+        calificarExamen();
+    }
+
+    function calificarExamen() {
+        let nota = 0;
+        let totalPreguntas = 40;
+        let itemsHTML = "";
+        let questionIndex = 1;
+
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let uVal = "";
+                if (q.type === 'choice') {
+                    uVal = document.querySelector(`input[name="${q.id}"]:checked`).value;
+                } else {
+                    uVal = document.getElementById(q.id).value.trim();
+                }
+
+                // Normalización para obviar tildes y mayúsculas en respuestas generales
+                let cleanU = uVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let cleanC = q.correct.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                
+                let esOk = (cleanU === cleanC) || (q.type === 'write' && cleanU.includes(cleanC));
+
+                if (esOk) nota++;
+
+                itemsHTML += `<div class="item-revision" style="border-left: 8px solid ${esOk ? '#27ae60' : '#e74c3c'}">
+                    <p><strong>Pregunta ${questionIndex}: ${q.question}</strong></p>
+                    <p>Tu respuesta: <span class="resp-usuario">${uVal}</span> ${esOk ? '✅' : '❌'}</p>
+                    ${!esOk ? `<p class="resp-correcta">Respuesta Correcta Esperada: ${q.correct}</p>` : ''}
+                    <p class="explicacion">💡 Explicación didáctica: ${q.feedback}</p>
+                </div>`;
+                    
+                questionIndex++;
+            });
+        });
+
+        const finalScore = Math.round((nota / totalPreguntas) * 20);
+        const rb = document.getElementById('result-box');
+        
+        rb.style.display = 'block';
+        document.getElementById('score-text').innerText = `Puntaje Final: ${finalScore} / 20 (${nota} aciertos de 40)`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        
+        if(finalScore >= 11) {
+            rb.className = "correct-box";
+            document.getElementById('feedback-content').innerHTML = "<h4>🌟 ¡Excelente trabajo, Edward! Has superado con éxito tu examen de Personal Social.</h4>";
+        } else {
+            rb.className = "error-box";
+            document.getElementById('feedback-content').innerHTML = "<h4>📚 ¡Buen intento, Edward! Revisa la lista de corrección para repasar las fichas con papá.</h4>";
+        }
+        
+        window.scrollTo({ top: rb.offsetTop, behavior: 'smooth' });
+    }
+
+    window.onload = renderQuiz;
+</script>
+</body>
+</html>
