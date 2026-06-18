@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Bimestral de Matemática - Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #f4f6f9; padding: 15px; color: #2c3e50; }
+        .container { max-width: 950px; margin: auto; background: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 6px solid #9b59b6; }
+        h1 { text-align: center; color: #8e44ad; text-transform: uppercase; font-size: 1.8em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        
+        .section-header { 
+            position: -webkit-sticky; position: sticky; top: 0; 
+            background: #9b59b6; color: #fff; padding: 15px; 
+            border-radius: 12px; margin: 30px 0 15px 0; 
+            text-align: center; font-weight: bold; z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+        }
+
+        /* DISEÑO INTEGRADO DE DOBLE COLUMNA */
+        .main-layout { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 25px; }
+        .questions-column { flex: 1; }
+        
+        /* TARJETA DE SOPORTE MULTIMEDIA E INFORMACIÓN */
+        .visual-side-card { 
+            width: 220px; background: #fbf5fc; border: 3px dashed #9b59b6; 
+            border-radius: 18px; padding: 20px; text-align: center; 
+            position: sticky; top: 70px; box-sizing: border-box;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        }
+        .visual-emoji { font-size: 4.5em; margin-bottom: 10px; display: block; animation: floatAnim 3s ease-in-out infinite; }
+        .visual-tag { background: #9b59b6; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.85em; font-weight: bold; display: inline-block; }
+        
+        @keyframes floatAnim {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .section { margin-bottom: 15px; padding: 18px; border: 2px solid #edf2f7; border-radius: 15px; background-color: #ffffff; transition: 0.3s; }
+        .incomplete { border: 3px solid #e74c3c !important; background-color: #fff5f5 !important; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #2f3542; display: block; line-height: 1.4; }
+        
+        input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #ced4da; font-size: 16px; font-family: inherit; box-sizing: border-box; }
+        .options label { display: block; margin: 10px 0; cursor: pointer; padding: 10px; border-radius: 8px; border: 1px solid #eee; transition: 0.2s; }
+        .options label:hover { background: #fbf5fc; border-color: #9b59b6; }
+        
+        /* BOTÓN SUPER PODER 50/50 */
+        .powerup-btn { background: #e67e22; color: white; border: none; padding: 6px 12px; border-radius: 10px; cursor: pointer; font-size: 0.8em; font-weight: bold; margin-top: 5px; }
+        .powerup-btn:disabled { background: #bdc3c7; cursor: not-allowed; }
+
+        button#btn-evaluar { display: block; width: 100%; max-width: 350px; height: 65px; margin: 40px auto; background: #27ae60; color: white; border: none; border-radius: 35px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #1e8449; }
+        
+        #result-box { display: none; padding: 25px; border-radius: 20px; margin-top: 30px; border: 4px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+        
+        .revision-container { margin-top: 20px; background: white; border-radius: 10px; padding: 15px; border: 1px solid #ccc; }
+        .item-revision { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; text-align: left; }
+        .resp-correcta { color: #27ae60; font-weight: bold; }
+        .resp-usuario { font-style: italic; color: #555; }
+        .explicacion { color: #2980b9; font-size: 0.9em; font-style: italic; margin-top: 5px; }
+        .missing-alert { color: #e74c3c; font-weight: bold; text-align: center; margin-bottom: 15px; display: none; padding: 10px; background: #fdf2f2; border-radius: 10px; border: 2px solid #e74c3c; }
+
+        @media (max-width: 768px) {
+            .main-layout { flex-direction: column-reverse; }
+            .visual-side-card { width: 100%; position: relative; top: 0; margin-bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚀 Gran Desafío de Matemática Bimestral</h1>
+    <h2>Edward, ¡usa tu súper pizarra mental, piensa con calma y demuestra tu genialidad!</h2>
+
+    <div style="text-align: center; margin-bottom: 15px;">
+        <button class="powerup-btn" id="global-5050" onclick="usarCincuentaCincuentaGlobal()">⚡ Súper Poder: Comodín 50/50 (1 disponible)</button>
+    </div>
+
+    <div id="missing-msg" class="missing-alert">⚠️ ¡Edward, faltan resolver algunas preguntas del examen! Revisa los bloques marcados en rojo.</div>
+
+    <form id="quizForm">
+        <div id="quizContainer"></div>
+        <button type="button" id="btn-evaluar" onclick="validarExamen()">✨ Terminar Examen</button>
+    </form>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+        <div id="revision-lista" class="revision-container">
+            <h4>🔍 Reporte de Pizarra Integral (Aprende de tus respuestas):</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // BASE DE DATOS MATEMÁTICA CON LAS 40 PREGUNTAS ESTRUCTURADAS
+    const examData = {
+      "sections": [
+        {
+          "title": "Semana 1: Aproximación y Operaciones Combinadas",
+          "emoji": "🧮",
+          "tag": "Aritmética Fichas",
+          "questions": [
+            {"id": "q1", "type": "choice", "question": "Si tenemos el número 427, ¿cuál es su aproximación o redondeo a la DECENA más próxima?", "options": ["420", "430", "400"], "correct": "430", "feedback": "Como las unidades son 7 (mayor o igual que 5), se aproxima hacia la decena superior, que es 430."},
+            {"id": "q2", "type": "choice", "question": "Aproxima el número 685 a la CENTENA más próxima en la recta numérica:", "options": ["600", "690", "700"], "correct": "700", "feedback": "El número 685 está más cerca del 700 que del 600 porque las decenas superan el punto medio 50."},
+            {"id": "q3", "type": "write", "question": "En una operación combinada SIN paréntesis como '25 + 18 - 32', ¿en qué orden debes resolver?", "correct": "izquierda a derecha", "feedback": "Sin signos de agrupación, las sumas y restas tienen la misma jerarquía y se resuelven estrictamente de izquierda a derecha."},
+            {"id": "q4", "type": "choice", "question": "Resuelve en tu pizarra mental: 25 + 18 - 32. ¿Cuál es el resultado final?", "options": ["11", "21", "43"], "correct": "11", "feedback": "Primero: 25 + 18 = 43. Luego restamos: 43 - 32 = 11."},
+            {"id": "q5", "type": "choice", "question": "Si una operación combinada TIENE paréntesis como '72 - (35 + 12)', ¿qué se debe resolver primero?", "options": ["Lo que está fuera del paréntesis", "Lo que está adentro de los paréntesis ()", "Da igual el orden"], "correct": "Lo que está adentro de los paréntesis ()", "feedback": "Los paréntesis tienen máxima prioridad en matemática; primero se elimina su contenido."},
+            {"id": "q6", "type": "choice", "question": "Resuelve la operación con signos de agrupación: 72 - (35 + 12). ¿Cuál es la respuesta?", "options": ["47", "37", "25"], "correct": "25", "feedback": "Primero resolvemos el paréntesis: 35 + 12 = 47. Luego restamos del total: 72 - 47 = 25."},
+            {"id": "q7", "type": "write", "question": "El colegio San Luis tenía 947 alumnos. Se retiraron 236 y luego ingresaron 451 nuevos. Escribe cuántos alumnos hay en total (947 - 236 + 451):", "correct": "1162", "feedback": "947 - 236 = 711. Luego sumamos los nuevos: 711 + 451 = 1162 alumnos."},
+            {"id": "q8", "type": "choice", "question": "Un comerciante tiene 234 casacas. Revisa y descubre que 28 están manchadas y 12 vinieron sin cierre. Para saber cuántas están buenas, plantea la operación combinada correcta:", "options": ["234 - 28 + 12", "234 - (28 + 12)", "234 + 28 - 12"], "correct": "234 - (28 + 12)", "feedback": "Agrupamos el total de casacas dañadas (28 + 12 = 40) y luego lo restamos del inventario total: 234 - 40 = 194."}
+          ]
+        },
+        {
+          "title": "Semana 2: Elementos Geométricos y Conteo de Segmentos",
+          "emoji": "📐",
+          "tag": "Geometría Plana",
+          "questions": [
+            {"id": "q9", "type": "choice", "question": "¿Qué elemento geométrico no tiene dimensión ni tamaño y solo sirve para indicar una posición denotándose con letra mayúscula?", "options": ["La recta", "El punto", "El plano"], "correct": "El punto", "feedback": "El punto es la representación gráfica básica que marca un lugar específico en el espacio."},
+            {"id": "q10", "type": "choice", "question": "Es una línea infinita que se extiende en ambas direcciones, no tiene principio ni fin y lleva flechas en sus extremos:", "options": ["La recta", "El rayo", "El segmento"], "correct": "La recta", "feedback": "La recta es ilimitada y continua por ambos lados sin detenerse jamás."},
+            {"id": "q11", "type": "choice", "question": "Elemento de la geometría que tiene un punto de inicio (origen) en un extremo pero avanza al infinito en la otra dirección:", "options": ["La recta", "El segmento", "El rayo"], "correct": "El rayo", "feedback": "El rayo tiene un origen fijo pero su otra punta es infinita (lleva flecha)."},
+            {"id": "q12", "type": "write", "question": "Es una porción de recta delimitada por dos puntos extremos. ¡Es el único elemento de la línea recta que SÍ podemos medir con una regla!: E _ _ _ _ _ _ O", "correct": "segmento", "feedback": "El segmento tiene principio y fin, por lo tanto representa una longitud fija medible."},
+            {"id": "q13", "type": "choice", "question": "Dos rectas que avanzan en la misma dirección a la misma distancia y JAMÁS se cruzan ni se intersectan se llaman:", "options": ["Rectas paralelas", "Rectas perpendiculares", "Rectas oblicuas"], "correct": "Rectas paralelas", "feedback": "Las líneas paralelas nunca se cortan, manteniendo siempre su misma separación (ej: rieles de tren)."},
+            {"id": "q14", "type": "choice", "question": "Cuando dos rectas se cruzan en un punto formando una esquina perfecta en forma de cruz (ángulo de 90°), se denominan rectas secantes...", "options": ["Oblicuas", "Perpendiculares", "Paralelas"], "correct": "Perpendiculares", "feedback": "Las perpendiculares forman esquinas ortogonales perfectas de 90°."},
+            {"id": "q15", "type": "choice", "question": "Si una línea recta tiene marcados consecutivamente los puntos de unión A, B, C, D. ¿Cuántos espacios simples tiene?", "options": ["2", "3", "4"], "correct": "3", "feedback": "Los espacios entre puntos son AB, BC y CD; es decir, tiene 3 segmentos simples."},
+            {"id": "q16", "type": "choice", "question": "Usa el truco matemático de sumar números consecutivos para hallar el total de segmentos formados en un camino de 3 espacios (1 + 2 + 3):", "options": ["4 segmentos", "6 segmentos", "9 segmentos"], "correct": "6 segmentos", "feedback": "Sumando los espacios individuales (3) más los compuestos de dos en dos (2) y el total largo (1) sale: 1+2+3 = 6 segmentos."}
+          ]
+        },
+        {
+          "title": "Semana 3: Cuadrícula, Simetría y Plano Cartesiano",
+          "emoji": "📊",
+          "tag": "Plano Cartesiano",
+          "questions": [
+            {"id": "q17", "type": "choice", "question": "Para encontrar la ubicación exacta de un punto en el plano cartesiano usamos dos números encerrados en un paréntesis llamados:", "options": ["Par ordenado", "Suma combinada", "Eje simétrico"], "correct": "Par ordenado", "feedback": "Un par ordenado (x; y) determina las coordenadas de posición de cualquier vértice."},
+            {"id": "q18", "type": "choice", "question": "Cuando buscamos un par ordenado como A(3; 5) en el plano cartesiano, ¿cuál de los números se busca SIEMPRE primero?", "options": ["El número vertical (Eje Y)", "El número horizontal (Eje X)", "Cualquiera de los dos"], "correct": "El número horizontal (Eje X)", "feedback": "La primera componente del par ordenado siempre pertenece a la recta horizontal X (las abscisas)."},
+            {"id": "q19", "type": "write", "question": "¿Cómo se llama la acción de mover una figura geométrica de un lugar a otro en el plano cartesiano sin cambiar su tamaño ni su forma?", "correct": "traslacion", "feedback": "La traslación desplaza todos los puntos de la figura en una misma dirección y distancia mediante flechas guías."},
+            {"id": "q20", "type": "choice", "question": "Si el punto original es A(1; 2) y el ejercicio te pide trasladar la figura desplazando 3 cuadraditos hacia la DERECHA, ¿cuál será su nueva coordenada?", "options": ["A'(4; 2)", "A'(1; 5)", "A'(4; 5)"], "correct": "A'(4; 2)", "feedback": "Moverse a la derecha afecta únicamente al eje horizontal X; sumamos 1 + 3 = 4, el eje Y se queda igual en 2."},
+            {"id": "q21", "type": "choice", "question": "La línea imaginaria que divide un dibujo exactamente por la mitad, de modo que si lo doblamos ambos lados coinciden a la perfección, se llama:", "options": ["Eje de simetría", "Eje cartesiano", "Medidiano"], "correct": "Eje de simetría", "feedback": "El eje de simetría funciona como un espejo perfecto partiendo la figura en dos mitades idénticas."},
+            {"id": "q22", "type": "choice", "question": "Un cuadrado perfecto es una figura muy especial, ¿cuántos ejes de simetría diferentes se le pueden trazar?", "options": ["1 solo eje", "2 ejes", "4 ejes"], "correct": "4 ejes", "feedback": "El cuadrado posee un eje vertical, uno horizontal y dos ejes diagonales que cruzan sus esquinas."},
+            {"id": "q23", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'Si trasladamos un triángulo de un cuadrante a otro en el plano cartesiano, este se vuelve más grande.'", "options": ["Verdadero", "Falso"], "correct": "Falso", "feedback": "En la traslación pura de figuras, el tamaño y la forma geométrica original jamás se alteran ni cambian."},
+            {"id": "q24", "type": "write", "question": "Si una figura u objeto no tiene ninguna línea que la parta en dos mitades iguales, se dice que es una figura: A _ _ m _ _ r _ c _ .", "correct": "asimetrica", "feedback": "Las formas que carecen de simetría o equilibrio en sus lados opuestos se clasifican como asimétricas."}
+          ]
+        },
+        {
+          "title": "Semana 4: Ángulos y Organización de Datos en Tablas",
+          "emoji": "📈",
+          "tag": "Estadística y Ángulos",
+          "questions": [
+            {"id": "q25", "type": "choice", "question": "¿Qué es un ángulo en geometría?", "options": ["La distancia entre dos puntos separados.", "La unión de dos rayos que comparten un mismo punto de origen llamado vértice.", "Una línea que no tiene fin."], "correct": "La unión de dos rayos que comparten un mismo punto de origen llamado vértice.", "feedback": "La abertura formada entre esos dos rayos (lados) unidos por el vértice constituye el ángulo."},
+            {"id": "q26", "type": "choice", "question": "¿Cómo se llama el ángulo cuya abertura mide exactamente 90° (idéntico a la esquina de una ventana o una escuadra)?", "options": ["Ángulo Agudo", "Ángulo Recto", "Ángulo Obtuso"], "correct": "Ángulo Recto", "feedback": "Los ángulos rectos miden exactamente 90° formando una escuadra perfecta."},
+            {"id": "q27", "type": "choice", "question": "Si un ángulo es muy cerrado y estrecho, midiendo MENOS de 90° (como el techo empinado de una choza), se clasifica como ángulo:", "options": ["Agudo", "Obtuso", "Llano"], "correct": "Agudo", "feedback": "Todo ángulo con una abertura mayor a 0° pero menor a 90° es agudo."},
+            {"id": "q28", "type": "write", "question": "Un ángulo muy abierto que mide MÁS de 90° pero MENOS de 180° se llama ángulo: O _ _ _ s _ .", "correct": "obtuso", "feedback": "Los ángulos obtusos representan aberturas amplias sin llegar a ser una línea recta plana."},
+            {"id": "q29", "type": "choice", "question": "Para recolectar las respuestas desordenadas de una encuesta de aula y ordenarlas de forma que se pueda entender rápido, usamos una:", "options": ["Tabla de frecuencia", "Operación combinada", "Recta paralela"], "correct": "Tabla de frecuencia", "feedback": "La tabla de frecuencias organiza los datos mostrando el conteo por palotes y el número total de veces que se repite cada respuesta."},
+            {"id": "q30", "type": "choice", "question": "En estadística, el dato que tiene la mayor frecuencia (la opción que más se repite y que es la favorita del grupo) se conoce técnicamente como:", "options": ["La variable", "La moda", "El total"], "correct": "La moda", "feedback": "La moda representa la tendencia o preferencia mayoritaria en un conjunto de datos registrados."},
+            {"id": "q31", "type": "write", "question": "Si encuestamos a un grupo y anotamos en la tabla de frecuencias: 10 perros, 4 gatos y 6 loros, ¿cuál es el TOTAL de niños encuestados?", "correct": "20", "feedback": "Para hallar el total general sumamos todas las frecuencias registradas: 10 + 4 + 6 = 20 niños."},
+            {"id": "q32", "type": "choice", "question": "Las tablas estructuradas por filas y columnas cruzadas que sirven para registrar datos complejos relacionando dos variables distintas son tablas de:", "options": ["Frecuencia simple", "Doble entrada", "Conteo recto"], "correct": "Doble entrada", "feedback": "Las tablas de doble entrada cruzan variables en celdas de cuadrículas para organizar la información cruzada."}
+          ]
+        },
+        {
+          "title": "Semana 5: Valor Numérico y Polígonos",
+          "emoji": "📐",
+          "tag": "Álgebra y Formas",
+          "questions": [
+            {"id": "q33", "type": "choice", "question": "¿A qué llamamos VALOR NUMÉRICO en matemática?", "options": ["A contar cuántas sílabas tiene una palabra.", "A descubrir el número real escondido detrás de un dibujo, figura geométrica o variable.", "A aproximar un número a la centena."], "correct": "A descubrir el número real escondido detrás de un dibujo, figura geométrica o variable.", "feedback": "Consiste en reemplazar el símbolo por su número asignado y calcular el resultado matemático."},
+            {"id": "q34", "type": "choice", "question": "Resuelve el misterio detectivesco: Si un 'Sol + 5 = 12', ¿cuál es el valor numérico oculto del Sol?", "options": ["5", "7", "17"], "correct": "7", "feedback": "Restamos 12 - 5 = 7. Por lo tanto, el valor numérico del Sol es 7."},
+            {"id": "q35", "type": "choice", "question": "Si la variable algebraíca m = 9 y te piden calcular el valor numérico de la expresión 'm + 19', ¿cuál es la respuesta?", "options": ["28", "10", "19"], "correct": "28", "feedback": "Sustituimos la letra por su valor real: m + 19 se convierte en 9 + 19 = 28."},
+            {"id": "q36", "type": "write", "question": "¿Qué es un polígono en geometría?", "options": ["Una línea curva abierta como una ola.", "Una figura plana compuesta exclusivamente por líneas rectas y cuya forma es CERRADA.", "Una pirámide en 3D."], "correct": "Una figura plana compuesta exclusivamente por líneas rectas y cuya forma es CERRADA.", "feedback": "Un polígono requiere obligatoriamente lados rectos y un contorno cerrado perimetral."},
+            {"id": "q37", "type": "choice", "question": "Los polígonos que tienen todos sus lados de la misma longitud y todos sus ángulos internos iguales se clasifican como:", "options": ["Polígonos regulares", "Polígonos irregulares", "Polígonos curvos"], "correct": "Polígonos regulares", "feedback": "Los polígonos regulares gozan de perfecta armonía simétrica en lados y aberturas angulares (ej: triángulo equilátero)."},
+            {"id": "q38", "type": "choice", "question": "¿Por qué figuras como el círculo, el óvalo o el corazón NO son considerados polígonos matemáticos?", "options": ["Porque son muy difíciles de dibujar con lápiz.", "Porque tienen líneas curvas y los polígonos solo se forman con líneas rectas cerradas.", "Porque no tienen color."], "correct": "Porque tienen líneas curvas y los polígonos solo se forman con líneas rectas cerradas.", "feedback": "La condición matemática estricta del polígono exige que el 100% de sus lados sean segmentos rectos."},
+            {"id": "q39", "type": "choice", "question": "¿Cómo se llama el polígono regular o irregular que tiene exactamente 5 lados?", "options": ["Cuadrilátero", "Pentágono", "Hexágono"], "correct": "Pentágono", "feedback": "Los polígonos de 5 lados reciben el nombre de pentágonos."},
+            {"id": "q40", "type": "write", "question": "Escribe el nombre técnico del polígono que cuenta con 8 lados de extensión (como las señales de ALTO del tráfico): O _ _ Ó _ _ _ O.", "correct": "octógono", "feedback": "Los polígonos de ocho lados se denominan octógonos u octonarios."}
+          ]
+        }
+      ]
+    };
+
+    let comodinUsado = false;
+
+    // INYECTOR DINÁMICO DEL CÓDIGO DEL EXAMEN
+    function renderQuiz() {
+        const container = document.getElementById('quizContainer');
+        let questionCounter = 1;
+        
+        examData.sections.forEach(section => {
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.innerText = section.title;
+            container.appendChild(header);
+            
+            const layoutDiv = document.createElement('div');
+            layoutDiv.className = 'main-layout';
+            
+            const questionsColumn = document.createElement('div');
+            questionsColumn.className = 'questions-column';
+            
+            section.questions.forEach(q => {
+                const secDiv = document.createElement('div');
+                secDiv.className = 'section';
+                secDiv.id = 'sec_' + q.id;
+                
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'question-title';
+                titleSpan.innerText = `${questionCounter}. ${q.question}`;
+                secDiv.appendChild(titleSpan);
+                
+                if (q.type === 'choice') {
+                    const optDiv = document.createElement('div');
+                    optDiv.className = 'options';
+                    optDiv.id = 'opts_' + q.id;
+                    q.options.forEach(opt => {
+                        const lbl = document.createElement('label');
+                        lbl.innerHTML = `<input type="radio" name="${q.id}" value="${opt}" onclick="saveProgress('${q.id}', '${opt}')"> ${opt}`;
+                        optDiv.appendChild(lbl);
+                    });
+                    secDiv.appendChild(optDiv);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = q.id;
+                    input.placeholder = q.type === 'reorder' ? 'Escribe la oración ordenada aquí...' : 'Escribe el número, letra o palabras...';
+                    input.oninput = function() { saveProgress(q.id, this.value); };
+                    secDiv.appendChild(input);
+                }
+                
+                questionsColumn.appendChild(secDiv);
+                questionCounter++;
+            });
+            
+            const visualCard = document.createElement('div');
+            visualCard.className = 'visual-side-card';
+            visualCard.innerHTML = `
+                <span class="visual-emoji">${section.emoji}</span>
+                <span class="visual-tag">${section.tag}</span>
+                <p style="font-size: 0.85em; color: #555; margin-top: 10px; line-height: 1.3;">
+                    Edward: Utiliza tu hoja borrador o pizarra para hacer tus cálculos antes de responder. ¡Tú puedes!
+                </p>
+            `;
+            
+            layoutDiv.appendChild(questionsColumn);
+            layoutDiv.appendChild(visualCard);
+            container.appendChild(layoutDiv);
+        });
+
+        loadSavedProgress();
+    }
+
+    // MEJORA TECNOLÓGICA: GUARDADO AUTOMÁTICO EN LA TABLET (localStorage)
+    function saveProgress(id, val) {
+        localStorage.setItem('math_exam_edward_' + id, val);
+        document.getElementById('sec_' + id).classList.remove('incomplete');
+        if(document.querySelectorAll('.incomplete').length === 0) document.getElementById('missing-msg').style.display='none';
+    }
+
+    function loadSavedProgress() {
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                const saved = localStorage.getItem('math_exam_edward_' + q.id);
+                if (saved) {
+                    if (q.type === 'choice') {
+                        const radio = document.querySelector(`input[name="${q.id}"][value="${saved}"]`);
+                        if (radio) radio.checked = true;
+                    } else {
+                        const txtInput = document.getElementById(q.id);
+                        if (txtInput) txtInput.value = saved;
+                    }
+                }
+            });
+        });
+    }
+
+    // MEJORA TECNOLÓGICA: COMODÍN GAMIFICACIÓN 50/50
+    function usarCincuentaCincuentaGlobal() {
+        if (comodinUsado) return;
+        
+        let seleccionada = prompt("Edward, escribe el número de pregunta (de opción múltiple) donde deseas usar el comodín del 50/50:");
+        let qNum = parseInt(seleccionada);
+        
+        if (isNaN(qNum) || qNum < 1 || qNum > 40) {
+            alert("Número de pregunta no válido.");
+            return;
+        }
+
+        // Buscar el ID de la pregunta correspondiente basándonos en el conteo
+        let currentIdx = 1;
+        let targetId = null;
+        let targetQObj = null;
+
+        for (let s of examData.sections) {
+            for (let q of s.questions) {
+                if (currentIdx === qNum) {
+                    targetId = q.id;
+                    targetQObj = q;
+                    break;
+                }
+                currentIdx++;
+            }
+            if (targetId) break;
+        }
+
+        if (targetQObj.type !== 'choice') {
+            alert("El comodín solo se puede usar en preguntas de marcar (opción múltiple).");
+            return;
+        }
+
+        // Eliminar opciones falsas (dejar la correcta y una falsa aleatoria)
+        let optsDiv = document.getElementById('opts_' + targetId);
+        let labels = optsDiv.querySelectorAll('label');
+        let incorrectasBorradas = 0;
+
+        labels.forEach(lbl => {
+            let radio = lbl.querySelector('input');
+            if (radio.value !== targetQObj.correct && incorrectasBorradas < 1) {
+                lbl.style.display = 'none'; // Esconde la opción incorrecta
+                incorrectasBorradas++;
+            }
+        });
+
+        comodinUsado = true;
+        document.getElementById('global-5050').disabled = true;
+        document.getElementById('global-5050').innerText = "⚡ Súper Poder: Comodín Usado";
+        alert(`¡Poder activado! En la pregunta ${qNum} se ha eliminado una opción incorrecta para ayudarte.`);
+    }
+
+    // VALIDACIÓN ESTRICTA ANTI-RESPUESTAS VACÍAS
+    function validarExamen() {
+        let vacios = [];
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let respondido = false;
+                if (q.type === 'choice') {
+                    if (document.querySelector(`input[name="${q.id}"]:checked`)) respondido = true;
+                } else {
+                    if (document.getElementById(q.id).value.trim() !== "") respondido = true;
+                }
+                
+                if (!respondido) {
+                    const container = document.getElementById('sec_' + q.id);
+                    container.classList.add('incomplete');
+                    vacios.push(container);
+                }
+            });
+        });
+
+        if (vacios.length > 0) {
+            document.getElementById('missing-msg').style.display = 'block';
+            vacios[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+        calificarExamen();
+    }
+
+    // CALIFICADOR AUTOMÁTICO CON RETROALIMENTACIÓN INTEGRAL 360°
+    function calificarExamen() {
+        let nota = 0;
+        let totalPreguntas = 40;
+        let itemsHTML = "";
+        let questionIndex = 1;
+
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let uVal = "";
+                if (q.type === 'choice') {
+                    uVal = document.querySelector(`input[name="${q.id}"]:checked`).value;
+                } else {
+                    uVal = document.getElementById(q.id).value.trim();
+                }
+
+                // Normalización de cadenas para validaciones flexibles e inteligentes
+                let cleanU = uVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let cleanC = q.correct.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                
+                let esOk = (cleanU === cleanC) || (q.type === 'write' && cleanU.includes(cleanC));
+                if (esOk) nota++;
+
+                itemsHTML += `<div class="item-revision" style="border-left: 8px solid ${esOk ? '#27ae60' : '#e74c3c'}">
+                    <p><strong>Pregunta ${questionIndex}: ${q.question}</strong></p>
+                    <p>Tu respuesta en la tablet: <span class="resp-usuario">${uVal}</span> ${esOk ? '✅' : '❌'}</p>
+                    ${!esOk ? `<p class="resp-correcta">Respuesta Correcta Esperada: ${q.correct}</p>` : ''}
+                    <p class="explicacion">💡 Pizarra de corrección: ${q.feedback}</p>
+                </div>`;
+                    
+                questionIndex++;
+            });
+        });
+
+        // Escala del sistema de evaluación tradicional peruano (0 a 20)
+        const finalScore = Math.round((nota / totalPreguntas) * 20);
+        const rb = document.getElementById('result-box');
+        
+        rb.style.display = 'block';
+        document.getElementById('score-text').innerText = `Puntaje Obtenido: ${finalScore} / 20 (${nota} aciertos de 40)`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        
+        if(finalScore >= 11) {
+            rb.className = "correct-box";
+            document.getElementById('feedback-content').innerHTML = "<h4>🌟 ¡Excelente esfuerzo, Edward! Has superado el reto bimestral de Matemática de forma espectacular.</h4>";
+        } else {
+            rb.className = "error-box";
+            document.getElementById('feedback-content').innerHTML = "<h4>📚 ¡Buen intento, Edward! Revisa las explicaciones de la pizarra inferior para seguir mejorando.</h4>";
+        }
+        
+        // Al terminar, limpiar el almacenamiento local para que pueda volver a practicar limpio
+        localStorage.clear();
+        window.scrollTo({ top: rb.offsetTop, behavior: 'smooth' });
+    }
+
+    window.onload = renderQuiz;
+</script>
+</body>
+</html>

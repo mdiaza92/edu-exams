@@ -41,10 +41,6 @@
         .bg-mate { background-color: #34495e; }
         .border-mate { border-color: #34495e; }
 
-        /* ESTILO PARA CURSOS AÚN NO DISPONIBLES */
-        .locked-day { filter: grayscale(15%); border-color: #cbd5e1; }
-        .bg-locked { background-color: #95a5a6; }
-
         .card-title { display: flex; align-items: center; gap: 10px; font-size: 1.3em; font-weight: bold; color: #2c3e50; margin-bottom: 10px; }
         .card-emoji { font-size: 1.3em; }
         
@@ -57,13 +53,6 @@
         }
         .exam-link:hover { background: #2c3e50; color: white; border-color: #2c3e50; }
         
-        /* BADGES */
-        .status-badge { font-size: 0.75em; padding: 5px 12px; border-radius: 10px; font-weight: bold; margin-left: 15px; }
-        .badge-ready { background: #27ae60; color: white; }
-        .badge-coming { background: #e2e8f0; color: #64748b; border: 1px dashed #cbd5e1; }
-        
-        .coming-text { font-size: 0.95em; color: #7f8c8d; font-style: italic; }
-
         /* NOTA DE CIENCIA Y AMBIENTE */
         .note-box { background: #fff9db; border-left: 6px solid #f1c40f; padding: 20px; border-radius: 15px; margin-top: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .note-title { font-weight: bold; color: #b7791f; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 1.1em; }
@@ -78,10 +67,8 @@
     <h1>📅 Calendario Escolar: Julio 2026</h1>
     <h2>Edward, ¡revisa tus evaluaciones y prepárate paso a paso esta semana!</h2>
 
-    <!-- LÍNEA DE TIEMPO DÍA POR DÍA -->
     <div class="timeline-layout">
         
-        <!-- MARTES 16: INGLÉS -->
         <div class="day-card border-ingles">
             <div class="day-indicator bg-ingles">
                 <span class="day-name">Martes</span>
@@ -101,7 +88,6 @@
             </div>
         </div>
 
-        <!-- MIÉRCOLES 17: COMUNICACIÓN -->
         <div class="day-card border-comu">
             <div class="day-indicator bg-comu">
                 <span class="day-name">Miércoles</span>
@@ -121,7 +107,6 @@
             </div>
         </div>
 
-        <!-- JUEVES 18: PERSONAL SOCIAL (¡AHORA DISPONIBLE!) -->
         <div class="day-card border-personal">
             <div class="day-indicator bg-personal">
                 <span class="day-name">Jueves</span>
@@ -141,26 +126,27 @@
             </div>
         </div>
 
-        <!-- VIERNES 19: MATEMÁTICA (PRÓXIMAMENTE) -->
-        <div class="day-card locked-day">
-            <div class="day-indicator bg-locked">
+        <div class="day-card border-mate">
+            <div class="day-indicator bg-mate">
                 <span class="day-name">Viernes</span>
                 <span class="day-date">19</span>
                 <span style="font-size:0.8em; margin-top:5px;">Julio</span>
             </div>
             <div class="day-content">
-                <div class="card-title" style="color: #7f8c8d;">
+                <div class="card-title">
                     <span class="card-emoji">🚀</span>
                     <span>Matemática</span>
                 </div>
-                <div class="coming-text">⏳ El examen estará disponible para practicar el <strong>Jueves 18</strong> (un día antes).</div>
-                <div style="margin-top: 10px;"><span class="status-badge badge-coming">Próximamente</span></div>
+                <div>
+                    <a href="matematica_3grado.html" class="exam-link">
+                        <span>🚀 Resolver Gran Desafío</span>
+                    </a>
+                </div>
             </div>
         </div>
 
     </div>
 
-    <!-- RECORDATORIO DE CIENCIA Y AMBIENTE -->
     <div class="note-box">
         <div class="note-title">🚌 Nota Importante: Ciencia y Ambiente 🌿</div>
         <p style="margin: 0; line-height: 1.5; color: #744210; font-size: 0.95em;">
