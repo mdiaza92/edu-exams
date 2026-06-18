@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Bimestral de Religión - Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #fcfbf2; padding: 15px; color: #2c3e50; }
+        .container { max-width: 950px; margin: auto; background: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 6px solid #e67e22; }
+        h1 { text-align: center; color: #e67e22; text-transform: uppercase; font-size: 1.8em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        
+        .section-header { 
+            position: -webkit-sticky; position: sticky; top: 0; 
+            background: #e67e22; color: #fff; padding: 15px; 
+            border-radius: 12px; margin: 30px 0 15px 0; 
+            text-align: center; font-weight: bold; z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+        }
+
+        .main-layout { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 25px; }
+        .questions-column { flex: 1; }
+        
+        .visual-side-card { 
+            width: 220px; background: #fdf6f0; border: 3px dashed #e67e22; 
+            border-radius: 18px; padding: 20px; text-align: center; 
+            position: sticky; top: 70px; box-sizing: border-box;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        }
+        .visual-emoji { font-size: 4.5em; margin-bottom: 10px; display: block; animation: floatAnim 3s ease-in-out infinite; }
+        .visual-tag { background: #e67e22; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.85em; font-weight: bold; display: inline-block; }
+        
+        @keyframes floatAnim {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .section { margin-bottom: 15px; padding: 18px; border: 2px solid #edf2f7; border-radius: 15px; background-color: #ffffff; transition: 0.3s; }
+        .incomplete { border: 3px solid #e74c3c !important; background-color: #fff5f5 !important; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #2f3542; display: block; line-height: 1.4; }
+        
+        input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #ced4da; font-size: 16px; font-family: inherit; box-sizing: border-box; }
+        .options label { display: block; margin: 10px 0; cursor: pointer; padding: 10px; border-radius: 8px; border: 1px solid #eee; transition: 0.2s; }
+        .options label:hover { background: #fdf6f0; border-color: #e67e22; }
+        
+        .powerup-btn { background: #9b59b6; color: white; border: none; padding: 6px 12px; border-radius: 10px; cursor: pointer; font-size: 0.8em; font-weight: bold; margin-top: 5px; }
+        .powerup-btn:disabled { background: #bdc3c7; cursor: not-allowed; }
+
+        button#btn-evaluar { display: block; width: 100%; max-width: 350px; height: 65px; margin: 40px auto; background: #27ae60; color: white; border: none; border-radius: 35px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #1e8449; }
+        
+        #result-box { display: none; padding: 25px; border-radius: 20px; margin-top: 30px; border: 4px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+        
+        .revision-container { margin-top: 20px; background: white; border-radius: 10px; padding: 15px; border: 1px solid #ccc; }
+        .item-revision { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; text-align: left; }
+        .resp-correcta { color: #27ae60; font-weight: bold; }
+        .resp-usuario { font-style: italic; color: #555; }
+        .explicacion { color: #2980b9; font-size: 0.9em; font-style: italic; margin-top: 5px; }
+        .missing-alert { color: #e74c3c; font-weight: bold; text-align: center; margin-bottom: 15px; display: none; padding: 10px; background: #fdf2f2; border-radius: 10px; border: 2px solid #e74c3c; }
+
+        @media (max-width: 768px) {
+            .main-layout { flex-direction: column-reverse; }
+            .visual-side-card { width: 100%; position: relative; top: 0; margin-bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🙏 Examen Bimestral de Educación Religiosa</h1>
+    <h2>Edward, ¡piensa en tus clases, responde con calma y demuestra tu conocimiento!</h2>
+
+    <div style="text-align: center; margin-bottom: 15px;">
+        <button class="powerup-btn" id="global-5050" onclick="usarCincuentaCincuentaGlobal()">⚡ Súper Poder: Comodín 50/50 (1 disponible)</button>
+    </div>
+
+    <div id="missing-msg" class="missing-alert">⚠️ ¡Edward, te falta responder algunas preguntas! Revisa los bloques marcados en rojo.</div>
+
+    <form id="quizForm">
+        <div id="quizContainer"></div>
+        <button type="button" id="btn-evaluar" onclick="validarExamen()">✨ Terminar Examen</button>
+    </form>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+        <div id="revision-lista" class="revision-container">
+            <h4>🔍 Reporte de Pizarra de Religión (Aprende y repasa):</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const examData = {
+      "sections": [
+        {
+          "title": "Semana 1: La Santa Biblia",
+          "emoji": "📖",
+          "tag": "Palabra de Dios",
+          "questions": [
+            {"id": "r1", "type": "choice", "question": "¿Qué es la Biblia para los cristianos?", "options": ["Un conjunto de cuentos inventados en la actualidad.", "La Palabra de Dios que nos guía, nos enseña y nos muestra su gran amor.", "Un libro de recetas de cocina antiguas."], "correct": "La Palabra de Dios que nos guía, nos enseña y nos muestra su gran amor.", "feedback": "La Biblia es el libro sagrado donde encontramos la revelación y los mensajes de Dios para vivir felices y en paz."},
+            {"id": "r2", "type": "write", "question": "Según el Salmo 119,105 estudiado en el cuaderno: 'Tu palabra es una l á _ _ _ r a para mis pasos, una luz en mi camino.'", "correct": "lampara", "feedback": "La palabra de Dios nos guía iluminando nuestro camino cuando está oscuro, enseñándonos a hacer el bien."},
+            {"id": "r3", "type": "choice", "question": "¿En cuántas partes principales está dividida la Santa Biblia?", "options": ["Está dividida en 2 partes", "Está dividida en 5 partes", "No tiene divisiones"], "correct": "Está dividida en 2 partes", "feedback": "La Biblia se divide en dos grandes bloques: el Antiguo Testamento y el Nuevo Testamento."},
+            {"id": "r4", "type": "choice", "question": "¿De qué nos habla la primera parte llamada el ANTIGUO TESTAMENTO?", "options": ["De la vida, los milagros y las parábolas de Jesús.", "De la creación del mundo, la historia del pueblo de Israel y la promesa del Salvador.", "De los viajes de los apóstoles por el mundo."], "correct": "De la creación del mundo, la historia del pueblo de Israel y la promesa del Salvador.", "feedback": "El Antiguo Testamento narra todo lo que sucedió antes de la llegada de Jesucristo a la Tierra."},
+            {"id": "r5", "type": "write", "question": "Análisis Numérico: ¿Cuántos libros en total contiene el ANTIGUO TESTAMENTO?: _ _ libros.", "correct": "46", "feedback": "El Antiguo Testamento está compuesto exactamente por 46 libros sagrados."},
+            {"id": "r6", "type": "choice", "question": "¿De qué nos habla la segunda parte llamada el NUEVO TESTAMENTO?", "options": ["De la vida de Adán, Eva y el diluvio universal.", "De la vida de Jesús, sus milagros, enseñanzas y el inicio de la Iglesia.", "De cómo Moisés abrió el Mar Rojo."], "correct": "De la vida de Jesús, sus milagros, enseñanzas y el inicio de la Iglesia.", "feedback": "El Nuevo Testamento se enfoca por completo en la venida de Jesús, los Evangelios y sus discípulos."},
+            {"id": "r7", "type": "write", "question": "Análisis Numérico: ¿Cuántos libros en total contiene el NUEVO TESTAMENTO?: _ _ libros.", "correct": "27", "feedback": "El Nuevo Testamento cuenta con exactamente 27 libros, empezando con los 4 Evangelios."},
+            {"id": "r8", "type": "choice", "question": "Según la ficha de clase, ¿cuál es uno de los grandes beneficios de leer constantemente la Biblia?", "options": ["Que nos da sueño antes de dormir.", "Que Dios nos habla, nos acerca a Él y transforma nuestra vida ayudándonos a actuar con amor.", "Que aprendemos nombres de países antiguos."], "correct": "Que Dios nos habla, nos acerca a Él y transforma nuestra vida ayudándonos a actuar con amor.", "feedback": "Leernos la Biblia nos aleja del pecado y prospera nuestro camino guiándonos a hacer cosas buenas."}
+          ]
+        },
+        {
+          "title": "Semana 2: Los Profetas de Dios",
+          "emoji": "📣",
+          "tag": "Mensajeros de Fe",
+          "questions": [
+            {"id": "r9", "type": "choice", "question": "¿Quiénes eran los profetas según las diapositivas de clase?", "options": ["Reyes ricos que gobernaban los castillos de Israel.", "Personas especiales elegidas por Dios para comunicar mensajes de amor, justicia y obediencia.", "Soldados que peleaban en las guerras."], "correct": "Personas especiales elegidas por Dios para comunicar mensajes de amor, justicia y obediencia.", "feedback": "Los profetas eran los portavoces oficiales de Dios; transmitían sus consejos para que el pueblo actúe correctamente."},
+            {"id": "r10", "type": "write", "question": "Completa el propósito de la lección: Dios eligió a los profetas para orientar al pueblo y enseñarles el camino del B _ _ N.", "correct": "bien", "feedback": "Los profetas recordaban las leyes de Dios e invitaban al pueblo a alejarse de las malas acciones."},
+            {"id": "r11", "type": "choice", "question": "Por qué a algunos profetas de la Biblia se les clasifica como 'PROFETAS MAYORES'?", "options": ["Porque eran los hombres más ancianos y de mayor edad.", "Porque los libros que llevan sus nombres en la Biblia son más largos y contienen más texto.", "Porque eran más importantes que los otros."], "correct": "Porque los libros que llevan sus nombres en la Biblia son más largos y contienen más texto.", "feedback": "Se les llama 'mayores' únicamente por la extensión física de sus escritos en las Sagradas Escrituras."},
+            {"id": "r12", "type": "choice", "question": "Identifica cuál de los siguientes personajes es un PROFETA MAYOR:", "options": ["Isaías", "Jonás", "Joel"], "correct": "Isaías", "feedback": "Isaías, Jeremías, Ezequiel y Daniel son los cuatro grandes profetas mayores de la Biblia."},
+            {"id": "r13", "type": "choice", "question": "¿Por qué a un grupo de autores se les llama 'PROFETAS MENORES'?", "options": ["Porque eran niños pequeños cuando Dios los llamó.", "Debido a la brevedad de los libros que llevan sus nombres (son más cortos), no porque sean menos importantes.", "Porque hacían milagros más chiquitos."], "correct": "Debido a la brevedad de los libros que llevan sus nombres (son más cortos), no porque sean menos importantes.", "feedback": "Todos los profetas son valiosos para Dios, pero los 'menores' escribieron libros con menos capítulos."},
+            {"id": "r14", "type": "write", "question": "Escribe el nombre del famoso profeta menor que estuvo dentro de una gran ballena por desobedecer a Dios: J _ _ á s.", "correct": "jonas", "feedback": "Jonás es uno de los doce profetas menores cuyos escritos son cortos pero muy significativos."},
+            {"id": "r15", "type": "choice", "question": "Según el bloque 'Actuar' de tu cuaderno, ¿cómo podemos seguir hoy el ejemplo de los profetas?", "options": ["Haciendo el bien cada día, escuchando la palabra de Dios y compartiendo con los demás.", "Escribiendo un libro muy largo.", "Dándole órdenes a nuestros amigos."], "correct": "Haciendo el bien cada día, escuchando la palabra de Dios y compartiendo con los demás.", "feedback": "Escuchar los buenos consejos de nuestros padres y maestros es una forma actual de seguir la voz de Dios."},
+            {"id": "r16", "type": "reorder", "question": "Reordena la frase lógica sobre los mensajeros: [mensajes] [Los] [comunican] [de] [profetas] [Dios]", "correct": "Los profetas comunican mensajes de Dios", "feedback": "Esa fue la gran misión encomendada a estos hombres santos."}
+          ]
+        },
+        {
+          "title": "Semana 3: El Anuncio del Reino de Dios",
+          "emoji": "👑",
+          "tag": "Buenas Acciones",
+          "questions": [
+            {"id": "r17", "type": "choice", "question": "Según las enseñanzas de Jesús, ¿qué es el Reino de Dios?", "options": ["Un castillo de oro gigante con reyes que usan coronas físicas.", "No es un lugar físico; está en nuestro corazón y lo construimos con buenas acciones cotidianas.", "Un país muy lejano donde no vive nadie."], "correct": "No es un lugar físico; está en nuestro corazón y lo construimos con buenas acciones cotidianas.", "feedback": "El Reino de Dios progresa cuando sembramos paz, amor y respeto en nuestro entorno diario."},
+            {"id": "r18", "type": "choice", "question": "¿A qué edad comenzó Jesús a recorrer los pueblos y ciudades para anunciar la llegada de su Reino?", "options": ["A los 12 años", "A los 30 años", "A los 50 años"], "correct": "A los 30 años", "feedback": "A los 30 años inició la vida pública de Jesús junto con sus discípulos recorriendo Galilea y Judea."},
+            {"id": "r19", "type": "write", "question": "En Mateo 13, Jesús compara el Reino de Dios con una semilla de M _ s _ _ z _ que es muy pequeñita pero crece hasta hacerse un gran árbol.", "correct": "mostaza", "feedback": "La parábola de la semilla de mostaza nos enseña que un pequeño acto de bondad puede crecer infinitamente."},
+            {"id": "r20", "type": "choice", "question": "¿Cuál de las siguientes acciones SÍ ayuda a construir el Reino de Dios en tu aula de clases?", "options": ["Burlarse de un compañero cuando se equivoca.", "Compartir tus materiales, ayudar a los demás, respetar y perdonar.", "Excluir a los niños nuevos en la hora de los juegos."], "correct": "Compartir tus materiales, ayudar a los demás, respetar y perdonar.", "feedback": "Construimos el Reino actuando con solidaridad, obediencia, oración y cuidando la creación."},
+            {"id": "r21", "type": "choice", "question": "¿Qué acciones NO construyen el Reino de Dios y nos alejan de Jesús?", "options": ["Pelear, mentir, burlarse y excluir a las personas.", "Amar a nuestra familia y obedecer a la maestra.", "Rezar de noche y regar las plantas."], "correct": "Pelear, mentir, burlarse y excluir a las personas.", "feedback": "El egoísmo y las discusiones destruyen la armonía y rompen nuestra amistad con Cristo."},
+            {"id": "r22", "type": "write", "question": "Completa según el cuaderno: En el Reino de Dios los enfermos serán sanados y los sufrimientos t _ r _ _ n _ r á n.", "correct": "terminaran", "feedback": "El Reino de Dios trae un mundo nuevo y renovado libre de pecado y dolor."},
+            {"id": "r23", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'Jesús nos invita a construir su Reino cada día, con amor y buenas obras.'", "options": ["Verdadero", "Falso"], "correct": "Verdadero", "feedback": "Cada uno de nosotros tiene la misión de ser luz reflejando el amor de Jesús en el hogar y colegio."},
+            {"id": "r24", "type": "reorder", "question": "Reordena el lema fundamental de la semana: [corazón] [Reino] [está] [en] [El] [nuestro]", "correct": "El Reino está en nuestro corazón", "feedback": "Si hay amor en tu interior, el Reino de Dios ya está actuando."}
+          ]
+        },
+        {
+          "title": "Semana 4: La Parábola de la Oveja Perdida",
+          "emoji": "🐑",
+          "tag": "El Buen Pastor",
+          "questions": [
+            {"id": "r25", "type": "choice", "question": "En la parábola narrada por Jesús, ¿cuántas ovejitas tenía el pastor en total?", "options": ["Tenía 10 ovejas", "Tenía 50 ovejas", "Tenía 100 ovejas"], "correct": "Tenía 100 ovejas", "feedback": "El relato de Lucas 15,1-7 nos dice que el buen pastor poseía cien ovejitas a las que amaba."},
+            {"id": "r26", "type": "write", "question": "Al contar sus animales por la tarde, ¿cuántas ovejitas se le habían PERDIDO en el cerro?: _ _ ovejita.", "correct": "1", "feedback": "Solo una ovejita se desvió del camino y se perdió en el peligro del monte."},
+            {"id": "r27", "type": "choice", "question": "¿Qué hizo el buen pastor al darse cuenta de que le faltaba una sola ovejita?", "options": ["Se olvidó de ella porque todavía le quedaban muchísimas seguras.", "Dejó a las 99 a salvo en el redil y fue a buscar sin descanso a la perdida hasta encontrarla.", "Se fue a dormir esperando que regrese sola."], "correct": "Dejó a las 99 a salvo en el redil y fue a buscar sin descanso a la perdida hasta encontrarla.", "feedback": "El pastor ama a cada una por igual; ninguna vida es menos importante para él."},
+            {"id": "r28", "type": "choice", "question": "¿Cómo reaccionó el pastor cuando por fin encontró a la ovejita perdida?", "options": ["Le pegó con su vara por haberse escapado.", "La cargó sobre sus hombros muy feliz y celebró haciendo una gran fiesta con sus amigos.", "La dejó amarrada en un rincón."], "correct": "La cargó sobre sus hombros muy feliz y celebró haciendo una gran fiesta con sus amigos.", "feedback": "Al encontrarla, la colocó con inmensa ternura en sus hombros sintiendo una enorme felicidad."},
+            {"id": "r29", "type": "write", "question": "Según Jesús, esta parábola nos enseña que hay gran alegría en el C _ _ _ o cuando un pecador se arrepiente de corazón.", "correct": "cielo", "feedback": "Dios celebra una fiesta espiritual en el cielo cada vez que volvemos al buen camino."},
+            {"id": "r30", "type": "choice", "question": "¿Quién es el BUEN PASTOR en nuestras vidas?", "options": ["El director de la escuela.", "Dios (Jesús) que nos cuida, nos protege y nos busca con tierno amor.", "El policía de la comisaría."], "correct": "Dios (Jesús) que nos cuida, nos protege y nos busca con tierno amor.", "feedback": "Jesús es nuestro guía perfecto que da la vida por sus ovejitas."},
+            {"id": "r31", "type": "choice", "question": "¿Quiénes somos las ovejitas del rebaño de Dios según lo trabajado en clase?", "options": ["Todos nosotros, los hijos de Dios, a quienes Él conoce por nuestro nombre.", "Los animales del campo.", "Solamente los apóstoles antiguos."], "correct": "Todos nosotros, los hijos de Dios, a quienes Él conoce por nuestro nombre.", "feedback": "Edward, tú y cada persona en el mundo somos las valiosas ovejitas de Dios."},
+            {"id": "r32", "type": "choice", "question": "¿Qué significa 'perderse' hoy en día según la situación de convivencia del aula?", "options": ["Irse de viaje a otra ciudad en avión.", "Sentirse solo, de lado, excluido en los juegos del recreo o alejarse del amor de Dios por malas acciones.", "Olvidar el cuaderno de religión en casa."], "correct": "Sentirse solo, de lado, excluido en los juegos del recreo o alejarse del amor de Dios por malas acciones.", "feedback": "Perderse es alejarse del grupo o del camino del bien. Debemos cuidarnos los unos a los otros en el salón."},
+            {"id": "r33", "type": "write", "question": "¿Cómo se llama la dinámica divertida que realizó la maestra para hacernos notar quién faltaba en el grupo?: ¿Quién ___?", "correct": "falta", "feedback": "La dinámica '¿Quién falta?' nos enseña a estar atentos a las necesidades de cada compañero."},
+            {"id": "r34", "type": "reorder", "question": "Reordena las palabras sobre el tierno cuidado de Dios: [pastor] [cuida] [El] [buen] [ovejas] [sus]", "correct": "El buen pastor cuida sus ovejas", "feedback": "Dios nos mantiene protegidos de todo peligro bajo su sombra."}
+          ]
+        },
+        {
+          "title": "Sección 5: Repaso de Oraciones del Cristiano",
+          "emoji": "🤲",
+          "tag": "Diálogo con Dios",
+          "questions": [
+            {"id": "r35", "type": "choice", "question": "¿Cuál es la gran oración fraternal que nos enseñó Jesucristo en los Evangelios?", "options": ["El Ave María", "El Padre Nuestro", "El Credo"], "correct": "El Padre Nuestro", "feedback": "El Padre Nuestro es la oración por excelencia que Jesús nos regaló para hablar con el Padre."},
+            {"id": "r36", "type": "write", "question": "Completa la línea de la oración: 'Danos hoy nuestro p a n de cada día...'", "correct": "pan", "feedback": "Le pedimos al Señor el alimento y sustento diario para todos los hogares del mundo."},
+            {"id": "r37", "type": "choice", "question": "La oración que rezamos para saludar y pedir la intercesión de nuestra Madre del Cielo es:", "options": ["El Padre Nuestro", "El Ave María", "El Gloria"], "correct": "El Ave María", "feedback": "Con el Ave María recordamos el saludo del ángel Gabriel a la Virgen María."},
+            {"id": "r38", "type": "write", "question": "Escribe la palabra sagrada con la que cerramos todas nuestras oraciones que significa 'Así sea': A _ é n.", "correct": "amen", "feedback": "Amén demuestra nuestra fe y confianza absoluta en que Dios nos ha escuchado."},
+            {"id": "r39", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'Hacer una oración rápida renegando o conversando con otros agrada a Dios.'", "options": ["Verdadero", "Falso"], "correct": "Falso", "feedback": "La oración requiere silencio, respeto, atención y abrir nuestro corazón con sincera humildad."},
+            {"id": "r40", "type": "reorder", "question": "Reordena la frase sobre la comunicación espiritual: [oración] [La] [con] [hablar] [es] [Dios]", "correct": "La oración es hablar con Dios", "feedback": "Orar es entablar una conversación cariñosa con nuestro Creador celestial."}
+          ]
+        }
+      ]
+    };
+
+    let comodinUsado = false;
+    let logDudas = {};
+
+    function trackDuda(id) {
+        logDudas[id] = (logDudas[id] || 0) + 1;
+    }
+
+    function renderQuiz() {
+        const container = document.getElementById('quizContainer');
+        let questionCounter = 1;
+        
+        examData.sections.forEach(section => {
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.innerText = section.title;
+            container.appendChild(header);
+            
+            const layoutDiv = document.createElement('div');
+            layoutDiv.className = 'main-layout';
+            
+            const questionsColumn = document.createElement('div');
+            questionsColumn.className = 'questions-column';
+            
+            section.questions.forEach(q => {
+                const secDiv = document.createElement('div');
+                secDiv.className = 'section';
+                secDiv.id = 'sec_' + q.id;
+                
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'question-title';
+                titleSpan.innerText = `${questionCounter}. ${q.question}`;
+                secDiv.appendChild(titleSpan);
+                
+                if (q.type === 'choice') {
+                    const optDiv = document.createElement('div');
+                    optDiv.className = 'options';
+                    optDiv.id = 'opts_' + q.id;
+                    q.options.forEach(opt => {
+                        const lbl = document.createElement('label');
+                        lbl.innerHTML = `<input type="radio" name="${q.id}" value="${opt}" onclick="trackDuda('${q.id}'); saveProgress('${q.id}', '${opt}')"> ${opt}`;
+                        optDiv.appendChild(lbl);
+                    });
+                    secDiv.appendChild(optDiv);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = q.id;
+                    input.placeholder = q.type === 'reorder' ? 'Escribe el orden correcto aquí...' : 'Escribe las letras o palabras...';
+                    input.oninput = function() { trackDuda(q.id); saveProgress(q.id, this.value); };
+                    secDiv.appendChild(input);
+                }
+                
+                questionsColumn.appendChild(secDiv);
+                questionCounter++;
+            });
+            
+            const visualCard = document.createElement('div');
+            visualCard.className = 'visual-side-card';
+            visualCard.innerHTML = `
+                <span class="visual-emoji">${section.emoji}</span>
+                <span class="visual-tag">${section.tag}</span>
+                <p style="font-size: 0.85em; color: #555; margin-top: 10px; line-height: 1.3;">
+                    Edward: Piensa en las bellas historias de amor de tus fichas de clase para responder con éxito.
+                </p>
+            `;
+            
+            layoutDiv.appendChild(questionsColumn);
+            layoutDiv.appendChild(visualCard);
+            container.appendChild(layoutDiv);
+        });
+
+        loadSavedProgress();
+    }
+
+    function saveProgress(id, val) {
+        localStorage.setItem('religion_exam_clase_' + id, val);
+        document.getElementById('sec_' + id).classList.remove('incomplete');
+        if(document.querySelectorAll('.incomplete').length === 0) document.getElementById('missing-msg').style.display='none';
+    }
+
+    function loadSavedProgress() {
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                const saved = localStorage.getItem('religion_exam_clase_' + q.id);
+                if (saved) {
+                    if (q.type === 'choice') {
+                        const radio = document.querySelector(`input[name="${q.id}"][value="${saved}"]`);
+                        if (radio) radio.checked = true;
+                    } else {
+                        const txtInput = document.getElementById(q.id);
+                        if (txtInput) txtInput.value = saved;
+                    }
+                }
+            });
+        });
+    }
+
+    function usarCincuentaCincuentaGlobal() {
+        if (comodinUsado) return;
+        
+        let seleccionada = prompt("Edward, escribe el número de pregunta de marcar donde deseas usar el comodín:");
+        let qNum = parseInt(seleccionada);
+        
+        if (isNaN(qNum) || qNum < 1 || qNum > 40) {
+            alert("Número de pregunta no válido.");
+            return;
+        }
+
+        let currentIdx = 1;
+        let targetId = null;
+        let targetQObj = null;
+
+        for (let s of examData.sections) {
+            for (let q of s.questions) {
+                if (currentIdx === qNum) {
+                    targetId = q.id;
+                    targetQObj = q;
+                    break;
+                }
+                currentIdx++;
+            }
+            if (targetId) break;
+        }
+
+        if (!targetQObj || targetQObj.type !== 'choice') {
+            alert("El comodín solo se puede aplicar a preguntas de marcar.");
+            return;
+        }
+
+        let optsDiv = document.getElementById('opts_' + targetId);
+        let labels = optsDiv.querySelectorAll('label');
+        let incorrectasBorradas = 0;
+
+        labels.forEach(lbl => {
+            let radio = lbl.querySelector('input');
+            if (radio.value !== targetQObj.correct && incorrectasBorradas < 1) {
+                lbl.style.display = 'none'; 
+                incorrectasBorradas++;
+            }
+        });
+
+        comodinUsado = true;
+        document.getElementById('global-5050').disabled = true;
+        document.getElementById('global-5050').innerText = "⚡ Súper Poder: Comodín Usado";
+        alert(`¡Poder activado! En la pregunta ${qNum} hemos eliminado una opción incorrecta.`);
+    }
+
+    function validarExamen() {
+        let vacios = [];
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let respondido = false;
+                if (q.type === 'choice') {
+                    if (document.querySelector(`input[name="${q.id}"]:checked`)) respondido = true;
+                } else {
+                    if (document.getElementById(q.id).value.trim() !== "") respondido = true;
+                }
+                
+                if (!respondido) {
+                    const container = document.getElementById('sec_' + q.id);
+                    container.classList.add('incomplete');
+                    vacios.push(container);
+                }
+            });
+        });
+
+        if (vacios.length > 0) {
+            document.getElementById('missing-msg').style.display = 'block';
+            vacios[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+        calificarExamen();
+    }
+
+    function calificarExamen() {
+        let nota = 0;
+        let totalPreguntas = 40;
+        let itemsHTML = "";
+        let questionIndex = 1;
+
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let uVal = "";
+                if (q.type === 'choice') {
+                    uVal = document.querySelector(`input[name="${q.id}"]:checked`).value;
+                } else {
+                    uVal = document.getElementById(q.id).value.trim();
+                }
+
+                let cleanU = uVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let cleanC = q.correct.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                
+                let esOk = (cleanU === cleanC) || (q.type === 'write' && cleanU.includes(cleanC));
+                if (esOk) nota++;
+
+                itemsHTML += `<div class="item-revision" style="border-left: 8px solid ${esOk ? '#27ae60' : '#e74c3c'}">
+                    <p><strong>Pregunta ${questionIndex}: ${q.question}</strong></p>
+                    <p>Tu respuesta: <span class="resp-usuario">${uVal}</span> ${esOk ? '✅' : '❌'}</p>
+                    ${!esOk ? `<p class="resp-correcta">Respuesta Correcta: ${q.correct}</p>` : ''}
+                    <p class="explicacion">💡 Pizarra didáctica: ${q.feedback}</p>
+                    ${logDudas[q.id] > 2 ? `<p style="color:#e67e22; font-weight:bold; margin-top:5px; font-size:0.9em;">⚠️ Edward, noté que dudaste o cambiaste de opción en esta pregunta. ¡Repásala en tu pizarra!</p>` : ''}
+                </div>`;
+                    
+                questionIndex++;
+            });
+        });
+
+        const finalScore = Math.round((nota / totalPreguntas) * 20);
+        const rb = document.getElementById('result-box');
+        
+        rb.style.display = 'block';
+        document.getElementById('score-text').innerText = `Puntaje Final: ${finalScore} / 20 (${nota} aciertos de 40)`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        
+        if(finalScore >= 11) {
+            rb.className = "correct-box";
+            document.getElementById('feedback-content').innerHTML = "<h4>🌟 ¡Excelente esfuerzo, Edward! Has superado tu examen bimestral de Religión con gran éxito.</h4>";
+        } else {
+            rb.className = "error-box";
+            document.getElementById('feedback-content').innerHTML = "<h4>📚 ¡Buen intento, Edward! Revisa las explicaciones didácticas inferiores junto a papá para recordar los temas.</h4>";
+        }
+        
+        localStorage.clear(); 
+        window.scrollTo({ top: rb.offsetTop, behavior: 'smooth' });
+    }
+
+    window.onload = renderQuiz;
+</script>
+</body>
+</html>

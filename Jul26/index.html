@@ -26,7 +26,7 @@
         .day-date { font-size: 1.5em; margin-top: 5px; }
 
         /* COLUMNA DEL CONTENIDO DEL EXAMEN */
-        .day-content { flex: 1; padding: 22px; display: flex; flex-direction: column; justify-content: center; }
+        .day-content { flex: 1; padding: 22px; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
         
         /* COLORES Y ESTILOS POR CURSO */
         .bg-ingles { background-color: #9b59b6; }
@@ -38,10 +38,11 @@
         .bg-personal { background-color: #16a085; }
         .border-personal { border-color: #16a085; }
         
+        .bg-religion { background-color: #e67e22; }
         .bg-mate { background-color: #34495e; }
-        .border-mate { border-color: #34495e; }
+        .border-viernes { border-color: #34495e; }
 
-        .card-title { display: flex; align-items: center; gap: 10px; font-size: 1.3em; font-weight: bold; color: #2c3e50; margin-bottom: 10px; }
+        .card-title { display: flex; align-items: center; gap: 10px; font-size: 1.3em; font-weight: bold; color: #2c3e50; }
         .card-emoji { font-size: 1.3em; }
         
         /* ENLACES ACTIVOS */
@@ -49,7 +50,7 @@
             display: inline-flex; align-items: center; justify-content: space-between; 
             padding: 12px 20px; background: #f8fafc; border-radius: 12px; 
             text-decoration: none; color: #2c3e50; font-weight: bold; 
-            border: 2px solid #e2e8f0; transition: 0.2s; max-width: 320px;
+            border: 2px solid #e2e8f0; transition: 0.2s; width: 100%; max-width: 320px; box-sizing: border-box;
         }
         .exam-link:hover { background: #2c3e50; color: white; border-color: #2c3e50; }
         
@@ -126,21 +127,35 @@
             </div>
         </div>
 
-        <div class="day-card border-mate">
+        <div class="day-card border-viernes">
             <div class="day-indicator bg-mate">
                 <span class="day-name">Viernes</span>
                 <span class="day-date">19</span>
                 <span style="font-size:0.8em; margin-top:5px;">Julio</span>
             </div>
             <div class="day-content">
-                <div class="card-title">
-                    <span class="card-emoji">🚀</span>
-                    <span>Matemática</span>
+                <div style="margin-bottom: 5px;">
+                    <div class="card-title">
+                        <span class="card-emoji">🚀</span>
+                        <span>Matemática</span>
+                    </div>
+                    <div style="margin-top: 5px;">
+                        <a href="matematica_3grado.html" class="exam-link">
+                            <span>🚀 Resolver Gran Desafío</span>
+                        </a>
+                    </div>
                 </div>
-                <div>
-                    <a href="matematica_3grado.html" class="exam-link">
-                        <span>🚀 Resolver Gran Desafío</span>
-                    </a>
+                
+                <div style="margin-top: 10px; padding-top: 10px; border-top: 2px dashed #edf2f7;">
+                    <div class="card-title">
+                        <span class="card-emoji">🙏</span>
+                        <span>Educación Religiosa</span>
+                    </div>
+                    <div style="margin-top: 5px;">
+                        <a href="religion_3grado.html" class="exam-link" style="border-color: #e67e22;">
+                            <span>🚀 Resolver Desafío Religioso</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
