@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen 360° Ciencia y Tecnología - Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #f5fcf7; padding: 15px; color: #2c3e50; }
+        .container { max-width: 950px; margin: auto; background: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 6px solid #27ae60; position: relative; }
+        
+        /* BOTÓN DE RETORNO AL INDEX */
+        .back-nav-button { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; background: #ffffff; color: #27ae60; border: 2.5px solid #27ae60; padding: 10px 20px; border-radius: 15px; font-weight: bold; font-size: 0.9em; transition: 0.2s; margin-bottom: 20px; cursor: pointer; }
+        .back-nav-button:hover { background: #27ae60; color: #ffffff; }
+
+        h1 { text-align: center; color: #27ae60; text-transform: uppercase; font-size: 1.8em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        .section-header { position: -webkit-sticky; position: sticky; top: 0; background: #27ae60; color: #fff; padding: 15px; border-radius: 12px; margin: 30px 0 15px 0; text-align: center; font-weight: bold; z-index: 100; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-transform: uppercase; }
+        .main-layout { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 25px; }
+        .questions-column { flex: 1; }
+        .visual-side-card { width: 220px; background: #f0fdf7; border: 3px dashed #27ae60; border-radius: 18px; padding: 20px; text-align: center; position: sticky; top: 70px; box-sizing: border-box; }
+        .visual-emoji { font-size: 4.5em; margin-bottom: 10px; display: block; animation: floatAnim 3s ease-in-out infinite; }
+        .visual-tag { background: #27ae60; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.85em; font-weight: bold; display: inline-block; }
+        @keyframes floatAnim { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        .section { margin-bottom: 15px; padding: 18px; border: 2px solid #edf2f7; border-radius: 15px; background-color: #ffffff; }
+        .incomplete { border: 3px solid #e74c3c !important; background-color: #fff5f5 !important; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #2f3542; display: block; line-height: 1.4; }
+        input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #ced4da; font-size: 16px; font-family: inherit; box-sizing: border-box; }
+        .options label { display: block; margin: 10px 0; cursor: pointer; padding: 10px; border-radius: 8px; border: 1px solid #eee; transition: 0.2s; }
+        .options label:hover { background: #f0fdf7; border-color: #27ae60; }
+        .powerup-btn { background: #e67e22; color: white; border: none; padding: 6px 12px; border-radius: 10px; cursor: pointer; font-size: 0.8em; font-weight: bold; margin-top: 5px; }
+        .powerup-btn:disabled { background: #bdc3c7; cursor: not-allowed; }
+        button#btn-evaluar { display: block; width: 100%; max-width: 350px; height: 65px; margin: 40px auto; background: #2acc73; color: white; border: none; border-radius: 35px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #21a058; }
+        #result-box { display: none; padding: 25px; border-radius: 20px; margin-top: 30px; border: 4px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+        .revision-container { margin-top: 20px; background: white; border-radius: 10px; padding: 15px; border: 1px solid #ccc; }
+        .item-revision { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; text-align: left; }
+        .resp-correcta { color: #27ae60; font-weight: bold; }
+        .resp-usuario { font-style: italic; color: #555; }
+        .explicacion { color: #2980b9; font-size: 0.9em; font-style: italic; margin-top: 5px; }
+        .missing-alert { color: #e74c3c; font-weight: bold; text-align: center; margin-bottom: 15px; display: none; padding: 10px; background: #fdf2f2; border-radius: 10px; border: 2px solid #e74c3c; }
+    </style>
+</head>
+<body>
+<div class="container">
+    
+    <!-- ENLACE DE RETORNO AL INDEX CONFIGURADO -->
+    <a href="index.html" class="back-nav-button">🏠 Volver a la Agenda</a>
+
+    <h1>🧬 Examen de Ciencia y Tecnología - 2° Bimestre</h1>
+    <h2>Edward, ¡analiza las causas, identifica los ejemplos y demuestra tu conocimiento científico!</h2>
+    <div style="text-align: center; margin-bottom: 15px;">
+        <button class="powerup-btn" id="global-5050" onclick="usarCincuentaCincuentaGlobal()">⚡ Súper Poder: Comodín 50/50 (1 disponible)</button>
+    </div>
+    <div id="missing-msg" class="missing-alert">⚠️ ¡Edward, te faltan responder algunas preguntas! Revisa los bloques marcados en rojo.</div>
+    <form id="quizForm">
+        <div id="quizContainer"></div>
+        <button type="button" id="btn-evaluar" onclick="validarExamen()">✨ Terminar Examen</button>
+    </form>
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+        <div id="revision-lista" class="revision-container">
+            <h4>🔍 Análisis Científico de Resultados:</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const examData = {
+      "sections": [
+        {
+          "title": "Eje 1: Animales en Peligro de Extinción (Causas y Ejemplos)",
+          "emoji": "🦜",
+          "tag": "Especies Amenazadas",
+          "questions": [
+            {"id": "c1", "type": "choice", "question": "¿Qué significa exactamente que un animal esté en 'peligro de extinción'?", "options": ["Que quedan pocos ejemplares en el mundo y la especie está en riesgo de desaparecer para siempre si no se protege.", "Que el animal aprendió a esconderse muy bien en las cuevas.", "Que la especie decidió mudarse a vivir a otro planeta."], "correct": "Que quedan pocos ejemplares en el mundo y la especie está en riesgo de desaparecer para siempre si no se protege.", "feedback": "Estar en peligro de extinción significa que toda la especie corre el riesgo de dejar de existir por completo en la Tierra[cite: 26]."},
+            {"id": "c2", "type": "choice", "question": "Analiza tu cuaderno: ¿Cuáles son las causas humanas que destruyen el hábitat de los animales y los ponen en peligro de desaparecer?", "options": ["El ciclo normal de las lluvias y el crecimiento natural de los árboles.", "La caza ilegal, la pesca excesiva, la contaminación del agua y la deforestación (tala de árboles).", "El cambio de estación entre verano e invierno."], "correct": "La caza ilegal, la pesca excesiva, la contaminación del agua y la deforestación (tala de árboles).", "feedback": "La actividad humana descontrolada es la principal causa de la destrucción de hábitats y la desaparición de la fauna[cite: 26]."},
+            {"id": "c3", "type": "choice", "question": "Además de las acciones humanas, ¿qué causa de origen climático o natural acelera la desaparición de especies?", "options": ["La falta de juguetes en la comunidad.", "Los cambios climáticos bruscos que alteran las temperaturas del planeta.", "El canto matutino de las aves silvestres."], "correct": "Los cambios climáticos bruscos que alteran las temperaturas del planeta.", "feedback": "El cambio climático altera las fuentes de agua y vegetación que los animales necesitan para sobrevivir[cite: 26]."},
+            {"id": "c4", "type": "choice", "question": "De acuerdo con tus diapositivas de clase, ¿cuál de los siguientes grupos contiene ÚNICAMENTE ejemplos de animales peruanos en peligro de extinción?", "options": ["El perro, el gato, la gallina y el caballo.", "El Colibrí (maravilloso), la Rana gigante del Titicaca, el Cóndor Andino, el Mono choro, el Delfín rosado y el Jaguar.", "El león africano, el oso panda y la jirafa."], "correct": "El Colibrí (maravilloso), la Rana gigante del Titicaca, el Cóndor Andino, el Mono choro, el Delfín rosado y el Jaguar.", "feedback": "Todos estos animales son especies nativas de nuestro país que se encuentran amenazadas y registradas[cite: 26]."},
+            {"id": "c5", "type": "write", "question": "¿Por qué el hermoso Gallito de las Rocas está en peligro? Completa: Está desapareciendo debido a la captura ilegal y a la tala de árboles de la ______ peruana.", "correct": "amazonia", "feedback": "La Amazonía peruana pierde árboles por la deforestación, dejando al Gallito de las Rocas sin nidos ni alimento[cite: 26]."},
+            {"id": "c6", "type": "choice", "question": "¿Por qué causa específica se encuentra amenazada la Rana gigante del Titicaca en su entorno acuático?", "options": ["Keep calm, los peces del lago no quieren jugar con ella.", "Por la contaminación de las aguas del lago Titicaca donde vive.", "Porque aprendió a caminar fuera del agua."], "correct": "Por la contaminación de las aguas del lago Titicaca donde vive.", "feedback": "La contaminación por basura y sustancias tóxicas destruye la calidad del agua de este lago andino[cite: 26]."},
+            {"id": "c7", "type": "choice", "question": "¿Qué organización internacional se encarga de crear la 'Lista Roja' para registrar y ayudar a preservar a las especies amenazadas?", "options": ["La municipalidad del distrito.", "La Unión Internacional para la Conservación de la Naturaleza (UICN).", "El club de exploradores del colegio."], "correct": "La Unión Internacional para la Conservación de la Naturaleza (UICN).", "feedback": "La UICN es la entidad científica mundial que clasifica los niveles de riesgo de la flora y fauna[cite: 26]."},
+            {"id": "c8", "type": "write", "question": "Completa con una de las principales causas: El comercio ilegal de ______ y cueros de animales silvestres pone en grave riesgo a felinos como el Jaguar.", "correct": "pieles", "feedback": "La caza de animales silvestres para vender ilegalmente sus pieles y cueros afecta gravemente al jaguar y otros mamíferos[cite: 26]."}
+          ]
+        },
+        {
+          "title": "Eje 2: Clasificación por la Alimentación y Equilibrio",
+          "emoji": "🐄",
+          "tag": "Nutrición Animal",
+          "questions": [
+            {"id": "c9", "type": "choice", "question": "Si observas que una vaca pasa el día consumiendo pasto y alfalfa en el campo, ¿cómo se clasifica según su alimentación?", "options": ["Carnívoro", "Omnívoro", "Herbívoro"], "correct": "Herbívoro", "feedback": "Los animales herbívoros obtienen sus nutrientes exclusivamente de las plantas[cite: 27]."},
+            {"id": "c10", "type": "choice", "question": "El león y el tigre poseen colmillos muy afilados para desgarrar carne. Ellos pertenecen al grupo de los:", "options": ["Herbívoros", "Carnívoros", "Omnívoros"], "correct": "Carnívoros", "feedback": "Los carnívoros se alimentan de la carne de otros animales cogiéndolos mediante la caza o pesca[cite: 27]."},
+            {"id": "c11", "type": "write", "question": "La gallina come granos de maíz pero también consume pequeños insectos del suelo. Por lo tanto, es un animal ______.", "correct": "omnivoro", "feedback": "Los omnívoros tienen una dieta mixta: consumen tanto plantas como carnes[cite: 27]."},
+            {"id": "c12", "type": "choice", "question": "Analiza este caso: El oso consume frutos y raíces, pero también caza peces en el río. ¿A qué grupo pertenece por su alimentación?", "options": ["Es un herbívoro estricto.", "Es un omnívoro porque consume plantas y carnes.", "Es un carnívoro puro."], "correct": "Es un omnívoro porque consume plantas y carnes.", "feedback": "Su organismo está adaptado para procesar y digerir ambos tipos de alimentos[cite: 27]."},
+            {"id": "c13", "type": "choice", "question": "¿Qué es la alimentación desde el punto de vista biológico?", "options": ["Un juego que hacen los animales cuando están aburridos.", "El proceso por el cual los seres vivos ingieren nutrientes para sobrevivir, crecer y desarrollarse.", "Correr detrás de otros animales en el campo."], "correct": "El proceso por el cual los seres vivos ingieren nutrientes para sobrevivir, crecer y desarrollarse.", "feedback": "La alimentación provee la materia y energía indispensables para realizar las funciones vitales[cite: 27]."},
+            {"id": "c14", "type": "choice", "question": "Reto de Análisis: ¿Qué sucedería en la naturaleza si de pronto todos los animales quisieran comer ÚNICAMENTE carne?", "options": ["El planeta estaría mejor organizado.", "Se terminarían las presas rápido, romperíamos el equilibrio de la naturaleza y muchas especies morirían de hambre.", "Las plantas crecerían tanto que taparían el Sol."], "correct": "Se terminarían las presas rápido, romperíamos el equilibrio de la naturaleza y muchas especies morirían de hambre.", "feedback": "La variedad de dietas garantiza que los recursos no se agoten y se mantenga la cadena alimentaria[cite: 27]."},
+            {"id": "c15", "type": "write", "question": "Escribe el grupo alimenticio de los siguientes animales del Grupo San Luis (Conejo, Caballo): H _ r _ _ v _ r _ _.", "correct": "herbivoros", "feedback": "Tanto el conejo como el caballo basan su subsistencia en el consumo vegetal[cite: 27]."},
+            {"id": "c16", "type": "reorder", "question": "Ordena el principio ecológico fundamental: [importantes] [seres] [Todos] [vivos] [los] [son]", "correct": "Todos los seres vivos son importantes", "feedback": "Cada especie cumple un rol crucial en el equilibrio biológico natural[cite: 27]."}
+          ]
+        },
+        {
+          "title": "Eje 3: El Mundo de los Animales Invertebrados",
+          "emoji": "🦋",
+          "tag": "Especies sin Huesos",
+          "questions": [
+            {"id": "c17", "type": "choice", "question": "Sofía observa una mariposa, un caracol y una lombriz en el jardín. ¿Qué característica fundamental comparten estos animales?", "options": ["Tienen un esqueleto de huesos duros por dentro.", "No poseen columna vertebral ni esqueleto interno de huesos.", "Todos respiran por branquias bajo el agua."], "correct": "No poseen columna vertebral ni esqueleto interno de huesos.", "feedback": "Los invertebrados carecen por completo de una estructura ósea o espina interna[cite: 29]."},
+            {"id": "r18", "type": "choice", "question": "Respecto a su nacimiento, ¿qué característica reproductiva comparten todos los animales invertebrados?", "options": ["Son vivíparos (nacen del vientre materno).", "Son ovíparos (todos nacen a partir de huevos).", "Nacen directamente del agua sin huevos."], "correct": "Son ovíparos (todos nacen a partir de huevos).", "feedback": "La totalidad de las especies invertebradas se propaga mediante la puesta de huevos[cite: 29]."},
+            {"id": "c19", "type": "choice", "question": "Son considerados los animales más primitivos y sencillos del reino animal, no tienen cerebro ni músculos y absorben nutrientes filtrando agua:", "options": ["Los moluscos", "Las esponjas de mar", "Los artrópodos"], "correct": "Las esponjas de mar", "feedback": "Las esponjas filtran el agua marina a través de poros corporales llamados ostiolos[cite: 29]."},
+            {"id": "c20", "type": "write", "question": "Invertebrados acuáticos con cuerpo blando y paraguas que flotan libremente, compuestos en un 95% por agua: M _ d _ _ _ s.", "correct": "medusas", "feedback": "Las medusas poseen tentáculos provistos de células urticantes para cazar[cite: 29]."},
+            {"id": "c21", "type": "choice", "question": "Los caracoles, las almejas y los pulpos pertenecen al grupo de los moluscos. ¿Cómo protegen la mayoría de ellos su cuerpo blando?", "options": ["Con un esqueleto de cartílago elástico.", "Por medio de una concha calcárea dura.", "Con una cubierta de pelos gruesos."], "correct": "Por medio de una concha calcárea dura.", "feedback": "La concha calcárea resguarda sus órganos corporales internos de los depredadores[cite: 29]."},
+            {"id": "c22", "type": "write", "question": "Grupo de invertebrados marinos cuyo nombre significa 'piel con espinas' o con púas, como la estrella de mar: E _ _ _ n _ d _ r _ _ s.", "correct": "equinodermos", "feedback": "Los equinodermos (estrellas, erizos) se caracterizan por proyecciones calcáreas espinosas en la piel[cite: 29]."},
+            {"id": "c23", "type": "choice", "question": "Los insectos pertenecen al gran grupo de los artrópodos. ¿Cuántos pares de patas (número total) posee un insecto común como la hormiga?", "options": ["3 pares de patas (6 patas en total)", "4 pares de patas (8 patas en total)", "5 pares de patas (10 patas en total)"], "correct": "3 pares de patas (6 patas en total)", "feedback": "Los insectos se diferencian por poseer exactamente tres pares de patas articuladas[cite: 29]."},
+            {"id": "c24", "type": "choice", "question": "¿A qué grupo de artrópodos pertenece la araña sabiendo que posee 8 patas en total y no tiene antenas?", "options": ["Insectos", "Crustáceos", "Arácnidos"], "correct": "Arácnidos", "feedback": "Los arácnidos tienen 4 pares de patas (8 en total) y carecen de antenas sensoriales[cite: 29]."},
+            {"id": "c25", "type": "choice", "question": "Los cangrejos y las langostas son artrópodos acuáticos. ¿Cuántas patas articuladas poseen en total?", "options": ["6 patas", "8 patas", "10 patas (5 pares)"], "correct": "10 patas (5 pares)", "feedback": "Los crustáceos cuentan de forma característica con 10 extremidades caminadoras[cite: 29]."},
+            {"id": "c26", "type": "write", "question": "Artrópodos con cuerpo alargado dividido en muchos segmentos que tienen más de diez patas, como el ciempiés: M _ r _ á _ _ d _ s.", "correct": "miriapodos", "feedback": "Los miriápodos agrupan a los organismos articulados con múltiples segmentos corporales de patas[cite: 29]."},
+            {"id": "c27", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'Los gusanos son invertebrados de cuerpo blando y alargado que carecen de patas y se desplazan reptando.'", "options": ["Verdadero", "Falso"], "correct": "Verdadero", "feedback": "Los gusanos avanzan sobre las superficies contrayendo secuencialmente su musculatura blanda[cite: 29]."},
+            {"id": "c28", "type": "choice", "question": "Reto de observación de las fichas San Luis: ¿Cuál de los siguientes animales es un invertebrado?", "options": ["El perro", "La mariposa", "El gato"], "correct": "La mariposa", "feedback": "La mariposa es un insecto artrópodo, por ende, carece de huesos o columna ósea[cite: 29]."}
+          ]
+        },
+        {
+          "title": "Eje 4: Anatomía Vertebrada y Ciclos Biológicos",
+          "emoji": "🦁",
+          "tag": "Estructuras Óseas",
+          "questions": [
+            {"id": "c29", "type": "choice", "question": "¿Qué característica única e indispensable comparten la jirafa, el águila, la serpiente y los peces?", "options": ["Todos tienen el cuerpo cubierto de escamas secas.", "Poseen un esqueleto interno compuesto por huesos o cartílagos, cuyo eje principal es la columna vertebral.", "Todos nacen del vientre de la madre."], "correct": "Poseen un esqueleto interno compuesto por huesos o cartílagos, cuyo eje principal es la columna vertebral.", "feedback": "La columna vertebral es el soporte interno articulado que define a este phylum[cite: 31]."},
+            {"id": "c30", "type": "choice", "question": "Los peces viven bajo el agua y necesitan absorber el oxígeno disuelto en ella. ¿Mediante qué órgano especializado respiran?", "options": ["Pulmones elásticos", "Branquias", "A través de las escamas"], "correct": "Branquias", "feedback": "Las branquias extraen eficientemente el oxígeno disuelto del agua que fluye por la boca[cite: 31]."},
+            {"id": "c31", "type": "choice", "question": "Reto de análisis zoológico: Aunque las ballenas y los delfines viven nadando en el mar, ¿por qué la ciencia no los clasifica como peces?", "options": ["Porque son más grandes que los peces normales.", "Reflexiona: Porque respiran por pulmones, tienen sangre caliente y las hembras amamantan a sus crías con glándulas mamarias.", "Porque no tienen aletas reales."], "correct": "Reflexiona: Porque respiran por pulmones, tienen sangre caliente y las hembras amamantan a sus crías con glándulas mamarias.", "feedback": "Las ballenas y los delfines pertenecen de manera indiscutible a la clase de los mamíferos[cite: 31]."},
+            {"id": "c32", "type": "write", "question": "Los reptiles tienen la piel seca cubierta de placas o escamas duras. Como la mayoría tiene patas muy cortas o carece de ellas, necesitan R _ _ _ a r (arrastrarse).", "correct": "reptar", "feedback": "Reptar define el desplazamiento arrastrando el tronco contra el sustrato terrestre[cite: 31]."},
+            {"id": "c33", "type": "choice", "question": "¿Por qué los anfibios adultos (como las ranas) tienen una capacidad de respiración doble muy asombrosa?", "options": ["Porque respiran por la nariz y por la boca al mismo tiempo.", "Porque de renacuajos respiran por branquias, y de adultos desarrollan pulmones y también respiran a través de su piel delgada y húmeda.", "Porque guardan aire en burbujas bajo el agua."], "correct": "Porque de renacuajos respiran por branquias, y de adultos desarrollan pulmones y también respiran a través de su piel delgada y húmeda.", "feedback": "Los anfibios combinan la respiración pulmonar con el intercambio de gases a través de la piel húmeda[cite: 31]."},
+            {"id": "c34", "type": "choice", "question": "¿Qué estructura interna especial poseen las aves en su esqueleto que les permite reducir su peso para poder volar?", "options": ["Huesos sólidos rellenos de grasa densa.", "Sus huesos son huecos y llenos de aire, lo que los hace extremadamente livianos.", "No tienen huesos en la parte delantera."], "correct": "Sus huesos son huecos y llenos de aire, lo que los hace extremadamente livianos.", "feedback": "Los huesos neumáticos facilitan la aerodinámica disminuyendo la carga ósea pesada[cite: 31]."},
+            {"id": "c35", "type": "write", "question": "Los mamíferos se caracterizan porque sus crías se desarrollan dentro del vientre de la madre de forma interna. Por eso son animales V _ v _ _ _ r _ _.", "correct": "viviparos", "feedback": "Los vivíparos completan la gestación embrionaria dentro de la cavidad uterina materna[cite: 31]."},
+            {"id": "c36", "type": "choice", "question": "¿A qué grupo de animales corresponden la gallina, el pato y la tortuga sabiendo que se reproducen poniendo huevos?", "options": ["Vivíparos", "Ovíparos", "Asexuales"], "correct": "Ovíparos", "feedback": "Los ovíparos depositan huevos al medio externo para la maduración embrionaria[cite: 32]."},
+            {"id": "c37", "type": "write", "question": "Completa el término biológico: La serie de cambios y transformaciones que experimenta un ser vivo desde que nace hasta hacerse adulto es su C _ _ l o de vida.", "correct": "ciclo", "feedback": "El ciclo vital integra las etapas ordenadas de nacimiento, desarrollo, reproducción y fallecimiento[cite: 32]."},
+            {"id": "c38", "type": "choice", "question": "Las larvas de los anfibios (renacuajos) sufren una transformación radical perdiendo la cola y desarrollando patas. Este proceso se llama:", "options": ["Metamorfosis", "Aproximación", "Reproducción asexual"], "correct": "Metamorfosis", "feedback": "La metamorfosis reorganiza la morfología celular y anatómica para el cambio de hábitat[cite: 31]."},
+            {"id": "c39", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'Los seres humanos poseemos columna vertebral y glándulas mamarias, por lo tanto pertenecemos al grupo de los mamíferos.'", "options": ["Verdadero", "Falso"], "correct": "Verdadero", "feedback": "Nuestros rasgos anatómicos, óseos e histológicos nos incluyen dentro de la clase Mammalia[cite: 31]."},
+            {"id": "c40", "type": "choice", "question": "Reto final de análisis estadístico: ¿Qué grupo de animales es el más abundante y numeroso en todo el planeta Tierra?", "options": ["Los animales vertebrados como los mamíferos.", "Los animales invertebrados.", "Los grandes reptiles de la selva."], "correct": "Los animales invertebrados.", "feedback": "Los invertebrados componen más del 95% del total de las especies animales del planeta[cite: 29]."}
+          ]
+        }
+      ]
+    };
+
+    let comodinUsado = false;
+    let logDudas = {};
+
+    function trackDuda(id) { logDudas[id] = (logDudas[id] || 0) + 1; }
+
+    function renderQuiz() {
+        const container = document.getElementById('quizContainer');
+        let questionCounter = 1;
+        examData.sections.forEach(section => {
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.innerText = section.title;
+            container.appendChild(header);
+            const layoutDiv = document.createElement('div');
+            layoutDiv.className = 'main-layout';
+            const questionsColumn = document.createElement('div');
+            questionsColumn.className = 'questions-column';
+            section.questions.forEach(q => {
+                const secDiv = document.createElement('div');
+                secDiv.className = 'section';
+                secDiv.id = 'sec_' + q.id;
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'question-title';
+                titleSpan.innerText = `${questionCounter}. ${q.question}`;
+                secDiv.appendChild(titleSpan);
+                if (q.type === 'choice') {
+                    const optDiv = document.createElement('div');
+                    optDiv.className = 'options';
+                    optDiv.id = 'opts_' + q.id;
+                    q.options.forEach(opt => {
+                        const lbl = document.createElement('label');
+                        lbl.innerHTML = `<input type="radio" name="${q.id}" value="${opt}" onclick="trackDuda('${q.id}'); saveProgress('${q.id}', '${opt}')"> ${opt}`;
+                        optDiv.appendChild(lbl);
+                    });
+                    secDiv.appendChild(optDiv);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = q.id;
+                    input.placeholder = q.type === 'reorder' ? 'Ordena la oración aquí...' : 'Escribe las letras o palabras...';
+                    input.oninput = function() { trackDuda(q.id); saveProgress(q.id, this.value); };
+                    secDiv.appendChild(input);
+                }
+                questionsColumn.appendChild(secDiv);
+                questionCounter++;
+            });
+            const visualCard = document.createElement('div');
+            visualCard.className = 'visual-side-card';
+            visualCard.innerHTML = `<span class="visual-emoji">${section.emoji}</span><span class="visual-tag">${section.tag}</span><p style="font-size:0.85em; color:#555; margin-top:10px;">¡Analiza los ecosistemas de tus fichas San Luis para triunfar!</p>`;
+            layoutDiv.appendChild(questionsColumn);
+            layoutDiv.appendChild(visualCard);
+            container.appendChild(layoutDiv);
+        });
+        loadSavedProgress();
+    }
+
+    function saveProgress(id, val) {
+        localStorage.setItem('science_exam_2b_' + id, val);
+        document.getElementById('sec_' + id).classList.remove('incomplete');
+        if(document.querySelectorAll('.incomplete').length === 0) document.getElementById('missing-msg').style.display='none';
+    }
+
+    function loadSavedProgress() {
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                const saved = localStorage.getItem('science_exam_2b_' + q.id);
+                if (saved) {
+                    if (q.type === 'choice') {
+                        const radio = document.querySelector(`input[name="${q.id}"][value="${saved}"]`);
+                        if (radio) radio.checked = true;
+                    } else {
+                        const txtInput = document.getElementById(q.id);
+                        if (txtInput) txtInput.value = saved;
+                    }
+                }
+            });
+        });
+    }
+
+    function usarCincuentaCincuentaGlobal() {
+        if (comodinUsado) return;
+        let seleccionada = prompt("Edward, introduce el número de pregunta de marcar donde deseas el descarte:");
+        let qNum = parseInt(seleccionada);
+        if (isNaN(qNum) || qNum < 1 || qNum > 40) return;
+        let currentIdx = 1, targetId = null, targetQObj = null;
+        for (let s of examData.sections) {
+            for (let q of s.questions) {
+                if (currentIdx === qNum) { targetId = q.id; targetQObj = q; break; }
+                currentIdx++;
+            }
+            if (targetId) break;
+        }
+        if (!targetQObj || targetQObj.type !== 'choice') return;
+        let labels = document.getElementById('opts_' + targetId).querySelectorAll('label');
+        let incorrectasBorradas = 0;
+        labels.forEach(lbl => {
+            let radio = lbl.querySelector('input');
+            if (radio.value !== targetQObj.correct && incorrectasBorradas < 1) { lbl.style.display = 'none'; incorrectasBorradas++; }
+        });
+        comodinUsado = true;
+        document.getElementById('global-5050').disabled = true;
+        document.getElementById('global-5050').innerText = "⚡ Súper Poder Usado";
+    }
+
+    function validarExamen() {
+        let vacios = [];
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let r = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`) : document.getElementById(q.id).value.trim();
+                if (!r) { const c = document.getElementById('sec_' + q.id); c.classList.add('incomplete'); vacios.push(c); }
+            });
+        });
+        if (vacios.length > 0) { document.getElementById('missing-msg').style.display = 'block'; vacios[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+        calificarExamen();
+    }
+
+    function calificarExamen() {
+        let nota = 0, questionIndex = 1, itemsHTML = "";
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let uVal = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`).value : document.getElementById(q.id).value.trim();
+                let cleanU = uVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let cleanC = q.correct.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let esOk = (cleanU === cleanC) || (q.type === 'write' && cleanU.includes(cleanC));
+                if (esOk) nota++;
+                itemsHTML += `<div class="item-revision" style="border-left:8px solid ${esOk?'#27ae60':'#e74c3c'}">
+                    <p><strong>Pregunta ${questionIndex}: ${q.question}</strong></p>
+                    <p>Tu respuesta: <span class="resp-usuario">${uVal}</span> ${esOk?'✅':'❌'}</p>
+                    ${!esOk?`<p class="resp-correcta">Respuesta Esperada: ${q.correct}</p>`:''}
+                    <p class="explicacion">💡 Explicación científica: ${q.feedback}</p>
+                    ${logDudas[q.id]>2?`<p style="color:#e67e22; font-weight:bold; font-size:0.9em;">⚠️ Se detectó vacilación en esta respuesta. ¡A repasar el concepto en la pizarra!</p>`:''}
+                </div>`;
+                questionIndex++;
+            });
+        });
+        const finalScore = Math.round((nota / 40) * 20);
+        const rb = document.getElementById('result-box');
+        rb.style.display = 'block';
+        document.getElementById('score-text').innerText = `Calificación Final: ${finalScore} / 20 (${nota} de 40 aciertos)`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        rb.className = finalScore >= 11 ? "correct-box" : "error-box";
+        document.getElementById('feedback-content').innerHTML = finalScore >= 11 ? "<h4>🌟 ¡Magnífico trabajo de investigación, Edward! Tienes mente de científico.</h4>" : "<h4>📚 ¡Buen intento, Edward! Repasa la pizarra de resultados para dominar los temas.</h4>";
+        localStorage.clear();
+        window.scrollTo({ top: rb.offsetTop, behavior: 'smooth' });
+    }
+    window.onload = renderQuiz;
+</script>
+</body>
+</html>
