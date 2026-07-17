@@ -17,16 +17,20 @@
         .day-indicator { width: 180px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-weight: bold; color: white; box-sizing: border-box; }
         .day-name { font-size: 1.2em; text-transform: uppercase; }
         .day-date { font-size: 1.5em; margin-top: 5px; }
-        .day-content { flex: 1; padding: 22px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+        .day-content { flex: 1; padding: 22px; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
         
-        .bg-ciencia { background-color: #27ae60; }
-        .border-ciencia { border-color: #27ae60; }
+        .bg-ciencia { background-color: #2abc73; }
+        .bg-personal { background-color: #16a085; }
+        .bg-ingles { background-color: #9b59b6; }
+        .border-ciencia { border-color: #2abc73; }
+        .border-lunes { border-color: #16a085; }
+        
         .bg-locked { background-color: #95a5a6; }
         .locked-day { filter: grayscale(15%); border-color: #cbd5e1; }
         
         .card-title { display: flex; align-items: center; gap: 10px; font-size: 1.3em; font-weight: bold; color: #2c3e50; }
         .exam-link { display: inline-flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: #f8fafc; border-radius: 12px; text-decoration: none; color: #2c3e50; font-weight: bold; border: 2px solid #e2e8f0; transition: 0.2s; width: 100%; max-width: 320px; box-sizing: border-box; }
-        .exam-link:hover { background: #27ae60; color: white; border-color: #27ae60; }
+        .exam-link:hover { background: #2c3e50; color: white; border-color: #2c3e50; }
         .status-badge { font-size: 0.75em; padding: 5px 12px; border-radius: 10px; font-weight: bold; margin-left: 15px; }
         .badge-coming { background: #e2e8f0; color: #64748b; border: 1px dashed #cbd5e1; }
         .coming-text { font-size: 0.95em; color: #7f8c8d; font-style: italic; }
@@ -41,6 +45,7 @@
     <h2>¡Paso a paso, demuestra todo lo aprendido en el Grupo Educativo San Luis!</h2>
 
     <div class="timeline-layout">
+        
         <!-- VIERNES 17: CIENCIA -->
         <div class="day-card border-ciencia">
             <div class="day-indicator bg-ciencia">
@@ -51,24 +56,40 @@
             <div class="day-content">
                 <div class="card-title">🌿 Ciencia y Tecnología</div>
                 <div>
-                    <a href="ciencia_ambiente_3grado.html" class="exam-link">
+                    <a href="ciencia_ambiente_3grado.html" class="exam-link" style="border-color: #2abc73;">
                         <span>🚀 Iniciar Evaluación 360°</span>
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- LUNES 20: PERSONAL E INGLÉS -->
-        <div class="day-card locked-day">
-            <div class="day-indicator bg-locked">
+        <!-- LUNES 20: PERSONAL SOCIAL E INGLÉS (¡AMBOS ACTIVADOS!) -->
+        <div class="day-card border-lunes">
+            <div class="day-indicator bg-personal">
                 <span class="day-name">Lunes</span>
                 <span class="day-date">20</span>
                 <span style="font-size:0.8em; margin-top:5px;">Julio</span>
             </div>
             <div class="day-content">
-                <div class="card-title" style="color: #7f8c8d;">🏠 P. Social / 🇬🇧 Inglés</div>
-                <div class="coming-text">⏳ Disponibles a más tardar un día antes.</div>
-                <div><span class="status-badge badge-coming">Próximamente</span></div>
+                <!-- Personal Social -->
+                <div style="margin-bottom: 5px;">
+                    <div class="card-title">🏠 Personal Social</div>
+                    <div style="margin-top: 5px;">
+                        <a href="personal_social_3grado.html" class="exam-link" style="border-color: #16a085;">
+                            <span>🚀 Iniciar Evaluación 360°</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Inglés Activado -->
+                <div style="margin-top: 10px; padding-top: 10px; border-top: 2px dashed #edf2f7;">
+                    <div class="card-title">🇬🇧 Inglés (English)</div>
+                    <div style="margin-top: 5px;">
+                        <a href="ingles_3grado.html" class="exam-link" style="border-color: #9b59b6;">
+                            <span>🚀 Iniciar Evaluación 360°</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 

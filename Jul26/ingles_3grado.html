@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3rd Grade English Evaluation - Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #f7f5fb; padding: 15px; color: #2c3e50; }
+        .container { max-width: 950px; margin: auto; background: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 6px solid #9b59b6; position: relative; }
+        
+        /* BACK BUTTON */
+        .back-nav-button { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; background: #ffffff; color: #9b59b6; border: 2.5px solid #9b59b6; padding: 10px 20px; border-radius: 15px; font-weight: bold; font-size: 0.9em; transition: 0.2s; margin-bottom: 20px; cursor: pointer; }
+        .back-nav-button:hover { background: #9b59b6; color: #ffffff; }
+
+        h1 { text-align: center; color: #8e44ad; text-transform: uppercase; font-size: 1.8em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        .section-header { position: -webkit-sticky; position: sticky; top: 0; background: #9b59b6; color: #fff; padding: 15px; border-radius: 12px; margin: 30px 0 15px 0; text-align: center; font-weight: bold; z-index: 100; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-transform: uppercase; }
+        .main-layout { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 25px; }
+        .questions-column { flex: 1; }
+        .visual-side-card { width: 220px; background: #faf5fc; border: 3px dashed #9b59b6; border-radius: 18px; padding: 20px; text-align: center; position: sticky; top: 70px; box-sizing: border-box; }
+        .visual-emoji { font-size: 4.5em; margin-bottom: 10px; display: block; animation: floatAnim 3s ease-in-out infinite; }
+        .visual-tag { background: #9b59b6; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.85em; font-weight: bold; display: inline-block; }
+        @keyframes floatAnim { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        .section { margin-bottom: 15px; padding: 18px; border: 2px solid #edf2f7; border-radius: 15px; background-color: #ffffff; }
+        .incomplete { border: 3px solid #e74c3c !important; background-color: #fff5f5 !important; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #2f3542; display: block; line-height: 1.4; }
+        input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #ced4da; font-size: 16px; font-family: inherit; box-sizing: border-box; }
+        .options label { display: block; margin: 10px 0; cursor: pointer; padding: 10px; border-radius: 8px; border: 1px solid #eee; transition: 0.2s; }
+        .options label:hover { background: #faf5fc; border-color: #9b59b6; }
+        .powerup-btn { background: #e67e22; color: white; border: none; padding: 6px 12px; border-radius: 10px; cursor: pointer; font-size: 0.8em; font-weight: bold; margin-top: 5px; }
+        .powerup-btn:disabled { background: #bdc3c7; cursor: not-allowed; }
+        button#btn-evaluar { display: block; width: 100%; max-width: 350px; height: 65px; margin: 40px auto; background: #2ecc73; color: white; border: none; border-radius: 35px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #21a058; }
+        #result-box { display: none; padding: 25px; border-radius: 20px; margin-top: 30px; border: 4px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+        .revision-container { margin-top: 20px; background: white; border-radius: 10px; padding: 15px; border: 1px solid #ccc; }
+        .item-revision { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; text-align: left; }
+        .resp-correcta { color: #27ae60; font-weight: bold; }
+        .resp-usuario { font-style: italic; color: #555; }
+        .explicacion { color: #2980b9; font-size: 0.9em; font-style: italic; margin-top: 5px; }
+        .missing-alert { color: #e74c3c; font-weight: bold; text-align: center; margin-bottom: 15px; display: none; padding: 10px; background: #fdf2f2; border-radius: 10px; border: 2px solid #e74c3c; }
+    </style>
+</head>
+<body>
+<div class="container">
+    
+    <!-- RETURN TO MENU BUTTON -->
+    <a href="index.html" class="back-nav-button"> Solver to the Agenda / Volver</a>
+
+    <h1>🇬🇧 3rd Grade English Evaluation</h1>
+    <h2>Edward, avoid past mistakes! Think carefully, check your spelling, and read accurately!</h2>
+    <div style="text-align: center; margin-bottom: 15px;">
+        <button class="powerup-btn" id="global-5050" onclick="usarCincuentaCincuentaGlobal()">⚡ Power-up: 50/50 Wildcard (1 available)</button>
+    </div>
+    <div id="missing-msg" class="missing-alert">⚠️ Edward, you missed some questions! Look at the red sections.</div>
+    <form id="quizForm">
+        <div id="quizContainer"></div>
+        <button type="button" id="btn-evaluar" onclick="validarExamen()">✨ Finish Evaluation</button>
+    </form>
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+        <div id="revision-lista" class="revision-container">
+            <h4>🔍 Teacher's Pedagogical Review Board:</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const examData = {
+      "sections": [
+        {
+          "title": "Part 1: Wild Animals Features & Grammar Booster (Has it got...?)",
+          "emoji": "🦁",
+          "tag": "Fixing Mistakes",
+          "questions": [
+            {"id": "e1", "type": "choice", "question": "Choose the correct question format to ask about an animal's physical features:", "options": ["Your animal it got a tail?", "Has it got a tail?", "It got a tail?"], "correct": "Has it got a tail?", "feedback": "Remember Edward! To make a question, we ALWAYS start with 'Has it got...'[cite: 41]. Never say 'your animal it got'[cite: 41]."},
+            {"id": "e2", "type": "choice", "question": "Help Tim ask Anna about a bird. Choose the correct question structure:", "options": ["Has it got feathers?", "Your animal it got feathers?", "It has got feathers?"], "correct": "Has it got feathers?", "feedback": "Excellent! Questions always put 'Has' at the very beginning: 'Has it got feathers?'[cite: 41]."},
+            {"id": "e3", "type": "choice", "question": "Answer the question correctly in the negative: 'Has a snake got fur?'", "options": ["No, it hasn't.", "No, it teeth.", "No, it doesn't got."], "correct": "No, it hasn't.", "feedback": "For a negative short answer with 'has got', we always use 'No, it hasn't.'[cite: 41]."},
+            {"id": "e4", "type": "choice", "question": "Check the spelling! A crocodile has got very _________ teeth.", "options": ["shaarp", "sharp", "sharrp"], "correct": "sharp", "feedback": "Be careful with your spelling, Edward! 'Sharp' is spelled with only one 'a' (S-H-A-R-P)[cite: 41]."},
+            {"id": "e5", "type": "choice", "question": "Scientific Fact Check: Think about a turtle or a crocodile (reptiles). Has a turtle got scales?", "options": ["No, it hasn't.", "Yes, it has.", "No, it hasn't got scales."], "correct": "Yes, it has.", "feedback": "Turtles and all reptiles HAVE got scales on their body[cite: 41]. Don't confuse it with fur!"},
+            {"id": "e6", "type": "choice", "question": "Complete the positive short answer: 'Has a leopard got spots?' -> '________, it ________.'", "options": ["Yes, it has got", "Yes, it has.", "Yes, it is."], "correct": "Yes, it has.", "feedback": "The correct short answer format is 'Yes, it has.'[cite: 41]."},
+            {"id": "e7", "type": "write", "question": "Unscramble and correct the question: 'got / it / a / shell / Has / ?'", "correct": "Has it got a shell?", "feedback": "Perfect! 'Has it got a shell?' is the correct order[cite: 41]."},
+            {"id": "e8", "type": "choice", "question": "Mammals fact check: Complete the sentence: 'Mammals have got hair or fur, and they produce _______ for their babies.'", "options": ["milk", "scales", "feathers"], "correct": "milk", "feedback": "Mammals are warm-blooded and mothers produce milk for their babies[cite: 41]."},
+            {"id": "e9", "type": "write", "question": "Spell correctly: A peacock has got beautiful, colorful _________ (plumas).", "correct": "feathers", "feedback": "Feathers is spelled F-E-A-T-H-E-R-S[cite: 41]."},
+            {"id": "e10", "type": "choice", "question": "Look at a snake. Has it got legs?", "options": ["Yes, it has.", "No, it hasn't.", "No, it hasn't got scales."], "correct": "No, it hasn't.", "feedback": "Snakes have got scales but they haven't got any legs[cite: 41]."}
+          ]
+        },
+        {
+          "title": "Part 2: Technological Devices & Components",
+          "emoji": "💻",
+          "tag": "Tech Vocabulary",
+          "questions": [
+            {"id": "e11", "type": "choice", "question": "What component of a desktop computer do you look at to see pictures, text, and videos?", "options": ["The keyboard", "The mouse", "The screen"], "correct": "The screen", "feedback": "The screen displays all the visual information of our computer[cite: 44, 46]."},
+            {"id": "e12", "type": "choice", "question": "What part of a desktop computer do you use to type letters and write stories?", "options": ["The touchscreen", "The keyboard", "The headphones"], "correct": "The keyboard", "feedback": "We type on a physical keyboard to enter text[cite: 44, 46]."},
+            {"id": "e13", "type": "choice", "question": "A tablet doesn't have a physical mouse or keyboard. Instead, you click directly on its...", "options": ["screen", "touchscreen", "headphones"], "correct": "touchscreen", "feedback": "Tablets have got a touchscreen to interact with your fingers[cite: 44, 46]."},
+            {"id": "e14", "type": "write", "question": "Identify the device: It is smaller than a computer, portable, it hasn't got a physical mouse, but it has got a touchscreen: T _ _ _ _ t.", "correct": "tablet", "feedback": "A tablet is light, portable, and runs completely with a touchscreen[cite: 44, 46]."},
+            {"id": "e15", "type": "choice", "question": "What device do you place on your ears to listen to music without making noise in the classroom?", "options": ["The mouse", "Headphones", "The keyboard"], "correct": "Headphones", "feedback": "We use headphones to listen to music or language audios privately[cite: 44, 46]."},
+            {"id": "e16", "type": "write", "question": "Identify the small component you slide on the desk with your hand to click on icons: M _ _ s e.", "correct": "mouse", "feedback": "The mouse moves the cursor pointer on a desktop computer screen[cite: 44, 46]."},
+            {"id": "e17", "type": "choice", "question": "Complete the text: 'My tablet is amazing! It hasn't got a mouse or a keyboard, but it has got a big...'", "options": ["touchscreen", "headphones", "hair"], "correct": "touchscreen", "feedback": "Touchscreens substitute keyboards and mice on tablets[cite: 46]."},
+            {"id": "e18", "type": "choice", "question": "True or False: 'A desktop computer is portable and you can easily carry it in your backpack.'", "options": ["True", "False"], "correct": "False", "feedback": "Desktop computers are heavy and fixed on a desk; the portable one is a tablet[cite: 46]."},
+            {"id": "e19", "type": "choice", "question": "Match the component definition: 'You can use headphones to...'", "options": ["type a text story.", "listen to music or audio lessons safely.", "click on a touchscreen."], "correct": "listen to music or audio lessons safely.", "feedback": "Headphones capture and deliver sound straight to your ears[cite: 46]."},
+            {"id": "e20", "type": "reorder", "question": "Unscramble the device parts: [has] [computer] [A] [got] [mouse] [a]", "correct": "A computer has got a mouse", "feedback": "Desktop computers use an external mouse tool[cite: 46]."}
+          ]
+        },
+        {
+          "title": "Part 3: Purpose Expressions (I use my computer to...)",
+          "emoji": "🚀",
+          "tag": "Language Purpose",
+          "questions": [
+            {"id": "e21", "type": "choice", "question": "When your teacher gives you math or history tasks, you can say: 'I use my computer to...'", "options": ["do my homework.", "play chess.", "chat to friends."], "correct": "do my homework.", "feedback": "We use computers to look for info and do school homework[cite: 44]."},
+            {"id": "e22", "type": "choice", "question": "If you are playing a fun match on Minecraft or Roblox, you say: 'I use my tablet to...'", "options": ["learn a language.", "play video games.", "write a story."], "correct": "play video games.", "feedback": "Video games are a great digital activity for computers and tablets[cite: 44]."},
+            {"id": "e23", "type": "write", "question": "Complete the purpose phrase: 'I love Duolingo! I use my tablet to learn a l _ _ g _ _ g _.'", "correct": "language", "feedback": "We can use tech devices to learn a foreign language like English[cite: 44]."},
+            {"id": "e24", "type": "choice", "question": "When you open Microsoft Word to invent a creative tale, you say: 'I use my computer to...'", "options": ["watch TV.", "write a story.", "take a photo."], "correct": "write a story.", "feedback": "Writing a story is a great creative activity on a computer[cite: 42]."},
+            {"id": "e25", "type": "choice", "question": "If you open WhatsApp or Zoom on your device to talk with school mates, you say: 'I use my device to...'", "options": ["chat to friends.", "do my homework.", "play chess."], "correct": "chat to friends.", "feedback": "Chatting to friends allows us to communicate using technology[cite: 42]."},
+            {"id": "e26", "type": "write", "question": "Complete: 'I have got headphones. I use them to l _ s _ _ n to music.'", "correct": "listen", "feedback": "'Listen to music' is the action we do with headphones[cite: 42, 46]."},
+            {"id": "e27", "type": "choice", "question": "When you focus on a smart board game of strategy with black and white pieces, you say: 'I use my screen to...'", "options": ["watch TV.", "play chess.", "read a book."], "correct": "play chess.", "feedback": "Playing chess digitally exercises our brain capabilities[cite: 42]."},
+            {"id": "e28", "type": "choice", "question": "True or False: 'You can use a real physical desktop computer to climb a tree in your garden.'", "options": ["True", "False"], "correct": "False", "feedback": "You can't climb a tree or swim with new technology devices[cite: 42]!"},
+            {"id": "e29", "type": "choice", "question": "If you open a digital PDF reader to enjoy a comic, you say: 'I use my tablet to...'", "options": ["read a book.", "take a photo.", "do my homework."], "correct": "read a book.", "feedback": "Reading digital books is highly practical on tablets[cite: 42]."},
+            {"id": "e30", "type": "reorder", "question": "Unscramble: [to] [I] [my] [use] [computer] [watch] [videos]", "correct": "I use my computer to watch videos", "feedback": "Watching educational videos is a prime function of tech devices[cite: 44]."}
+          ]
+        },
+        {
+          "title": "Part 4: Grammer Mastery: Can / Can't & Possessives (His / Her)",
+          "emoji": "🌟",
+          "tag": "Advanced Grammar",
+          "questions": [
+            {"id": "e31", "type": "choice", "question": "Look at the grammar rules. Choose the correct possessive adjective for a BOY (like Lee):", "options": ["her", "his", "its"], "correct": "his", "feedback": "Remember: We use 'his' for boys and 'her' for girls[cite: 42]!"},
+            {"id": "e32", "type": "choice", "question": "Look at the rule. Choose the correct possessive for a GIRL (like Dee):", "options": ["his", "her", "your"], "correct": "her", "feedback": "We use 'her' to talk about things belonging to a girl[cite: 42]."},
+            {"id": "e33", "type": "choice", "question": "Complete the text about a boy: 'Lee has got a computer. He can play a video game on ________ computer.'", "options": ["her", "his", "he"], "correct": "his", "feedback": "Since Lee is a boy, the correct word is 'his computer'[cite: 43]."},
+            {"id": "e34", "type": "choice", "question": "Complete about a girl: 'Dee loves English. She can learn a language on ________ tablet.'", "options": ["his", "her", "she"], "correct": "her", "feedback": "Since Dee is a girl, we must use 'her tablet'[cite: 42]."},
+            {"id": "e35", "type": "choice", "question": "Form a question to ask about a girl's ability to swim. Choose the right order:", "options": ["Swim can she?", "Can she swim?", "She can swim?"], "correct": "Can she swim?", "feedback": "To make an ability question with 'can', we invert the order: 'Can she swim?'[cite: 45]."},
+            {"id": "e36", "type": "write", "question": "Answer the question in the short positive form: 'Can he play chess?' -> 'Yes, h _   c _ _.'", "correct": "he can", "feedback": "The short affirmative answer is 'Yes, he can.'[cite: 45]."},
+            {"id": "e37", "type": "choice", "question": "Answer in the short negative form: 'Can she do your homework on her laptop?'", "options": ["No, she can.", "No, she can't.", "No, she hasn't."], "correct": "No, she can't.", "feedback": "The negative short answer for ability is 'No, she can't.'[cite: 45]."},
+            {"id": "e38", "type": "choice", "question": "Complete the sentence based on the unit song: 'Dee can watch TV, but she ________ ride a bike on her computer.'", "options": ["can", "can't", "hasn't"], "correct": "can't", "feedback": "The song says: 'but she can't ride a bike on her computer'[cite: 42]."},
+            {"id": "e39", "type": "write", "question": "Unscramble the ability question: 'English / speak / he / Can / ?'", "correct": "Can he speak English?", "feedback": "The question is 'Can he speak English?'[cite: 45]."},
+            {"id": "e40", "type": "choice", "question": "Complete the short answer logically: 'Can a dog write a story?'", "options": ["Yes, it can.", "No, it can't.", "No, it hasn't."], "correct": "No, it can't.", "feedback": "Dogs have no ability to write, so the answer is 'No, it can't.'[cite: 45]."}
+          ]
+        }
+      ]
+    };
+
+    let comodinUsado = false;
+    let logDudas = {};
+
+    function trackDuda(id) { logDudas[id] = (logDudas[id] || 0) + 1; }
+
+    function renderQuiz() {
+        const container = document.getElementById('quizContainer');
+        let questionCounter = 1;
+        examData.sections.forEach(section => {
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.innerText = section.title;
+            container.appendChild(header);
+            const layoutDiv = document.createElement('div');
+            layoutDiv.className = 'main-layout';
+            const questionsColumn = document.createElement('div');
+            questionsColumn.className = 'questions-column';
+            section.questions.forEach(q => {
+                const secDiv = document.createElement('div');
+                secDiv.className = 'section';
+                secDiv.id = 'sec_' + q.id;
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'question-title';
+                titleSpan.innerText = `${questionCounter}. ${q.question}`;
+                secDiv.appendChild(titleSpan);
+                if (q.type === 'choice') {
+                    const optDiv = document.createElement('div');
+                    optDiv.className = 'options';
+                    optDiv.id = 'opts_' + q.id;
+                    q.options.forEach(opt => {
+                        const lbl = document.createElement('label');
+                        lbl.innerHTML = `<input type="radio" name="${q.id}" value="${opt}" onclick="trackDuda('${q.id}'); saveProgress('${q.id}', '${opt}')"> ${opt}`;
+                        optDiv.appendChild(lbl);
+                    });
+                    secDiv.appendChild(optDiv);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = q.id;
+                    input.placeholder = q.type === 'reorder' ? 'Unscramble the sentence here...' : 'Write your answer here...';
+                    input.oninput = function() { trackDuda(q.id); saveProgress(q.id, this.value); };
+                    secDiv.appendChild(input);
+                }
+                questionsColumn.appendChild(secDiv);
+                questionCounter++;
+            });
+            const visualCard = document.createElement('div');
+            visualCard.className = 'visual-side-card';
+            visualCard.innerHTML = `<span class="visual-emoji">${section.emoji}</span><span class="visual-tag">${section.tag}</span><p style="font-size:0.85em; color:#555; margin-top:10px;">Edward: Read carefully and avoid spelling mistakes. Trust the rules!</p>`;
+            layoutDiv.appendChild(questionsColumn);
+            layoutDiv.appendChild(visualCard);
+            container.appendChild(layoutDiv);
+        });
+        loadSavedProgress();
+    }
+
+    function saveProgress(id, val) {
+        localStorage.setItem('english_exam_2b_' + id, val);
+        document.getElementById('sec_' + id).classList.remove('incomplete');
+        if(document.querySelectorAll('.incomplete').length === 0) document.getElementById('missing-msg').style.display='none';
+    }
+
+    function loadSavedProgress() {
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                const saved = localStorage.getItem('english_exam_2b_' + q.id);
+                if (saved) {
+                    if (q.type === 'choice') {
+                        const radio = document.querySelector(`input[name="${q.id}"][value="${saved}"]`);
+                        if (radio) radio.checked = true;
+                    } else {
+                        const txtInput = document.getElementById(q.id);
+                        if (txtInput) txtInput.value = saved;
+                    }
+                }
+            });
+        });
+    }
+
+    function usarCincuentaCincuentaGlobal() {
+        if (comodinUsado) return;
+        let seleccionada = prompt("Edward, type the question number where you want to drop an option:");
+        let qNum = parseInt(seleccionada);
+        if (isNaN(qNum) || qNum < 1 || qNum > 40) return;
+        let currentIdx = 1, targetId = null, targetQObj = null;
+        for (let s of examData.sections) {
+            for (let q of s.questions) {
+                if (currentIdx === qNum) { targetId = q.id; targetQObj = q; break; }
+                currentIdx++;
+            }
+            if (targetId) break;
+        }
+        if (!targetQObj || targetQObj.type !== 'choice') return;
+        let labels = document.getElementById('opts_' + targetId).querySelectorAll('label');
+        let incorrectasBorradas = 0;
+        labels.forEach(lbl => {
+            let radio = lbl.querySelector('input');
+            if (radio.value !== targetQObj.correct && incorrectasBorradas < 1) { lbl.style.display = 'none'; incorrectasBorradas++; }
+        });
+        comodinUsado = true;
+        document.getElementById('global-5050').disabled = true;
+        document.getElementById('global-5050').innerText = "⚡ Power-up Used";
+    }
+
+    function validarExamen() {
+        let vacios = [];
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let r = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`) : document.getElementById(q.id).value.trim();
+                if (!r) { const c = document.getElementById('sec_' + q.id); c.classList.add('incomplete'); vacios.push(c); }
+            });
+        });
+        if (vacios.length > 0) { document.getElementById('missing-msg').style.display = 'block'; vacios[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+        calificarExamen();
+    }
+
+    function calificarExamen() {
+        let nota = 0, questionIndex = 1, itemsHTML = "";
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let uVal = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`).value : document.getElementById(q.id).value.trim();
+                let cleanU = uVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let cleanC = q.correct.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let esOk = (cleanU === cleanC) || (q.type === 'write' && cleanU.includes(cleanC));
+                if (esOk) nota++;
+                itemsHTML += `<div class="item-revision" style="border-left:8px solid ${esOk?'#27ae60':'#e74c3c'}">
+                    <p><strong>Question ${questionIndex}: ${q.question}</strong></p>
+                    <p>Your answer: <span class="resp-usuario">${uVal}</span> ${esOk?'✅':'❌'}</p>
+                    ${!esOk?`<p class="resp-correcta">Correct Answer: ${q.correct}</p>`:''}
+                    <p class="explicacion">💡 Pedagogical Feedback: ${q.feedback}</p>
+                    ${logDudas[q.id]>2?`<p style="color:#e67e22; font-weight:bold; font-size:0.9em;">⚠️ Hesitation tracked! You changed options. Review this specific structure on your whiteboard!</p>`:''}
+                </div>`;
+                questionIndex++;
+            });
+        });
+        const finalScore = Math.round((nota / 40) * 20);
+        const rb = document.getElementById('result-box');
+        rb.style.display = 'block';
+        document.getElementById('score-text').innerText = `Final Score: ${finalScore} / 20 (${nota} out of 40 correct)`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        rb.className = finalScore >= 11 ? "correct-box" : "error-box";
+        document.getElementById('feedback-content').innerHTML = finalScore >= 11 ? "<h4>🌟 Outstanding progress, Edward! Your grammar and spelling are safe now!</h4>" : "<h4>📚 Don't give up, Edward! Read the review notes carefully with dad.</h4>";
+        localStorage.clear();
+        window.scrollTo({ top: rb.offsetTop, behavior: 'smooth' });
+    }
+    window.onload = renderQuiz;
+</script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen 360° Personal Social - Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #fbfaf5; padding: 15px; color: #2c3e50; }
+        .container { max-width: 950px; margin: auto; background: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 6px solid #16a085; position: relative; }
+        
+        .back-nav-button { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; background: #ffffff; color: #16a085; border: 2.5px solid #16a085; padding: 10px 20px; border-radius: 15px; font-weight: bold; font-size: 0.9em; transition: 0.2s; margin-bottom: 20px; cursor: pointer; }
+        .back-nav-button:hover { background: #16a085; color: #ffffff; }
+
+        h1 { text-align: center; color: #16a085; text-transform: uppercase; font-size: 1.8em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        .section-header { position: -webkit-sticky; position: sticky; top: 0; background: #16a085; color: #fff; padding: 15px; border-radius: 12px; margin: 30px 0 15px 0; text-align: center; font-weight: bold; z-index: 100; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-transform: uppercase; }
+        .main-layout { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 25px; }
+        .questions-column { flex: 1; }
+        .visual-side-card { width: 220px; background: #e8f8f5; border: 3px dashed #16a085; border-radius: 18px; padding: 20px; text-align: center; position: sticky; top: 70px; box-sizing: border-box; }
+        .visual-emoji { font-size: 4.5em; margin-bottom: 10px; display: block; animation: floatAnim 3s ease-in-out infinite; }
+        .visual-tag { background: #16a085; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.85em; font-weight: bold; display: inline-block; }
+        @keyframes floatAnim { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        .section { margin-bottom: 15px; padding: 18px; border: 2px solid #edf2f7; border-radius: 15px; background-color: #ffffff; }
+        .incomplete { border: 3px solid #e74c3c !important; background-color: #fff5f5 !important; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #2f3542; display: block; line-height: 1.4; }
+        input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #ced4da; font-size: 16px; font-family: inherit; box-sizing: border-box; }
+        .options label { display: block; margin: 10px 0; cursor: pointer; padding: 10px; border-radius: 8px; border: 1px solid #eee; transition: 0.2s; }
+        .options label:hover { background: #e8f8f5; border-color: #16a085; }
+        .powerup-btn { background: #e67e22; color: white; border: none; padding: 6px 12px; border-radius: 10px; cursor: pointer; font-size: 0.8em; font-weight: bold; margin-top: 5px; }
+        .powerup-btn:disabled { background: #bdc3c7; cursor: not-allowed; }
+        button#btn-evaluar { display: block; width: 100%; max-width: 350px; height: 65px; margin: 40px auto; background: #1abc9c; color: white; border: none; border-radius: 35px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #148f77; }
+        #result-box { display: none; padding: 25px; border-radius: 20px; margin-top: 30px; border: 4px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+        .revision-container { margin-top: 20px; background: white; border-radius: 10px; padding: 15px; border: 1px solid #ccc; }
+        .item-revision { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; text-align: left; }
+        .resp-correcta { color: #27ae60; font-weight: bold; }
+        .resp-usuario { font-style: italic; color: #555; }
+        .explicacion { color: #2980b9; font-size: 0.9em; font-style: italic; margin-top: 5px; }
+        .missing-alert { color: #e74c3c; font-weight: bold; text-align: center; margin-bottom: 15px; display: none; padding: 10px; background: #fdf2f2; border-radius: 10px; border: 2px solid #e74c3c; }
+    </style>
+</head>
+<body>
+<div class="container">
+    
+    <a href="index.html" class="back-nav-button">🏠 Volver a la Agenda</a>
+
+    <h1>🌍 Examen de Personal Social - 2° Bimestre</h1>
+    <h2>Edward, ¡analiza las regiones, recuerda nuestra historia y demuestra lo que vales!</h2>
+    <div style="text-align: center; margin-bottom: 15px;">
+        <button class="powerup-btn" id="global-5050" onclick="usarCincuentaCincuentaGlobal()">⚡ Súper Poder: Comodín 50/50 (1 disponible)</button>
+    </div>
+    <div id="missing-msg" class="missing-alert">⚠️ ¡Edward, te faltan responder algunas preguntas! Revisa los bloques marcados en rojo.</div>
+    <form id="quizForm">
+        <div id="quizContainer"></div>
+        <button type="button" id="btn-evaluar" onclick="validarExamen()">✨ Terminar Examen</button>
+    </form>
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+        <div id="revision-lista" class="revision-container">
+            <h4>🔍 Análisis Geográfico e Histórico de Resultados:</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const examData = {
+      "sections": [
+        {
+          "title": "Semana 7: Las Regiones Naturales del Perú",
+          "emoji": "⛰️",
+          "tag": "Diversidad del Perú",
+          "questions": [
+            {"id": "p1", "type": "choice", "question": "El Perú divide su territorio en tres grandes regiones naturales debido a su gran diversidad geográfica. ¿Cuáles son?", "options": ["Norte, Centro y Sur.", "Costa, Sierra y Selva.", "Mar, Ciudades y Campos."], "correct": "Costa, Sierra y Selva.", "feedback": "El territorio peruano se divide en tres regiones naturales: Costa, Sierra y Selva, cada una con características geográficas únicas[cite: 38]."},
+            {"id": "p2", "type": "choice", "question": "¿Qué característica describe el relieve y la geografía física de la región de la COSTA?", "options": ["Está formada por montañas muy altas donde hace frío.", "Se ubica junto al océano Pacífico, presenta desiertos y valles.", "Tiene abundante vegetación y grandes bosques tropicales."], "correct": "Se ubica junto al océano Pacífico, presenta desiertos y valles.", "feedback": "La Costa se ubica junto al océano Pacífico, presenta desiertos, valles y playas[cite: 38]."},
+            {"id": "p3", "type": "write", "question": "Completa sobre el clima costeño: El clima de la Costa del Perú generalmente se caracteriza por ser ______ y templado.", "correct": "calido", "feedback": "El clima de la Costa es cálido y templado, y en algunas ciudades hace mucho calor en verano[cite: 38]."},
+            {"id": "p4", "type": "choice", "question": "¿Cuáles de los siguientes son animales representativos que forman la fauna de la COSTA peruana?", "options": ["La llama, la alpaca y el cóndor andino.", "El jaguar, el mono choro y la anaconda.", "Pelícanos, gaviotas, lobos marinos, anchovetas y pingüinos de Humboldt."], "correct": "Pelícanos, gaviotas, lobos marinos, anchovetas y pingüinos de Humboldt.", "feedback": "Estos animales marinos y aves guaneras habitan las costas y aguas del océano Pacífico[cite: 38]."},
+            {"id": "p5", "type": "choice", "question": "¿Qué gran cadena de montañas recorre el Perú y da origen al relieve frío y elevado de la SIERRA?", "options": ["La Cordillera de los Andes.", "Los desiertos occidentales.", "La llanura amazónica."], "correct": "La Cordillera de los Andes.", "feedback": "La Sierra está ubicada en la parte central del Perú y está formada por la Cordillera de los Andes[cite: 38]."},
+            {"id": "p6", "type": "write", "question": "Completa sobre la flora de la Sierra: Entre los cultivos andinos más conocidos que crecen en sus valles destacan la p _ _ a, la quinua y la oca.", "correct": "papa", "feedback": "La papa, la quinua y la oca son plantas nativas alimenticias cultivadas en la región andina[cite: 38]."},
+            {"id": "p7", "type": "choice", "question": "¿Qué características climáticas y geográficas definen a la región oriental de la SELVA?", "options": ["Su clima es frío, seco y tiene escasos ríos.", "Presenta playas arenosas y desiertos donde nunca llueve.", "Tiene abundante vegetación, su clima es cálido y llueve con mucha frecuencia."], "correct": "Tiene abundante vegetación, su clima es cálido y llueve con mucha frecuencia.", "feedback": "La Selva se ubica en la Amazonía, posee abundante vegetación y tiene un clima cálido y muy lluvioso[cite: 38]."},
+            {"id": "p8", "type": "choice", "question": "Los pobladores de la Costa se dedican mucho a la pesca debido a la cercanía al mar. ¿A qué actividades principales se dedican en la SIERRA?", "options": ["Únicamente a la recolección de conchas marinas.", "A la agricultura, la ganadería (crianza de llamas y alpacas), la artesanía y el turismo.", "A la tala de árboles de caoba y cedro."], "correct": "A la agricultura, la ganadería (crianza de llamas y alpacas), la artesanía y el turismo.", "feedback": "La ganadería andina y la agricultura de valles son pilares de subsistencia en la Sierra[cite: 38]."},
+            {"id": "p9", "type": "choice", "question": "Identifica qué grupo contiene exclusivamente ciudades importantes localizadas en la región de la SELVA:", "options": ["Cusco, Puno, Ayacucho y Huancayo.", "Lima, Piura, Trujillo e Ica.", "Iquitos, Pucallpa, Tarapoto y Puerto Maldonado."], "correct": "Iquitos, Pucallpa, Tarapoto y Puerto Maldonado.", "feedback": "Estas ciudades se localizan en la llanura y ceja de selva de la Amazonía peruana[cite: 38]."},
+            {"id": "p10", "type": "reorder", "question": "Ordena el concepto aprendido: [diversidad] [Perú] [país] [El] [es] [en] [rico]", "correct": "El Perú es rico en diversidad", "feedback": "La combinación de sus tres regiones naturales hace de nuestra patria una nación biodiversa[cite: 38]."}
+          ]
+        },
+        {
+          "title": "Semana 6: La Independencia del Perú",
+          "emoji": "⚔️",
+          "tag": "Historia Nacional",
+          "questions": [
+            {"id": "p11", "type": "choice", "question": "¿Qué fue el acontecimiento histórico de la Independencia del Perú?", "options": ["Una guerra entre Perú y otros países de América por el territorio.", "Un hecho histórico mediante el cual nuestro país dejó de depender del gobierno español y comenzó a ser una nación libre.", "El descubrimiento del mapa del territorio peruano."], "correct": "Un hecho histórico mediante el cual nuestro país dejó de depender del gobierno español y comenzó a ser una nación libre.", "feedback": "Con la Independencia, los peruanos pudieron organizar su propio gobierno y tomar sus propias decisiones[cite: 36]."},
+            {"id": "p12", "type": "write", "question": "Completa la fecha histórica: Don José de San Martín proclamó oficialmente la Independencia del Perú el 28 de ______ de 1821.", "correct": "julio", "feedback": "El 28 de julio de 1821 se inició formalmente nuestra etapa como nación libre e independiente[cite: 36]."},
+            {"id": "p13", "type": "choice", "question": "¿Qué general del Ejército Libertador llegó al Perú y proclamó la independencia en la Plaza Mayor de Lima?", "options": ["Simón Bolívar", "Túpac Amaru II", "José de San Martín"], "correct": "José de San Martín", "feedback": "Don José de San Martín fue el encargado de pronunciar las palabras sagradas de la emancipación en Lima[cite: 36]."},
+            {"id": "p14", "type": "choice", "question": "Analiza los antecedentes: Antes de ser independientes, ¿cómo era la situación política del Perú respecto a Europa?", "options": ["El Perú era un país completamente libre que comerciaba con todos.", "El Perú era una colonia gobernada por España, donde las autoridades españolas tomaban las decisiones.", "El Perú dependía del gobierno de Brasil."], "correct": "El Perú era una colonia gobernada por España, donde las autoridades españolas tomaban las decisiones.", "feedback": "Como colonia de España, los habitantes del Perú sufrían desigualdades y falta de participación[cite: 36]."},
+            {"id": "p15", "type": "choice", "question": "¿Qué gran rebelión indígena ocurrió en 1780 como antecedente clave contra los abusos y altos impuestos españoles?", "options": ["La rebelión de Túpac Amaru II.", "La llegada del Ejército Libertador.", "La proclamación de Simón Bolívar."], "correct": "La rebelión de Túpac Amaru II.", "feedback": "La rebelión de Túpac Amaru II despertó el deseo de justicia y fue un importante precedente libertador[cite: 36]."},
+            {"id": "p16", "type": "choice", "question": "Entre las causas que motivaron a los peruanos a luchar por la libertad figuraban los abusos españoles y el cobro de...", "options": ["Bajos precios en los alimentos.", "Altos impuestos que afectaban a agricultores, comerciantes e indígenas.", "Regalos a los ciudadanos."], "correct": "Altos impuestos que afectaban a agricultores, comerciantes e indígenas.", "feedback": "Las cargas económicas excesivas generaron un descontento generalizado en toda la población[cite: 36]."},
+            {"id": "p17", "type": "write", "question": "Escribe si es Verdadero o Falso: 'Tras lograr la Independencia, los peruanos continuaron siendo una colonia gobernada por el Rey de España.'", "options": ["Verdadero", "Falso"], "correct": "Falso", "feedback": "La independencia rompió los lazos de sumisión y dominación que nos ataban a España[cite: 36]."},
+            {"id": "p18", "type": "choice", "question": "¿Cuáles fueron las célebres palabras que exclamó San Martín al levantar la bandera en la Plaza de Lima?", "options": ["'¡El Perú es desde este momento libre e independiente por la voluntad general de los pueblos!'", "'¡Es necesario pagar los altos impuestos de inmediato!'", "'¡Bienvenidos todos los comerciantes de España!'"], "correct": "'¡El Perú es desde este momento libre e independiente por la voluntad general de los pueblos!'", "feedback": "Con este emotivo discurso se selló la promesa de soberanía de nuestra patria[cite: 36]."},
+            {"id": "p19", "type": "choice", "question": "¿Por qué fue verdaderamente importante alcanzar la Independencia del Perú?", "options": ["Porque los mapas se pintaron de colores más bonitos.", "Porque permitió iniciar la formación de nuestro propio gobierno y fortaleció nuestra identidad nacional.", "Porque dejamos de pescar en el mar."], "correct": "Porque permitió iniciar la formación de nuestro propio gobierno y fortaleció nuestra identidad nacional.", "feedback": "La independencia nos permitió comenzar a construir nuestra propia historia colectiva[cite: 36]."},
+            {"id": "p20", "type": "reorder", "question": "Ordena cronológicamente la frase histórica: [símbolos] [Debemos] [nuestros] [respetar] [patrios]", "correct": "Debemos respetar nuestros símbolos patrios", "feedback": "Cuidar la bandera y el himno demuestra nuestro orgullo e identidad nacional[cite: 35]."}
+          ]
+        },
+        {
+          "title": "Semana 5: Límites y División Política del Perú",
+          "emoji": "🗺️",
+          "tag": "Fronteras y Departamentos",
+          "questions": [
+            {"id": "p21", "type": "choice", "question": "¿Qué son los límites geográficos de nuestro país?", "options": ["Los caminos largos que cruzan la sierra.", "Las fronteras que indican hasta dónde llega el territorio del Perú y dónde comienzan otros países.", "Las divisiones entre distritos."], "correct": "Las fronteras que indican hasta dónde llega el territorio del Perú y dónde comienzan otros países.", "feedback": "Los límites definen la extensión territorial soberana de nuestra patria[cite: 40]."},
+            {"id": "p22", "type": "choice", "question": "¿Con qué países limita el Perú por el flanco del NORTE?", "options": ["Brasil y Bolivia", "Chile y el océano Pacífico", "Ecuador y Colombia"], "correct": "Ecuador y Colombia", "feedback": "Nuestras fronteras del Norte colindan con las naciones hermanas de Ecuador y Colombia[cite: 40]."},
+            {"id": "p23", "type": "write", "question": "Por el OESTE (la costa), el territorio de la república del Perú limita con las aguas del Océano ______.", "correct": "pacifico", "feedback": "El océano Pacífico es nuestro límite natural por todo el sector occidental del mapa[cite: 40]."},
+            {"id": "p24", "type": "choice", "question": "Si revisamos la frontera del SUR del mapa del Perú, ¿con qué país limita directamente?", "options": ["Con Chile", "Con Colombia", "Con Brasil"], "correct": "Con Chile", "feedback": "Por el Sur, la línea fronteriza delimita nuestro territorio con la república de Chile[cite: 40]."},
+            {"id": "p25", "type": "choice", "question": "¿Cuáles son los países vecinos que limitan con el Perú por el sector del ESTE?", "options": ["Ecuador y Chile", "Brasil y Bolivia", "Colombia y el Océano Pacífico"], "correct": "Brasil y Bolivia", "feedback": "Por el Este, el territorio peruano comparte amplias fronteras con Brasil y Bolivia[cite: 40]."},
+            {"id": "p26", "type": "write", "question": "La forma en que se organiza el territorio para facilitar su gobierno y administración pública se llama división ______.", "correct": "politica", "feedback": "La división política fragmenta el territorio en porciones organizadas para administrarlo mejor[cite: 40]."},
+            {"id": "p27", "type": "choice", "question": "¿En cuántos departamentos políticos autónomos se organiza internamente el territorio del Perú?", "options": ["Está dividido en 10 departamentos.", "Está dividido en 15 provincias.", "Está dividido en 24 departamentos y la Provincia Constitucional del Callao."], "correct": "Está dividido en 24 departamentos y la Provincia Constitucional del Callao.", "feedback": "Nuestra patria posee exactamente 24 departamentos políticos más la región Callao[cite: 40]."},
+            {"id": "p28", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'La división política nos ayuda a organizar el país para construir escuelas, hospitales y atender necesidades.'", "options": ["Verdadero", "Falso"], "correct": "Verdadero", "feedback": "Dividir el territorio permite que los servicios públicos e infraestructura se organicen de forma eficiente[cite: 40]."},
+            {"id": "p29", "type": "choice", "question": "De acuerdo con el mapa político estudiado, ¿cuál es el departamento más grande en extensión de todo el Perú?", "options": ["Lima", "Loreto", "Tacna"], "correct": "Loreto", "feedback": "Loreto, ubicado en la selva, representa la mayor provincia geográfica departamental del territorio[cite: 40]."},
+            {"id": "p30", "type": "reorder", "question": "Ordena los niveles territoriales de menor a mayor: [Provincias] [Departamentos] [Distritos]", "correct": "Distritos Provincias Departamentos", "feedback": "Los distritos integran las provincias, y un conjunto de provincias forma un departamento[cite: 40]."}
+          ]
+        },
+        {
+          "title": "Semana 4: Reto Sorpresa - Las Líneas Imaginarias",
+          "emoji": "🌐",
+          "tag": "Cartografía Básica",
+          "questions": [
+            {"id": "p31", "type": "choice", "question": "¿Qué son las líneas imaginarias que dibujamos sobre el globo terráqueo y los mapas?", "options": ["Líneas reales de color azul que se ven desde el espacio.", "Líneas ficticias creadas por las personas para facilitar la ubicación exacta de lugares en la Tierra.", "Carreteras aéreas para los aviones."], "correct": "Líneas ficticias creadas por las personas para facilitar la ubicación exacta de lugares en la Tierra.", "feedback": "Las líneas imaginarias no existen físicamente en la realidad, pero sirven de guía en los mapas[cite: 33]."},
+            {"id": "p32", "type": "write", "question": "¿Cuál es la línea imaginaria horizontal más importante que divide la Tierra en Hemisferio Norte y Hemisferio Sur?: Línea del ______.", "correct": "ecuador", "feedback": "La Línea del Ecuador es el paralelo central o paralelo 0° del planeta[cite: 33]."},
+            {"id": "p33", "type": "choice", "question": "¿Qué gran línea vertical divide la Tierra en Hemisferio Este y Hemisferio Oeste?", "options": ["La Línea del Ecuador.", "El Meridiano de Greenwich.", "El Círculo Polar Ártico."], "correct": "El Meridiano de Greenwich.", "feedback": "El Meridiano de Greenwich es la línea vertical de referencia o longitud 0°[cite: 33]."},
+            {"id": "p34", "type": "choice", "question": "Las líneas horizontales imaginarias que rodean la Tierra de forma paralela al Ecuador reciben el nombre de:", "options": ["Paralelos", "Meridianos", "Ejes de rotación"], "correct": "Paralelos", "feedback": "Los paralelos recorren el globo de forma horizontal; el principal es el Ecuador[cite: 33]."},
+            {"id": "p35", "type": "write", "question": "Las líneas verticales imaginarias que van extendiéndose de polo a polo sobre la Tierra se llaman M _ _ _ d _ _ _ _ s.", "correct": "meridianos", "feedback": "Los meridianos son los semicírculos verticales que cruzan el planeta de norte a sur[cite: 33]."},
+            {"id": "p36", "type": "choice", "question": "Escribe si es Verdadero o Falso: 'Las líneas imaginarias de la Tierra se pueden observar a simple vista si viajamos en un cohete al espacio.'", "options": ["Verdadero", "Falso"], "correct": "Falso", "feedback": "Son trazos abstractos; el espacio exterior muestra el planeta limpio sin líneas pintadas[cite: 33]."},
+            {"id": "p37", "type": "choice", "question": "¿En qué materiales didácticos o herramientas cartográficas aparecen representadas estas líneas?", "options": ["En los mapas y globos terráqueos.", "Únicamente en las pizarras del colegio.", "En los espejos de las casas."], "correct": "En los mapas y globos terráqueos.", "feedback": "Aparecen en globos y planisferios para ayudarnos a orientarnos matemáticamente[cite: 33]."},
+            {"id": "p38", "type": "choice", "question": "Si un viajero se encuentra en una ciudad ubicada exactamente arriba de la Línea del Ecuador, ¿en qué hemisferio está?", "options": ["Hemisferio Sur", "Hemisferio Norte", "Hemisferio Oeste"], "correct": "Hemisferio Norte", "feedback": "Todo lo situado al norte o por encima del Ecuador pertenece al Hemisferio Norte[cite: 33]."},
+            {"id": "p39", "type": "write", "question": "Completa sobre cartografía: El Meridiano de Greenwich divide nuestro planeta en dos mitades: el hemisferio Oeste y el hemisferio ______.", "correct": "este", "feedback": "Greenwich divide verticalmente la esfera terrestre en Este y Oeste[cite: 33]."},
+            {"id": "p40", "type": "reorder", "question": "Ordena el propósito de la lección sorpresa: [líneas] [ubicar] [Las] [ayudan] [lugares] [a]", "correct": "Las líneas ayudan a ubicar lugares", "feedback": "Ese sistema de coordenadas cuadricula el mapa para hallar cualquier coordenada exacta[cite: 33]."}
+          ]
+        }
+      ]
+    };
+
+    let comodinUsado = false;
+    let logDudas = {};
+
+    function trackDuda(id) { logDudas[id] = (logDudas[id] || 0) + 1; }
+
+    function renderQuiz() {
+        const container = document.getElementById('quizContainer');
+        let questionCounter = 1;
+        examData.sections.forEach(section => {
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.innerText = section.title;
+            container.appendChild(header);
+            const layoutDiv = document.createElement('div');
+            layoutDiv.className = 'main-layout';
+            const questionsColumn = document.createElement('div');
+            questionsColumn.className = 'questions-column';
+            section.questions.forEach(q => {
+                const secDiv = document.createElement('div');
+                secDiv.className = 'section';
+                secDiv.id = 'sec_' + q.id;
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'question-title';
+                titleSpan.innerText = `${questionCounter}. ${q.question}`;
+                secDiv.appendChild(titleSpan);
+                if (q.type === 'choice') {
+                    const optDiv = document.createElement('div');
+                    optDiv.className = 'options';
+                    optDiv.id = 'opts_' + q.id;
+                    q.options.forEach(opt => {
+                        const lbl = document.createElement('label');
+                        lbl.innerHTML = `<input type="radio" name="${q.id}" value="${opt}" onclick="trackDuda('${q.id}'); saveProgress('${q.id}', '${opt}')"> ${opt}`;
+                        optDiv.appendChild(lbl);
+                    });
+                    secDiv.appendChild(optDiv);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = q.id;
+                    input.placeholder = q.type === 'reorder' ? 'Ordena la oración aquí...' : 'Escribe las letras o palabras...';
+                    input.oninput = function() { trackDuda(q.id); saveProgress(q.id, this.value); };
+                    secDiv.appendChild(input);
+                }
+                questionsColumn.appendChild(secDiv);
+                questionCounter++;
+            });
+            const visualCard = document.createElement('div');
+            visualCard.className = 'visual-side-card';
+            visualCard.innerHTML = `<span class="visual-emoji">${section.emoji}</span><span class="visual-tag">${section.tag}</span><p style="font-size:0.85em; color:#555; margin-top:10px;">¡Analiza los datos de tus fichas San Luis para triunfar!</p>`;
+            layoutDiv.appendChild(questionsColumn);
+            layoutDiv.appendChild(visualCard);
+            container.appendChild(layoutDiv);
+        });
+        loadSavedProgress();
+    }
+
+    function saveProgress(id, val) {
+        localStorage.setItem('social_exam_2b_' + id, val);
+        document.getElementById('sec_' + id).classList.remove('incomplete');
+        if(document.querySelectorAll('.incomplete').length === 0) document.getElementById('missing-msg').style.display='none';
+    }
+
+    function loadSavedProgress() {
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                const saved = localStorage.getItem('social_exam_2b_' + q.id);
+                if (saved) {
+                    if (q.type === 'choice') {
+                        const radio = document.querySelector(`input[name="${q.id}"][value="${saved}"]`);
+                        if (radio) radio.checked = true;
+                    } else {
+                        const txtInput = document.getElementById(q.id);
+                        if (txtInput) txtInput.value = saved;
+                    }
+                }
+            });
+        });
+    }
+
+    function usarCincuentaCincuentaGlobal() {
+        if (comodinUsado) return;
+        let seleccionada = prompt("Edward, introduce el número de pregunta de marcar donde deseas el descarte:");
+        let qNum = parseInt(seleccionada);
+        if (isNaN(qNum) || qNum < 1 || qNum > 40) return;
+        let currentIdx = 1, targetId = null, targetQObj = null;
+        for (let s of examData.sections) {
+            for (let q of s.questions) {
+                if (currentIdx === qNum) { targetId = q.id; targetQObj = q; break; }
+                currentIdx++;
+            }
+            if (targetId) break;
+        }
+        if (!targetQObj || targetQObj.type !== 'choice') return;
+        let labels = document.getElementById('opts_' + targetId).querySelectorAll('label');
+        let incorrectasBorradas = 0;
+        labels.forEach(lbl => {
+            let radio = lbl.querySelector('input');
+            if (radio.value !== targetQObj.correct && incorrectasBorradas < 1) { lbl.style.display = 'none'; incorrectasBorradas++; }
+        });
+        comodinUsado = true;
+        document.getElementById('global-5050').disabled = true;
+        document.getElementById('global-5050').innerText = "⚡ Súper Poder Usado";
+    }
+
+    function validarExamen() {
+        let vacios = [];
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let r = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`) : document.getElementById(q.id).value.trim();
+                if (!r) { const c = document.getElementById('sec_' + q.id); c.classList.add('incomplete'); vacios.push(c); }
+            });
+        });
+        if (vacios.length > 0) { document.getElementById('missing-msg').style.display = 'block'; vacios[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+        calificarExamen();
+    }
+
+    function calificarExamen() {
+        let nota = 0, questionIndex = 1, itemsHTML = "";
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let uVal = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`).value : document.getElementById(q.id).value.trim();
+                let cleanU = uVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let cleanC = q.correct.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let esOk = (cleanU === cleanC) || (q.type === 'write' && cleanU.includes(cleanC));
+                if (esOk) nota++;
+                itemsHTML += `<div class="item-revision" style="border-left:8px solid ${esOk?'#27ae60':'#e74c3c'}">
+                    <p><strong>Pregunta ${questionIndex}: ${q.question}</strong></p>
+                    <p>Tu respuesta: <span class="resp-usuario">${uVal}</span> ${esOk?'✅':'❌'}</p>
+                    ${!esOk?`<p class="resp-correcta">Respuesta Esperada: ${q.correct}</p>`:''}
+                    <p class="explicacion">💡 Pizarra didáctica: ${q.feedback}</p>
+                    ${logDudas[q.id]>2?`<p style="color:#e67e22; font-weight:bold; font-size:0.9em;">⚠️ Se detectó vacilación en esta respuesta. ¡A repasar el concepto en la pizarra!</p>`:''}
+                </div>`;
+                questionIndex++;
+            });
+        });
+        const finalScore = Math.round((nota / 40) * 20);
+        const rb = document.getElementById('result-box');
+        rb.style.display = 'block';
+        document.getElementById('score-text').innerText = `Calificación Final: ${finalScore} / 20 (${nota} de 40 aciertos)`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        rb.className = finalScore >= 11 ? "correct-box" : "error-box";
+        document.getElementById('feedback-content').innerHTML = finalScore >= 11 ? "<h4>🌟 ¡Excelente trabajo, Edward! Conoces muy bien la geografía e historia de nuestra patria.</h4>" : "<h4>📚 ¡Buen intento, Edward! Repasa la pizarra de resultados para dominar los temas.</h4>";
+        localStorage.clear();
+        window.scrollTo({ top: rb.offsetTop, behavior: 'smooth' });
+    }
+    window.onload = renderQuiz;
+</script>
+</body>
+</html>
