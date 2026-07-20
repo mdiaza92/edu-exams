@@ -21,9 +21,10 @@
         
         .bg-ciencia { background-color: #2abc73; }
         .bg-personal { background-color: #16a085; }
-        .bg-ingles { background-color: #9b59b6; }
+        .bg-mate { background-color: #34495e; }
         .border-ciencia { border-color: #2abc73; }
         .border-lunes { border-color: #16a085; }
+        .border-mate { border-color: #34495e; }
         
         .bg-locked { background-color: #95a5a6; }
         .locked-day { filter: grayscale(15%); border-color: #cbd5e1; }
@@ -63,7 +64,7 @@
             </div>
         </div>
 
-        <!-- LUNES 20: PERSONAL SOCIAL E INGLÉS (¡AMBOS ACTIVADOS!) -->
+        <!-- LUNES 20: PERSONAL SOCIAL E INGLÉS -->
         <div class="day-card border-lunes">
             <div class="day-indicator bg-personal">
                 <span class="day-name">Lunes</span>
@@ -71,7 +72,6 @@
                 <span style="font-size:0.8em; margin-top:5px;">Julio</span>
             </div>
             <div class="day-content">
-                <!-- Personal Social -->
                 <div style="margin-bottom: 5px;">
                     <div class="card-title">🏠 Personal Social</div>
                     <div style="margin-top: 5px;">
@@ -80,8 +80,6 @@
                         </a>
                     </div>
                 </div>
-                
-                <!-- Inglés Activado -->
                 <div style="margin-top: 10px; padding-top: 10px; border-top: 2px dashed #edf2f7;">
                     <div class="card-title">🇬🇧 Inglés (English)</div>
                     <div style="margin-top: 5px;">
@@ -93,17 +91,20 @@
             </div>
         </div>
 
-        <!-- MARTES 21: MATEMÁTICA -->
-        <div class="day-card locked-day">
-            <div class="day-indicator bg-locked">
+        <!-- MARTES 21: MATEMÁTICA (¡ACTIVADO!) -->
+        <div class="day-card border-mate">
+            <div class="day-indicator bg-mate">
                 <span class="day-name">Martes</span>
                 <span class="day-date">21</span>
                 <span style="font-size:0.8em; margin-top:5px;">Julio</span>
             </div>
             <div class="day-content">
-                <div class="card-title" style="color: #7f8c8d;">🔢 Matemática</div>
-                <div class="coming-text">⏳ Disponible para practicar un día antes.</div>
-                <div><span class="status-badge badge-coming">Próximamente</span></div>
+                <div class="card-title">🔢 Matemática</div>
+                <div>
+                    <a href="matematica_3grado.html" class="exam-link" style="border-color: #34495e;">
+                        <span>🚀 Iniciar Evaluación 360°</span>
+                    </a>
+                </div>
             </div>
         </div>
 
