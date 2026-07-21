@@ -22,19 +22,16 @@
         .bg-ciencia { background-color: #2abc73; }
         .bg-personal { background-color: #16a085; }
         .bg-mate { background-color: #34495e; }
+        .bg-comu { background-color: #ff4757; }
+        
         .border-ciencia { border-color: #2abc73; }
         .border-lunes { border-color: #16a085; }
         .border-mate { border-color: #34495e; }
-        
-        .bg-locked { background-color: #95a5a6; }
-        .locked-day { filter: grayscale(15%); border-color: #cbd5e1; }
+        .border-comu { border-color: #ff4757; }
         
         .card-title { display: flex; align-items: center; gap: 10px; font-size: 1.3em; font-weight: bold; color: #2c3e50; }
         .exam-link { display: inline-flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: #f8fafc; border-radius: 12px; text-decoration: none; color: #2c3e50; font-weight: bold; border: 2px solid #e2e8f0; transition: 0.2s; width: 100%; max-width: 320px; box-sizing: border-box; }
         .exam-link:hover { background: #2c3e50; color: white; border-color: #2c3e50; }
-        .status-badge { font-size: 0.75em; padding: 5px 12px; border-radius: 10px; font-weight: bold; margin-left: 15px; }
-        .badge-coming { background: #e2e8f0; color: #64748b; border: 1px dashed #cbd5e1; }
-        .coming-text { font-size: 0.95em; color: #7f8c8d; font-style: italic; }
     </style>
 </head>
 <body>
@@ -91,7 +88,7 @@
             </div>
         </div>
 
-        <!-- MARTES 21: MATEMÁTICA (¡ACTIVADO!) -->
+        <!-- MARTES 21: MATEMÁTICA -->
         <div class="day-card border-mate">
             <div class="day-indicator bg-mate">
                 <span class="day-name">Martes</span>
@@ -108,17 +105,20 @@
             </div>
         </div>
 
-        <!-- MIÉRCOLES 22: COMUNICACIÓN -->
-        <div class="day-card locked-day">
-            <div class="day-indicator bg-locked">
+        <!-- MIÉRCOLES 22: COMUNICACIÓN (ACTIVADO) -->
+        <div class="day-card border-comu">
+            <div class="day-indicator bg-comu">
                 <span class="day-name">Miércoles</span>
                 <span class="day-date">22</span>
                 <span style="font-size:0.8em; margin-top:5px;">Julio</span>
             </div>
             <div class="day-content">
-                <div class="card-title" style="color: #7f8c8d;">📝 Comunicación</div>
-                <div class="coming-text">⏳ Disponible para practicar un día antes.</div>
-                <div><span class="status-badge badge-coming">Próximamente</span></div>
+                <div class="card-title">📝 Comunicación</div>
+                <div>
+                    <a href="comunicacion_3grado.html" class="exam-link" style="border-color: #ff4757;">
+                        <span>🚀 Iniciar Evaluación 360°</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

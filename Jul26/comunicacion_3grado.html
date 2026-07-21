@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen 360° Comunicación - Edward</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #fff9f9; padding: 15px; color: #2c3e50; }
+        .container { max-width: 950px; margin: auto; background: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 6px solid #ff4757; position: relative; }
+        
+        .back-nav-button { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; background: #ffffff; color: #ff4757; border: 2.5px solid #ff4757; padding: 10px 20px; border-radius: 15px; font-weight: bold; font-size: 0.9em; transition: 0.2s; margin-bottom: 20px; cursor: pointer; }
+        .back-nav-button:hover { background: #ff4757; color: #ffffff; }
+
+        h1 { text-align: center; color: #ff4757; text-transform: uppercase; font-size: 1.8em; margin-bottom: 5px; }
+        h2 { text-align: center; color: #7f8c8d; font-size: 1.1em; margin-bottom: 25px; }
+        .section-header { position: -webkit-sticky; position: sticky; top: 0; background: #ff4757; color: #fff; padding: 15px; border-radius: 12px; margin: 30px 0 15px 0; text-align: center; font-weight: bold; z-index: 100; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-transform: uppercase; }
+        .main-layout { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 25px; }
+        .questions-column { flex: 1; }
+        .visual-side-card { width: 220px; background: #fff0f1; border: 3px dashed #ff4757; border-radius: 18px; padding: 20px; text-align: center; position: sticky; top: 70px; box-sizing: border-box; }
+        .visual-emoji { font-size: 4.5em; margin-bottom: 10px; display: block; animation: floatAnim 3s ease-in-out infinite; }
+        .visual-tag { background: #ff4757; color: white; padding: 5px 12px; border-radius: 15px; font-size: 0.85em; font-weight: bold; display: inline-block; }
+        @keyframes floatAnim { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        .section { margin-bottom: 15px; padding: 18px; border: 2px solid #edf2f7; border-radius: 15px; background-color: #ffffff; }
+        .incomplete { border: 3px solid #e74c3c !important; background-color: #fff5f5 !important; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #2f3542; display: block; line-height: 1.4; }
+        input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #ced4da; font-size: 16px; font-family: inherit; box-sizing: border-box; }
+        .options label { display: block; margin: 10px 0; cursor: pointer; padding: 10px; border-radius: 8px; border: 1px solid #eee; transition: 0.2s; }
+        .options label:hover { background: #fff0f1; border-color: #ff4757; }
+        .powerup-btn { background: #e67e22; color: white; border: none; padding: 6px 12px; border-radius: 10px; cursor: pointer; font-size: 0.8em; font-weight: bold; margin-top: 5px; }
+        .powerup-btn:disabled { background: #bdc3c7; cursor: not-allowed; }
+        button#btn-evaluar { display: block; width: 100%; max-width: 350px; height: 65px; margin: 40px auto; background: #2acc73; color: white; border: none; border-radius: 35px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 6px #21a058; }
+        #result-box { display: none; padding: 25px; border-radius: 20px; margin-top: 30px; border: 4px solid; }
+        .correct-box { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .error-box { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+        .revision-container { margin-top: 20px; background: white; border-radius: 10px; padding: 15px; border: 1px solid #ccc; }
+        .item-revision { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; text-align: left; }
+        .resp-correcta { color: #27ae60; font-weight: bold; }
+        .resp-usuario { font-style: italic; color: #555; }
+        .explicacion { color: #2980b9; font-size: 0.9em; font-style: italic; margin-top: 5px; }
+        .tip-pizarra { color: #d35400; font-weight: bold; font-size: 0.9em; margin-top: 5px; background: #fff5f0; padding: 8px; border-radius: 8px; border-left: 4px solid #e67e22; }
+        .missing-alert { color: #e74c3c; font-weight: bold; text-align: center; margin-bottom: 15px; display: none; padding: 10px; background: #fdf2f2; border-radius: 10px; border: 2px solid #e74c3c; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-nav-button">🏠 Volver a la Agenda</a>
+    <h1>📝 Examen de Comunicación - 2° Bimestre</h1>
+    <h2>Edward, ¡analiza las oraciones, aplica las reglas ortográficas y supera tus notas anteriores!</h2>
+    <div style="text-align: center; margin-bottom: 15px;">
+        <button class="powerup-btn" id="global-5050" onclick="usarCincuentaCincuentaGlobal()">⚡ Súper Poder: Comodín 50/50 (1 disponible)</button>
+    </div>
+    <div id="missing-msg" class="missing-alert">⚠️ ¡Edward, te faltan responder algunas preguntas! Revisa los bloques marcados en rojo.</div>
+    <form id="quizForm">
+        <div id="quizContainer"></div>
+        <button type="button" id="btn-evaluar" onclick="validarExamen()">✨ Terminar Examen</button>
+    </form>
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+        <div id="revision-lista" class="revision-container">
+            <h4>🔍 Reporte Sintáctico y Ortográfico de Resultados:</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const examData = {
+      "sections": [
+        {
+          "title": "Eje 1: Estructura de la Oración y del Sujeto (N.S, M.D, M.I)",
+          "emoji": "✏️",
+          "tag": "Refuerzo Sintáctico",
+          "questions": [
+            {"id": "c1", "type": "choice", "question": "Dada la oración: 'La niña de cabello largo canta una canción.' ¿Cuál es el SUJETO completo?", "options": ["La niña", "La niña de cabello largo", "canta una canción"], "correct": "La niña de cabello largo", "feedback": "El sujeto abarca todo lo que se dice antes de la acción principal (preguntamos: ¿Quién canta? -> La niña de cabello largo).", "tip": "¡Atajo de la pregunta! Haz la pregunta ¿Quién o quiénes + verbo? Todo lo que responda es el Sujeto completo."},
+            {"id": "c2", "type": "choice", "question": "En la oración: 'La niña de cabello largo canta una canción.' ¿Cuál es el NÚCLEO DEL SUJETO (N.S)?", "options": ["niña", "cabello", "largo"], "correct": "niña", "feedback": "El Núcleo del Sujeto (N.S) es la palabra principal (sustantivo) sobre quien cae la acción.", "tip": "¡Atajo de pizarra! El N.S es el sustantivo principal. Si quitas las demás palabras, 'niña' sigue siendo de quien se habla."},
+            {"id": "c3", "type": "choice", "question": "En la oración: 'La niña de cabello largo canta una canción.' ¿Qué función cumple la palabra 'La'?", "options": ["Modificador Indirecto (M.I)", "Modificador Directo (M.D)", "Núcleo del Sujeto (N.S)"], "correct": "Modificador Directo (M.D)", "feedback": "Los artículos (El, La, Los, Las, Un, Una) se unen directamente al núcleo como Modificadores Directos (M.D).", "tip": "¡Filtro de M.D! Todos los artículos y adjetivos pegaditos al sustantivo sin enlaces son M.D."},
+            {"id": "c4", "type": "choice", "question": "En la oración: 'La niña de cabello largo canta una canción.' ¿Qué función cumple la frase 'de cabello largo'?", "options": ["Modificador Directo (M.D)", "Modificador Indirecto (M.I)", "Núcleo del Predicado (N.P)"], "correct": "Modificador Indirecto (M.I)", "feedback": "Es un Modificador Indirecto (M.I) porque se une al núcleo mediante una palabra enlace o preposición ('de').", "tip": "¡Súper Atajo del M.I! Si la frase empieza con palabras enlace como 'de', 'del', 'con', 'sin', ¡es un M.I de inmediato!"},
+            {"id": "c5", "type": "choice", "question": "En la oración: 'Las flores hermosas del jardín crecen rápido.' ¿Qué función cumple la palabra 'hermosas'?", "options": ["Modificador Directo (M.D)", "Modificador Indirecto (M.I)", "Núcleo del Sujeto (N.S)"], "correct": "Modificador Directo (M.D)", "feedback": "'Hermosas' es un adjetivo calificativo pegado directamente al núcleo 'flores', por lo tanto es un M.D.", "tip": "Los adjetivos (bonito, grande, hermosas, responsable) que dicen cómo es el núcleo son siempre M.D."},
+            {"id": "c6", "type": "write", "question": "Analiza la oración: 'Unos estudiantes responsables de mi colegio realizan la tarea.' Escribe la palabra que funciona como M.I (Modificador Indirecto):", "correct": "de mi colegio", "feedback": "'de mi colegio' es el M.I porque está unido al núcleo 'estudiantes' mediante el enlace 'de'.", "tip": "El M.I siempre lleva la palabra enlace por delante (de, del, con, sin)."},
+            {"id": "c7", "type": "choice", "question": "En la oración: 'Los perros pequeños del vecino juegan en el parque.' ¿Cuál es el NÚCLEO DEL SUJETO (N.S)?", "options": ["perros", "pequeños", "vecino"], "correct": "perros", "feedback": "El N.S es 'perros'. 'Los' es M.D, 'pequeños' es M.D y 'del vecino' es M.I.", "tip": "No confundas el sustantivo del M.I (vecino) con el verdadero Núcleo del Sujeto (perros)."},
+            {"id": "c8", "type": "choice", "question": "En la oración: 'Mi hermano de tercer grado lee un cuento.' ¿Cuáles son los DOS Modificadores del Sujeto?", "options": ["M.D = Mi / M.I = de tercer grado", "M.D = hermano / M.I = lee", "M.D = cuento / M.I = de tercer grado"], "correct": "M.D = Mi / M.I = de tercer grado", "feedback": "'Mi' es un adjetivo posesivo directo (M.D) y 'de tercer grado' se une mediante la preposición 'de' (M.I).", "tip": "Un sujeto puede tener M.D al inicio y M.I al final del sustantivo principal."}
+          ]
+        },
+        {
+          "title": "Eje 2: El Predicado y su Núcleo (El Verbo)",
+          "emoji": "🏃",
+          "tag": "Verbo y Predicado",
+          "questions": [
+            {"id": "c9", "type": "choice", "question": "¿Qué es el PREDICADO en una oración?", "options": ["La persona o animal que realiza la acción.", "Todo lo que se dice del sujeto o la acción que este realiza.", "Una palabra que une dos oraciones."], "correct": "Todo lo que se dice del sujeto o la acción que este realiza.", "feedback": "El predicado expresa la acción, estado o comportamiento del sujeto.", "tip": "Una vez que encuentras el Sujeto, todo lo demás en la oración es el Predicado."},
+            {"id": "c10", "type": "choice", "question": "¿Cuál es la palabra más importante y NÚCLEO DEL PREDICADO (N.P)?", "options": ["El adjetivo", "El verbo (la acción)", "El sustantivo"], "correct": "El verbo (la acción)", "feedback": "El Núcleo del Predicado (N.P) es SIEMPRE el verbo conjugado de la oración.", "tip": "¡Atajo de la práctica! En tu examen anterior el error fue subrayar más de la cuenta. El N.P es ÚNICAMENTE la palabra que indica la acción."},
+            {"id": "c11", "type": "choice", "question": "En la oración: 'Las ranas comen insectos en la laguna.' ¿Cuál es el NÚCLEO DEL PREDICADO (N.P)?", "options": ["ranas", "comen", "insectos"], "correct": "comen", "feedback": "'comen' es el verbo conjugado que indica la acción realizada por las ranas.", "tip": "Pregúntate: ¿Qué hacen las ranas? -> 'comen'. Esa sola palabra es el N.P."},
+            {"id": "c12", "type": "write", "question": "Dada la oración: 'Mi abuela prepara un pastel de chocolate.' Escribe la palabra exacta que es el NÚCLEO DEL PREDICADO (N.P):", "correct": "prepara", "feedback": "'prepara' es la acción principal (verbo) que funciona como N.P.", "tip": "Identifica la acción que realiza la abuela. ¡Esa sola palabra es el N.P!"},
+            {"id": "c13", "type": "choice", "question": "En la oración: 'Las niñas del colegio obtuvieron sus diplomas.' ¿Cuál es el PREDICADO completo?", "options": ["Las niñas del colegio", "obtuvieron sus diplomas", "sus diplomas"], "correct": "obtuvieron sus diplomas", "feedback": "El predicado se inicia desde el verbo 'obtuvieron' hasta el final de la oración.", "tip": "Corta la oración en dos: Sujeto (Las niñas del colegio) | Predicado (obtuvieron sus diplomas)."},
+            {"id": "c14", "type": "choice", "question": "¿A qué conjugación pertenecen los verbos cuyo infinitivo termina en '-ER' (como correr, tener, comer)?", "options": ["Primera conjugación", "Segunda conjugación", "Tercera conjugación"], "correct": "Segunda conjugación", "feedback": "1° Conjugación = -AR / 2° Conjugación = -ER / 3° Conjugación = -IR.", "tip": "A-E-I: 1° es -AR, 2° es -ER, 3° es -IR."},
+            {"id": "c15", "type": "choice", "question": "Si la oración dice: 'Martha lee un cuento interesante', ¿en qué TIEMPO VERBAL se encuentra la acción?", "options": ["Tiempo Pasado", "Tiempo Presente", "Tiempo Futuro"], "correct": "Tiempo Presente", "feedback": "'lee' indica que la acción está ocurriendo en este preciso momento (hoy).", "tip": "Pasado = ayer / Presente = hoy / Futuro = mañana."},
+            {"id": "c16", "type": "write", "question": "Transforma el verbo de esta oración al TIEMPO FUTURO: 'Yo jugué baloncesto.' -> 'Yo j u _ _ r é baloncesto.'", "correct": "jugare", "feedback": "En tiempo futuro expresa una acción que aún no ha ocurrido: 'jugaré'.", "tip": "Las acciones en futuro en primera persona suelen terminar con tilde en la 'é' (jugaré, estudiaré)."}
+          ]
+        },
+        {
+          "title": "Eje 3: Reglas Ortográficas de la G y J",
+          "emoji": "🔤",
+          "tag": "Ortografía Precisa",
+          "questions": [
+            {"id": "c17", "type": "choice", "question": "Según la regla ortográfica, las palabras que terminan en -gio, -gia, -gión, -gional se escriben con:", "options": ["Se escriben con G", "Se escriben con J", "Se escriben con Z"], "correct": "Se escriben con G", "feedback": "Ejemplos: colegio, magia, religión, regional (excepto lejía).", "tip": "Gia, gio, gión siempre van con G."},
+            {"id": "c18", "type": "choice", "question": "¿Cuál es la única palabra que representa una EXCEPCIÓN a la regla de la 'G' en terminaciones -gía?", "options": ["magia", "lejía", "energía"], "correct": "lejía", "feedback": "'Lejía' es la excepción a la regla y se escribe obligatoriamente con J.", "tip": "¡Cuidado con la trampa! Lejía es con J de jirafa."},
+            {"id": "c19", "type": "choice", "question": "Los verbos infinitivos terminados en -ger y -gir (como recoger, dirigir, rugir) se escriben con G, EXCEPTO:", "options": ["corregir y exigir", "tejer y crujir", "proteger y coger"], "correct": "tejer y crujir", "feedback": "'Tejer' y 'crujir' son las dos excepciones que siempre se escriben con J.", "tip": "Tejer la chomba y crujir la galleta se escriben con J."},
+            {"id": "c20", "type": "write", "question": "Completa la palabra con la letra correcta (G o J): El profesor de g e o _ r a f í a enseña la lección.", "correct": "g", "feedback": "Las palabras que empiezan con la raíz 'geo-' (tierra) se escriben con G.", "tip": "Geo- siempre empieza con G de Geografía."},
+            {"id": "c21", "type": "choice", "question": "Las palabras que terminan en -jero, -jera, -jería (como relojero, cajera, extranjería) se escriben con:", "options": ["Letra G", "Letra J", "Letra C"], "correct": "Letra J", "feedback": "Sustantivos y adjetivos con terminación -jero, -jera, -jería llevan J (excepto ligero).", "tip": "Relojero, cajera y consejero van con J."},
+            {"id": "c22", "type": "choice", "question": "Selecciona la palabra que está CORRECTAMENTE escrita:", "options": ["jemelo", "geografía", "gefe"], "correct": "geografía", "feedback": "'Geografía' lleva G (geo-), mientras que gemelo es con G y jefe es con J.", "tip": "Revisa los inicios: Geo- con G, Jefe con J."},
+            {"id": "c23", "type": "choice", "question": "Las palabras que terminan en -aje y -eje (como carruaje, viaje, personaje) se escriben con:", "options": ["Letra G", "Letra J", "Letra S"], "correct": "Letra J", "feedback": "Todas las palabras terminadas en -aje y -eje se escriben con J.", "tip": "-aje y -eje siempre van con J de viaje."},
+            {"id": "c24", "type": "write", "question": "Completa con la letra correcta: Vanessa come una deliciosa g e l a t i n a de fresa. (Escribe g o j):", "correct": "g", "feedback": "Gelatina se escribe con G.", "tip": "Gelatina empieza con G."}
+          ]
+        },
+        {
+          "title": "Eje 4: Analogías Lógicas y Clases de Oraciones",
+          "emoji": "💡",
+          "tag": "Razonamiento Verbal",
+          "questions": [
+            {"id": "c25", "type": "choice", "question": "¿Qué es una ANALOGÍA en Razonamiento Verbal?", "options": ["Una historia muy larga sobre animales.", "Una relación de semejanza entre dos parejas de palabras.", "Un tipo de verbo en pasado."], "correct": "Una relación de semejanza entre dos parejas de palabras.", "feedback": "La analogía compara dos parejas de palabras que guardan la misma lógica entre sí.", "tip": "Busca la relación del primer par y aplícala igual al segundo par."},
+            {"id": "c26", "type": "choice", "question": "Analiza la analogía de Parte-Todo: 'Dedo es a mano como...'", "options": ["talón es a pie.", "cuaderno es a lápiz.", "perro es a gato."], "correct": "talón es a pie.", "feedback": "El dedo es una parte de la mano, así como el talón es una parte del pie.", "tip": "Relación Parte -> Todo."},
+            {"id": "c27", "type": "choice", "question": "Analiza la analogía de Profesión-Lugar: 'Sacerdote es a parroquia como...'", "options": ["doctor es a medicamento.", "policía es a comisaría.", "profesor es a alumno."], "correct": "policía es a comisaría.", "feedback": "El sacerdote trabaja en la parroquia, así como el policía trabaja en la comisaría.", "tip": "¿Dónde trabaja la persona? Esa es la relación de lugar."},
+            {"id": "c28", "type": "write", "question": "Completa la analogía de Antonimia: 'Hablar es a callar como reír es a ______.'", "correct": "llorar", "feedback": "Lo opuesto de hablar es callar, y lo opuesto de reír es llorar.", "tip": "Busca el antónimo (opuesto directo)."},
+            {"id": "c29", "type": "choice", "question": "Analogía de Persona-Instrumento: 'Jardinero es a tijera como...'", "options": ["carpintero es a serrucho.", "pintor es a cuadro.", "chofer es a auto."], "correct": "carpintero es a serrucho.", "feedback": "El jardinero usa la tijera de podar como su herramienta, así como el carpintero usa el serrucho.", "tip": "¿Qué herramienta usa para trabajar?"},
+            {"id": "c30", "type": "choice", "question": "¿Qué clase de oración según la actitud del hablante expresa un DESEO o anhelo (ej: 'Ojalá apruebe el examen')?", "options": ["Oración Imperativa", "Oración Desiderativa", "Oración Dubitativa"], "correct": "Oración Desiderativa", "feedback": "Las oraciones desiderativas expresan deseos (suelen usar palabras como ojalá, quisiera, desearía).", "tip": "Desiderativa viene de 'deseo'."},
+            {"id": "c31", "type": "choice", "question": "La oración: '¡Qué alegría verte de nuevo!' es una oración de tipo:", "options": ["Interrogativa", "Exclamativa", "Enunciativa"], "correct": "Exclamativa", "feedback": "Lleva signos de admiración (¡!) y expresa una emoción o entusiasmo.", "tip": "Los signos ¡! indican emoción u oración exclamativa."},
+            {"id": "c32", "type": "choice", "question": "La oración: 'Tal vez mañana vaya al parque con mi primo' expresa duda o incertidumbre. Se clasifica como:", "options": ["Oración Dubitativa", "Oración Imperativa", "Oración Afirmativa"], "correct": "Oración Dubitativa", "feedback": "Las oraciones dubitativas usan palabras como tal vez, quizás, posiblemente.", "tip": "Dubitativa viene de 'duda'."},
+            {"id": "c33", "type": "choice", "question": "Si la profesora dice: 'Por favor, siéntate en tu carpeta', está dando un mandato o ruego. Es una oración:", "options": ["Imperativa", "Desiderativa", "Enunciativa"], "correct": "Imperativa", "feedback": "Las oraciones imperativas ordenan, piden o ruegan una acción.", "tip": "Imperativa = Orden o mandato."},
+            {"id": "c34", "type": "choice", "question": "¿Qué tipo de texto es aquel que nos dice de forma detallada y ordenada cómo es un lugar, animal o persona usando adjetivos?", "options": ["Texto Narrativo", "Texto Descriptivo", "Texto Instructivo"], "correct": "Texto Descriptivo", "feedback": "El texto descriptivo pinta con palabras las características y cualidades de algo o alguien.", "tip": "Describir = Decir cómo es algo."},
+            {"id": "c35", "type": "write", "question": "Completa la analogía de Origen-Producto: 'Río es a agua como árbol es a ______.'", "correct": "frutas", "feedback": "El río produce o contiene agua, así como el árbol produce frutas.", "tip": "¿Qué nos da el árbol?"},
+            {"id": "c36", "type": "choice", "question": "En la descripción de un lugar como Machu Picchu, ¿qué categoría de palabras usamos principalmente para decir cómo son las ruinas o el clima?", "options": ["Verbos en pasado", "Adjetivos calificativos", "Pronombres personales"], "correct": "Adjetivos calificativos", "feedback": "Los adjetivos (verde, hermoso, imponente, frío) nos dicen cómo son las cosas.", "tip": "Adjetivos = cualidades."},
+            {"id": "c37", "type": "choice", "question": "La oración: '¿Has traído tu libro de Comunicación?' es una oración:", "options": ["Exclamativa", "Interrogativa", "Imperativa"], "correct": "Interrogativa", "feedback": "Lleva signos de interrogación (¿?) y sirve para hacer preguntas.", "tip": "Signos ¿? = Pregunta e Interrogativa."},
+            {"id": "c38", "type": "choice", "question": "Completa la analogía: 'Comprar es a vender como dar es a...'", "options": ["regalar", "recibir", "prestar"], "correct": "recibir", "feedback": "Comprar es lo opuesto de vender, y dar es lo opuesto de recibir (Antonimia).", "tip": "Busca la acción contraria."},
+            {"id": "c39", "type": "write", "question": "Analiza la oración: 'El perrito sin collar apareció en el parque.' Escribe la palabra que funciona como NÚCLEO DEL SUJETO (N.S):", "correct": "perrito", "feedback": "'perrito' es el sustantivo principal del sujeto.", "tip": "¿De quién se habla en la oración? Del perrito."},
+            {"id": "c40", "type": "choice", "question": "En la oración: 'El perrito sin collar apareció en el parque.' ¿Qué función cumple 'sin collar'?", "options": ["Modificador Directo (M.D)", "Modificador Indirecto (M.I)", "Núcleo del Predicado (N.P)"], "correct": "Modificador Indirecto (M.I)", "feedback": "Se une al núcleo 'perrito' mediante la preposición enlace 'sin', por lo tanto es un M.I.", "tip": "Las palabras con 'de', 'con', 'sin' son M.I."}
+          ]
+        }
+      ]
+    };
+
+    let comodinUsado = false;
+    let logDudas = {};
+
+    function trackDuda(id) { logDudas[id] = (logDudas[id] || 0) + 1; }
+
+    function renderQuiz() {
+        const container = document.getElementById('quizContainer');
+        let questionCounter = 1;
+        examData.sections.forEach(section => {
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.innerText = section.title;
+            container.appendChild(header);
+            const layoutDiv = document.createElement('div');
+            layoutDiv.className = 'main-layout';
+            const questionsColumn = document.createElement('div');
+            questionsColumn.className = 'questions-column';
+            section.questions.forEach(q => {
+                const secDiv = document.createElement('div');
+                secDiv.className = 'section';
+                secDiv.id = 'sec_' + q.id;
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'question-title';
+                titleSpan.innerText = `${questionCounter}. ${q.question}`;
+                secDiv.appendChild(titleSpan);
+
+                if (q.type === 'choice') {
+                    const optDiv = document.createElement('div');
+                    optDiv.className = 'options';
+                    optDiv.id = 'opts_' + q.id;
+                    q.options.forEach(opt => {
+                        const lbl = document.createElement('label');
+                        lbl.innerHTML = `<input type="radio" name="${q.id}" value="${opt}" onclick="trackDuda('${q.id}'); saveProgress('${q.id}', '${opt}')"> ${opt}`;
+                        optDiv.appendChild(lbl);
+                    });
+                    secDiv.appendChild(optDiv);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = q.id;
+                    input.placeholder = q.type === 'reorder' ? 'Escribe el orden correcto aquí...' : 'Escribe la palabra o respuesta...';
+                    input.oninput = function() { trackDuda(q.id); saveProgress(q.id, this.value); };
+                    secDiv.appendChild(input);
+                }
+                questionsColumn.appendChild(secDiv);
+                questionCounter++;
+            });
+            const visualCard = document.createElement('div');
+            visualCard.className = 'visual-side-card';
+            visualCard.innerHTML = `<span class="visual-emoji">${section.emoji}</span><span class="visual-tag">${section.tag}</span><p style="font-size:0.85em; color:#555; margin-top:10px;">Edward: Lee con atención la oración completa antes de responder. ¡Tú puedes!</p>`;
+            layoutDiv.appendChild(questionsColumn);
+            layoutDiv.appendChild(visualCard);
+            container.appendChild(layoutDiv);
+        });
+        loadSavedProgress();
+    }
+
+    function saveProgress(id, val) {
+        localStorage.setItem('comu_exam_2b_' + id, val);
+        document.getElementById('sec_' + id).classList.remove('incomplete');
+        if(document.querySelectorAll('.incomplete').length === 0) document.getElementById('missing-msg').style.display='none';
+    }
+
+    function loadSavedProgress() {
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                const saved = localStorage.getItem('comu_exam_2b_' + q.id);
+                if (saved) {
+                    if (q.type === 'choice') {
+                        const radio = document.querySelector(`input[name="${q.id}"][value="${saved}"]`);
+                        if (radio) radio.checked = true;
+                    } else {
+                        const txtInput = document.getElementById(q.id);
+                        if (txtInput) txtInput.value = saved;
+                    }
+                }
+            });
+        });
+    }
+
+    function usarCincuentaCincuentaGlobal() {
+        if (comodinUsado) return;
+        let seleccionada = prompt("Edward, introduce el número de pregunta (de marcar) donde deseas descartar una alternativa incorrecta:");
+        let qNum = parseInt(seleccionada);
+        if (isNaN(qNum) || qNum < 1 || qNum > 40) return;
+        let currentIdx = 1, targetId = null, targetQObj = null;
+        for (let s of examData.sections) {
+            for (let q of s.questions) {
+                if (currentIdx === qNum) { targetId = q.id; targetQObj = q; break; }
+                currentIdx++;
+            }
+            if (targetId) break;
+        }
+        if (!targetQObj || targetQObj.type !== 'choice') return;
+        let labels = document.getElementById('opts_' + targetId).querySelectorAll('label');
+        let incorrectasBorradas = 0;
+        labels.forEach(lbl => {
+            let radio = lbl.querySelector('input');
+            if (radio.value !== targetQObj.correct && incorrectasBorradas < 1) { lbl.style.display = 'none'; incorrectasBorradas++; }
+        });
+        comodinUsado = true;
+        document.getElementById('global-5050').disabled = true;
+        document.getElementById('global-5050').innerText = "⚡ Súper Poder Usado";
+    }
+
+    function validarExamen() {
+        let vacios = [];
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let r = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`) : document.getElementById(q.id).value.trim();
+                if (!r) { const c = document.getElementById('sec_' + q.id); c.classList.add('incomplete'); vacios.push(c); }
+            });
+        });
+        if (vacios.length > 0) { document.getElementById('missing-msg').style.display = 'block'; vacios[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+        calificarExamen();
+    }
+
+    function calificarExamen() {
+        let nota = 0, questionIndex = 1, itemsHTML = "";
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let uVal = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`).value : document.getElementById(q.id).value.trim();
+                let cleanU = uVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let cleanC = q.correct.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let esOk = (cleanU === cleanC) || (q.type === 'write' && cleanU.includes(cleanC));
+                if (esOk) nota++;
+                itemsHTML += `<div class="item-revision" style="border-left:8px solid ${esOk?'#27ae60':'#e74c3c'}">
+                    <p><strong>Pregunta ${questionIndex}: ${q.question}</strong></p>
+                    <p>Tu respuesta: <span class="resp-usuario">${uVal}</span> ${esOk?'✅':'❌'}</p>
+                    ${!esOk?`<p class="resp-correcta">Respuesta Correcta Esperada: ${q.correct}</p>`:''}
+                    <p class="explicacion">📌 Explicación gramatical: ${q.feedback}</p>
+                    <p class="tip-pizarra">💡 Whiteboard Tip (Consejo Rápido): ${q.tip || "Identifica primero el verbo principal para dividir la oración correctamente."}</p>
+                    ${logDudas[q.id]>2?`<p style="color:#e67e22; font-weight:bold; font-size:0.9em; margin-top:5px;">⚠️ ¡Alerta de duda! Edward vaciló aquí. Practiquen este análisis en la pizarra.</p>`:''}
+                </div>`;
+                questionIndex++;
+            });
+        });
+        const finalScore = Math.round((nota / 40) * 20);
+        const rb = document.getElementById('result-box');
+        rb.style.display = 'block';
+        document.getElementById('score-text').innerText = `Puntaje Final Bimestral: ${finalScore} / 20 (${nota} aciertos de 40)`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        rb.className = finalScore >= 11 ? "correct-box" : "error-box";
+        document.getElementById('feedback-content').innerHTML = finalScore >= 11 ? "<h4>🌟 ¡Excelente análisis sintáctico, Edward! Has superado con éxito tus prácticas anteriores.</h4>" : "<h4>📚 ¡Buen intento, Edward! Revisa los consejos rápidos de la pizarra inferior para dominar la estructura de la oración.</h4>";
+        localStorage.clear();
+        window.scrollTo({ top: rb.offsetTop, behavior: 'smooth' });
+    }
+    
+    window.onload = renderQuiz;
+</script>
+</body>
+</html>
