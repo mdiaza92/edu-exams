@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Evaluaciones - Edward</title>
+    <style>
+        :root {
+            --primary: #4a69bd;
+            --comu: #ff4757;
+            --ciencia: #2ed573;
+            --mate: #3742fa;
+            --personal: #ffa502;
+            --ingles: #9b59b6;
+            --card-bg: #ffffff;
+            --bg-color: #f1f2f6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
+            background-color: var(--bg-color);
+            padding: 20px;
+            color: #2f3542;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border: 4px solid var(--primary);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2f3542;
+            font-size: 2.2em;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #747d8c;
+            font-size: 1.1em;
+        }
+
+        .badge-bimestre {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Horario Banner */
+        .info-box {
+            background-color: #eccc68;
+            color: #2f3542;
+            padding: 12px 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            font-weight: bold;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* Contenedor del Calendario */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .day-card {
+            display: flex;
+            border-radius: 18px;
+            border: 2px solid #e1e2e6;
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .day-card:not(.locked-day):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        }
+
+        .date-box {
+            width: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .day-name {
+            font-size: 1.1em;
+            text-transform: uppercase;
+        }
+
+        .day-number {
+            font-size: 2em;
+            font-weight: bold;
+            line-height: 1;
+            margin: 4px 0;
+        }
+
+        .day-month {
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+
+        .content-box {
+            flex: 1;
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Colores por Curso */
+        .bg-comu { background-color: var(--comu); }
+        .bg-ciencia { background-color: var(--ciencia); }
+        .bg-mate { background-color: var(--mate); }
+        .bg-personal { background-color: var(--personal); }
+        .bg-ingles { background-color: var(--ingles); }
+
+        .border-comu { border-color: var(--comu); }
+        .border-ciencia { border-color: var(--ciencia); }
+        .border-mate { border-color: var(--mate); }
+        .border-personal { border-color: var(--personal); }
+        .border-ingles { border-color: var(--ingles); }
+
+        .btn-exam {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            color: #2f3542;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1em;
+            border: 2px solid #dfe4ea;
+            transition: all 0.2s ease;
+            width: fit-content;
+            min-width: 250px;
+        }
+
+        .btn-comu:hover { background: var(--comu); color: white; border-color: var(--comu); }
+
+        /* Estilos Bloqueado */
+        .locked-day {
+            opacity: 0.7;
+            background-color: #f8f9fa;
+            border-color: #e9ecef;
+        }
+
+        .bg-locked {
+            background-color: #a4b0be;
+        }
+
+        .btn-locked {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: #e4e7eb;
+            color: #747d8c;
+            border-radius: 10px;
+            font-size: 0.9em;
+            font-weight: bold;
+            cursor: not-allowed;
+            width: fit-content;
+        }
+
+        /* Historial */
+        .history-section {
+            margin-top: 35px;
+            border-top: 2px dashed #ced6e0;
+            padding-top: 20px;
+        }
+
+        .history-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #747d8c;
+            margin-bottom: 12px;
+        }
+
+        .history-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .history-btn {
+            text-decoration: none;
+            background: #e4e7eb;
+            color: #57606f;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .history-btn:hover {
+            background: #ced6e0;
+        }
+
+        @media(max-width: 600px) {
+            .day-card {
+                flex-direction: column;
+            }
+            .date-box {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 10px 20px;
+            }
+            .day-number {
+                font-size: 1.3em;
+            }
+            .btn-exam, .btn-locked {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <span class="badge-bimestre">III Bimestre 2026</span>
+        <h1>Rol de Exámenes Mensuales</h1>
+        <p>Estudiante: <strong>Edward (3.° de Primaria)</strong></p>
+    </div>
+
+    <div class="info-box">
+        <span>⏰ Horario de Salida: 02:15 PM</span>
+        <span>🏫 Grupo Educativo San Luis</span>
+    </div>
+
+    <div class="timeline">
+        <!-- LUNES 31 DE AGOSTO: COMUNICACIÓN (ACTIVO) -->
+        <div class="day-card border-comu">
+            <div class="date-box bg-comu">
+                <span class="day-name">Lunes</span>
+                <span class="day-number">31</span>
+                <span class="day-month">Agosto</span>
+            </div>
+            <div class="content-box">
+                <h3>📝 Comunicación</h3>
+                <a href="Set26/comunicacion_3grado.html" class="btn-exam btn-comu">
+                    <span>🚀 Iniciar Evaluación 360°</span>
+                    <span>➔</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- MARTES 01 DE SEPTIEMBRE: CIENCIA Y TECNOLOGÍA (BLOQUEADO) -->
+        <div class="day-card locked-day">
+            <div class="date-box bg-locked">
+                <span class="day-name">Martes</span>
+                <span class="day-number">01</span>
+                <span class="day-month">Setiembre</span>
+            </div>
+            <div class="content-box">
+                <h3>🌿 Ciencia y Tecnología</h3>
+                <div class="btn-locked">🔒 Se habilitará 1 día antes del examen</div>
+            </div>
+        </div>
+
+        <!-- MIÉRCOLES 02 DE SEPTIEMBRE: MATEMÁTICA (BLOQUEADO) -->
+        <div class="day-card locked-day">
+            <div class="date-box bg-locked">
+                <span class="day-name">Miércoles</span>
+                <span class="day-number">02</span>
+                <span class="day-month">Setiembre</span>
+            </div>
+            <div class="content-box">
+                <h3>🔢 Matemática</h3>
+                <div class="btn-locked">🔒 Se habilitará 1 día antes del examen</div>
+            </div>
+        </div>
+
+        <!-- JUEVES 03 DE SEPTIEMBRE: PERSONAL SOCIAL (BLOQUEADO) -->
+        <div class="day-card locked-day">
+            <div class="date-box bg-locked">
+                <span class="day-name">Jueves</span>
+                <span class="day-number">03</span>
+                <span class="day-month">Setiembre</span>
+            </div>
+            <div class="content-box">
+                <h3>🗺️ Personal Social</h3>
+                <div class="btn-locked">🔒 Se habilitará 1 día antes del examen</div>
+            </div>
+        </div>
+
+        <!-- VIERNES 04 DE SEPTIEMBRE: INGLÉS (BLOQUEADO) -->
+        <div class="day-card locked-day">
+            <div class="date-box bg-locked">
+                <span class="day-name">Viernes</span>
+                <span class="day-number">04</span>
+                <span class="day-month">Setiembre</span>
+            </div>
+            <div class="content-box">
+                <h3>🇬🇧 Inglés (English)</h3>
+                <div class="btn-locked">🔒 Se habilitará 1 día antes del examen</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Acceso a Bimestres Pasados -->
+    <div class="history-section">
+        <div class="history-title">📚 Repasos de Bimestres Anteriores:</div>
+        <div class="history-links">
+            <a href="Jul26/comunicacion_3grado.html" class="history-btn">Julio '26 - Comunicación</a>
+            <a href="Jul26/matematica_3grado.html" class="history-btn">Julio '26 - Matemática</a>
+            <a href="Jul26/ciencia_ambiente_3grado.html" class="history-btn">Julio '26 - Ciencia</a>
+            <a href="Jul26/personal_social_3grado.html" class="history-btn">Julio '26 - P. Social</a>
+            <a href="Jul26/ingles_3grado.html" class="history-btn">Julio '26 - Inglés</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
