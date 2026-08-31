@@ -171,6 +171,7 @@
         }
 
         .btn-comu:hover { background: var(--comu); color: white; border-color: var(--comu); }
+        .btn-ciencia:hover { background: var(--ciencia); color: white; border-color: var(--ciencia); }
 
         /* Estilos Bloqueado */
         .locked-day {
@@ -197,7 +198,7 @@
             width: fit-content;
         }
 
-        /* Historial */
+        /* Historial de Bimestres anteriores */
         .history-section {
             margin-top: 35px;
             border-top: 2px dashed #ced6e0;
@@ -225,6 +226,7 @@
             border-radius: 8px;
             font-size: 0.85em;
             font-weight: bold;
+            transition: background 0.2s;
         }
 
         .history-btn:hover {
@@ -265,7 +267,7 @@
     </div>
 
     <div class="timeline">
-        <!-- LUNES 31 DE AGOSTO: COMUNICACIÓN (ACTIVO) -->
+        <!-- LUNES 31 DE AGOSTO: COMUNICACIÓN (HABILITADO) -->
         <div class="day-card border-comu">
             <div class="date-box bg-comu">
                 <span class="day-name">Lunes</span>
@@ -281,16 +283,19 @@
             </div>
         </div>
 
-        <!-- MARTES 01 DE SEPTIEMBRE: CIENCIA Y TECNOLOGÍA (BLOQUEADO) -->
-        <div class="day-card locked-day">
-            <div class="date-box bg-locked">
+        <!-- MARTES 01 DE SEPTIEMBRE: CIENCIA Y TECNOLOGÍA (HABILITADO) -->
+        <div class="day-card border-ciencia">
+            <div class="date-box bg-ciencia">
                 <span class="day-name">Martes</span>
                 <span class="day-number">01</span>
                 <span class="day-month">Setiembre</span>
             </div>
             <div class="content-box">
                 <h3>🌿 Ciencia y Tecnología</h3>
-                <div class="btn-locked">🔒 Se habilitará 1 día antes del examen</div>
+                <a href="Set26/ciencia_ambiente_3grado.html" class="btn-exam btn-ciencia">
+                    <span>🚀 Iniciar Evaluación 360°</span>
+                    <span>➔</span>
+                </a>
             </div>
         </div>
 

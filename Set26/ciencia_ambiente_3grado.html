@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen 360° Ciencia y Tecnología - III Bimestre</title>
+    <style>
+        :root {
+            --primary: #2ed573;
+            --primary-dark: #26af5f;
+            --accent: #ffa502;
+            --bg-color: #f1f8f5;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
+            background-color: var(--bg-color);
+            padding: 15px;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 6px solid var(--primary);
+            position: relative;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .back-nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            background: #ffffff;
+            color: var(--primary-dark);
+            border: 2px solid var(--primary-dark);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.95em;
+            transition: all 0.2s ease;
+        }
+
+        .back-nav-button:hover {
+            background: var(--primary);
+            color: #ffffff;
+            transform: scale(1.03);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e824c;
+            text-transform: uppercase;
+            font-size: 1.8em;
+            margin: 0 0 5px 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.05em;
+            margin-bottom: 25px;
+        }
+
+        .section-header {
+            position: sticky;
+            top: 10px;
+            background: var(--primary);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin: 25px 0 15px 0;
+            font-size: 1.1em;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(46, 213, 115, 0.3);
+        }
+
+        .main-layout {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .questions-column {
+            flex: 1;
+        }
+
+        .visual-side-card {
+            width: 210px;
+            background: #eafaf1;
+            border: 3px dashed var(--primary);
+            border-radius: 18px;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 75px;
+            box-sizing: border-box;
+        }
+
+        .visual-emoji {
+            font-size: 4em;
+            display: block;
+            margin-bottom: 8px;
+            animation: floatAnim 3s ease-in-out infinite;
+        }
+
+        .visual-tag {
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .section {
+            margin-bottom: 15px;
+            padding: 16px;
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            background-color: #ffffff;
+            transition: border-color 0.3s;
+        }
+
+        .incomplete {
+            border: 2px solid #e74c3c !important;
+            background-color: #fff8f8 !important;
+        }
+
+        .question-title {
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #2f3542;
+            display: block;
+            font-size: 1.02em;
+            line-height: 1.4;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 2px solid #cbd5e1;
+            font-size: 15px;
+            font-family: inherit;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+        }
+
+        .options label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #fafafa;
+            transition: all 0.2s ease;
+        }
+
+        .options label:hover {
+            background: #eafaf1;
+            border-color: var(--primary);
+        }
+
+        .powerup-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 4px #d35400;
+        }
+
+        .powerup-btn:disabled {
+            background: #bdc3c7;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        button#btn-evaluar {
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            height: 55px;
+            margin: 30px auto;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px var(--primary-dark);
+            transition: transform 0.1s;
+        }
+
+        button#btn-evaluar:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px var(--primary-dark);
+        }
+
+        #result-box {
+            display: none;
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 30px;
+            border: 3px solid;
+        }
+
+        .correct-box {
+            background: #f0fff4;
+            color: #27ae60;
+            border-color: #2ecc73;
+        }
+
+        .error-box {
+            background: #fffdf0;
+            color: #d35400;
+            border-color: #f39c12;
+        }
+
+        .revision-container {
+            margin-top: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .item-revision {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 6px solid #ccc;
+            background: #fafafa;
+        }
+
+        .resp-correcta {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .resp-usuario {
+            font-style: italic;
+            color: #555;
+        }
+
+        .explicacion {
+            color: #2980b9;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .tip-pizarra {
+            color: #d35400;
+            font-size: 0.88em;
+            margin-top: 6px;
+            background: #fff3e0;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        .missing-alert {
+            color: #e74c3c;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+            padding: 12px;
+            background: #fdf2f2;
+            border-radius: 10px;
+            border: 2px solid #e74c3c;
+        }
+
+        .diagram-container {
+            margin: 15px 0;
+            background: #fafbfc;
+            border: 2px dashed #b2bec3;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .diagram-svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media(max-width: 800px) {
+            .main-layout {
+                flex-direction: column;
+            }
+            .visual-side-card {
+                width: 100%;
+                position: static;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="nav-bar">
+        <a href="../index.html" class="back-nav-button">⬅️ Volver a la Agenda</a>
+        <button class="powerup-btn" id="global-5050" onclick="usarCincuentaCincuentaGlobal()">⚡ Usar Comodín 50/50 (1 vez)</button>
+    </div>
+
+    <h1>🌿 Examen de Ciencia y Tecnología - III Bimestre</h1>
+    <h2>Colegio San Luis • 3.° Primaria</h2>
+
+    <div id="missing-msg" class="missing-alert">⚠️ ¡Edward, aún te faltan preguntas por responder! Revisa las casillas en rojo.</div>
+
+    <form id="quizForm">
+        <div id="quizContainer"></div>
+        <button type="button" id="btn-evaluar" onclick="validarExamen()">Terminar y Calificar</button>
+    </form>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+        <div id="revision-lista" class="revision-container">
+            <h4>📋 Pizarra de Respuestas y Tips de Repaso:</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const examData = {
+      "sections": [
+        {
+          "title": "Eje 1: La Planta y sus Órganos (Teoría y Conceptos - 40%)",
+          "emoji": "🌱",
+          "tag": "Partes de la Planta",
+          "questions": [
+            {
+              "id": "sci1",
+              "type": "choice",
+              "question": "¿Cuál es la función principal de la raíz en una planta?",
+              "options": [
+                "Realizar la fotosíntesis y respirar.",
+                "Sujetar la planta al suelo y absorber agua con sales minerales.",
+                "Atraer insectos para la polinización."
+              ],
+              "correct": "Sujetar la planta al suelo y absorber agua con sales minerales.",
+              "feedback": "La raíz vive bajo tierra, fija la planta y actúa como un sorbete absorbiendo nutrientes y agua.",
+              "tip": "¡Atajo de pizarra! Raíz = Anclaje al suelo + Sorbete de agua y minerales."
+            },
+            {
+              "id": "sci2",
+              "type": "choice",
+              "question": "El tallo es comparado en la clase con una 'carretera' porque:",
+              "options": [
+                "Atrae a las abejas y mariposas.",
+                "Transporta el agua y nutrientes desde la raíz hacia las hojas y sostiene flores y frutos.",
+                "Es de color verde brillante y produce frutos."
+              ],
+              "correct": "Transporta el agua y nutrientes desde la raíz hacia las hojas y sostiene flores y frutos.",
+              "feedback": "El tallo crece hacia arriba buscando la luz, sostiene las ramas y transporta la savia.",
+              "tip": "¡Atajo de pizarra! Tallo = Sostén + Carretera de agua hacia las hojas."
+            },
+            {
+              "id": "sci3",
+              "type": "choice",
+              "question": "¿Por qué decimos que las hojas son la 'fábrica de comida y los pulmones' de la planta?",
+              "options": [
+                "Porque protegen las semillas dentro de la tierra.",
+                "Porque a través de ellas la planta respira y realiza la fotosíntesis.",
+                "Porque se encargan de sujetar el tallo."
+              ],
+              "correct": "Porque a través de ellas la planta respira y realiza la fotosíntesis.",
+              "feedback": "Las hojas contienen clorofila, capturan la luz solar y el aire para producir alimento mediante fotosíntesis.",
+              "tip": "¡Atajo de pizarra! Hoja = Clorofila (verde) + Respiración + Fotosíntesis."
+            },
+            {
+              "id": "sci4",
+              "type": "choice",
+              "question": "¿Qué órgano de la planta se encarga directamente de la reproducción y da origen a los frutos?",
+              "options": ["La raíz", "La flor", "El tallo"],
+              "correct": "La flor",
+              "feedback": "La flor es el órgano reproductor de la planta; tras ser polinizada, se transforma en fruto.",
+              "tip": "¡Atajo de pizarra! Flor = Parte colorida + Órgano reproductor."
+            },
+            {
+              "id": "sci5",
+              "type": "choice",
+              "question": "El fruto tiene una función muy importante para el ciclo de vida de la planta, la cual es:",
+              "options": [
+                "Guardar y proteger a las semillas en su interior.",
+                "Absorber el agua de la lluvia.",
+                "Afirmar la planta a la tierra."
+              ],
+              "correct": "Guardar y proteger a las semillas en su interior.",
+              "feedback": "Dentro del fruto se encuentran las semillas, que al caer al suelo dan vida a una nueva planta.",
+              "tip": "¡Atajo de pizarra! Fruto = Guarda y protege semillas."
+            },
+            {
+              "id": "sci6",
+              "type": "write",
+              "question": "¿Cuál es la sustancia verde que le da color a las hojas y ayuda en la fotosíntesis?: C l o _ o f _ l a.",
+              "correct": "clorofila",
+              "feedback": "La clorofila es el pigmento verde fundamental para transformar la luz del sol en energía.",
+              "tip": "¡Atajo de memoria! 'Cloro-fila', como el color verde de las plantas."
+            },
+            {
+              "id": "sci7",
+              "type": "choice",
+              "question": "¿Cuál de las siguientes partes forma parte de la estructura interna de la raíz?",
+              "options": [
+                "Pétalos, polen y sépalos",
+                "Raíz principal, raíces secundarias, pelos absorbentes y cofia",
+                "Tronco, corteza y ramas"
+              ],
+              "correct": "Raíz principal, raíces secundarias, pelos absorbentes y cofia",
+              "feedback": "La raíz tiene una raíz principal, ramificaciones secundarias, pelos absorbentes para chupar agua y una cofia en la punta.",
+              "tip": "¡Atajo de pizarra! Pelos absorbentes + Cofia = Partes de la raíz subterránea."
+            },
+            {
+              "id": "sci8",
+              "type": "choice",
+              "question": "Verdadero o Falso: Las plantas son seres vivos que pueden desplazarse por sí solas de un lugar a otro caminando.",
+              "options": ["Verdadero", "Falso"],
+              "correct": "Falso",
+              "feedback": "Las plantas son seres vivos fijos al suelo por sus raíces; no tienen desplazamiento activo como los animales.",
+              "tip": "¡Ojo! Las plantas crecen y se mueven hacia el sol, pero no se desplazan ni caminan."
+            },
+            {
+              "id": "sci9",
+              "type": "choice",
+              "question": "Verdadero o Falso: Las plantas cumplen un ciclo vital que incluye nacer, crecer, reproducirse y morir.",
+              "options": ["Verdadero", "Falso"],
+              "correct": "Verdadero",
+              "feedback": "Como todos los seres vivos, las plantas cumplen este ciclo completo de vida.",
+              "tip": "¡Regla biológica! Todos los seres vivos nacen, crecen, se reproducen y mueren."
+            },
+            {
+              "id": "sci10",
+              "type": "write",
+              "question": "El proceso mediante el cual una semilla se transforma y brota para dar origen a una nueva planta se llama: G _ _ m i n a c i ó n.",
+              "correct": "germinacion",
+              "feedback": "La germinación es el despertar de la semilla con ayuda del agua, luz y tierra.",
+              "tip": "Palabra clave: Germinación."
+            }
+          ]
+        },
+        {
+          "title": "Eje 2: Clasificación y Utilidad de las Plantas (40%)",
+          "emoji": "🌳",
+          "tag": "Tipos y Usos",
+          "questions": [
+            {
+              "id": "sci11",
+              "type": "choice",
+              "question": "¿Cuáles son las tres clases de plantas según el tamaño y la forma de su tallo?",
+              "options": [
+                "Acuáticas, aéreas y terrestres",
+                "Árboles, arbustos y hierbas",
+                "Flores, frutas y verduras"
+              ],
+              "correct": "Árboles, arbustos y hierbas",
+              "feedback": "Las plantas se clasifican en árboles (grandes y leñosos), arbustos (medianos) y hierbas (bajas y flexibles).",
+              "tip": "¡Atajo de clasificación! 1. Árbol (tronco alto) - 2. Arbusto (ramas desde el suelo) - 3. Hierba (tallo verde blando)."
+            },
+            {
+              "id": "sci12",
+              "type": "choice",
+              "question": "Tienen tallo blando, delgado y de color verde, y suelen ser de tamaño pequeño. Hablamos de:",
+              "options": ["Los árboles", "Las hierbas", "Los arbustos"],
+              "correct": "Las hierbas",
+              "feedback": "Las hierbas se caracterizan por tallos tiernos, delgados y flexibles (como el pasto o el perejil).",
+              "tip": "Hierba = Tallo verde y flexible."
+            },
+            {
+              "id": "sci13",
+              "type": "choice",
+              "question": "Planta mediana con varios tallos duros y leñosos cuyas ramas nacen muy cerca del suelo:",
+              "options": ["Árbol", "Arbusto", "Alga"],
+              "correct": "Arbusto",
+              "feedback": "Los arbustos no tienen un solo tronco alto, sino varios tallos que brotan desde la base.",
+              "tip": "Arbusto = Ramas pegadas al suelo (como el rosal o la retama)."
+            },
+            {
+              "id": "sci14",
+              "type": "choice",
+              "question": "El manzano, el pino y el nogal se clasifican como:",
+              "options": ["Hierbas", "Arbustos", "Árboles"],
+              "correct": "Árboles",
+              "feedback": "Poseen un tronco grueso, leñoso y elevado, propio de los árboles.",
+              "tip": "Tienen un solo tronco leñoso y grueso = Árboles."
+            },
+            {
+              "id": "sci15",
+              "type": "choice",
+              "question": "La manzanilla, el perejil y la lechuga son ejemplos de:",
+              "options": ["Árboles", "Hierbas", "Arbustos"],
+              "correct": "Hierbas",
+              "feedback": "Tienen tallos suaves y verdes, por lo que son hierbas.",
+              "tip": "Plantas de huerto con tallitos delgados = Hierbas."
+            },
+            {
+              "id": "sci16",
+              "type": "choice",
+              "question": "El rosal, la retama y la adelfa son considerados:",
+              "options": ["Arbustos", "Árboles", "Hierbas"],
+              "correct": "Arbustos",
+              "feedback": "Son plantas de porte medio con ramas desde la base.",
+              "tip": "Plantas medianas con flores o espinas desde abajo = Arbustos."
+            },
+            {
+              "id": "sci17",
+              "type": "choice",
+              "question": "Las plantas que cultivamos para adornar casas, parques y jardines (como las rosas o petunias) son:",
+              "options": ["Plantas medicinales", "Plantas ornamentales", "Plantas industriales"],
+              "correct": "Plantas ornamentales",
+              "feedback": "Ornamental significa que sirve de adorno o decoración.",
+              "tip": "Ornamento = Decoración / Belleza."
+            },
+            {
+              "id": "sci18",
+              "type": "choice",
+              "question": "Plantas como el llantén, manzanilla o eucalipto que alivian malestares de salud son:",
+              "options": ["Medicinales", "Alimenticias", "Industriales"],
+              "correct": "Medicinales",
+              "feedback": "Se usan en infusiones y remedios por sus propiedades curativas.",
+              "tip": "Medicina = Plantas medicinales."
+            },
+            {
+              "id": "sci19",
+              "type": "choice",
+              "question": "De los árboles obtenemos madera para fabricar sillas, mesas y papel. Este uso corresponde a:",
+              "options": ["Plantas ornamentales", "Plantas industriales/madereras", "Plantas aromáticas"],
+              "correct": "Plantas industriales/madereras",
+              "feedback": "La madera es una materia prima de la industria maderera y papelera.",
+              "tip": "Madera y telas = Uso industrial."
+            },
+            {
+              "id": "sci20",
+              "type": "write",
+              "question": "¿Qué gas vital producen y liberan las plantas a la atmósfera durante el día?: O _ _ g e n o.",
+              "correct": "oxigeno",
+              "feedback": "Las plantas liberan oxígeno mediante la fotosíntesis, permitiendo la respiración de los seres vivos.",
+              "tip": "El gas que respiramos todos los días."
+            }
+          ]
+        },
+        {
+          "title": "Eje 3: Los Ecosistemas y sus Clases (Teoría y Aplicación - 20%)",
+          "emoji": "🌍",
+          "tag": "Ecosistemas",
+          "questions": [
+            {
+              "id": "sci21",
+              "type": "choice",
+              "question": "¿Qué es un ECOSISTEMA según lo trabajado en clase?",
+              "options": [
+                "Solo un grupo de animales que viven en una jaula.",
+                "Un lugar donde interactúan los seres vivos con los elementos no vivos del ambiente.",
+                "Un mapa con dibujos de montañas."
+              ],
+              "correct": "Un lugar donde interactúan los seres vivos con los elementos no vivos del ambiente.",
+              "feedback": "Un ecosistema es la comunidad de seres vivos (bióticos) y su medio físico no vivo (abiótico).",
+              "tip": "Ecosistema = Seres vivos (animales/plantas) + Elementos no vivos (agua, suelo, aire, sol)."
+            },
+            {
+              "id": "sci22",
+              "type": "choice",
+              "question": "¿Cuáles son los componentes NO VIVOS (abióticos) de un ecosistema?",
+              "options": [
+                "León, árbol, peces y bacterias.",
+                "Agua, aire, suelo, luz solar y temperatura.",
+                "Aves, hongos, algas y mariposas."
+              ],
+              "correct": "Agua, aire, suelo, luz solar y temperatura.",
+              "feedback": "Los elementos no vivos o abióticos son el agua, aire, rocas, tierra, sol y clima.",
+              "tip": "No tienen vida pero son indispensables para vivir."
+            },
+            {
+              "id": "sci23",
+              "type": "choice",
+              "question": "¿Cuáles son las tres clases principales de ecosistemas?",
+              "options": [
+                "Caliente, frío y templado",
+                "Terrestre, acuático y aéreo (aeroterrestre)",
+                "Grande, mediano y pequeño"
+              ],
+              "correct": "Terrestre, acuático y aéreo (aeroterrestre)",
+              "feedback": "Se clasifican según el medio donde habitan: Tierra, Agua y Aire/Cielo.",
+              "tip": "Las 3 'A-T-A': Acuático, Terrestre, Aéreo."
+            },
+            {
+              "id": "sci24",
+              "type": "choice",
+              "question": "Son ejemplos de ecosistemas de tipo TERRESTRE:",
+              "options": [
+                "Mares, océanos y ríos.",
+                "Bosques, desiertos, selvas y praderas.",
+                "Nubes, atmósfera y lagunas."
+              ],
+              "correct": "Bosques, desiertos, selvas y praderas.",
+              "feedback": "Todos estos se desarrollan sobre la superficie de la tierra.",
+              "tip": "Donde caminamos y crecen los árboles terrestres."
+            },
+            {
+              "id": "sci25",
+              "type": "choice",
+              "question": "El mar, los ríos, lagos y lagunas corresponden a ecosistemas de tipo:",
+              "options": ["Aéreo", "Terrestre", "Acuático"],
+              "correct": "Acuático",
+              "feedback": "Acuático comprende masas de agua tanto dulce como salada.",
+              "tip": "Aqua = Agua."
+            },
+            {
+              "id": "sci26",
+              "type": "choice",
+              "question": "¿Qué animales encontramos principalmente en el ecosistema AÉREO / mixto?",
+              "options": [
+                "Tiburones, pulpos y algas",
+                "Águilas, mariposas, abejas y golondrinas",
+                "Llamas, vicuñas y zorros"
+              ],
+              "correct": "Águilas, mariposas, abejas y golondrinas",
+              "feedback": "Las aves y los insectos voladores utilizan el espacio aéreo para desplazarse y alimentarse.",
+              "tip": "Animales con alas que vuelan en el cielo."
+            },
+            {
+              "id": "sci27",
+              "type": "choice",
+              "question": "¿Por qué es fundamental proteger y cuidar los ecosistemas?",
+              "options": [
+                "Para que no se extingan los animales ni se destruyan los recursos que dan vida al planeta.",
+                "Para poder construir más fábricas y carreteras sobre ellos.",
+                "Para que no haya lluvia."
+              ],
+              "correct": "Para que no se extingan los animales ni se destruyan los recursos que dan vida al planeta.",
+              "feedback": "Cuidar los ecosistemas asegura el equilibrio ecológico, el agua y el aire limpio.",
+              "tip": "Cuidar el ecosistema = Proteger la vida de todos."
+            },
+            {
+              "id": "sci28",
+              "type": "write",
+              "question": "En un ecosistema desértico del Perú, ¿qué planta con espinas almacena agua?: C _ c t u s.",
+              "correct": "cactus",
+              "feedback": "El cactus es una planta adaptada al ecosistema terrestre desértico.",
+              "tip": "Planta típica del desierto con espinas."
+            }
+          ]
+        },
+        {
+          "title": "Eje 4: Análisis Gráfico y Diagramas Interactivos (Práctica Visual - 20%)",
+          "emoji": "📊",
+          "tag": "Identificación Visual",
+          "questions": [
+            {
+              "id": "sci29",
+              "type": "choice",
+              "question": "Observa el diagrama de la planta. ¿Qué parte señala la flecha en la zona subterránea con pelos absorbentes?",
+              "options": ["Tallo", "Raíz", "Hoja"],
+              "correct": "Raíz",
+              "hasDiagram": "raiz",
+              "feedback": "La raíz se encuentra en la base bajo tierra y posee pelos absorbentes para nutrirse.",
+              "tip": "¡Atajo de imagen! La parte inferior con ramificaciones bajo el suelo es la raíz."
+            },
+            {
+              "id": "sci30",
+              "type": "choice",
+              "question": "Observa el esquema del tallo de la planta. ¿Cuál es su rol según la imagen?",
+              "options": ["Absorber la luz directamente", "Sostener las hojas y ramas", "Producir semillas"],
+              "correct": "Sostener las hojas y ramas",
+              "hasDiagram": "tallo",
+              "feedback": "El tallo central actúa como estructura de soporte y canal de savia.",
+              "tip": "El tronco/tallo es la columna que sostiene la copa de la planta."
+            },
+            {
+              "id": "sci31",
+              "type": "choice",
+              "question": "Observa la ilustración de la hoja verde. ¿Qué función vital se realiza gracias al sol en esta estructura?",
+              "options": ["Polinización", "Fotosíntesis y respiración", "Anclaje"],
+              "correct": "Fotosíntesis y respiración",
+              "hasDiagram": "hoja",
+              "feedback": "En las hojas verdes ocurre la fotosíntesis que elabora el alimento de la planta.",
+              "tip": "Hojas verdes = Fotosíntesis."
+            },
+            {
+              "id": "sci32",
+              "type": "choice",
+              "question": "Observa el gráfico de la flor. ¿Por qué es fundamental en las plantas con flores?",
+              "options": ["Porque contiene las raíces", "Porque es el órgano de reproducción", "Porque absorbe abono"],
+              "correct": "Porque es el órgano de reproducción",
+              "hasDiagram": "flor",
+              "feedback": "La flor contiene los órganos reproductores que luego formarán el fruto.",
+              "tip": "Flor = Reproducción."
+            },
+            {
+              "id": "sci33",
+              "type": "choice",
+              "question": "Mira la imagen del rosal con muchas ramas naciendo desde el suelo. ¿Qué tipo de planta es?",
+              "options": ["Hierba", "Arbusto", "Árbol"],
+              "correct": "Arbusto",
+              "hasDiagram": "arbusto",
+              "feedback": "Es un arbusto porque tiene tallos leñosos ramificados desde la base.",
+              "tip": "Ramas que salen desde la tierra sin tronco alto = Arbusto."
+            },
+            {
+              "id": "sci34",
+              "type": "choice",
+              "question": "Observa el árbol con su gran tronco leñoso. ¿Cuál es su estructura principal de soporte?",
+              "options": ["Tallo blando", "Tronco leñoso grueso", "Hojas flotantes"],
+              "correct": "Tronco leñoso grueso",
+              "hasDiagram": "arbol",
+              "feedback": "Los árboles se caracterizan por poseer un tronco leñoso único y grueso.",
+              "tip": "Tronco alto y duro = Árbol."
+            },
+            {
+              "id": "sci35",
+              "type": "choice",
+              "question": "Observa el pasto y las hierbas. ¿Qué característica física tienen sus tallos?",
+              "options": ["Tallo de madera dura", "Tallo blando, verde y flexible", "No tienen tallo"],
+              "correct": "Tallo blando, verde y flexible",
+              "hasDiagram": "hierba",
+              "feedback": "Las hierbas tienen tallos tiernos y de color verde.",
+              "tip": "Hierba = verde y fácil de doblar."
+            },
+            {
+              "id": "sci36",
+              "type": "choice",
+              "question": "En el ecosistema marino ilustrado, ¿cuáles son seres vivos destacados?",
+              "options": ["Delfines, peces y algas", "Agua, arena y sol", "Piedras y barcos"],
+              "correct": "Delfines, peces y algas",
+              "hasDiagram": "marino",
+              "feedback": "Los peces, corales, delfines y algas son los componentes bióticos o seres vivos del ecosistema marino.",
+              "tip": "Biótico = con vida."
+            },
+            {
+              "id": "sci37",
+              "type": "write",
+              "question": "Si una planta pierde todas sus raíces por una plaga, ¿qué función vital NO podrá realizar?: A _ s o r c i ó n de agua.",
+              "correct": "absorcion",
+              "feedback": "Sin raíces la planta no puede absorber el agua ni los minerales del suelo.",
+              "tip": "La raíz absorbe el agua como un sorbete."
+            },
+            {
+              "id": "sci38",
+              "type": "choice",
+              "question": "¿En cuál de estos ecosistemas habitan vicuñas, cóndores y pastizales de ichu?",
+              "options": ["Ecosistema Marino", "Ecosistema de Montaña / Sierra", "Ecosistema Selva baja"],
+              "correct": "Ecosistema de Montaña / Sierra",
+              "feedback": "La fauna y flora andina peruana pertenece al ecosistema terrestre de montaña/sierra.",
+              "tip": "Vicuñas e ichu son propios de la sierra y zonas altas."
+            },
+            {
+              "id": "sci39",
+              "type": "choice",
+              "question": "Si clasificamos el PINO según las clases de plantas de la ficha, ¿qué es?",
+              "options": ["Hierba", "Arbusto", "Árbol"],
+              "correct": "Árbol",
+              "feedback": "El pino es un árbol con tronco alto y leñoso.",
+              "tip": "El pino tiene madera y gran altura."
+            },
+            {
+              "id": "sci40",
+              "type": "choice",
+              "question": "¿Qué acción ayuda a conservar los ecosistemas y las plantas en nuestro colegio o casa?",
+              "options": [
+                "Arrancar las hojas y flores por diversión.",
+                "Regar las plantas, no botar basura y sembrar áreas verdes.",
+                "Dejar el caño abierto sin usarlo."
+              ],
+              "correct": "Regar las plantas, no botar basura y sembrar áreas verdes.",
+              "feedback": "El cuidado responsable del agua y el respeto por la vegetación protegen nuestro ecosistema.",
+              "tip": "Proteger la naturaleza es compromiso de todos."
+            }
+          ]
+        }
+      ]
+    };
+
+    let comodinUsado = false;
+    let logDudas = {};
+
+    function trackDuda(id) {
+        logDudas[id] = (logDudas[id] || 0) + 1;
+        if (window.navigator && window.navigator.vibrate) {
+            window.navigator.vibrate(20);
+        }
+    }
+
+    function renderQuiz() {
+        const container = document.getElementById('quizContainer');
+        let questionCounter = 1;
+        examData.sections.forEach(section => {
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.innerText = section.title;
+            container.appendChild(header);
+
+            const layoutDiv = document.createElement('div');
+            layoutDiv.className = 'main-layout';
+
+            const questionsColumn = document.createElement('div');
+            questionsColumn.className = 'questions-column';
+
+            section.questions.forEach(q => {
+                const secDiv = document.createElement('div');
+                secDiv.className = 'section';
+                secDiv.id = 'sec_' + q.id;
+
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'question-title';
+                titleSpan.innerText = `${questionCounter}. ${q.question}`;
+                secDiv.appendChild(titleSpan);
+
+                // SVGs educativos para la seccion grafica
+                if (q.hasDiagram) {
+                    const diagDiv = document.createElement('div');
+                    diagDiv.className = 'diagram-container';
+                    
+                    if (q.hasDiagram === 'raiz') {
+                        diagDiv.innerHTML = `
+                            <svg class="diagram-svg" width="200" height="130" viewBox="0 0 200 130">
+                                <rect x="10" y="10" width="180" height="40" fill="#a8e6cf" rx="5" />
+                                <text x="100" y="35" font-size="12" text-anchor="middle" fill="#2d3436">Planta (Tallo y Hojas)</text>
+                                <line x1="10" y1="50" x2="190" y2="50" stroke="#8d6e63" stroke-width="4" />
+                                <path d="M100 50 Q100 100 95 120 M100 70 Q70 90 50 110 M100 80 Q130 95 150 115" stroke="#795548" stroke-width="3" fill="none" />
+                                <text x="100" y="125" font-size="12" font-weight="bold" text-anchor="middle" fill="#5d4037">⬇ RAÍZ (Pelos y Cofia)</text>
+                            </svg>
+                        `;
+                    } else if (q.hasDiagram === 'tallo') {
+                        diagDiv.innerHTML = `
+                            <svg class="diagram-svg" width="180" height="120" viewBox="0 0 180 120">
+                                <rect x="80" y="20" width="20" height="90" fill="#8d6e63" rx="4" />
+                                <path d="M80 50 Q40 40 30 20" stroke="#27ae60" stroke-width="3" fill="none" />
+                                <path d="M100 50 Q140 40 150 20" stroke="#27ae60" stroke-width="3" fill="none" />
+                                <text x="90" y="115" font-size="11" text-anchor="middle" fill="#333">Tallo conductor</text>
+                            </svg>
+                        `;
+                    } else if (q.hasDiagram === 'hoja') {
+                        diagDiv.innerHTML = `
+                            <svg class="diagram-svg" width="180" height="110" viewBox="0 0 180 110">
+                                <path d="M20 90 Q90 10 160 30 Q120 100 20 90 Z" fill="#2ecc71" stroke="#27ae60" stroke-width="2" />
+                                <line x1="20" y1="90" x2="160" y2="30" stroke="#1b5e20" stroke-width="2" />
+                                <text x="90" y="105" font-size="11" text-anchor="middle" fill="#2c3e50">Hoja: Fotosíntesis</text>
+                            </svg>
+                        `;
+                    } else if (q.hasDiagram === 'flor') {
+                        diagDiv.innerHTML = `
+                            <svg class="diagram-svg" width="150" height="120" viewBox="0 0 150 120">
+                                <circle cx="75" cy="50" r="18" fill="#f1c40f" />
+                                <circle cx="75" cy="20" r="14" fill="#e84393" opacity="0.8" />
+                                <circle cx="75" cy="80" r="14" fill="#e84393" opacity="0.8" />
+                                <circle cx="45" cy="50" r="14" fill="#e84393" opacity="0.8" />
+                                <circle cx="105" cy="50" r="14" fill="#e84393" opacity="0.8" />
+                                <line x1="75" y1="68" x2="75" y2="110" stroke="#27ae60" stroke-width="4" />
+                                <text x="75" y="115" font-size="11" text-anchor="middle" fill="#2c3e50">Flor: Reproducción</text>
+                            </svg>
+                        `;
+                    } else if (q.hasDiagram === 'arbusto') {
+                        diagDiv.innerHTML = `
+                            <svg class="diagram-svg" width="160" height="120" viewBox="0 0 160 120">
+                                <ellipse cx="80" cy="60" rx="60" ry="40" fill="#27ae60" />
+                                <line x1="50" y1="100" x2="60" y2="60" stroke="#5d4037" stroke-width="3" />
+                                <line x1="80" y1="100" x2="80" y2="50" stroke="#5d4037" stroke-width="3" />
+                                <line x1="110" y1="100" x2="100" y2="60" stroke="#5d4037" stroke-width="3" />
+                                <text x="80" y="115" font-size="11" text-anchor="middle" fill="#333">Arbusto (Ramas bajas)</text>
+                            </svg>
+                        `;
+                    } else if (q.hasDiagram === 'arbol') {
+                        diagDiv.innerHTML = `
+                            <svg class="diagram-svg" width="160" height="130" viewBox="0 0 160 130">
+                                <rect x="70" y="60" width="20" height="55" fill="#795548" />
+                                <circle cx="80" cy="45" r="40" fill="#2ecc71" />
+                                <text x="80" y="125" font-size="11" text-anchor="middle" fill="#333">Árbol (Tronco alto)</text>
+                            </svg>
+                        `;
+                    } else if (q.hasDiagram === 'hierba') {
+                        diagDiv.innerHTML = `
+                            <svg class="diagram-svg" width="160" height="100" viewBox="0 0 160 100">
+                                <path d="M30 90 Q40 30 50 10 Q60 50 70 90 Q80 20 90 10 Q100 50 110 90 Q120 40 130 20" stroke="#27ae60" stroke-width="3" fill="none" />
+                                <text x="80" y="98" font-size="11" text-anchor="middle" fill="#333">Hierba (Tallo blando)</text>
+                            </svg>
+                        `;
+                    } else if (q.hasDiagram === 'marino') {
+                        diagDiv.innerHTML = `
+                            <svg class="diagram-svg" width="180" height="110" viewBox="0 0 180 110">
+                                <rect x="5" y="5" width="170" height="90" fill="#dff9fb" rx="10" stroke="#22a6b3" />
+                                <text x="90" y="35" font-size="24" text-anchor="middle">🐬 🐠 🌿</text>
+                                <text x="90" y="70" font-size="11" font-weight="bold" text-anchor="middle" fill="#130f40">Ecosistema Acuático</text>
+                            </svg>
+                        `;
+                    }
+                    secDiv.appendChild(diagDiv);
+                }
+
+                if (q.type === 'choice') {
+                    const optDiv = document.createElement('div');
+                    optDiv.className = 'options';
+                    optDiv.id = 'opts_' + q.id;
+                    q.options.forEach(opt => {
+                        const lbl = document.createElement('label');
+                        lbl.innerHTML = `<input type="radio" name="${q.id}" value="${opt}" onclick="trackDuda('${q.id}'); saveProgress('${q.id}', '${opt}')"> ${opt}`;
+                        optDiv.appendChild(lbl);
+                    });
+                    secDiv.appendChild(optDiv);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = q.id;
+                    input.placeholder = 'Escribe tu respuesta aquí...';
+                    input.oninput = function() { trackDuda(q.id); saveProgress(q.id, this.value); };
+                    secDiv.appendChild(input);
+                }
+                questionsColumn.appendChild(secDiv);
+                questionCounter++;
+            });
+
+            const visualCard = document.createElement('div');
+            visualCard.className = 'visual-side-card';
+            visualCard.innerHTML = `<span class="visual-emoji">${section.emoji}</span><span class="visual-tag">${section.tag}</span><p style="font-size:0.85em; color:#555; margin-top:10px;">Edward: Observa las imágenes con atención y responde con seguridad.</p>`;
+            layoutDiv.appendChild(questionsColumn);
+            layoutDiv.appendChild(visualCard);
+            container.appendChild(layoutDiv);
+        });
+        loadSavedProgress();
+    }
+
+    function saveProgress(id, val) {
+        localStorage.setItem('ciencia_exam_3b_' + id, val);
+        document.getElementById('sec_' + id).classList.remove('incomplete');
+        if(document.querySelectorAll('.incomplete').length === 0) document.getElementById('missing-msg').style.display='none';
+    }
+
+    function loadSavedProgress() {
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                const saved = localStorage.getItem('ciencia_exam_3b_' + q.id);
+                if (saved) {
+                    if (q.type === 'choice') {
+                        const radio = document.querySelector(`input[name="${q.id}"][value="${saved}"]`);
+                        if (radio) radio.checked = true;
+                    } else {
+                        const txtInput = document.getElementById(q.id);
+                        if (txtInput) txtInput.value = saved;
+                    }
+                }
+            });
+        });
+    }
+
+    function usarCincuentaCincuentaGlobal() {
+        if (comodinUsado) return;
+        let seleccionada = prompt("Edward, introduce el número de pregunta (de 1 a 40) donde deseas descartar una alternativa incorrecta:");
+        let qNum = parseInt(seleccionada);
+        if (isNaN(qNum) || qNum < 1 || qNum > 40) return;
+        let currentIdx = 1, targetId = null, targetQObj = null;
+        for (let s of examData.sections) {
+            for (let q of s.questions) {
+                if (currentIdx === qNum) { targetId = q.id; targetQObj = q; break; }
+                currentIdx++;
+            }
+            if (targetId) break;
+        }
+        if (!targetQObj || targetQObj.type !== 'choice') return;
+        let labels = document.getElementById('opts_' + targetId).querySelectorAll('label');
+        let incorrectasBorradas = 0;
+        labels.forEach(lbl => {
+            let radio = lbl.querySelector('input');
+            if (radio.value !== targetQObj.correct && incorrectasBorradas < 1) { lbl.style.display = 'none'; incorrectasBorradas++; }
+        });
+        comodinUsado = true;
+        document.getElementById('global-5050').disabled = true;
+        document.getElementById('global-5050').innerText = "⚡ Súper Poder Usado";
+    }
+
+    function validarExamen() {
+        let vacios = [];
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let r = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`) : document.getElementById(q.id).value.trim();
+                if (!r) { const c = document.getElementById('sec_' + q.id); c.classList.add('incomplete'); vacios.push(c); }
+            });
+        });
+        if (vacios.length > 0) {
+            document.getElementById('missing-msg').style.display = 'block';
+            vacios[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (window.navigator && window.navigator.vibrate) window.navigator.vibrate([100, 50, 100]);
+            return;
+        }
+        calificarExamen();
+    }
+
+    function calificarExamen() {
+        let nota = 0, questionIndex = 1, itemsHTML = "";
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let uVal = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`).value : document.getElementById(q.id).value.trim();
+                let cleanU = uVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let cleanC = q.correct.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let esOk = (cleanU === cleanC) || (q.type === 'write' && cleanU.includes(cleanC));
+                if (esOk) nota++;
+                itemsHTML += `<div class="item-revision" style="border-left:8px solid ${esOk?'#27ae60':'#e74c3c'}">
+                    <p><strong>Pregunta ${questionIndex}: ${q.question}</strong></p>
+                    <p>Tu respuesta: <span class="resp-usuario">${uVal}</span> ${esOk?'✅':'❌'}</p>
+                    ${!esOk?`<p class="resp-correcta">Respuesta Correcta: ${q.correct}</p>`:''}
+                    <p class="explicacion">📌 Explicación científica: ${q.feedback}</p>
+                    <p class="tip-pizarra">💡 Tip de Pizarra: ${q.tip}</p>
+                    ${logDudas[q.id]>2?`<p style="color:#e67e22; font-weight:bold; font-size:0.9em; margin-top:5px;">⚠️ Atención: Dudaste en esta pregunta. ¡Repásala en tu cuaderno!</p>`:''}
+                </div>`;
+                questionIndex++;
+            });
+        });
+        const finalScore = Math.round((nota / 40) * 20);
+        const rb = document.getElementById('result-box');
+        rb.style.display = 'block';
+        document.getElementById('score-text').innerText = `Puntaje Final: ${finalScore} / 20 (${nota} de 40 aciertos)`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        rb.className = finalScore >= 11 ? "correct-box" : "error-box";
+        document.getElementById('feedback-content').innerHTML = finalScore >= 11 ? "<h4>🌟 ¡Excelente investigador, Edward! Tienes un gran conocimiento de la naturaleza.</h4>" : "<h4>📚 ¡Sigue explorando, Edward! Revisa cada tip en la pizarra de abajo para mejorar.</h4>";
+        localStorage.clear();
+        window.scrollTo({ top: rb.offsetTop, behavior: 'smooth' });
+    }
+
+    window.onload = renderQuiz;
+</script>
+</body>
+</html>
