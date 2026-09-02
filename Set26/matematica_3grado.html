@@ -189,13 +189,27 @@
         }
 
         .clue-box {
+            display: none;
             background: #e8f4fd;
             border-left: 4px solid #0984e3;
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 10px 14px;
+            border-radius: 8px;
             color: #0c2461;
-            font-size: 0.88em;
-            margin-bottom: 10px;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .clue-box.visible {
+            display: block;
+            opacity: 1;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         input[type="text"] {
@@ -343,22 +357,6 @@
             border: 2px solid #e74c3c;
         }
 
-        .diagram-container {
-            margin: 15px 0;
-            background: #ffffff;
-            border: 2px dashed #b2bec3;
-            border-radius: 12px;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .diagram-svg {
-            max-width: 100%;
-            height: auto;
-        }
-
         .send-instructions {
             background: #e3f2fd;
             border: 2px solid #2196f3;
@@ -388,9 +386,9 @@
         <button class="powerup-btn" id="global-5050" onclick="usarCincuentaCincuentaGlobal()">⚡ Usar Comodín 50/50 (1 vez)</button>
     </div>
 
-    <h1>🎯 Repaso Focalizado: Matemática</h1>
+    <h1>🎯 Repaso Especial: Matemática</h1>
     <h2>Colegio San Luis • 3.° Primaria | Alumno: Edward</h2>
-    <span class="mode-badge">⚡ Módulo Especial: 10 Preguntas Clave</span>
+    <span class="mode-badge">⚡ Evaluación Focalizada: 10 Preguntas</span>
 
     <div id="missing-msg" class="missing-alert">⚠️ ¡Edward, aún te faltan preguntas por responder! Revisa las casillas marcadas en rojo.</div>
 
@@ -403,7 +401,7 @@
         <h3 id="score-text"></h3>
         <div id="feedback-content"></div>
         <div id="revision-lista" class="revision-container">
-            <h4>📋 Solucionario Paso a Paso y Trucos de Pizarra:</h4>
+            <h4>📋 Solucionario Paso a Paso y Tips de Pizarra:</h4>
             <div id="lista-items"></div>
         </div>
         <div class="send-instructions">
@@ -416,7 +414,7 @@
     const examData = {
       "sections": [
         {
-          "title": "Sección 1: Multiplicación con 2 Cifras y Trucos Operativos (5 Preguntas)",
+          "title": "Sección 1: Multiplicación con 2 Cifras (5 Preguntas)",
           "emoji": "📦",
           "tag": "Algoritmo de 2 Cifras",
           "questions": [
@@ -425,7 +423,7 @@
               "type": "choice",
               "isComplex": true,
               "question": "TRUCO DE LA GRADA (53 × 26): Si 53 × 6 = 318 en el primer piso, ¿cómo se anota correctamente el producto al multiplicar por el 2 de las decenas?",
-              "clue": "💡 Truco: El 2 vale 20. Coloca un '0 fantasma' debajo del 8 o deja un huequito antes de multiplicar.",
+              "clue": "💡 Truco de Pizarra: El 2 vale 20. Coloca un '0 fantasma' debajo del 8 o corre un casillero a la izquierda antes de multiplicar.",
               "options": [
                 "106 (empezando justo debajo del 8)",
                 "1 060 (o 106 dejando libre la columna del 8)",
@@ -438,14 +436,14 @@
             {
               "id": "rep_m2",
               "type": "choice",
-              "question": "TRUCO DEL CERO FINAL: En la tienda escolar hay 45 paquetes con 20 galletas cada uno. ¿Cómo calculas el total en un solo paso mental?",
-              "clue": "💡 Truco: Tapa el cero del 20, multiplica 45 × 2 = 90 y al final devuélvele el cero.",
+              "question": "TRUCO DEL CERO FINAL: En la tienda escolar hay 45 paquetes con 20 galletas cada uno. ¿Cómo calculas el total rápidamente en un solo paso?",
+              "clue": "💡 Truco de Pizarra: Tapa el cero del 20 con tu dedo, multiplica 45 × 2 = 90 y al final devuélvele el cero.",
               "options": [
-                "Multiplicas 45 × 2 = 90 y le agregas el cero $\\rightarrow$ 900 galletas",
+                "Multiplicas 45 × 2 = 90 y le agregas el cero ➔ 900 galletas",
                 "Sumas 45 + 20 = 65 galletas",
                 "Multiplicas 45 × 10 = 450 y sumas 2"
               ],
-              "correct": "Multiplicas 45 × 2 = 90 y le agregas el cero $\\rightarrow$ 900 galletas",
+              "correct": "Multiplicas 45 × 2 = 90 y le agregas el cero ➔ 900 galletas",
               "feedback": "45 × 2 = 90. Al agregar el cero de la decena obtenemos 900 de forma directa.",
               "tip": "Multiplicar por decenas completas (20, 30, 40): opera el número base y añade el 0."
             },
@@ -453,7 +451,7 @@
               "id": "rep_m3",
               "type": "choice",
               "question": "DESCOMPOSICIÓN RÁPIDA (14 × 15): ¿Cuál es la forma más sencilla de calcularlo mentalmente?",
-              "clue": "💡 Truco: 15 es (10 + 5). Multiplica 14 × 10 y súmale la mitad (14 × 5).",
+              "clue": "💡 Truco de Pizarra: 15 es (10 + 5). Multiplica 14 × 10 y súmale la mitad (14 × 5).",
               "options": [
                 "(14 × 10) + (14 × 5) = 140 + 70 = 210",
                 "(14 × 1) + (14 × 5) = 14 + 70 = 84",
@@ -467,7 +465,7 @@
               "id": "rep_m4",
               "type": "choice",
               "question": "DETECTIVE DE ERRORES: Un alumno resolvió 64 × 23. Obtuvo 192 en el primer piso y anotó 128 justo debajo sin dejar espacio, sumando 192 + 128 = 320. ¿Dónde cometió la equivocación?",
-              "clue": "💡 Truco: Revisa si alineó las decenas o si sumó 128 como si fueran unidades.",
+              "clue": "💡 Truco de Pizarra: Revisa si alineó las decenas o si sumó 128 como si fuesen unidades.",
               "options": [
                 "Multiplicó mal 64 × 3.",
                 "No dejó la grada de las decenas; debió sumar 192 + 1 280 = 1 472.",
@@ -481,8 +479,8 @@
               "id": "rep_m5",
               "type": "write",
               "isComplex": true,
-              "question": "DESAFÍO OPERATIVO EN PIZARRA: Resuelve 48 × 25 usando los dos pisos en tu pizarra y escribe el producto final.",
-              "clue": "💡 Truco: Piso 1: 48 × 5 = 240. Piso 2: coloca el cero fantasma y haz 48 × 2 = 96 (queda 960). ¡Súmalos!",
+              "question": "DESAFÍO OPERATIVO EN PIZARRA: Resuelve 48 × 25 usando los dos pisos en tu pizarra y escribe el producto final numérico.",
+              "clue": "💡 Truco de Pizarra: Piso 1: 48 × 5 = 240. Piso 2: coloca el cero fantasma y haz 48 × 2 = 96 (queda 960). ¡Súmalos!",
               "correct": "1200",
               "feedback": "Piso 1: 48 × 5 = 240. Piso 2: 48 × 20 = 960. Suma final: 240 + 960 = 1 200.",
               "tip": "240 + 960 = 1 200."
@@ -500,11 +498,11 @@
               "question": "LA BALANZA Y PALABRAS CLAVE: 'La edad de Joaquín aumentada en 15 es igual a 42'. ¿Cómo se plantea y resuelve la incógnita x?",
               "clue": "💡 Palabra clave: 'Aumentada' significa sumar (+). Al cruzar el signo igual (=), pasa con la operación contraria: restar (-).",
               "options": [
-                "x + 15 = 42 $\\rightarrow$ x = 42 - 15 = 27",
-                "x - 15 = 42 $\\rightarrow$ x = 42 + 15 = 57",
-                "15x = 42 $\\rightarrow$ x = 42 ÷ 15"
+                "x + 15 = 42 ➔ x = 42 - 15 = 27",
+                "x - 15 = 42 ➔ x = 42 + 15 = 57",
+                "15x = 42 ➔ x = 42 ÷ 15"
               ],
-              "correct": "x + 15 = 42 $\\rightarrow$ x = 42 - 15 = 27",
+              "correct": "x + 15 = 42 ➔ x = 42 - 15 = 27",
               "feedback": "'Aumentada' es suma (+). Para despejar, el 15 pasa restando al segundo miembro: 42 - 15 = 27.",
               "tip": "Lo que suma a un lado, pasa al otro lado restando."
             },
@@ -541,14 +539,14 @@
               "type": "choice",
               "isComplex": true,
               "question": "PROBLEMA DE DOS ETAPAS: 'Si al triple de figuritas de Liam le sumamos 10, obtenemos 40'. ¿Cuántas figuritas tiene Liam?",
-              "clue": "💡 Truco: Escribe 3x + 10 = 40. Paso 1: Pasa el 10 a restar (40 - 10 = 30). Paso 2: Pasa el 3 a dividir (30 ÷ 3).",
+              "clue": "💡 Truco de Pizarra: Escribe 3x + 10 = 40. Paso 1: Pasa el 10 a restar (40 - 10 = 30). Paso 2: Divide entre 3 (30 ÷ 3).",
               "options": [
                 "10 figuritas",
                 "15 figuritas",
                 "30 figuritas"
               ],
               "correct": "10 figuritas",
-              "feedback": "3x + 10 = 40 $\\rightarrow$ 3x = 40 - 10 = 30 $\\rightarrow$ x = 30 ÷ 3 = 10 figuritas.",
+              "feedback": "3x + 10 = 40 ➔ 3x = 40 - 10 = 30 ➔ x = 30 ÷ 3 = 10 figuritas.",
               "tip": "Paso 1: Resta el 10 (40 - 10 = 30). Paso 2: Divide entre 3 (30 ÷ 3 = 10)."
             },
             {
@@ -556,9 +554,9 @@
               "type": "write",
               "isComplex": true,
               "question": "DESAFÍO EN PIZARRA: En una caja hay cierta cantidad de plumones (x). Compras 25 plumones más y ahora tienes 60 en total. ¿Cuántos plumones había al inicio? Escribe solo el número.",
-              "clue": "💡 Truco: Plantea x + 25 = 60. Pasa el 25 a restar al otro lado en tu pizarra.",
+              "clue": "💡 Truco de Pizarra: Plantea x + 25 = 60. Pasa el 25 a restar al otro lado en tu pizarra (60 - 25).",
               "correct": "35",
-              "feedback": "x + 25 = 60 $\\rightarrow$ x = 60 - 25 = 35 plumones.",
+              "feedback": "x + 25 = 60 ➔ x = 60 - 25 = 35 plumones.",
               "tip": "60 - 25 = 35."
             }
           ]
@@ -568,11 +566,22 @@
 
     let comodinUsado = false;
     let logDudas = {};
+    let questionTimers = {};
 
     function trackDuda(id) {
         logDudas[id] = (logDudas[id] || 0) + 1;
         if (window.navigator && window.navigator.vibrate) {
             window.navigator.vibrate(25);
+        }
+        if (logDudas[id] >= 2) {
+            revelarPista(id);
+        }
+    }
+
+    function revelarPista(id) {
+        const clueEl = document.getElementById('clue_' + id);
+        if (clueEl && !clueEl.classList.contains('visible')) {
+            clueEl.classList.add('visible');
         }
     }
 
@@ -606,6 +615,7 @@
                 if (q.clue) {
                     const clueDiv = document.createElement('div');
                     clueDiv.className = 'clue-box';
+                    clueDiv.id = 'clue_' + q.id;
                     clueDiv.innerText = q.clue;
                     secDiv.appendChild(clueDiv);
                 }
@@ -635,11 +645,18 @@
                 }
                 questionsColumn.appendChild(secDiv);
                 questionCounter++;
+
+                questionTimers[q.id] = setTimeout(() => {
+                    const saved = localStorage.getItem('matematica_repaso_3b_' + q.id);
+                    if (!saved) {
+                        revelarPista(q.id);
+                    }
+                }, 18000);
             });
 
             const visualCard = document.createElement('div');
             visualCard.className = 'visual-side-card';
-            visualCard.innerHTML = `<span class="visual-emoji">${section.emoji}</span><span class="visual-tag">${section.tag}</span><p style="font-size:0.85em; color:#555; margin-top:10px;">¡Tú puedes, Edward! Aplica cada truco y resuelve paso a paso en tu pizarra.</p>`;
+            visualCard.innerHTML = `<span class="visual-emoji">${section.emoji}</span><span class="visual-tag">${section.tag}</span><p style="font-size:0.85em; color:#555; margin-top:10px;">¡Tú puedes, Edward! Si necesitas ayuda con alguna pregunta, te daremos un truco clave.</p>`;
             layoutDiv.appendChild(questionsColumn);
             layoutDiv.appendChild(visualCard);
             container.appendChild(layoutDiv);
