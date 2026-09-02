@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen 360° Personal Social - III Bimestre</title>
+    <style>
+        :root {
+            --primary: #e67e22;
+            --primary-dark: #d35400;
+            --accent: #2980b9;
+            --bg-color: #fdfaf6;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
+            background-color: var(--bg-color);
+            padding: 15px;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 6px solid var(--primary);
+            position: relative;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .back-nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            background: #ffffff;
+            color: var(--primary-dark);
+            border: 2px solid var(--primary-dark);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.95em;
+            transition: all 0.2s ease;
+        }
+
+        .back-nav-button:hover {
+            background: var(--primary);
+            color: #ffffff;
+            transform: scale(1.03);
+        }
+
+        h1 {
+            text-align: center;
+            color: #b94a00;
+            text-transform: uppercase;
+            font-size: 1.8em;
+            margin: 0 0 5px 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.05em;
+            margin-bottom: 25px;
+        }
+
+        .section-header {
+            position: sticky;
+            top: 10px;
+            background: var(--primary);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin: 25px 0 15px 0;
+            font-size: 1.1em;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(230, 126, 34, 0.3);
+        }
+
+        .main-layout {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .questions-column {
+            flex: 1;
+        }
+
+        .visual-side-card {
+            width: 210px;
+            background: #fef5ec;
+            border: 3px dashed var(--primary);
+            border-radius: 18px;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 75px;
+            box-sizing: border-box;
+        }
+
+        .visual-emoji {
+            font-size: 4em;
+            display: block;
+            margin-bottom: 8px;
+            animation: floatAnim 3s ease-in-out infinite;
+        }
+
+        .visual-tag {
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .section {
+            margin-bottom: 15px;
+            padding: 16px;
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            background-color: #ffffff;
+            transition: border-color 0.3s;
+        }
+
+        .incomplete {
+            border: 2px solid #e74c3c !important;
+            background-color: #fff8f8 !important;
+        }
+
+        .question-title {
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #2f3542;
+            display: block;
+            font-size: 1.02em;
+            line-height: 1.4;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 2px solid #cbd5e1;
+            font-size: 15px;
+            font-family: inherit;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+        }
+
+        .options label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #fafafa;
+            transition: all 0.2s ease;
+        }
+
+        .options label:hover {
+            background: #fef5ec;
+            border-color: var(--primary);
+        }
+
+        .powerup-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 4px #1b4f72;
+        }
+
+        .powerup-btn:disabled {
+            background: #bdc3c7;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        button#btn-evaluar {
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            height: 55px;
+            margin: 30px auto;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px var(--primary-dark);
+            transition: transform 0.1s;
+        }
+
+        button#btn-evaluar:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px var(--primary-dark);
+        }
+
+        #result-box {
+            display: none;
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 30px;
+            border: 3px solid;
+        }
+
+        .correct-box {
+            background: #fdfaf6;
+            color: #27ae60;
+            border-color: #2ecc71;
+        }
+
+        .error-box {
+            background: #fffdf0;
+            color: #d35400;
+            border-color: #f39c12;
+        }
+
+        .revision-container {
+            margin-top: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .item-revision {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 6px solid #ccc;
+            background: #fafafa;
+        }
+
+        .resp-correcta {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .resp-usuario {
+            font-style: italic;
+            color: #555;
+        }
+
+        .explicacion {
+            color: #2980b9;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .tip-pizarra {
+            color: #d35400;
+            font-size: 0.88em;
+            margin-top: 6px;
+            background: #fff3e0;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        .missing-alert {
+            color: #e74c3c;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+            padding: 12px;
+            background: #fdf2f2;
+            border-radius: 10px;
+            border: 2px solid #e74c3c;
+        }
+
+        .diagram-container {
+            margin: 15px 0;
+            background: #fafbfc;
+            border: 2px dashed #b2bec3;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .diagram-svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media(max-width: 800px) {
+            .main-layout {
+                flex-direction: column;
+            }
+            .visual-side-card {
+                width: 100%;
+                position: static;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="nav-bar">
+        <a href="../index.html" class="back-nav-button">⬅️ Volver a la Agenda</a>
+        <button class="powerup-btn" id="global-5050" onclick="usarCincuentaCincuentaGlobal()">⚡ Usar Comodín 50/50 (1 vez)</button>
+    </div>
+
+    <h1>🗺️ Examen de Personal Social - III Bimestre</h1>
+    <h2>Colegio San Luis • 3.° Primaria</h2>
+
+    <div id="missing-msg" class="missing-alert">⚠️ ¡Edward, aún te faltan preguntas por responder! Revisa las casillas en rojo.</div>
+
+    <form id="quizForm">
+        <div id="quizContainer"></div>
+        <button type="button" id="btn-evaluar" onclick="validarExamen()">Terminar y Calificar</button>
+    </form>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+        <div id="revision-lista" class="revision-container">
+            <h4>📋 Pizarra de Respuestas y Tips de Repaso:</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const examData = {
+      "sections": [
+        {
+          "title": "Bloque 1: Continentes y Océanos del Planeta Tierra",
+          "emoji": "🌍",
+          "tag": "Geografía Mundial",
+          "questions": [
+            {
+              "id": "ps1",
+              "type": "choice",
+              "question": "¿Qué son los continentes según lo aprendido en clase?",
+              "options": [
+                "Grandes extensiones de tierra rodeadas por océanos.",
+                "Grandes extensiones de agua salada.",
+                "Islas pequeñas donde solo viven aves."
+              ],
+              "correct": "Grandes extensiones de tierra rodeadas por océanos.",
+              "feedback": "Los continentes son las enormes masas de tierra emergida donde vivimos los seres humanos.",
+              "tip": "¡Atajo de Pizarra! Continente = Gran masa de TIERRA firme."
+            },
+            {
+              "id": "ps2",
+              "type": "choice",
+              "question": "¿Cuántos continentes existen en nuestro planeta Tierra?",
+              "options": ["4 continentes", "6 continentes", "8 continentes"],
+              "correct": "6 continentes",
+              "feedback": "En el colegio San Luis estudiamos los 6 continentes: América, Asia, África, Europa, Oceanía y Antártida.",
+              "tip": "¡Regla 6-5! Son 6 continentes y 5 océanos."
+            },
+            {
+              "id": "ps3",
+              "type": "choice",
+              "question": "¿En qué continente se encuentra ubicado nuestro país, el Perú?",
+              "options": ["Europa", "Asia", "América"],
+              "correct": "América",
+              "feedback": "El Perú se ubica en el continente de América, específicamente en América del Sur.",
+              "tip": "¡Orgullo peruano! El Perú está en América del Sur."
+            },
+            {
+              "id": "ps4",
+              "type": "choice",
+              "question": "¿Cuál es el continente más grande de la Tierra?",
+              "options": ["Oceanía", "Asia", "Europa"],
+              "correct": "Asia",
+              "feedback": "Asia es el continente de mayor extensión territorial y población del mundo.",
+              "tip": "¡Atajo geográfico! Asia = El continente MÁS GRANDE."
+            },
+            {
+              "id": "ps5",
+              "type": "choice",
+              "question": "¿Cuál es el continente más pequeño del mundo?",
+              "options": ["Oceanía", "África", "América"],
+              "correct": "Oceanía",
+              "feedback": "Oceanía es el continente de menor tamaño territorial de nuestro planeta.",
+              "tip": "Oceanía = El continente MÁS PEQUEÑO."
+            },
+            {
+              "id": "ps6",
+              "type": "choice",
+              "question": "¿Cuál es el continente más frío del planeta y que está cubierto de hielo?",
+              "options": ["África", "Europa", "Antártida"],
+              "correct": "Antártida",
+              "feedback": "La Antártida se localiza en el Polo Sur y está cubierta permanentemente de gruesas capas de hielo.",
+              "tip": "Antártida = Hielo perpetuo y frío extremo."
+            },
+            {
+              "id": "ps7",
+              "type": "choice",
+              "question": "¿Qué son los océanos?",
+              "options": [
+                "Grandes extensiones de tierra cultivable.",
+                "Enormes cantidades de agua salada que rodean los continentes.",
+                "Ríos de agua dulce que cruzan las ciudades."
+              ],
+              "correct": "Enormes cantidades de agua salada que rodean los continentes.",
+              "feedback": "Los océanos son gigantescas masas de agua salada que cubren la mayor parte del planeta.",
+              "tip": "Océanos = Enormes masas de AGUA SALADA."
+            },
+            {
+              "id": "ps8",
+              "type": "choice",
+              "question": "¿Cuál es el océano que baña las costas del Perú y es el más grande del mundo?",
+              "options": ["Océano Atlántico", "Océano Pacífico", "Océano Índico"],
+              "correct": "Océano Pacífico",
+              "feedback": "El Océano Pacífico baña directamente el litoral peruano y es el más extenso de la Tierra.",
+              "tip": "¡Nuestro mar! Las costas peruanas son bañadas por el Océano Pacífico."
+            },
+            {
+              "id": "ps9",
+              "type": "write",
+              "question": "Océano ubicado en el extremo norte del planeta, cerca del Polo Norte: Océano Glacial Á _ _ i c o.",
+              "correct": "artico",
+              "feedback": "El Océano Glacial Ártico rodea el casquete polar septentrional.",
+              "tip": "Arriba en el norte = Ártico. Abajo en el sur = Antártico."
+            },
+            {
+              "id": "ps10",
+              "type": "choice",
+              "question": "Verdadero o Falso: El Océano Atlántico se encuentra ubicado entre América, Europa y África.",
+              "options": ["Verdadero", "Falso"],
+              "correct": "Verdadero",
+              "feedback": "El Atlántico separa las masas de América por el oeste, y Europa con África por el este.",
+              "tip": "El Atlántico es el océano intermedio entre América, Europa y África."
+            }
+          ]
+        },
+        {
+          "title": "Bloque 2: Llegada de los Primeros Pobladores a América",
+          "emoji": "🏹",
+          "tag": "Poblamiento Americano",
+          "questions": [
+            {
+              "id": "ps11",
+              "type": "choice",
+              "question": "Según la teoría inmigracionista más aceptada, ¿desde qué continente procedían los primeros pobladores?",
+              "options": ["África", "Asia", "Europa"],
+              "correct": "Asia",
+              "feedback": "La teoría inmigracionista sostiene que grupos humanos llegaron provenientes del continente asiático.",
+              "tip": "¡Ruta inicial! Los primeros humanos llegaron a América desde ASIA."
+            },
+            {
+              "id": "ps12",
+              "type": "choice",
+              "question": "¿Quién fue el notable investigador que propuso la teoría inmigracionista asiática?",
+              "options": ["Alex Hrdlicka", "Ruth Shady", "Cristóbal Colón"],
+              "correct": "Alex Hrdlicka",
+              "feedback": "El antropólogo Alex Hrdlicka planteó que los cazadores cruzaron por el norte desde Siberia (Asia).",
+              "tip": "¡Científico clave! Alex Hrdlicka = Teoría Inmigracionista Asiática."
+            },
+            {
+              "id": "ps13",
+              "type": "choice",
+              "question": "¿Cómo se llama el puente de tierra que unió Asia con América cuando bajó el nivel del mar?",
+              "options": ["Cordillera Blanca", "Beringia (Estrecho de Bering)", "Valle de Supe"],
+              "correct": "Beringia (Estrecho de Bering)",
+              "feedback": "Durante la glaciación el mar bajó y se formó el puente terrestre de Beringia entre Siberia y Alaska.",
+              "tip": "Paso terrestre = Istmo / Puente de Beringia."
+            },
+            {
+              "id": "ps14",
+              "type": "choice",
+              "question": "¿Cuál fue el motivo principal por el cual se desplazaban estos primeros grupos humanos?",
+              "options": [
+                "Para hacer turismo y viajar en aviones.",
+                "Buscaban alimentos, agua y seguían a los animales para cazar.",
+                "Para construir centros comerciales y tiendas."
+              ],
+              "correct": "Buscaban alimentos, agua y seguían a los animales para cazar.",
+              "feedback": "Eran cazadores que seguían las manadas de mamuts y bisontes para poder alimentarse y sobrevivir.",
+              "tip": "Causa del viaje = Supervivencia: comida, agua y persecución de presas."
+            },
+            {
+              "id": "ps15",
+              "type": "choice",
+              "question": "A qué región de nuestro continente llegaron primero al cruzar Beringia:",
+              "options": ["América del Sur", "América Central", "América del Norte"],
+              "correct": "América del Norte",
+              "feedback": "Al cruzar el estrecho de Bering ingresaron por Alaska, en América del Norte.",
+              "tip": "Entraron por arriba: primero llegaron a América del Norte."
+            },
+            {
+              "id": "ps16",
+              "type": "choice",
+              "question": "Indica el orden correcto de la secuencia del poblamiento americano:",
+              "options": [
+                "1. Asia -> 2. Beringia -> 3. América del Norte -> 4. América del Sur",
+                "1. América del Sur -> 2. Asia -> 3. Europa -> 4. Beringia",
+                "1. Beringia -> 2. Oceanía -> 3. Asia -> 4. Lima"
+              ],
+              "correct": "1. Asia -> 2. Beringia -> 3. América del Norte -> 4. América del Sur",
+              "feedback": "La ruta migratoria inició en Asia, cruzó Beringia hacia Norteamérica y descendió al sur.",
+              "tip": "Secuencia: Asia ➔ Puente de Beringia ➔ Norteamérica ➔ Sur."
+            },
+            {
+              "id": "ps17",
+              "type": "choice",
+              "question": "¿De qué material fabricaban sus armas y herramientas estos primeros pobladores?",
+              "options": ["Plástico y acero inoxidable", "Piedra, huesos y madera", "Vidrio y aluminio"],
+              "correct": "Piedra, huesos y madera",
+              "feedback": "Tallaban piedras para hacer lanzas, raspadores y puntas de proyectil.",
+              "tip": "Herramientas líticas = Hechas a base de PIEDRA tallada."
+            },
+            {
+              "id": "ps18",
+              "type": "choice",
+              "question": "¿Verdadero o Falso? Los primeros pobladores viajaban en automóviles modernos por carreteras asfaltadas.",
+              "options": ["Verdadero", "Falso"],
+              "correct": "Falso",
+              "feedback": "Hace miles de años no existían vehículos ni carreteras; se desplazaban caminando a pie.",
+              "tip": "Caminaban a pie soportando frío y terrenos agrestes."
+            },
+            {
+              "id": "ps19",
+              "type": "write",
+              "question": "Gran animal prehistórico con colmillos curvos y pelaje abundante que cazaban: M _ m u t.",
+              "correct": "mamut",
+              "feedback": "El mamut era una de las grandes presas de la megafauna pleistocénica.",
+              "tip": "Mamut o Mastodonte."
+            },
+            {
+              "id": "ps20",
+              "type": "choice",
+              "question": "¿Qué actividades de subsistencia realizaban principalmente estos primeros pobladores?",
+              "options": [
+                "Caza, pesca y recolección de frutos y plantas silvestres.",
+                "Programación de computadoras e imprenta.",
+                "Comercio formal con monedas y billetes."
+              ],
+              "correct": "Caza, pesca y recolección de frutos y plantas silvestres.",
+              "feedback": "Obtenían todo directamente de la naturaleza: cazaban fauna silvestre y recolectaban raíces y semillas.",
+              "tip": "Tríada primitiva: Caza, Pesca y Recolección."
+            }
+          ]
+        },
+        {
+          "title": "Bloque 3: Primeros Pobladores del Perú y Modo de Vida",
+          "emoji": "🦣",
+          "tag": "Poblamiento del Perú",
+          "questions": [
+            {
+              "id": "ps21",
+              "type": "choice",
+              "question": "¿Cómo se llama a las personas que no viven fijas en un lugar y se trasladan constantemente?",
+              "options": ["Sedentarias", "Nómadas (o nómades)", "Alcaldes"],
+              "correct": "Nómadas (o nómades)",
+              "feedback": "Los nómades no tenían casa fija; cuando los alimentos escaseaban, cambiaban de lugar.",
+              "tip": "¡Concepto clave! NÓMADA = Se desplaza de un lugar a otro sin residencia fija."
+            },
+            {
+              "id": "ps22",
+              "type": "choice",
+              "question": "¿Dónde se refugiaban y protegían del frío los primeros habitantes del Perú?",
+              "options": [
+                "En edificios y hoteles",
+                "En cuevas, abrigos rocosos y refugios sencillos",
+                "En tiendas de campaña sintéticas"
+              ],
+              "correct": "En cuevas, abrigos rocosos y refugios sencillos",
+              "feedback": "Aprovechaban las cavidades naturales de las montañas como cuevas y abrigos rocosos.",
+              "tip": "Vivienda primitiva: Cuevas y abrigos en los cerros."
+            },
+            {
+              "id": "ps23",
+              "type": "choice",
+              "question": "El Hombre de Pacaicasa fue hallado en el departamento de:",
+              "options": ["Ayacucho", "Huánuco", "Loreto"],
+              "correct": "Ayacucho",
+              "feedback": "Los restos líticos de Pacaicasa se descubrieron en la cueva de Piquimachay, Ayacucho.",
+              "tip": "Pacaicasa = Ayacucho (uno de los rastros más antiguos)."
+            },
+            {
+              "id": "ps24",
+              "type": "choice",
+              "question": "El Hombre de Lauricocha, que vivió en cuevas y cazaba venados, se ubicó en:",
+              "options": ["Huánuco", "Tumbes", "Tacna"],
+              "correct": "Huánuco",
+              "feedback": "Lauricocha se encuentra en Huánuco, famoso por sus cuevas, entierros y caza de venados.",
+              "tip": "Lauricocha = Huánuco (cazador de venados y camélidos)."
+            },
+            {
+              "id": "ps25",
+              "type": "choice",
+              "question": "¿Con qué se abrigaban y vestían los primeros pobladores del territorio peruano?",
+              "options": [
+                "Ropa de algodón comprada en tiendas",
+                "Pieles de los animales que cazaban",
+                "Telas de seda importadas"
+              ],
+              "correct": "Pieles de los animales que cazaban",
+              "feedback": "Trataban y limpiaban las pieles y cueros de los animales cazados para protegerse del frío andino.",
+              "tip": "Vestimenta: Pieles y cueros de animales."
+            },
+            {
+              "id": "ps26",
+              "type": "choice",
+              "question": "Con el paso de muchos años, los pobladores descubrieron la agricultura y la ganadería, volviéndose:",
+              "options": ["Nómades eternos", "Sedentarios (viviendo en aldeas fijas)", "Astronautas"],
+              "correct": "Sedentarios (viviendo en aldeas fijas)",
+              "feedback": "Al aprender a cultivar plantas y domesticar animales, construyeron casas fijas formando aldeas.",
+              "tip": "Sedentario = Vive fijo en un lugar gracias al cultivo y crianza."
+            },
+            {
+              "id": "ps27",
+              "type": "choice",
+              "question": "¿Qué herramientas de piedra usaban los nómades para cortar la carne y pieles?",
+              "options": ["Raspadores y puntas de proyectil", "Tijeras de metal", "Licuadoras manuales"],
+              "correct": "Raspadores y puntas de proyectil",
+              "feedback": "Fabricaban lascas afiladas como cuchillos y raspadores para retirar la grasa de las pieles.",
+              "tip": "Herramientas: Puntas y raspadores de piedra."
+            },
+            {
+              "id": "ps28",
+              "type": "write",
+              "question": "Animal andino de cuello largo y lana que cazaban y luego aprendieron a domesticar: V _ c u ñ a.",
+              "correct": "vicuna",
+              "feedback": "Las vicuñas y guanacos fueron los camélidos que habitaron las alturas andinas.",
+              "tip": "Camélido silvestre: Vicuña / Guanaco."
+            },
+            {
+              "id": "ps29",
+              "type": "choice",
+              "question": "Verdadero o Falso: Los primeros pobladores llegaron al Perú hace aproximadamente entre 14 000 y 15 000 años.",
+              "options": ["Verdadero", "Falso"],
+              "correct": "Verdadero",
+              "feedback": "Ese es el rango temporal estimado en las fuentes escolares para el poblamiento temprano del Perú.",
+              "tip": "Antigüedad peruana: Hace más de 14 000 años."
+            },
+            {
+              "id": "ps30",
+              "type": "choice",
+              "question": "Cuando los recursos de una zona se agotaban, los grupos nómadas:",
+              "options": [
+                "Se mudaban a otro valle o cueva buscando agua y caza.",
+                "Hacían pedidos por teléfono a un supermercado.",
+                "Se quedaban sentados esperando sin hacer nada."
+              ],
+              "correct": "Se mudaban a otro valle o cueva buscando agua y caza.",
+              "feedback": "La necesidad de alimento obligaba a las bandas nómadas a migrar continuamente.",
+              "tip": "Escasez de comida = Mudanza a nuevo refugio."
+            }
+          ]
+        },
+        {
+          "title": "Bloque 4: La Civilización Caral y Patrimonio Cultural",
+          "emoji": "🏛️",
+          "tag": "Cultura Caral",
+          "questions": [
+            {
+              "id": "ps31",
+              "type": "choice",
+              "question": "¿En qué valle y región del Perú se desarrolló la civilización de Caral?",
+              "options": [
+                "Valle de Supe, en la región Lima.",
+                "Valle Sagrado, en el Cusco.",
+                "Valle del Mantaro, en Junín."
+              ],
+              "correct": "Valle de Supe, en la región Lima.",
+              "feedback": "Caral se ubica en el valle del río Supe, provincia de Barranca, región Lima (a 182 km al norte).",
+              "hasDiagram": "mapa_supe",
+              "tip": "¡Ubicación exacta! Caral = Valle de SUPE en LIMA."
+            },
+            {
+              "id": "ps32",
+              "type": "choice",
+              "question": "¿Hace cuántos años aproximadamente floreció la civilización de Caral?",
+              "options": ["Hace 500 años", "Hace 5 000 años", "Hace 50 años"],
+              "correct": "Hace 5 000 años",
+              "feedback": "Caral floreció hace 5 000 años (aprox. 3000 a.C.), contemporánea con las pirámides de Egipto.",
+              "tip": "¡Memoria histórica! Caral = 5 000 años de antigüedad."
+            },
+            {
+              "id": "ps33",
+              "type": "choice",
+              "question": "¿Por qué es reconocida Caral a nivel internacional?",
+              "options": [
+                "Por ser la ciudad más moderna del siglo XXI.",
+                "Por ser considerada la civilización más antigua del Perú y de América.",
+                "Por tener fábricas de automóviles."
+              ],
+              "correct": "Por ser considerada la civilización más antigua del Perú y de América.",
+              "feedback": "Caral es la cuna de la civilización en América y la más antigua de todo el continente.",
+              "tip": "¡Título de oro! Caral = La civilización MÁS ANTIGUA DE AMÉRICA."
+            },
+            {
+              "id": "ps34",
+              "type": "choice",
+              "question": "¿Quién es la ilustre arqueóloga peruana que investigó y descubrió científicamente Caral?",
+              "options": ["Ruth Shady Solís", "María Reiche", "Chabuca Granda"],
+              "correct": "Ruth Shady Solís",
+              "feedback": "La Dra. Ruth Shady Solís lideró los trabajos arqueológicos que revelaron la trascendencia mundial de Caral.",
+              "tip": "¡Arqueóloga insigne! Ruth Shady Solís."
+            },
+            {
+              "id": "ps35",
+              "type": "choice",
+              "question": "¿Qué construcciones monumentales destacan en la Ciudad Sagrada de Caral?",
+              "options": [
+                "Rascacielos con ascensores",
+                "Grandes pirámides escalonadas, plazas circulares hundidas y viviendas",
+                "Castillos con fosas de agua"
+              ],
+              "correct": "Grandes pirámides escalonadas, plazas circulares hundidas y viviendas",
+              "hasDiagram": "piramide",
+              "feedback": "Sus arquitectos levantaron pirámides con plataformas de piedra y plazas ceremoniales circulares.",
+              "tip": "Arquitectura de Caral: Pirámides truncas + Plazas circulares."
+            },
+            {
+              "id": "ps36",
+              "type": "choice",
+              "question": "¿Caral se desarrolló ANTES o DESPUÉS del Imperio de los Incas?",
+              "options": [
+                "Mucho antes que los incas (miles de años antes).",
+                "Mucho después que los incas.",
+                "Al mismo tiempo que los incas."
+              ],
+              "correct": "Mucho antes que los incas (miles de años antes).",
+              "feedback": "Caral pertenece al periodo Arcaico Tardío precerámico, miles de años antes de que surgiera el Tahuantinsuyo.",
+              "tip": "¡Cuidado con la trampa! Caral fue MILES DE AÑOS ANTES de los incas."
+            },
+            {
+              "id": "ps37",
+              "type": "choice",
+              "question": "¿Cuáles fueron las principales actividades económicas de los pobladores de Caral?",
+              "options": [
+                "Agricultura, pesca en el litoral y el intercambio (trueque) de productos.",
+                "Venta de gasolina y aparatos electrónicos.",
+                "Únicamente cazar mamuts en la nieve."
+              ],
+              "correct": "Agricultura, pesca en el litoral y el intercambio (trueque) de productos.",
+              "feedback": "Cultivaban algodón y alimentos en el valle fértil, aprovechaban el mar cercano para pescar e intercambiaban bienes.",
+              "tip": "Economía Caral: Agricultura en el valle + Pesca en el mar + Intercambio."
+            },
+            {
+              "id": "ps38",
+              "type": "choice",
+              "question": "Entre los hallazgos arqueológicos ceremoniales en Caral se descubrieron:",
+              "options": [
+                "Flautas de hueso de pelícano y guanaco, y restos de quipus",
+                "Guitarras eléctricas y tambores de metal",
+                "Teléfonos antiguos de disco"
+              ],
+              "correct": "Flautas de hueso de pelícano y guanaco, y restos de quipus",
+              "hasDiagram": "flauta",
+              "feedback": "Se encontraron más de 30 flautas traversas hechas de huesos de animales y un quipu primitivo.",
+              "tip": "Arte y registro: Flautas de hueso e inicios del quipu."
+            },
+            {
+              "id": "ps39",
+              "type": "write",
+              "question": "El río que permitió regar los valles fértiles de Caral es el río: S _ _ e.",
+              "correct": "supe",
+              "feedback": "El río Supe abastecía de agua vital para la agricultura y supervivencia en el desierto costero.",
+              "tip": "Río y valle llevan el mismo nombre: Supe."
+            },
+            {
+              "id": "ps40",
+              "type": "choice",
+              "question": "¿Por qué debemos cuidar, respetar y proteger el patrimonio arqueológico como Caral?",
+              "options": [
+                "Porque nos permite conocer la historia y la identidad cultural de nuestros antepasados.",
+                "Para poder pintar grafitis sobre las piedras antiguas.",
+                "Porque no tiene ningún valor para el Perú."
+              ],
+              "correct": "Porque nos permite conocer la historia y la identidad cultural de nuestros antepasados.",
+              "feedback": "El patrimonio arqueológico es herencia de nuestra historia que debemos preservar para el futuro.",
+              "tip": "Patrimonio cultural = Nuestra identidad y riqueza histórica que debemos proteger."
+            }
+          ]
+        }
+      ]
+    };
+
+    let comodinUsado = false;
+    let logDudas = {};
+
+    function trackDuda(id) {
+        logDudas[id] = (logDudas[id] || 0) + 1;
+        if (window.navigator && window.navigator.vibrate) {
+            window.navigator.vibrate(25);
+        }
+    }
+
+    function renderQuiz() {
+        const container = document.getElementById('quizContainer');
+        let questionCounter = 1;
+        examData.sections.forEach(section => {
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.innerText = section.title;
+            container.appendChild(header);
+
+            const layoutDiv = document.createElement('div');
+            layoutDiv.className = 'main-layout';
+
+            const questionsColumn = document.createElement('div');
+            questionsColumn.className = 'questions-column';
+
+            section.questions.forEach(q => {
+                const secDiv = document.createElement('div');
+                secDiv.className = 'section';
+                secDiv.id = 'sec_' + q.id;
+
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'question-title';
+                titleSpan.innerText = `${questionCounter}. ${q.question}`;
+                secDiv.appendChild(titleSpan);
+
+                // SVGs inline nativos
+                if (q.hasDiagram) {
+                    const diagDiv = document.createElement('div');
+                    diagDiv.className = 'diagram-container';
+                    
+                    if (q.hasDiagram === 'mapa_supe') {
+                        diagDiv.innerHTML = `
+                            <svg class="diagram-svg" width="220" height="130" viewBox="0 0 220 130">
+                                <rect x="5" y="5" width="210" height="120" rx="10" fill="#fcf3cf" stroke="#d35400" stroke-width="2"/>
+                                <path d="M20 100 Q60 50 110 40 Q160 30 200 15" stroke="#3498db" stroke-width="6" fill="none"/>
+                                <circle cx="110" cy="40" r="8" fill="#e74c3c"/>
+                                <text x="110" y="25" font-size="11" font-weight="bold" fill="#c0392b" text-anchor="middle">📍 Caral (Valle de Supe)</text>
+                                <text x="60" y="80" font-size="10" fill="#2980b9">Río Supe</text>
+                                <text x="180" y="115" font-size="10" font-weight="bold" fill="#7f8c8d">Región Lima</text>
+                            </svg>
+                        `;
+                    } else if (q.hasDiagram === 'piramide') {
+                        diagDiv.innerHTML = `
+                            <svg class="diagram-svg" width="240" height="130" viewBox="0 0 240 130">
+                                <rect x="10" y="110" width="220" height="15" fill="#d2b48c"/>
+                                <!-- Piramide trunca -->
+                                <polygon points="30,110 210,110 180,50 60,50" fill="#e59866" stroke="#ba4a00" stroke-width="2"/>
+                                <polygon points="60,50 180,50 160,20 80,20" fill="#edbb99" stroke="#ba4a00" stroke-width="2"/>
+                                <!-- Escalera central -->
+                                <polygon points="105,110 135,110 128,20 112,20" fill="#f6ddcc" stroke="#ba4a00" stroke-width="1.5"/>
+                                <!-- Plaza circular -->
+                                <ellipse cx="120" cy="118" rx="35" ry="8" fill="none" stroke="#ba4a00" stroke-width="3"/>
+                                <text x="120" y="15" font-size="10" font-weight="bold" fill="#a04000" text-anchor="middle">Pirámide Mayor y Plaza Circular</text>
+                            </svg>
+                        `;
+                    } else if (q.hasDiagram === 'flauta') {
+                        diagDiv.innerHTML = `
+                            <svg class="diagram-svg" width="220" height="100" viewBox="0 0 220 100">
+                                <rect x="10" y="10" width="200" height="80" rx="8" fill="#fbeee6" stroke="#e67e22"/>
+                                <rect x="30" y="45" width="160" height="12" rx="6" fill="#fdfefe" stroke="#7f8c8d" stroke-width="2"/>
+                                <circle cx="65" cy="51" r="3" fill="#2c3e50"/>
+                                <circle cx="95" cy="51" r="3" fill="#2c3e50"/>
+                                <circle cx="125" cy="51" r="3" fill="#2c3e50"/>
+                                <circle cx="155" cy="51" r="3" fill="#2c3e50"/>
+                                <text x="110" y="32" font-size="11" font-weight="bold" fill="#b94a00" text-anchor="middle">🎶 Flauta Ceremonial de Caral</text>
+                                <text x="110" y="78" font-size="10" fill="#7f8c8d" text-anchor="middle">Tallada en hueso de pelícano</text>
+                            </svg>
+                        `;
+                    }
+                    secDiv.appendChild(diagDiv);
+                }
+
+                if (q.type === 'choice') {
+                    const optDiv = document.createElement('div');
+                    optDiv.className = 'options';
+                    optDiv.id = 'opts_' + q.id;
+                    q.options.forEach(opt => {
+                        const lbl = document.createElement('label');
+                        lbl.innerHTML = `<input type="radio" name="${q.id}" value="${opt}" onclick="trackDuda('${q.id}'); saveProgress('${q.id}', '${opt}')"> ${opt}`;
+                        optDiv.appendChild(lbl);
+                    });
+                    secDiv.appendChild(optDiv);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = q.id;
+                    input.placeholder = 'Escribe tu respuesta aquí...';
+                    input.oninput = function() { trackDuda(q.id); saveProgress(q.id, this.value); };
+                    secDiv.appendChild(input);
+                }
+                questionsColumn.appendChild(secDiv);
+                questionCounter++;
+            });
+
+            const visualCard = document.createElement('div');
+            visualCard.className = 'visual-side-card';
+            visualCard.innerHTML = `<span class="visual-emoji">${section.emoji}</span><span class="visual-tag">${section.tag}</span><p style="font-size:0.85em; color:#555; margin-top:10px;">¡Adelante Edward! Lee bien cada pregunta antes de marcar.</p>`;
+            layoutDiv.appendChild(questionsColumn);
+            layoutDiv.appendChild(visualCard);
+            container.appendChild(layoutDiv);
+        });
+        loadSavedProgress();
+    }
+
+    function saveProgress(id, val) {
+        localStorage.setItem('ps_exam_3b_' + id, val);
+        const itemSec = document.getElementById('sec_' + id);
+        if (itemSec) itemSec.classList.remove('incomplete');
+        if (document.querySelectorAll('.incomplete').length === 0) {
+            document.getElementById('missing-msg').style.display = 'none';
+        }
+    }
+
+    function loadSavedProgress() {
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                const saved = localStorage.getItem('ps_exam_3b_' + q.id);
+                if (saved) {
+                    if (q.type === 'choice') {
+                        const radio = document.querySelector(`input[name="${q.id}"][value="${saved}"]`);
+                        if (radio) radio.checked = true;
+                    } else {
+                        const txtInput = document.getElementById(q.id);
+                        if (txtInput) txtInput.value = saved;
+                    }
+                }
+            });
+        });
+    }
+
+    function usarCincuentaCincuentaGlobal() {
+        if (comodinUsado) return;
+        let seleccionada = prompt("Edward, escribe el número de la pregunta (1 al 40) donde quieras descartar una alternativa incorrecta:");
+        let qNum = parseInt(seleccionada);
+        if (isNaN(qNum) || qNum < 1 || qNum > 40) return;
+        let currentIdx = 1, targetId = null, targetQObj = null;
+        for (let s of examData.sections) {
+            for (let q of s.questions) {
+                if (currentIdx === qNum) { targetId = q.id; targetQObj = q; break; }
+                currentIdx++;
+            }
+            if (targetId) break;
+        }
+        if (!targetQObj || targetQObj.type !== 'choice') {
+            alert("El comodín solo se aplica a preguntas de opción múltiple.");
+            return;
+        }
+        let labels = document.getElementById('opts_' + targetId).querySelectorAll('label');
+        let incorrectasBorradas = 0;
+        labels.forEach(lbl => {
+            let radio = lbl.querySelector('input');
+            if (radio.value !== targetQObj.correct && incorrectasBorradas < 1) { 
+                lbl.style.display = 'none'; 
+                incorrectasBorradas++; 
+            }
+        });
+        comodinUsado = true;
+        if (window.navigator && window.navigator.vibrate) window.navigator.vibrate([40, 40, 40]);
+        document.getElementById('global-5050').disabled = true;
+        document.getElementById('global-5050').innerText = "⚡ Súper Poder 50/50 Usado";
+    }
+
+    function validarExamen() {
+        let vacios = [];
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let r = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`) : document.getElementById(q.id).value.trim();
+                if (!r) { 
+                    const c = document.getElementById('sec_' + q.id); 
+                    c.classList.add('incomplete'); 
+                    vacios.push(c); 
+                }
+            });
+        });
+        if (vacios.length > 0) {
+            document.getElementById('missing-msg').style.display = 'block';
+            vacios[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (window.navigator && window.navigator.vibrate) window.navigator.vibrate([100, 50, 100]);
+            return;
+        }
+        calificarExamen();
+    }
+
+    function calificarExamen() {
+        let nota = 0, questionIndex = 1, itemsHTML = "";
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let uVal = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`).value : document.getElementById(q.id).value.trim();
+                let cleanU = uVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let cleanC = q.correct.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let esOk = (cleanU === cleanC) || (q.type === 'write' && cleanU.includes(cleanC));
+                if (esOk) nota++;
+                itemsHTML += `<div class="item-revision" style="border-left:8px solid ${esOk?'#27ae60':'#e74c3c'}">
+                    <p><strong>Pregunta ${questionIndex}: ${q.question}</strong></p>
+                    <p>Tu respuesta: <span class="resp-usuario">${uVal}</span> ${esOk?'✅':'❌'}</p>
+                    ${!esOk?`<p class="resp-correcta">Respuesta Correcta: ${q.correct}</p>`:''}
+                    <p class="explicacion">📌 Explicación histórica: ${q.feedback}</p>
+                    <p class="tip-pizarra">💡 Tip de Pizarra: ${q.tip}</p>
+                    ${logDudas[q.id]>2?`<p style="color:#e67e22; font-weight:bold; font-size:0.9em; margin-top:5px;">⚠️ Atención: Dudaste en esta pregunta. ¡Repásala en tu cuaderno!</p>`:''}
+                </div>`;
+                questionIndex++;
+            });
+        });
+        const finalScore = Math.round((nota / 40) * 20);
+        const rb = document.getElementById('result-box');
+        rb.style.display = 'block';
+        document.getElementById('score-text').innerText = `Puntaje Final: ${finalScore} / 20 (${nota} de 40 aciertos)`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        rb.className = finalScore >= 11 ? "correct-box" : "error-box";
+        document.getElementById('feedback-content').innerHTML = finalScore >= 11 ? "<h4>🌟 ¡Excelente historiador, Edward! Conoces a la perfección el pasado de nuestro Perú y el mundo.</h4>" : "<h4>📚 ¡Buen esfuerzo Edward! Revisa cada tip en la pizarra de abajo para asegurar tu 20 mañana.</h4>";
+        localStorage.clear();
+        window.scrollTo({ top: rb.offsetTop, behavior: 'smooth' });
+    }
+
+    window.onload = renderQuiz;
+</script>
+</body>
+</html>

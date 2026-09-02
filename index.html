@@ -66,6 +66,7 @@
             margin-bottom: 10px;
         }
 
+        /* Horario Banner */
         .info-box {
             background-color: #eccc68;
             color: #2f3542;
@@ -80,6 +81,7 @@
             gap: 10px;
         }
 
+        /* Contenedor del Calendario */
         .timeline {
             display: flex;
             flex-direction: column;
@@ -138,6 +140,7 @@
             gap: 8px;
         }
 
+        /* Colores por Curso */
         .bg-comu { background-color: var(--comu); }
         .bg-ciencia { background-color: var(--ciencia); }
         .bg-mate { background-color: var(--mate); }
@@ -169,8 +172,9 @@
 
         .btn-comu:hover { background: var(--comu); color: white; border-color: var(--comu); }
         .btn-ciencia:hover { background: var(--ciencia); color: white; border-color: var(--ciencia); }
-        .btn-mate:hover { background: var(--mate); color: white; border-color: var(--mate); }
+        .btn-personal:hover { background: var(--personal); color: white; border-color: var(--personal); }
 
+        /* Estilos Bloqueado */
         .locked-day {
             opacity: 0.7;
             background-color: #f8f9fa;
@@ -195,6 +199,7 @@
             width: fit-content;
         }
 
+        /* Historial de Bimestres anteriores */
         .history-section {
             margin-top: 35px;
             border-top: 2px dashed #ced6e0;
@@ -295,32 +300,32 @@
             </div>
         </div>
 
-        <!-- MIÉRCOLES 02 DE SEPTIEMBRE: MATEMÁTICA (HABILITADO) -->
-        <div class="day-card border-mate">
-            <div class="date-box bg-mate">
+        <!-- MIÉRCOLES 02 DE SEPTIEMBRE: MATEMÁTICA (BLOQUEADO) -->
+        <div class="day-card locked-day">
+            <div class="date-box bg-locked">
                 <span class="day-name">Miércoles</span>
                 <span class="day-number">02</span>
                 <span class="day-month">Setiembre</span>
             </div>
             <div class="content-box">
                 <h3>🔢 Matemática</h3>
-                <a href="Set26/matematica_3grado.html" class="btn-exam btn-mate">
-                    <span>⚡ Iniciar Repaso Flash (10 Preguntas)</span>
-                    <span>➔</span>
-                </a>
+                <div class="btn-locked">🔒 Se habilitará 1 día antes del examen</div>
             </div>
         </div>
 
-        <!-- JUEVES 03 DE SEPTIEMBRE: PERSONAL SOCIAL (BLOQUEADO) -->
-        <div class="day-card locked-day">
-            <div class="date-box bg-locked">
+        <!-- JUEVES 03 DE SEPTIEMBRE: PERSONAL SOCIAL (HABILITADO) -->
+        <div class="day-card border-personal">
+            <div class="date-box bg-personal">
                 <span class="day-name">Jueves</span>
                 <span class="day-number">03</span>
                 <span class="day-month">Setiembre</span>
             </div>
             <div class="content-box">
                 <h3>🗺️ Personal Social</h3>
-                <div class="btn-locked">🔒 Se habilitará 1 día antes del examen</div>
+                <a href="Set26/personal_social_3grado.html" class="btn-exam btn-personal">
+                    <span>🚀 Iniciar Evaluación 360°</span>
+                    <span>➔</span>
+                </a>
             </div>
         </div>
 
