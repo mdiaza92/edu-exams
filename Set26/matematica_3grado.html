@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Examen 360° Matemática - III Bimestre</title>
+    <title>Repaso Flash 360° Matemática - III Bimestre</title>
     <style>
         :root {
             --primary: #3742fa;
@@ -82,6 +82,18 @@
             color: #747d8c;
             font-size: 1.05em;
             margin-bottom: 25px;
+        }
+
+        .mode-badge {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 20px auto;
+            background: #2ed573;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
         }
 
         .section-header {
@@ -173,6 +185,16 @@
             color: #856404;
             font-size: 0.9em;
             font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .clue-box {
+            background: #e8f4fd;
+            border-left: 4px solid #0984e3;
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: #0c2461;
+            font-size: 0.88em;
             margin-bottom: 10px;
         }
 
@@ -366,25 +388,26 @@
         <button class="powerup-btn" id="global-5050" onclick="usarCincuentaCincuentaGlobal()">⚡ Usar Comodín 50/50 (1 vez)</button>
     </div>
 
-    <h1>🔢 Examen de Matemática - III Bimestre</h1>
+    <h1>🎯 Repaso Focalizado: Matemática</h1>
     <h2>Colegio San Luis • 3.° Primaria | Alumno: Edward</h2>
+    <span class="mode-badge">⚡ Módulo Especial: 10 Preguntas Clave</span>
 
     <div id="missing-msg" class="missing-alert">⚠️ ¡Edward, aún te faltan preguntas por responder! Revisa las casillas marcadas en rojo.</div>
 
     <form id="quizForm">
         <div id="quizContainer"></div>
-        <button type="button" id="btn-evaluar" onclick="validarExamen()">Terminar y Calificar Examen</button>
+        <button type="button" id="btn-evaluar" onclick="validarExamen()">Terminar y Calificar Repaso</button>
     </form>
 
     <div id="result-box">
         <h3 id="score-text"></h3>
         <div id="feedback-content"></div>
         <div id="revision-lista" class="revision-container">
-            <h4>📋 Solucionario Paso a Paso y Tips de Pizarra:</h4>
+            <h4>📋 Solucionario Paso a Paso y Trucos de Pizarra:</h4>
             <div id="lista-items"></div>
         </div>
         <div class="send-instructions">
-            📸 <strong>¡Paso Final Obligatorio!</strong> Edward, toma una captura de pantalla (screenshot) de esta nota y envíala de inmediato por el <strong>Chat de Google</strong> para registrar tu nota oficial.
+            📸 <strong>¡Paso Final Obligatorio!</strong> Edward, toma una captura de pantalla (screenshot) de este puntaje y envíala por el <strong>Chat de Google</strong> para tu revisión.
         </div>
     </div>
 </div>
@@ -393,415 +416,150 @@
     const examData = {
       "sections": [
         {
-          "title": "Bloque 1: Multiplicación de 1 Cifra y Abreviada (10 Preguntas)",
-          "emoji": "✖️",
-          "tag": "Multiplicación Básica",
-          "questions": [
-            {
-              "id": "mat1",
-              "type": "choice",
-              "question": "¿Cuáles son los términos principales de la multiplicación?",
-              "options": [
-                "Sumando, sumando y suma total",
-                "Multiplicando, multiplicador y producto",
-                "Minuendo, sustraendo y diferencia"
-              ],
-              "correct": "Multiplicando, multiplicador y producto",
-              "feedback": "Los números que se multiplican se llaman factores (multiplicando y multiplicador) y el resultado es el producto.",
-              "tip": "Multiplicando × Multiplicador = Producto final."
-            },
-            {
-              "id": "mat2",
-              "type": "choice",
-              "question": "Calcula de forma abreviada: 25 × 1 000",
-              "options": ["250", "2 500", "25 000"],
-              "correct": "25 000",
-              "feedback": "Al multiplicar por 1 000, se escribe el mismo número (25) y se le agregan 3 ceros a la derecha.",
-              "tip": "Multiplicar por 1 000 = Escribir el número + 3 ceros (000)."
-            },
-            {
-              "id": "mat3",
-              "type": "choice",
-              "question": "Resuelve la operación: 136 × 5",
-              "options": ["680", "580", "650"],
-              "correct": "680",
-              "feedback": "5 × 6 = 30 (pones 0 y llevas 3); 5 × 3 = 15 + 3 = 18 (pones 8 y llevas 1); 5 × 1 = 5 + 1 = 6. Resultado: 680.",
-              "tip": "Multiplica primero unidades, luego decenas sumando la llevada, y finalmente centenas."
-            },
-            {
-              "id": "mat4",
-              "type": "choice",
-              "question": "Una fábrica produce 104 sillas diarias. ¿Cuántas sillas se producirán durante una semana entera (7 días)?",
-              "options": ["708 sillas", "728 sillas", "738 sillas"],
-              "correct": "728 sillas",
-              "feedback": "Operación: 104 × 7. 7 × 4 = 28 (llevas 2); 7 × 0 = 0 + 2 = 2; 7 × 1 = 7. Total = 728.",
-              "tip": "¡Cuidado con el cero! 7 × 0 = 0, luego se suma la llevada (0 + 2 = 2)."
-            },
-            {
-              "id": "mat5",
-              "type": "choice",
-              "question": "Calcula el resultado directo de: 120 × 100",
-              "options": ["1 200", "12 000", "120 000"],
-              "correct": "12 000",
-              "feedback": "Escribes 120 y agregas los dos ceros del 100: 120 + 00 = 12 000.",
-              "tip": "Por 100 se agregan dos ceros al final del número base."
-            },
-            {
-              "id": "mat6",
-              "type": "choice",
-              "question": "En un establo hay 32 caballos. Cada caballo necesita 4 herraduras. ¿Cuántas herraduras se necesitan en total?",
-              "options": ["128 herraduras", "136 herraduras", "118 herraduras"],
-              "correct": "128 herraduras",
-              "feedback": "Operación: 32 × 4. 4 × 2 = 8 en unidades; 4 × 3 = 12 en decenas. Total = 128.",
-              "tip": "Multiplicación sin llevar: 32 × 4 = 128."
-            },
-            {
-              "id": "mat7",
-              "type": "choice",
-              "question": "Paty compra 2 licuadoras para su juguería. Si cada una cuesta S/ 346, ¿cuánto dinero necesita?",
-              "options": ["S/ 682", "S/ 692", "S/ 712"],
-              "correct": "S/ 692",
-              "feedback": "346 × 2: 2 × 6 = 12 (llevas 1); 2 × 4 = 8 + 1 = 9; 2 × 3 = 6. Total = 692.",
-              "tip": "Siempre suma la cifra de canje después de multiplicar la columna."
-            },
-            {
-              "id": "mat8",
-              "type": "choice",
-              "question": "Resuelve la multiplicación posicional: 495 × 2",
-              "options": ["990", "890", "980"],
-              "correct": "990",
-              "feedback": "2 × 5 = 10 (llevas 1); 2 × 9 = 18 + 1 = 19 (llevas 1); 2 × 4 = 8 + 1 = 9. Total = 990.",
-              "tip": "Doble llevada: primero a decenas y luego a centenas."
-            },
-            {
-              "id": "mat9",
-              "type": "write",
-              "question": "Escribe el número que falta en la igualdad: 73 × ____ = 730",
-              "correct": "10",
-              "feedback": "Como solo se agregó un cero a la derecha, el factor multiplicador es 10.",
-              "tip": "Si aumenta un cero, se multiplicó por 10."
-            },
-            {
-              "id": "mat10",
-              "type": "write",
-              "question": "Escribe el producto final de: 312 × 3",
-              "correct": "936",
-              "feedback": "3 × 2 = 6, 3 × 1 = 3, 3 × 3 = 9. Resultado: 936.",
-              "tip": "Multiplicación directa columna por columna."
-            }
-          ]
-        },
-        {
-          "title": "Bloque 2: Multiplicación por 2 Cifras y Problemas Reales (10 Preguntas)",
+          "title": "Sección 1: Multiplicación con 2 Cifras y Trucos Operativos (5 Preguntas)",
           "emoji": "📦",
           "tag": "Algoritmo de 2 Cifras",
           "questions": [
             {
-              "id": "mat11",
+              "id": "rep_m1",
               "type": "choice",
-              "question": "Al multiplicar por un número de dos cifras, ¿qué paso fundamental debemos realizar al multiplicar las decenas?",
+              "isComplex": true,
+              "question": "TRUCO DE LA GRADA (53 × 26): Si 53 × 6 = 318 en el primer piso, ¿cómo se anota correctamente el producto al multiplicar por el 2 de las decenas?",
+              "clue": "💡 Truco: El 2 vale 20. Coloca un '0 fantasma' debajo del 8 o deja un huequito antes de multiplicar.",
               "options": [
-                "Sumar 10 al resultado inmediatamente.",
-                "Dejar un espacio libre a la derecha (o colocar un cero) y escribir alineado a las decenas.",
-                "Borrar el primer producto obtenido."
+                "106 (empezando justo debajo del 8)",
+                "1 060 (o 106 dejando libre la columna del 8)",
+                "265"
               ],
-              "correct": "Dejar un espacio libre a la derecha (o colocar un cero) y escribir alineado a las decenas.",
-              "feedback": "Al multiplicar la cifra de las decenas, su valor de posición exige dejar un espacio o colocar un 0 en las unidades.",
-              "tip": "¡La grada mágica! En el segundo producto parcial, dejamos un espacio a la derecha."
+              "correct": "1 060 (o 106 dejando libre la columna del 8)",
+              "feedback": "Como el 2 pertenece a las decenas, 53 × 2 decenas = 106 decenas = 1 060.",
+              "tip": "¡La grada mágica! En el segundo piso nunca escribas en la columna de unidades; pon un 0 o deja el espacio."
             },
             {
-              "id": "mat12",
+              "id": "rep_m2",
               "type": "choice",
-              "question": "Un centro de salud recibió 32 paquetes con 12 sobres de rehidratación oral cada uno. ¿Cuántos sobres llegaron en total?",
-              "options": ["384 sobres", "364 sobres", "394 sobres"],
-              "correct": "384 sobres",
-              "feedback": "32 × 12: 32 × 2 = 64; 32 × 1 = 32 (desplazado: 320); 64 + 320 = 384.",
-              "tip": "Suma de productos parciales: 64 + 320 = 384."
+              "question": "TRUCO DEL CERO FINAL: En la tienda escolar hay 45 paquetes con 20 galletas cada uno. ¿Cómo calculas el total en un solo paso mental?",
+              "clue": "💡 Truco: Tapa el cero del 20, multiplica 45 × 2 = 90 y al final devuélvele el cero.",
+              "options": [
+                "Multiplicas 45 × 2 = 90 y le agregas el cero $\\rightarrow$ 900 galletas",
+                "Sumas 45 + 20 = 65 galletas",
+                "Multiplicas 45 × 10 = 450 y sumas 2"
+              ],
+              "correct": "Multiplicas 45 × 2 = 90 y le agregas el cero $\\rightarrow$ 900 galletas",
+              "feedback": "45 × 2 = 90. Al agregar el cero de la decena obtenemos 900 de forma directa.",
+              "tip": "Multiplicar por decenas completas (20, 30, 40): opera el número base y añade el 0."
             },
             {
-              "id": "mat13",
+              "id": "rep_m3",
               "type": "choice",
-              "question": "Manuel escribió una novela de 19 capítulos. Si cada capítulo tiene 40 páginas, ¿cuántas páginas tiene el libro?",
-              "options": ["760 páginas", "720 páginas", "840 páginas"],
-              "correct": "760 páginas",
-              "feedback": "19 × 40: 19 × 4 = 76, y agregamos el cero del 40 $\\rightarrow$ 760 páginas.",
-              "tip": "Multiplica 19 × 4 y añade el 0 al final."
+              "question": "DESCOMPOSICIÓN RÁPIDA (14 × 15): ¿Cuál es la forma más sencilla de calcularlo mentalmente?",
+              "clue": "💡 Truco: 15 es (10 + 5). Multiplica 14 × 10 y súmale la mitad (14 × 5).",
+              "options": [
+                "(14 × 10) + (14 × 5) = 140 + 70 = 210",
+                "(14 × 1) + (14 × 5) = 14 + 70 = 84",
+                "14 + 15 = 29"
+              ],
+              "correct": "(14 × 10) + (14 × 5) = 140 + 70 = 210",
+              "feedback": "Descomponer factores simplifica el cálculo: 14 × 10 = 140; 14 × 5 = 70; 140 + 70 = 210.",
+              "tip": "Desarmar números en decenas y unidades evita errores de llevadas."
             },
             {
-              "id": "mat14",
+              "id": "rep_m4",
               "type": "choice",
-              "question": "En una granja hay 25 gallinas y cada gallina pone 15 huevos al día. ¿Cuántos huevos recolectan al día?",
-              "options": ["375 huevos", "325 huevos", "400 huevos"],
-              "correct": "375 huevos",
-              "feedback": "25 × 15: 25 × 5 = 125; 25 × 1 = 25 (en decenas: 250); 125 + 250 = 375.",
-              "tip": "125 + 250 = 375 huevos en total."
+              "question": "DETECTIVE DE ERRORES: Un alumno resolvió 64 × 23. Obtuvo 192 en el primer piso y anotó 128 justo debajo sin dejar espacio, sumando 192 + 128 = 320. ¿Dónde cometió la equivocación?",
+              "clue": "💡 Truco: Revisa si alineó las decenas o si sumó 128 como si fueran unidades.",
+              "options": [
+                "Multiplicó mal 64 × 3.",
+                "No dejó la grada de las decenas; debió sumar 192 + 1 280 = 1 472.",
+                "Debió restar los dos resultados en vez de sumarlos."
+              ],
+              "correct": "No dejó la grada de las decenas; debió sumar 192 + 1 280 = 1 472.",
+              "feedback": "El 2 representa 20. El producto real es 1 280, por lo que la suma correcta es 1 472.",
+              "tip": "En el segundo piso, corre siempre una casilla hacia la izquierda."
             },
             {
-              "id": "mat15",
-              "type": "choice",
-              "question": "Pedro compró 39 cajas de chocolates. En cada caja vienen 27 barras. ¿Cuántas barras compró?",
-              "options": ["1 053 barras", "953 barras", "1 153 barras"],
-              "correct": "1 053 barras",
-              "feedback": "39 × 27: 39 × 7 = 273; 39 × 2 = 78 (780); 273 + 780 = 1 053.",
-              "tip": "Realiza la suma con cuidado: 273 + 780 = 1 053."
-            },
-            {
-              "id": "mat16",
-              "type": "choice",
-              "question": "Resuelve la multiplicación: 218 × 45",
-              "options": ["9 810", "9 710", "8 810"],
-              "correct": "9 810",
-              "feedback": "218 × 5 = 1 090; 218 × 4 = 872 (8 720); 1 090 + 8 720 = 9 810.",
-              "tip": "1 090 + 8 720 = 9 810."
-            },
-            {
-              "id": "mat17",
-              "type": "choice",
-              "question": "Resuelve la multiplicación: 364 × 35",
-              "options": ["12 740", "11 740", "12 840"],
-              "correct": "12 740",
-              "feedback": "364 × 5 = 1 820; 364 × 3 = 1 092 (10 920); 1 820 + 10 920 = 12 740.",
-              "tip": "Alinea bien los sumandos en el tablero posicional."
-            },
-            {
-              "id": "mat18",
-              "type": "choice",
-              "question": "El señor Rodolfo tiene 424 cajas con 32 tablets cada una. ¿Cuántas tablets tiene en total?",
-              "options": ["13 568 tablets", "12 568 tablets", "13 468 tablets"],
-              "correct": "13 568 tablets",
-              "feedback": "424 × 32: 424 × 2 = 848; 424 × 3 = 1 272 (12 720); 848 + 12 720 = 13 568.",
-              "tip": "Multiplica primero las 2 unidades (848) y luego las 3 decenas (12 720)."
-            },
-            {
-              "id": "mat19",
+              "id": "rep_m5",
               "type": "write",
-              "question": "Calcula el producto de: 85 × 24",
-              "correct": "2040",
-              "feedback": "85 × 4 = 340; 85 × 2 = 170 (1 700); 340 + 1 700 = 2 040.",
-              "tip": "340 + 1 700 = 2 040."
-            },
-            {
-              "id": "mat20",
-              "type": "write",
-              "question": "María tiene 42 planchas de stickers con 25 stickers cada una. ¿Cuántos stickers tiene en total?",
-              "correct": "1050",
-              "feedback": "42 × 25: 42 × 5 = 210; 42 × 2 = 84 (840); 210 + 840 = 1 050.",
-              "tip": "210 + 840 = 1 050."
+              "isComplex": true,
+              "question": "DESAFÍO OPERATIVO EN PIZARRA: Resuelve 48 × 25 usando los dos pisos en tu pizarra y escribe el producto final.",
+              "clue": "💡 Truco: Piso 1: 48 × 5 = 240. Piso 2: coloca el cero fantasma y haz 48 × 2 = 96 (queda 960). ¡Súmalos!",
+              "correct": "1200",
+              "feedback": "Piso 1: 48 × 5 = 240. Piso 2: 48 × 20 = 960. Suma final: 240 + 960 = 1 200.",
+              "tip": "240 + 960 = 1 200."
             }
           ]
         },
         {
-          "title": "Bloque 3: Operaciones Combinadas y Jerarquía (10 Preguntas)",
-          "emoji": "🧮",
-          "tag": "Jerarquía Operacional",
+          "title": "Sección 2: Ecuaciones con Problemas y Palabras Clave (5 Preguntas)",
+          "emoji": "⚖️",
+          "tag": "Ecuaciones y Balanza",
           "questions": [
             {
-              "id": "mat21",
+              "id": "rep_e1",
               "type": "choice",
-              "question": "¿Cuál es el orden estricto para resolver una operación combinada?",
+              "question": "LA BALANZA Y PALABRAS CLAVE: 'La edad de Joaquín aumentada en 15 es igual a 42'. ¿Cómo se plantea y resuelve la incógnita x?",
+              "clue": "💡 Palabra clave: 'Aumentada' significa sumar (+). Al cruzar el signo igual (=), pasa con la operación contraria: restar (-).",
               "options": [
-                "1.° Sumas y restas, 2.° Multiplicaciones, 3.° Paréntesis",
-                "1.° Paréntesis, 2.° Multiplicaciones y divisiones, 3.° Adición y sustracción de izquierda a derecha",
-                "Siempre se resuelve de derecha a izquierda sin importar los signos"
+                "x + 15 = 42 $\\rightarrow$ x = 42 - 15 = 27",
+                "x - 15 = 42 $\\rightarrow$ x = 42 + 15 = 57",
+                "15x = 42 $\\rightarrow$ x = 42 ÷ 15"
               ],
-              "correct": "1.° Paréntesis, 2.° Multiplicaciones y divisiones, 3.° Adición y sustracción de izquierda a derecha",
-              "feedback": "La jerarquía matemática manda: primero signos de agrupación (paréntesis), luego multiplicaciones, y al final sumas/restas de izquierda a derecha.",
-              "tip": "Regla de Oro: ( ) Paréntesis $\\rightarrow$ Multiplicación $\\rightarrow$ Suma y Resta (izq a der)."
+              "correct": "x + 15 = 42 $\\rightarrow$ x = 42 - 15 = 27",
+              "feedback": "'Aumentada' es suma (+). Para despejar, el 15 pasa restando al segundo miembro: 42 - 15 = 27.",
+              "tip": "Lo que suma a un lado, pasa al otro lado restando."
             },
             {
-              "id": "mat22",
+              "id": "rep_e2",
               "type": "choice",
-              "question": "Resuelve la operación combinada: 2 × (16 - 9) + 5 × (20 - 13)",
-              "options": ["49", "42", "54"],
-              "correct": "49",
-              "feedback": "1.° Paréntesis: (16 - 9 = 7) y (20 - 13 = 7). 2.° Multiplicaciones: 2 × 7 = 14 y 5 × 7 = 35. 3.° Suma: 14 + 35 = 49.",
-              "tip": "2×(7) + 5×(7) = 14 + 35 = 49."
+              "question": "OPERACIÓN INVERSA: 'El dinero de Camila disminuido en 18 soles es igual a 35 soles'. ¿Cuánto dinero tiene Camila?",
+              "clue": "💡 Palabra clave: 'Disminuido' significa resta (-). Al cruzar el puente del igual pasa a SUMAR (+).",
+              "options": [
+                "S/ 53",
+                "S/ 17",
+                "S/ 43"
+              ],
+              "correct": "S/ 53",
+              "feedback": "Ecuación: x - 18 = 35. Despeje: x = 35 + 18 = 53 soles.",
+              "tip": "Disminuido = Resta (-). Pasa al otro lado sumando: 35 + 18 = 53."
             },
             {
-              "id": "mat23",
+              "id": "rep_e3",
               "type": "choice",
-              "question": "Resuelve: 7 × (32 - 24) + 15",
-              "options": ["71", "61", "81"],
-              "correct": "71",
-              "feedback": "1.° Paréntesis: 32 - 24 = 8. 2.° Multiplicación: 7 × 8 = 56. 3.° Suma: 56 + 15 = 71.",
-              "tip": "7 × 8 + 15 = 56 + 15 = 71."
+              "question": "EL DOBLE Y LA MITAD: 'El doble de canicas que tiene Edward es igual a 48'. ¿Cuántas canicas tiene?",
+              "clue": "💡 Palabra clave: 'El doble' es multiplicar por 2 (2x). Para despejar x, pasa dividiendo entre 2 (sacar la mitad).",
+              "options": [
+                "24 canicas",
+                "96 canicas",
+                "46 canicas"
+              ],
+              "correct": "24 canicas",
+              "feedback": "Ecuación: 2x = 48. Despejamos dividiendo: x = 48 ÷ 2 = 24 canicas.",
+              "tip": "El doble = 2x. Pasa dividiendo: 48 ÷ 2 = 24."
             },
             {
-              "id": "mat24",
-              "type": "choice",
-              "question": "Resuelve: 4 × (25 - 13) - (6 × 5)",
-              "options": ["18", "28", "12"],
-              "correct": "18",
-              "feedback": "1.° Paréntesis: (25 - 13 = 12) y (6 × 5 = 30). 2.° Multiplicación: 4 × 12 = 48. 3.° Resta: 48 - 30 = 18.",
-              "tip": "4 × 12 - 30 = 48 - 30 = 18."
-            },
-            {
-              "id": "mat25",
-              "type": "choice",
-              "question": "Resuelve: 7 × 6 - (64 - 58) + 115 × 2",
-              "options": ["266", "256", "276"],
-              "correct": "266",
-              "feedback": "Paréntesis: 64 - 58 = 6. Multiplicaciones: 7 × 6 = 42 y 115 × 2 = 230. Cadena: 42 - 6 + 230 = 36 + 230 = 266.",
-              "tip": "42 - 6 + 230 = 36 + 230 = 266."
-            },
-            {
-              "id": "mat26",
-              "type": "choice",
-              "question": "Mateo compró 4 bolsas de galletas a S/ 2 cada una y 1 jugo a S/ 3. Si pagó con un billete de S/ 20, ¿cuánto le dieron de vuelto?",
-              "options": ["S/ 9 de vuelto", "S/ 11 de vuelto", "S/ 8 de vuelto"],
-              "correct": "S/ 9 de vuelto",
-              "feedback": "Planteamiento: 20 - (4 × 2 + 3) = 20 - (8 + 3) = 20 - 11 = 9 soles de vuelto.",
-              "tip": "Gasto total = (4×2) + 3 = 11 soles. Vuelto = 20 - 11 = 9 soles."
-            },
-            {
-              "id": "mat27",
-              "type": "choice",
-              "question": "Resuelve: (213 × 5) + (246 × 3) - 12",
-              "options": ["1 791", "1 803", "1 789"],
-              "correct": "1 791",
-              "feedback": "213 × 5 = 1 065. 246 × 3 = 738. Suma: 1 065 + 738 = 1 803. Resta: 1 803 - 12 = 1 791.",
-              "tip": "1 065 + 738 - 12 = 1 803 - 12 = 1 791."
-            },
-            {
-              "id": "mat28",
+              "id": "rep_e4",
               "type": "choice",
               "isComplex": true,
-              "question": "DESAFÍO INTEGRAL: En un almacén hay 8 cajas grandes con 15 paquetes de arroz cada una, y 6 cajas medianas con 12 paquetes de azúcar cada una. Si donan 45 paquetes en total, ¿cuántos paquetes quedan?",
-              "options": ["147 paquetes", "137 paquetes", "157 paquetes"],
-              "correct": "147 paquetes",
-              "feedback": "Arroz: 8 × 15 = 120. Azúcar: 6 × 12 = 72. Total víveres: 120 + 72 = 192. Quedan: 192 - 45 = 147.",
-              "tip": "Usa la pizarra: (8 × 15) + (6 × 12) - 45 = 120 + 72 - 45 = 192 - 45 = 147."
-            },
-            {
-              "id": "mat29",
-              "type": "write",
-              "question": "Calcula el resultado de: 50 - 3 × 8 + 12",
-              "correct": "38",
-              "feedback": "Primero la multiplicación: 3 × 8 = 24. Luego de izquierda a derecha: 50 - 24 = 26; 26 + 12 = 38.",
-              "tip": "¡Cuidado! No restes 50 - 3 primero. Multiplica 3 × 8 = 24 primero."
-            },
-            {
-              "id": "mat30",
-              "type": "write",
-              "question": "Calcula el valor de: (18 + 12) × 4 - 20",
-              "correct": "100",
-              "feedback": "Paréntesis: 18 + 12 = 30. Multiplicación: 30 × 4 = 120. Resta: 120 - 20 = 100.",
-              "tip": "30 × 4 = 120 $\\rightarrow$ 120 - 20 = 100."
-            }
-          ]
-        },
-        {
-          "title": "Bloque 4: Geometría (Perímetro) y Estadística (Gráficos) (10 Preguntas)",
-          "emoji": "📐",
-          "tag": "Perímetro y Gráficos",
-          "questions": [
-            {
-              "id": "mat31",
-              "type": "choice",
-              "question": "¿Qué es el PERÍMETRO de una figura geométrica?",
+              "question": "PROBLEMA DE DOS ETAPAS: 'Si al triple de figuritas de Liam le sumamos 10, obtenemos 40'. ¿Cuántas figuritas tiene Liam?",
+              "clue": "💡 Truco: Escribe 3x + 10 = 40. Paso 1: Pasa el 10 a restar (40 - 10 = 30). Paso 2: Pasa el 3 a dividir (30 ÷ 3).",
               "options": [
-                "La cantidad de espacio dentro de la figura.",
-                "La suma de las longitudes de todos sus lados (el contorno).",
-                "El número de esquinas que tiene la figura."
+                "10 figuritas",
+                "15 figuritas",
+                "30 figuritas"
               ],
-              "correct": "La suma de las longitudes de todos sus lados (el contorno)",
-              "feedback": "El perímetro (P) es la medida del borde o contorno de un polígono, sumando todos sus lados.",
-              "tip": "Perímetro = Borde = Suma de TODOS los lados."
+              "correct": "10 figuritas",
+              "feedback": "3x + 10 = 40 $\\rightarrow$ 3x = 40 - 10 = 30 $\\rightarrow$ x = 30 ÷ 3 = 10 figuritas.",
+              "tip": "Paso 1: Resta el 10 (40 - 10 = 30). Paso 2: Divide entre 3 (30 ÷ 3 = 10)."
             },
             {
-              "id": "mat32",
-              "type": "choice",
-              "question": "Calcula el perímetro de un triángulo equilátero cuyos tres lados miden 32 cm cada uno.",
-              "options": ["96 cm", "64 cm", "86 cm"],
-              "correct": "96 cm",
-              "hasDiagram": "triangulo",
-              "feedback": "P = 32 + 32 + 32 (o 32 × 3) = 96 cm.",
-              "tip": "Triángulo con lados iguales: P = 32 × 3 = 96 cm."
-            },
-            {
-              "id": "mat33",
-              "type": "choice",
-              "question": "Calcula el perímetro de un cuadrado que mide 25 cm por lado.",
-              "options": ["100 cm", "50 cm", "125 cm"],
-              "correct": "100 cm",
-              "hasDiagram": "cuadrado",
-              "feedback": "Un cuadrado tiene 4 lados iguales: P = 25 + 25 + 25 + 25 = 100 cm (o 25 × 4 = 100 cm).",
-              "tip": "Cuadrado: P = 4 × lado = 4 × 25 = 100 cm."
-            },
-            {
-              "id": "mat34",
-              "type": "choice",
-              "question": "Calcula el perímetro de un pentágono regular si cada uno de sus 5 lados mide 12 cm.",
-              "options": ["60 cm", "50 cm", "72 cm"],
-              "correct": "60 cm",
-              "hasDiagram": "pentagono",
-              "feedback": "Pentágono regular (5 lados iguales): P = 12 × 5 = 60 cm.",
-              "tip": "Pentágono: 5 lados × 12 cm = 60 cm."
-            },
-            {
-              "id": "mat35",
-              "type": "choice",
-              "question": "Rafaela hizo una torta cuadrada de 6 m de lado y Alondra una rectangular de 10 m de largo por 4 m de ancho. ¿Cómo son sus perímetros?",
-              "options": [
-                "La torta de Rafaela tiene mayor perímetro.",
-                "Ambas tortas tienen exactamente el mismo perímetro (28 m).",
-                "La torta de Alondra tiene mayor perímetro (28 m) que la de Rafaela (24 m)."
-              ],
-              "correct": "La torta de Alondra tiene mayor perímetro (28 m) que la de Rafaela (24 m).",
-              "feedback": "Rafaela (cuadrada): 6 × 4 = 24 m. Alondra (rectangular): 10 + 10 + 4 + 4 = 28 m. 28 m > 24 m.",
-              "tip": "Rafaela: 6×4=24 m. Alondra: 10+10+4+4=28 m."
-            },
-            {
-              "id": "mat36",
-              "type": "choice",
-              "question": "Observa el gráfico de barras de helados vendidos. ¿Cuántos helados de FRESA se vendieron?",
-              "options": ["150 helados", "180 helados", "120 helados"],
-              "correct": "150 helados",
-              "hasDiagram": "grafico_helados",
-              "feedback": "La barra roja de fresa llega exactamente a la línea de 150 en el eje de frecuencia.",
-              "tip": "Mira la altura de la barra roja: Marca 150."
-            },
-            {
-              "id": "mat37",
-              "type": "choice",
-              "question": "Según el gráfico de helados, ¿cuál fue el sabor MENOS vendido y con cuántas unidades?",
-              "options": [
-                "Lúcuma con 120",
-                "Vainilla con 60",
-                "Chocolate con 180"
-              ],
-              "correct": "Vainilla con 60",
-              "hasDiagram": "grafico_helados",
-              "feedback": "La barra más baja es la amarilla (vainilla) con una altura de 60 unidades.",
-              "tip": "Menor frecuencia = Barra más baja (Vainilla = 60)."
-            },
-            {
-              "id": "mat38",
-              "type": "choice",
-              "question": "Observa el gráfico de deportes. ¿Qué deporte tiene mayor preferencia entre las NIÑAS (barra verde)?",
-              "options": ["Fútbol", "Vóley", "Ajedrez"],
-              "correct": "Vóley",
-              "hasDiagram": "grafico_deportes",
-              "feedback": "La barra verde (niñas) más alta corresponde al vóley con 50 alumnas.",
-              "tip": "Compara solo las barras verdes: Vóley llega a 50."
-            },
-            {
-              "id": "mat39",
+              "id": "rep_e5",
               "type": "write",
               "isComplex": true,
-              "question": "DESAFÍO DE PERÍMETRO: Observa la figura en 'L'. Lados: vertical izq = 9 cm, horizontal sup = 8 cm, vertical der = 4 cm, horizontal interior = 6 cm, vertical interior = 5 cm, base inferior = 2 cm. Escribe el perímetro total numérico.",
-              "correct": "34",
-              "hasDiagram": "figura_l",
-              "feedback": "Sumamos todos los lados exteriores del contorno: 9 + 8 + 4 + 6 + 5 + 2 = 34 cm.",
-              "tip": "Usa la pizarra: Suma 9 + 8 + 4 + 6 + 5 + 2 = 34 cm."
-            },
-            {
-              "id": "mat40",
-              "type": "write",
-              "question": "En la tabla de cosecha, en Julio se cosecharon 30 zanahorias y en Agosto 60 zanahorias. ¿Cuántas zanahorias se cosecharon en TOTAL entre ambos meses?",
-              "correct": "90",
-              "feedback": "30 + 60 = 90 zanahorias cosechadas en total.",
-              "tip": "30 + 60 = 90."
+              "question": "DESAFÍO EN PIZARRA: En una caja hay cierta cantidad de plumones (x). Compras 25 plumones más y ahora tienes 60 en total. ¿Cuántos plumones había al inicio? Escribe solo el número.",
+              "clue": "💡 Truco: Plantea x + 25 = 60. Pasa el 25 a restar al otro lado en tu pizarra.",
+              "correct": "35",
+              "feedback": "x + 25 = 60 $\\rightarrow$ x = 60 - 25 = 35 plumones.",
+              "tip": "60 - 25 = 35."
             }
           ]
         }
@@ -845,100 +603,17 @@
                     secDiv.appendChild(compAlert);
                 }
 
+                if (q.clue) {
+                    const clueDiv = document.createElement('div');
+                    clueDiv.className = 'clue-box';
+                    clueDiv.innerText = q.clue;
+                    secDiv.appendChild(clueDiv);
+                }
+
                 const titleSpan = document.createElement('span');
                 titleSpan.className = 'question-title';
                 titleSpan.innerText = `${questionCounter}. ${q.question}`;
                 secDiv.appendChild(titleSpan);
-
-                if (q.hasDiagram) {
-                    const diagDiv = document.createElement('div');
-                    diagDiv.className = 'diagram-container';
-                    
-                    if (q.hasDiagram === 'triangulo') {
-                        diagDiv.innerHTML = `
-                            <svg class="diagram-svg" width="180" height="140" viewBox="0 0 180 140">
-                                <polygon points="90,15 20,120 160,120" fill="#e3f2fd" stroke="#1976d2" stroke-width="3"/>
-                                <text x="45" y="65" font-size="12" font-weight="bold" fill="#0d47a1">32 cm</text>
-                                <text x="135" y="65" font-size="12" font-weight="bold" fill="#0d47a1">32 cm</text>
-                                <text x="90" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#0d47a1">32 cm</text>
-                            </svg>
-                        `;
-                    } else if (q.hasDiagram === 'cuadrado') {
-                        diagDiv.innerHTML = `
-                            <svg class="diagram-svg" width="160" height="140" viewBox="0 0 160 140">
-                                <rect x="30" y="20" width="100" height="100" fill="#fff3e0" stroke="#f57c00" stroke-width="3"/>
-                                <text x="80" y="15" font-size="12" font-weight="bold" text-anchor="middle" fill="#e65100">25 cm</text>
-                                <text x="140" y="75" font-size="12" font-weight="bold" fill="#e65100">25 cm</text>
-                                <text x="80" y="135" font-size="12" font-weight="bold" text-anchor="middle" fill="#e65100">25 cm</text>
-                                <text x="15" y="75" font-size="12" font-weight="bold" fill="#e65100">25 cm</text>
-                            </svg>
-                        `;
-                    } else if (q.hasDiagram === 'pentagono') {
-                        diagDiv.innerHTML = `
-                            <svg class="diagram-svg" width="180" height="150" viewBox="0 0 180 150">
-                                <polygon points="90,15 160,65 135,135 45,135 20,65" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="3"/>
-                                <text x="45" y="35" font-size="11" font-weight="bold" fill="#4a148c">12 cm</text>
-                                <text x="135" y="35" font-size="11" font-weight="bold" fill="#4a148c">12 cm</text>
-                                <text x="155" y="105" font-size="11" font-weight="bold" fill="#4a148c">12 cm</text>
-                                <text x="90" y="148" font-size="11" font-weight="bold" text-anchor="middle" fill="#4a148c">12 cm</text>
-                                <text x="10" y="105" font-size="11" font-weight="bold" fill="#4a148c">12 cm</text>
-                            </svg>
-                        `;
-                    } else if (q.hasDiagram === 'grafico_helados') {
-                        diagDiv.innerHTML = `
-                            <svg class="diagram-svg" width="300" height="160" viewBox="0 0 300 160">
-                                <line x1="40" y1="20" x2="40" y2="130" stroke="#333" stroke-width="2"/>
-                                <line x1="40" y1="130" x2="280" y2="130" stroke="#333" stroke-width="2"/>
-                                <text x="35" y="35" font-size="9" text-anchor="end">180</text>
-                                <text x="35" y="55" font-size="9" text-anchor="end">150</text>
-                                <text x="35" y="75" font-size="9" text-anchor="end">120</text>
-                                <text x="35" y="95" font-size="9" text-anchor="end">90</text>
-                                <text x="35" y="115" font-size="9" text-anchor="end">60</text>
-                                <rect x="55" y="50" width="35" height="80" fill="#ff4757" />
-                                <rect x="110" y="70" width="35" height="60" fill="#ffa502" />
-                                <rect x="165" y="110" width="35" height="20" fill="#fffa65" stroke="#eccc68" />
-                                <rect x="220" y="30" width="35" height="100" fill="#8d6e63" />
-                                <text x="72" y="145" font-size="10" text-anchor="middle">Fresa</text>
-                                <text x="127" y="145" font-size="10" text-anchor="middle">Lúcuma</text>
-                                <text x="182" y="145" font-size="10" text-anchor="middle">Vainilla</text>
-                                <text x="237" y="145" font-size="10" text-anchor="middle">Choc.</text>
-                            </svg>
-                        `;
-                    } else if (q.hasDiagram === 'grafico_deportes') {
-                        diagDiv.innerHTML = `
-                            <svg class="diagram-svg" width="300" height="150" viewBox="0 0 300 150">
-                                <line x1="35" y1="15" x2="35" y2="120" stroke="#333" stroke-width="2"/>
-                                <line x1="35" y1="120" x2="280" y2="120" stroke="#333" stroke-width="2"/>
-                                <rect x="50" y="30" width="15" height="90" fill="#ff7f50" />
-                                <rect x="67" y="90" width="15" height="30" fill="#2ed573" />
-                                <rect x="100" y="105" width="15" height="15" fill="#ff7f50" />
-                                <rect x="117" y="45" width="15" height="75" fill="#2ed573" />
-                                <rect x="150" y="75" width="15" height="45" fill="#ff7f50" />
-                                <rect x="167" y="75" width="15" height="45" fill="#2ed573" />
-                                <text x="66" y="135" font-size="9" text-anchor="middle">Fútbol</text>
-                                <text x="116" y="135" font-size="9" text-anchor="middle">Vóley</text>
-                                <text x="166" y="135" font-size="9" text-anchor="middle">Ajedrez</text>
-                                <rect x="220" y="20" width="12" height="12" fill="#ff7f50"/>
-                                <text x="236" y="30" font-size="9">Niños</text>
-                                <rect x="220" y="38" width="12" height="12" fill="#2ed573"/>
-                                <text x="236" y="48" font-size="9">Niñas</text>
-                            </svg>
-                        `;
-                    } else if (q.hasDiagram === 'figura_l') {
-                        diagDiv.innerHTML = `
-                            <svg class="diagram-svg" width="220" height="160" viewBox="0 0 220 160">
-                                <polygon points="30,15 150,15 150,60 70,60 70,140 30,140" fill="#e0f7fa" stroke="#00838f" stroke-width="3"/>
-                                <text x="20" y="80" font-size="11" font-weight="bold" fill="#006064">9 cm</text>
-                                <text x="90" y="12" font-size="11" font-weight="bold" fill="#006064">8 cm</text>
-                                <text x="155" y="40" font-size="11" font-weight="bold" fill="#006064">4 cm</text>
-                                <text x="110" y="55" font-size="11" font-weight="bold" fill="#006064">6 cm</text>
-                                <text x="75" y="105" font-size="11" font-weight="bold" fill="#006064">5 cm</text>
-                                <text x="50" y="152" font-size="11" font-weight="bold" fill="#006064">2 cm</text>
-                            </svg>
-                        `;
-                    }
-                    secDiv.appendChild(diagDiv);
-                }
 
                 if (q.type === 'choice') {
                     const optDiv = document.createElement('div');
@@ -954,7 +629,7 @@
                     const input = document.createElement('input');
                     input.type = 'text';
                     input.id = q.id;
-                    input.placeholder = 'Escribe tu respuesta numérica o resultado aquí...';
+                    input.placeholder = 'Escribe tu respuesta numérica aquí...';
                     input.oninput = function() { trackDuda(q.id); saveProgress(q.id, this.value); };
                     secDiv.appendChild(input);
                 }
@@ -964,7 +639,7 @@
 
             const visualCard = document.createElement('div');
             visualCard.className = 'visual-side-card';
-            visualCard.innerHTML = `<span class="visual-emoji">${section.emoji}</span><span class="visual-tag">${section.tag}</span><p style="font-size:0.85em; color:#555; margin-top:10px;">¡Tú puedes, Edward! Realiza tus cálculos con calma en tu cuaderno o pizarra.</p>`;
+            visualCard.innerHTML = `<span class="visual-emoji">${section.emoji}</span><span class="visual-tag">${section.tag}</span><p style="font-size:0.85em; color:#555; margin-top:10px;">¡Tú puedes, Edward! Aplica cada truco y resuelve paso a paso en tu pizarra.</p>`;
             layoutDiv.appendChild(questionsColumn);
             layoutDiv.appendChild(visualCard);
             container.appendChild(layoutDiv);
@@ -973,7 +648,7 @@
     }
 
     function saveProgress(id, val) {
-        localStorage.setItem('matematica_exam_3b_' + id, val);
+        localStorage.setItem('matematica_repaso_3b_' + id, val);
         document.getElementById('sec_' + id).classList.remove('incomplete');
         if(document.querySelectorAll('.incomplete').length === 0) document.getElementById('missing-msg').style.display='none';
     }
@@ -981,7 +656,7 @@
     function loadSavedProgress() {
         examData.sections.forEach(section => {
             section.questions.forEach(q => {
-                const saved = localStorage.getItem('matematica_exam_3b_' + q.id);
+                const saved = localStorage.getItem('matematica_repaso_3b_' + q.id);
                 if (saved) {
                     if (q.type === 'choice') {
                         const radio = document.querySelector(`input[name="${q.id}"][value="${saved}"]`);
@@ -997,9 +672,9 @@
 
     function usarCincuentaCincuentaGlobal() {
         if (comodinUsado) return;
-        let seleccionada = prompt("Edward, escribe el número de la pregunta (1 a 40) donde deseas descartar una alternativa incorrecta:");
+        let seleccionada = prompt("Edward, escribe el número de pregunta (1 a 10) donde deseas descartar una alternativa incorrecta:");
         let qNum = parseInt(seleccionada);
-        if (isNaN(qNum) || qNum < 1 || qNum > 40) return;
+        if (isNaN(qNum) || qNum < 1 || qNum > 10) return;
         let currentIdx = 1, targetId = null, targetQObj = null;
         for (let s of examData.sections) {
             for (let q of s.questions) {
@@ -1039,7 +714,7 @@
     }
 
     function calificarExamen() {
-        let nota = 0, questionIndex = 1, itemsHTML = "";
+        let nota = 0, total = 10, questionIndex = 1, itemsHTML = "";
         examData.sections.forEach(section => {
             section.questions.forEach(q => {
                 let uVal = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`).value : document.getElementById(q.id).value.trim();
@@ -1051,27 +726,27 @@
                     <p><strong>Pregunta ${questionIndex}: ${q.question}</strong></p>
                     <p>Tu respuesta: <span class="resp-usuario">${uVal}</span> ${esOk?'✅':'❌'}</p>
                     ${!esOk?`<p class="resp-correcta">Respuesta esperada: ${q.correct}</p>`:''}
-                    <p class="explicacion">📌 Demostración / Procedimiento: ${q.feedback}</p>
+                    <p class="explicacion">📌 Explicación paso a paso: ${q.feedback}</p>
                     <p class="tip-pizarra">💡 Tip de Pizarra: ${q.tip}</p>
-                    ${logDudas[q.id]>2?`<p style="color:#e67e22; font-weight:bold; font-size:0.9em; margin-top:5px;">⚠️ Atención: Cambiaste de opción varias veces. ¡Refuerza este cálculo en tu pizarra!</p>`:''}
+                    ${logDudas[q.id]>2?`<p style="color:#e67e22; font-weight:bold; font-size:0.9em; margin-top:5px;">⚠️ Cambiaste de respuesta varias veces en esta pregunta. ¡Repásala en tu pizarra!</p>`:''}
                 </div>`;
                 questionIndex++;
             });
         });
-        const finalScore = Math.round((nota / 40) * 20);
+        const finalScore = Math.round((nota / total) * 20);
         const rb = document.getElementById('result-box');
         rb.style.display = 'block';
-        document.getElementById('score-text').innerText = `Puntaje Obtenido: ${finalScore} / 20 (${nota} de 40 aciertos)`;
+        document.getElementById('score-text').innerText = `Nota del Repaso: ${finalScore} / 20 (${nota} de ${total} aciertos)`;
         document.getElementById('lista-items').innerHTML = itemsHTML;
         rb.className = finalScore >= 11 ? "correct-box" : "error-box";
         
         let feedbackFinal = "";
-        if (finalScore >= 17) {
-            feedbackFinal = "<h4>🏆 ¡Excelente trabajo, Edward! Dominas la multiplicación, los perímetros y las operaciones combinadas con gran destreza.</h4>";
-        } else if (finalScore >= 11) {
-            feedbackFinal = "<h4>👍 ¡Buen desempeño, Edward! Te recomendamos repasar el orden de las operaciones combinadas y la suma de lados en figuras compuestas para llegar al 20.</h4>";
+        if (finalScore >= 18) {
+            feedbackFinal = "<h4>🏆 ¡Misión cumplida, Edward! Dominas la multiplicación de dos cifras y el planteamiento de ecuaciones sin dudar.</h4>";
+        } else if (finalScore >= 12) {
+            feedbackFinal = "<h4>👍 ¡Buen avance, Edward! Recuerda siempre aplicar el cero fantasma en la multiplicación y la operación inversa al despejar ecuaciones.</h4>";
         } else {
-            feedbackFinal = "<h4>📚 ¡Sigue practicando, Edward! Utiliza tu pizarra acrílica y revisa con atención cada demostración del solucionario para reforzar tus llevadas.</h4>";
+            feedbackFinal = "<h4>📚 ¡A seguir practicando en la pizarra! Vuelve a revisar los 10 trucos para afianzar cada procedimiento.</h4>";
         }
         
         document.getElementById('feedback-content').innerHTML = feedbackFinal;
