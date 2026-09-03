@@ -11,7 +11,7 @@
             --ciencia: #2ed573;
             --mate: #3742fa;
             --personal: #ffa502;
-            --ingles: #9b59b6;
+            --ingles: #8e44ad;
             --card-bg: #ffffff;
             --bg-color: #f1f2f6;
         }
@@ -172,8 +172,7 @@
 
         .btn-comu:hover { background: var(--comu); color: white; border-color: var(--comu); }
         .btn-ciencia:hover { background: var(--ciencia); color: white; border-color: var(--ciencia); }
-        .btn-mate:hover { background: var(--mate); color: white; border-color: var(--mate); }
-        .btn-personal:hover { background: var(--personal); color: white; border-color: var(--personal); }
+        .btn-ingles:hover { background: var(--ingles); color: white; border-color: var(--ingles); }
 
         /* Estilos Bloqueado */
         .locked-day {
@@ -301,48 +300,45 @@
             </div>
         </div>
 
-        <!-- MIÉRCOLES 02 DE SEPTIEMBRE: MATEMÁTICA (HABILITADO) -->
-        <div class="day-card border-mate">
-            <div class="date-box bg-mate">
+        <!-- MIÉRCOLES 02 DE SEPTIEMBRE: MATEMÁTICA (BLOQUEADO) -->
+        <div class="day-card locked-day">
+            <div class="date-box bg-locked">
                 <span class="day-name">Miércoles</span>
                 <span class="day-number">02</span>
                 <span class="day-month">Setiembre</span>
             </div>
             <div class="content-box">
                 <h3>🔢 Matemática</h3>
-                <a href="Set26/matematica_3grado.html" class="btn-exam btn-mate">
-                    <span>🚀 Iniciar Evaluación 360°</span>
-                    <span>➔</span>
-                </a>
+                <div class="btn-locked">🔒 Se habilitará 1 día antes del examen</div>
             </div>
         </div>
 
-        <!-- JUEVES 03 DE SEPTIEMBRE: PERSONAL SOCIAL (HABILITADO) -->
-        <div class="day-card border-personal">
-            <div class="date-box bg-personal">
+        <!-- JUEVES 03 DE SEPTIEMBRE: PERSONAL SOCIAL (BLOQUEADO) -->
+        <div class="day-card locked-day">
+            <div class="date-box bg-locked">
                 <span class="day-name">Jueves</span>
                 <span class="day-number">03</span>
                 <span class="day-month">Setiembre</span>
             </div>
             <div class="content-box">
                 <h3>🗺️ Personal Social</h3>
-                <a href="Set26/personal_social_3grado.html" class="btn-exam btn-personal">
-                    <span>🚀 Iniciar Evaluación 360°</span>
-                    <span>➔</span>
-                </a>
+                <div class="btn-locked">🔒 Se habilitará 1 día antes del examen</div>
             </div>
         </div>
 
-        <!-- VIERNES 04 DE SEPTIEMBRE: INGLÉS (BLOQUEADO) -->
-        <div class="day-card locked-day">
-            <div class="date-box bg-locked">
+        <!-- VIERNES 04 DE SEPTIEMBRE: INGLÉS (HABILITADO - EXAMEN DE MAÑANA) -->
+        <div class="day-card border-ingles">
+            <div class="date-box bg-ingles">
                 <span class="day-name">Viernes</span>
                 <span class="day-number">04</span>
                 <span class="day-month">Setiembre</span>
             </div>
             <div class="content-box">
-                <h3>🇬🇧 Inglés (English)</h3>
-                <div class="btn-locked">🔒 Se habilitará 1 día antes del examen</div>
+                <h3>🇬🇧 Inglés (English - TOEFL Jr.)</h3>
+                <a href="Set26/ingles_3grado.html" class="btn-exam btn-ingles">
+                    <span>🚀 Iniciar Evaluación 360°</span>
+                    <span>➔</span>
+                </a>
             </div>
         </div>
     </div>
