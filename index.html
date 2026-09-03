@@ -98,7 +98,7 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .day-card:not(.locked-day):hover {
+        .day-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(0,0,0,0.08);
         }
@@ -172,32 +172,9 @@
 
         .btn-comu:hover { background: var(--comu); color: white; border-color: var(--comu); }
         .btn-ciencia:hover { background: var(--ciencia); color: white; border-color: var(--ciencia); }
+        .btn-mate:hover { background: var(--mate); color: white; border-color: var(--mate); }
+        .btn-personal:hover { background: var(--personal); color: white; border-color: var(--personal); }
         .btn-ingles:hover { background: var(--ingles); color: white; border-color: var(--ingles); }
-
-        /* Estilos Bloqueado */
-        .locked-day {
-            opacity: 0.7;
-            background-color: #f8f9fa;
-            border-color: #e9ecef;
-        }
-
-        .bg-locked {
-            background-color: #a4b0be;
-        }
-
-        .btn-locked {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 15px;
-            background: #e4e7eb;
-            color: #747d8c;
-            border-radius: 10px;
-            font-size: 0.9em;
-            font-weight: bold;
-            cursor: not-allowed;
-            width: fit-content;
-        }
 
         /* Historial de Bimestres anteriores */
         .history-section {
@@ -247,7 +224,7 @@
             .day-number {
                 font-size: 1.3em;
             }
-            .btn-exam, .btn-locked {
+            .btn-exam {
                 width: 100%;
             }
         }
@@ -300,33 +277,39 @@
             </div>
         </div>
 
-        <!-- MIÉRCOLES 02 DE SEPTIEMBRE: MATEMÁTICA (BLOQUEADO) -->
-        <div class="day-card locked-day">
-            <div class="date-box bg-locked">
+        <!-- MIÉRCOLES 02 DE SEPTIEMBRE: MATEMÁTICA (HABILITADO) -->
+        <div class="day-card border-mate">
+            <div class="date-box bg-mate">
                 <span class="day-name">Miércoles</span>
                 <span class="day-number">02</span>
                 <span class="day-month">Setiembre</span>
             </div>
             <div class="content-box">
                 <h3>🔢 Matemática</h3>
-                <div class="btn-locked">🔒 Se habilitará 1 día antes del examen</div>
+                <a href="Set26/matematica_3grado.html" class="btn-exam btn-mate">
+                    <span>🚀 Iniciar Evaluación 360°</span>
+                    <span>➔</span>
+                </a>
             </div>
         </div>
 
-        <!-- JUEVES 03 DE SEPTIEMBRE: PERSONAL SOCIAL (BLOQUEADO) -->
-        <div class="day-card locked-day">
-            <div class="date-box bg-locked">
+        <!-- JUEVES 03 DE SEPTIEMBRE: PERSONAL SOCIAL (HABILITADO) -->
+        <div class="day-card border-personal">
+            <div class="date-box bg-personal">
                 <span class="day-name">Jueves</span>
                 <span class="day-number">03</span>
                 <span class="day-month">Setiembre</span>
             </div>
             <div class="content-box">
                 <h3>🗺️ Personal Social</h3>
-                <div class="btn-locked">🔒 Se habilitará 1 día antes del examen</div>
+                <a href="Set26/personal_social_3grado.html" class="btn-exam btn-personal">
+                    <span>🚀 Iniciar Evaluación 360°</span>
+                    <span>➔</span>
+                </a>
             </div>
         </div>
 
-        <!-- VIERNES 04 DE SEPTIEMBRE: INGLÉS (HABILITADO - EXAMEN DE MAÑANA) -->
+        <!-- VIERNES 04 DE SEPTIEMBRE: INGLÉS (HABILITADO - CIERRE DE EXÁMENES) -->
         <div class="day-card border-ingles">
             <div class="date-box bg-ingles">
                 <span class="day-name">Viernes</span>
