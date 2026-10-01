@@ -1,0 +1,1419 @@
+<!-- Examen 360° Comunicación - Octubre 2026 -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff4757">
+    <link rel="manifest" href="../manifest.json">
+    <title>Examen 360° Comunicación - III Bimestre (Edward)</title>
+    <style>
+        :root {
+            --primary: #ff4757;
+            --primary-dark: #c0392b;
+            --accent: #2ed573;
+            --accent-blue: #1e90ff;
+            --bg-color: #fff9f9;
+            --card-bg: #ffffff;
+            --text: #2f3542;
+            --border: #f1f2f6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
+            background-color: var(--bg-color);
+            padding: 15px;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 6px solid var(--primary);
+            position: relative;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .back-nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            background: #ffffff;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.95em;
+            transition: all 0.2s ease;
+        }
+
+        .back-nav-button:hover {
+            background: var(--primary);
+            color: #ffffff;
+            transform: scale(1.03);
+        }
+
+        h1 {
+            text-align: center;
+            color: #d63031;
+            text-transform: uppercase;
+            font-size: 1.75em;
+            margin: 0 0 5px 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #747d8c;
+            font-size: 1.05em;
+            margin-bottom: 25px;
+        }
+
+        .section-header {
+            position: sticky;
+            top: 10px;
+            background: var(--primary);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin: 25px 0 15px 0;
+            font-size: 1.1em;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
+        }
+
+        .main-layout {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .questions-column {
+            flex: 1;
+        }
+
+        .visual-side-card {
+            width: 220px;
+            background: #fff0f1;
+            border: 3px dashed var(--primary);
+            border-radius: 18px;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 75px;
+            box-sizing: border-box;
+        }
+
+        .visual-emoji {
+            font-size: 3.2em;
+            display: block;
+            margin-bottom: 6px;
+            animation: floatAnim 3s ease-in-out infinite;
+        }
+
+        .visual-tag {
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.82em;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .diagram-container {
+            margin: 8px 0;
+            background: #ffffff;
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .diagram-svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .section {
+            margin-bottom: 15px;
+            padding: 18px;
+            border: 2px solid #e4e7eb;
+            border-radius: 15px;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .section:hover {
+            border-color: #cbd5e1;
+        }
+
+        .incomplete {
+            border: 3px solid #ff4757 !important;
+            background-color: #fff5f5 !important;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        .question-title {
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #2f3542;
+            display: block;
+            line-height: 1.4;
+            font-size: 1.03em;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid #ced4da;
+            font-size: 16px;
+            font-family: inherit;
+            box-sizing: border-box;
+            background: #fdfdfd;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #ffffff;
+        }
+
+        .options label {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            cursor: pointer;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #e4e7eb;
+            transition: 0.2s;
+            font-size: 0.98em;
+        }
+
+        .options label:hover {
+            background: #fff5f5;
+            border-color: var(--primary);
+        }
+
+        .options input[type="radio"] {
+            margin-right: 12px;
+            accent-color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .powerup-btn {
+            background: #ff6b81;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 4px #c0392b;
+            transition: 0.15s;
+        }
+
+        .powerup-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .powerup-btn:disabled {
+            background: #bdc3c7;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        button#btn-evaluar {
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            height: 55px;
+            margin: 30px auto;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px var(--primary-dark);
+            transition: transform 0.1s;
+        }
+
+        button#btn-evaluar:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px var(--primary-dark);
+        }
+
+        #result-box {
+            display: none;
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 30px;
+            border: 3px solid;
+        }
+
+        .correct-box {
+            background: #fafffb;
+            color: #2ed573;
+            border-color: #2ed573;
+        }
+
+        .error-box {
+            background: #fffbf0;
+            color: #e67e22;
+            border-color: #ffa502;
+        }
+
+        /* Resumen por Temas */
+        .topics-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .topic-summary-card {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.03);
+            text-align: left;
+        }
+
+        .topic-badge {
+            font-size: 0.8em;
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+
+        .status-mastered { background: #e8f8f5; color: #27ae60; border: 1px solid #2ecc71; }
+        .status-review { background: #fff8e1; color: #d35400; border: 1px solid #f39c12; }
+        .status-danger { background: #ffebee; color: #c0392b; border: 1px solid #e74c3c; }
+
+        .share-actions-box {
+            background: #f1f2f6;
+            border: 2px solid #ced6e0;
+            border-radius: 15px;
+            padding: 18px;
+            margin: 25px 0 15px 0;
+            text-align: center;
+        }
+
+        .share-btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .btn-share {
+            padding: 10px 18px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-share-chat { background: #00897b; color: white; }
+        .btn-share-copy { background: #2f3542; color: white; }
+        .btn-share-json { background: #3742fa; color: white; }
+
+        .btn-share:hover { transform: translateY(-2px); opacity: 0.95; }
+
+        .json-preview-container {
+            display: none;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .json-textarea {
+            width: 100%;
+            height: 140px;
+            font-family: monospace;
+            font-size: 0.85em;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            background: #2f3542;
+            color: #7bed9f;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        .revision-container {
+            margin-top: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .item-revision {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 6px solid #ccc;
+            background: #fafafa;
+        }
+
+        .resp-correcta {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .resp-usuario {
+            font-style: italic;
+            color: #555;
+        }
+
+        .explicacion {
+            color: var(--accent-blue);
+            font-size: 0.9em;
+            margin-top: 6px;
+        }
+
+        .tip-box {
+            background: #eafaf1;
+            border-left: 4px solid #2ecc71;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.88em;
+            margin-top: 6px;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .missing-alert {
+            color: #ff4757;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+            padding: 12px;
+            background: #fff5f5;
+            border-radius: 10px;
+            border: 2px solid #ff4757;
+        }
+
+        @media(max-width: 800px) {
+            .main-layout {
+                flex-direction: column;
+            }
+            .visual-side-card {
+                width: 100%;
+                position: static;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="nav-bar">
+        <a href="../index.html" class="back-nav-button">⬅️ Volver a la Agenda</a>
+        <button class="powerup-btn" id="global-5050" onclick="usarCincuentaCincuentaGlobal()">⚡ Usar Comodín 50/50 (1 vez)</button>
+    </div>
+
+    <h1>📖 Examen Bimestral de Comunicación</h1>
+    <h2>Colegio San Luis • 3.° Primaria • Evaluación Integral Bimestral</h2>
+
+    <div id="missing-msg" class="missing-alert">⚠️ ¡Edward, aún te faltan preguntas por responder! Revisa las casillas en rojo.</div>
+
+    <form id="quizForm">
+        <div id="quizContainer"></div>
+        <button type="button" id="btn-evaluar" onclick="validarExamen()">Terminar y Evaluar</button>
+    </form>
+
+    <div id="result-box">
+        <h3 id="score-text"></h3>
+        <div id="feedback-content"></div>
+
+        <!-- Resumen Diagnóstico por Temas -->
+        <h4 style="margin-top: 20px; color: #2f3542;">📊 Diagnóstico de Aprendizaje por Temas:</h4>
+        <div id="topics-summary" class="topics-summary-grid"></div>
+
+        <!-- Botones para Compartir el Reporte al Papá -->
+        <div class="share-actions-box">
+            <h4 style="color: #2f3542; margin-bottom: 4px;">📤 Enviar Reporte de Errores a Papá</h4>
+            <p style="font-size: 0.9em; color: #57606f;">Comparte este diagnóstico detallado para saber exactamente qué reforzar juntos.</p>
+            <div class="share-btn-group">
+                <button type="button" class="btn-share btn-share-copy" onclick="copiarReporteTexto()">📋 Copiar Reporte para Chat</button>
+                <button type="button" class="btn-share btn-share-chat" onclick="abrirGoogleChat()">💬 Abrir Google Chat</button>
+                <button type="button" class="btn-share btn-share-json" onclick="toggleJsonView()">💻 Ver Datos en JSON</button>
+            </div>
+            <div id="json-box" class="json-preview-container">
+                <textarea id="json-output" class="json-textarea" readonly></textarea>
+                <button type="button" class="btn-share btn-share-copy" style="margin-top: 6px; font-size: 0.82em;" onclick="copiarJson()">📄 Copiar JSON al Portapapeles</button>
+            </div>
+        </div>
+
+        <div id="revision-lista" class="revision-container">
+            <h4>📋 Revisión Detallada de Preguntas (Prioridad Errores):</h4>
+            <div id="lista-items"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const examData = {
+      "sections": [
+        {
+          "title": "Bloque 1: Textos de Comunicación: La Carta y El Díptico",
+          "emoji": "✉️",
+          "tag": "La Carta & El Díptico",
+          "svg": `<svg class="diagram-svg" viewBox="0 0 180 120" width="160" height="110" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="20" width="140" height="80" rx="8" fill="#ffeaa7" stroke="#fdcb6e" stroke-width="2"/>
+                    <path d="M20,20 L90,65 L160,20" fill="none" stroke="#e17055" stroke-width="2.5"/>
+                    <rect x="115" y="30" width="28" height="22" fill="#ff7675" stroke="#d63031"/>
+                    <line x1="35" y1="75" x2="85" y2="75" stroke="#636e72" stroke-width="2"/>
+                    <line x1="35" y1="85" x2="105" y2="85" stroke="#636e72" stroke-width="2"/>
+                    <text x="50" y="112" font-size="8" font-weight="bold" fill="#d63031">Carta & Díptico (4 Caras)</text>
+                  </svg>`,
+          "questions": [
+            {
+              "id": "c1",
+              "type": "choice",
+              "question": "¿Qué es la carta según lo aprendido en clase de Comunicación?",
+              "options": [
+                "Es un texto escrito que funciona como medio de comunicación a distancia entre dos personas.",
+                "Es un cartel que se pega en la calle para vender juguetes.",
+                "Es un poema corto que se escribe de arriba hacia abajo."
+              ],
+              "correct": "Es un texto escrito que funciona como medio de comunicación a distancia entre dos personas.",
+              "feedback": "La carta permite que dos personas separadas por la distancia compartan ideas, noticias o sentimientos.",
+              "tip": "Carta = Medio de comunicación por escrito que conecta a personas a la distancia."
+            },
+            {
+              "id": "c2",
+              "type": "choice",
+              "question": "En el proceso de escribir una carta, ¿quién es el REMITENTE o EMISOR?",
+              "options": [
+                "Es la persona que escribe la carta y plasma sus ideas o sentimientos.",
+                "Es la persona que recibe la carta en su casa.",
+                "Es el cartero que maneja la bicicleta."
+              ],
+              "correct": "Es la persona que escribe la carta y plasma sus ideas o sentimientos.",
+              "feedback": "El remitente (emisor) es el autor que redacta la carta.",
+              "tip": "Remitente o Emisor = Quien ESCRIBE y envía la carta."
+            },
+            {
+              "id": "c3",
+              "type": "choice",
+              "question": "¿A quién se le conoce como DESTINATARIO o RECEPTOR de la carta?",
+              "options": [
+                "A la persona a quien va dirigida la carta y se encarga de leerla.",
+                "A quien fabrica el sobre de papel.",
+                "Al cartero del buzón rojo."
+              ],
+              "correct": "A la persona a quien va dirigida la carta y se encarga de leerla.",
+              "feedback": "El destinatario (receptor) es quien recibe el mensaje y lo lee.",
+              "tip": "Destinatario o Receptor = Quien RECIBE y lee la carta."
+            },
+            {
+              "id": "c4",
+              "type": "choice",
+              "question": "Al preparar el sobre para enviar una carta por correo:",
+              "options": [
+                "Los datos del destinatario van en el reverso (frente con estampilla) y los del remitente en el anverso (parte de la solapa).",
+                "No es necesario escribir ningún nombre ni dirección.",
+                "Solo se dibuja una flor y se mete al buzón sin datos."
+              ],
+              "correct": "Los datos del destinatario van en el reverso (frente con estampilla) y los del remitente en el anverso (parte de la solapa).",
+              "feedback": "En el sobre se colocan claramente los datos de quien envía (remitente) y a quién se envía (destinatario).",
+              "tip": "Destinatario = Frente con estampilla | Remitente = Solapa posterior."
+            },
+            {
+              "id": "c5",
+              "type": "choice",
+              "question": "Si terminaste tu carta y olvidaste contarle algo muy importante a tu familiar, ¿qué parte utilizas al final?",
+              "options": [
+                "La Posdata (P.D.)",
+                "El saludo inicial",
+                "La fecha y ciudad"
+              ],
+              "correct": "La Posdata (P.D.)",
+              "feedback": "La posdata (P.D.) se añade después de la firma para agregar una nota u olvido.",
+              "tip": "P.D. (Posdata) = Mensaje breve añadido al final por olvido."
+            },
+            {
+              "id": "c6",
+              "type": "choice",
+              "question": "¿Qué es un DÍPTICO según las clases del colegio San Luis?",
+              "options": [
+                "Es un folleto impreso formado por una hoja doblada en 2 partes con un total de 4 caras.",
+                "Es un libro de 100 páginas encuadernado en cuero.",
+                "Es una carta larga metida en un buzón."
+              ],
+              "correct": "Es un folleto impreso formado por una hoja doblada en 2 partes con un total de 4 caras.",
+              "feedback": "Un díptico tiene un pliegue que divide la hoja en 2 partes, originando 4 caras.",
+              "tip": "Díptico = Folleto doblado en 2 partes con 4 CARAS en total."
+            },
+            {
+              "id": "c7",
+              "type": "choice",
+              "question": "¿Cuál es la primera cara que percibe el público en un díptico y qué elementos debe contener?",
+              "options": [
+                "La Portada: contiene el título llamativo, una imagen atractiva y el eslogan.",
+                "La Contraportada: contiene solo números de teléfono.",
+                "La parte central: contiene toda la letra pequeña."
+              ],
+              "correct": "La Portada: contiene el título llamativo, una imagen atractiva y el eslogan.",
+              "feedback": "La portada es la cara visible que capta la atención del lector con título, eslogan e imagen.",
+              "tip": "Portada = Primera cara visible (Título llamativo + Imagen + Eslogan)."
+            },
+            {
+              "id": "c8",
+              "type": "choice",
+              "question": "¿En qué parte del díptico se desarrolla el tema principal con subtítulos, textos breves y viñetas?",
+              "options": [
+                "En la Parte Central (las 2 caras interiores).",
+                "En el borde de la hoja doblada.",
+                "En el sobre de la carta."
+              ],
+              "correct": "En la Parte Central (las 2 caras interiores).",
+              "feedback": "Las caras 2 y 3 (interiores) constituyen la parte central donde se expone la información.",
+              "tip": "Parte Central = Caras interiores 2 y 3 donde se desarrolla el contenido."
+            },
+            {
+              "id": "c9",
+              "type": "choice",
+              "question": "¿Qué información suele colocarse en la CONTRAPORTADA (última cara) de un díptico?",
+              "options": [
+                "Recomendaciones finales, conclusiones o datos de contacto y fuentes.",
+                "El saludo inicial con el nombre del remitente.",
+                "Una lista de compras de supermercado."
+              ],
+              "correct": "Recomendaciones finales, conclusiones o datos de contacto y fuentes.",
+              "feedback": "La contraportada cierra el díptico con consejos útiles, conclusiones o contactos.",
+              "tip": "Contraportada = Última cara con conclusiones o datos de contacto."
+            },
+            {
+              "id": "c10",
+              "type": "write",
+              "question": "Parte de la carta donde se escribe todo el mensaje o noticia que queremos comunicar: El C _ _ r p o de la carta.",
+              "correct": "cuerpo",
+              "feedback": "El cuerpo es el contenido medular de la carta.",
+              "tip": "Palabra clave: Cuerpo."
+            }
+          ]
+        },
+        {
+          "title": "Bloque 2: Reglas Ortográficas: Uso de C, S y Z",
+          "emoji": "✍️",
+          "tag": "Ortografía C - S - Z",
+          "svg": `<svg class="diagram-svg" viewBox="0 0 180 120" width="160" height="110" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="15" y="15" width="45" height="45" rx="8" fill="#ff7675"/>
+                    <text x="27" y="48" font-size="28" font-weight="bold" fill="#fff">C</text>
+                    <rect x="68" y="15" width="45" height="45" rx="8" fill="#74b9ff"/>
+                    <text x="80" y="48" font-size="28" font-weight="bold" fill="#fff">S</text>
+                    <rect x="120" y="15" width="45" height="45" rx="8" fill="#ffeaa7" stroke="#fdcb6e"/>
+                    <text x="132" y="48" font-size="28" font-weight="bold" fill="#2d3436">Z</text>
+                    <text x="35" y="85" font-size="9" font-weight="bold" fill="#2f3542">-ces / -oso / -eza</text>
+                    <text x="25" y="102" font-size="8" fill="#636e72">¡Dominio de reglas C, S y Z!</text>
+                  </svg>`,
+          "questions": [
+            {
+              "id": "c11",
+              "type": "choice",
+              "question": "¿Por qué las palabras 'luces', 'peces' y 'lápices' se escriben con C?",
+              "options": [
+                "Porque son los plurales de palabras que en singular terminan en Z (luz, pez, lápiz).",
+                "Porque todas las palabras con L llevan C.",
+                "Porque son palabras aumentativas."
+              ],
+              "correct": "Porque son los plurales de palabras que en singular terminan en Z (luz, pez, lápiz).",
+              "feedback": "La regla indica que las palabras terminadas en Z forman su plural cambiando la Z por C: pez ➔ peces.",
+              "tip": "Regla de Oro: Singular en Z ➔ Plural en CES (lápiz ➔ lápices)."
+            },
+            {
+              "id": "c12",
+              "type": "choice",
+              "question": "Los adjetivos terminados en -oso y -osa se escriben con S. ¿Cuál de estas oraciones está correctamente escrita?",
+              "options": [
+                "El padre estaba orgulloso de su hija cariñosa.",
+                "El padre estaba orgulloco de su hija cariñoza.",
+                "El padre estaba orgulloso de su hija cariñosa con z."
+              ],
+              "correct": "El padre estaba orgulloso de su hija cariñosa.",
+              "feedback": "Los adjetivos en -oso / -osa (orgulloso, cariñosa, chistoso, amorosa) siempre se escriben con S.",
+              "tip": "Adjetivos en -OSO / -OSA se escriben con S."
+            },
+            {
+              "id": "c13",
+              "type": "choice",
+              "question": "Los sustantivos abstractos terminados en -ez y -eza se escriben con Z. Marca el grupo que cumple esta regla:",
+              "options": [
+                "honradez, niñez, belleza, tristeza, nobleza.",
+                "honrades, niñes, bellesa, tristesa.",
+                "honradec, niñec, bellecia, tristece."
+              ],
+              "correct": "honradez, niñez, belleza, tristeza, nobleza.",
+              "feedback": "Sustantivos abstractos terminados en -ez y -eza (vejez, belleza, pobreza, honradez) van con Z.",
+              "tip": "Sustantivos abstractos en -EZ y -EZA van con Z."
+            },
+            {
+              "id": "c14",
+              "type": "choice",
+              "question": "Los diminutivos terminados en -cito y -cita (de palabras que no tienen S en la última sílaba) se escriben con:",
+              "options": [
+                "Con C (ejemplo: avioncito, nubecita, pececito).",
+                "Con S siempre.",
+                "Con Z siempre."
+              ],
+              "correct": "Con C (ejemplo: avioncito, nubecita, pececito).",
+              "feedback": "Avión ➔ avioncito; nube ➔ nubecita. Se escriben con C.",
+              "tip": "Diminutivos en -CITO / -CITA se escriben con C."
+            },
+            {
+              "id": "c15",
+              "type": "choice",
+              "question": "En clase aprendimos que las palabras que empiezan con 'sem-' se escriben con S. ¿Cuál es el grupo correcto?",
+              "options": [
+                "semáforo, semilla, semana, sembrador.",
+                "cemáforo, cemilla, cemana.",
+                "zemáforo, zemilla, zemana."
+              ],
+              "correct": "semáforo, semilla, semana, sembrador.",
+              "feedback": "Las palabras que inician con 'sem-' van con S: semáforo, semilla, semana.",
+              "tip": "Inicio con SEM- va con S: semáforo, semilla, semana."
+            },
+            {
+              "id": "c16",
+              "type": "choice",
+              "question": "¿Cómo se escriben los aumentativos o palabras que indican golpe terminadas en -azo y -aza?",
+              "options": [
+                "Con Z (ejemplos: pelotazo, bocaza, jefazo).",
+                "Con S (ejemplos: pelotaso, bocasa).",
+                "Con C (ejemplos: pelotaco, bocaca)."
+              ],
+              "correct": "Con Z (ejemplos: pelotazo, bocaza, jefazo).",
+              "feedback": "Las terminaciones aumentativas o de golpe en -azo / -aza se escriben con Z: pelotazo, golpazo.",
+              "tip": "Golpe o aumentativo en -AZO / -AZA = Con Z."
+            },
+            {
+              "id": "c17",
+              "type": "choice",
+              "question": "De acuerdo a la ficha de aplicación de clase, completa correctamente: 'Los anun___ios casi nunca dicen los pre___ios.'",
+              "options": [
+                "anuncios - precios (ambas con C por terminar en -cio).",
+                "anunsios - presios (con S).",
+                "anunzios - prezios (con Z)."
+              ],
+              "correct": "anuncios - precios (ambas con C por terminar en -cio).",
+              "feedback": "Las palabras terminadas en -cio, -cia, -cie se escriben con C: anuncio, precio, noticia.",
+              "tip": "Terminaciones en -CIO, -CIA, -CIE van con C."
+            },
+            {
+              "id": "c18",
+              "type": "choice",
+              "question": "Los adjetivos agudos terminados en -az se escriben con Z. Marca la serie que cumple la regla:",
+              "options": [
+                "audaz, capataz, eficaz, tenaz.",
+                "audas, capatas, eficas.",
+                "audac, capatac, eficac."
+              ],
+              "correct": "audaz, capataz, eficaz, tenaz.",
+              "feedback": "Adjetivos agudos terminados en -az llevan Z: audaz, capataz, eficaz.",
+              "tip": "Adjetivos en -AZ van con Z."
+            },
+            {
+              "id": "c19",
+              "type": "write",
+              "question": "Escribe el plural de la palabra 'nuez' cambiando la Z por C: N u _ _ _ s.",
+              "correct": "nueces",
+              "feedback": "¡Muy bien! Nuez cambia a nueces con C.",
+              "tip": "Palabra clave: Nueces."
+            },
+            {
+              "id": "c20",
+              "type": "write",
+              "question": "Sustantivo abstracto derivado de pobre que termina en -eza y se escribe con Z: P o b r _ _ a.",
+              "correct": "pobreza",
+              "feedback": "Pobreza se escribe con Z por la terminación -eza.",
+              "tip": "Palabra clave: Pobreza."
+            }
+          ]
+        },
+        {
+          "title": "Bloque 3: Ortografía y Fonética: Uso de gue, gui - güe, güi (La Diéresis)",
+          "emoji": "🐧",
+          "tag": "Uso de gue, gui, güe, güi",
+          "svg": `<svg class="diagram-svg" viewBox="0 0 180 120" width="160" height="110" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="15" y="15" width="150" height="90" rx="10" fill="#e0f7fa" stroke="#00bcd4" stroke-width="2"/>
+                    <text x="25" y="55" font-size="22" font-weight="bold" fill="#00838f">gue - gui</text>
+                    <text x="25" y="85" font-size="22" font-weight="bold" fill="#d81b60">güe - güi</text>
+                    <circle cx="130" cy="50" r="18" fill="#3742fa"/>
+                    <circle cx="125" cy="45" r="3" fill="#fff"/>
+                    <circle cx="135" cy="45" r="3" fill="#fff"/>
+                    <polygon points="130,50 126,56 134,56" fill="#ffa502"/>
+                    <text x="35" y="102" font-size="8" font-weight="bold" fill="#00838f">Diéresis: ¡La 'ü' sí suena!</text>
+                  </svg>`,
+          "questions": [
+            {
+              "id": "c21",
+              "type": "choice",
+              "question": "En palabras como 'manguera', 'guiso' y 'guitarra', ¿por qué se escribe la U entre la G y la vocal?",
+              "options": [
+                "Para que la G tenga sonido suave ante 'e' e 'i', y la letra U NO se pronuncia.",
+                "Porque la U siempre debe sonar muy fuerte.",
+                "Porque es un adorno que no cumple ninguna función."
+              ],
+              "correct": "Para que la G tenga sonido suave ante 'e' e 'i', y la letra U NO se pronuncia.",
+              "feedback": "En 'gue' y 'gui', la U es muda; su función es suavizar el sonido de la G.",
+              "tip": "En 'gue' y 'gui', la U es muda: guitarra, manguera, guiso."
+            },
+            {
+              "id": "c22",
+              "type": "choice",
+              "question": "¿Cómo se llaman los dos puntitos que se colocan sobre la 'u' (ü) para que SÍ se pronuncie en las sílabas güe y güi?",
+              "options": ["Diéresis", "Tildes", "Puntos suspensivos"],
+              "correct": "Diéresis",
+              "feedback": "La diéresis (¨) son dos puntos horizontales colocados sobre la U para indicar que tiene sonido.",
+              "tip": "Dos puntitos sobre la U = DIÉRESIS (¨)."
+            },
+            {
+              "id": "c23",
+              "type": "choice",
+              "question": "¿En cuál de las siguientes palabras la letra U SÍ suena y debe llevar DIÉRESIS?",
+              "options": [
+                "pingüino, cigüeña, desagüe.",
+                "guisado, guitarra, águila.",
+                "juguetes, manguera, merengue."
+              ],
+              "correct": "pingüino, cigüeña, desagüe.",
+              "feedback": "En pin-güi-no, ci-güe-ña y de-sa-güe la U suena claramente, por eso llevan diéresis.",
+              "tip": "Llevan diéresis: pingüino, cigüeña, desagüe, bilingüe."
+            },
+            {
+              "id": "c24",
+              "type": "choice",
+              "question": "Identifica la pareja de palabras donde la U NO suena (es muda) y por lo tanto NO lleva diéresis:",
+              "options": [
+                "guerrero y guiso.",
+                "cigüeña y pingüino.",
+                "agüita y paragüita."
+              ],
+              "correct": "guerrero y guiso.",
+              "feedback": "En guerrero y guiso la U no suena: gue-rre-ro, gui-so.",
+              "tip": "Sin diéresis: guerrero, guiso, águila, juguetes."
+            },
+            {
+              "id": "c25",
+              "type": "choice",
+              "question": "Según la ficha de clase, ¿cuál es el diminutivo de 'agua' y cómo se escribe?",
+              "options": [
+                "agüita (con diéresis porque la U sí se pronuncia).",
+                "aguita (sin diéresis).",
+                "ajita (con j)."
+              ],
+              "correct": "agüita (con diéresis porque la U sí se pronuncia).",
+              "feedback": "Agua ➔ agüita. Al sonar la sílaba 'güi', requiere obligatoriamente diéresis.",
+              "tip": "Diminutivo de agua = agüita (con diéresis)."
+            },
+            {
+              "id": "c26",
+              "type": "choice",
+              "question": "Descripción de la ficha: 'Tiempo que existió hace muchísimos años'. ¿Cuál es la palabra correcta?",
+              "options": ["Antigüedad (con diéresis)", "Antiguedad (sin diéresis)", "Antijuedad"],
+              "correct": "Antigüedad (con diéresis)",
+              "feedback": "Antigüedad se pronuncia an-ti-güe-dad, por lo que lleva diéresis sobre la U.",
+              "tip": "Tiempo antiguo = Antigüedad."
+            },
+            {
+              "id": "c27",
+              "type": "choice",
+              "question": "Palabra que describe la sombrilla pequeña que usamos para protegernos de la lluvia:",
+              "options": ["Paragüita", "Paraguita", "Parajita"],
+              "correct": "Paragüita",
+              "feedback": "Paragüita lleva diéresis porque la U se pronuncia: pa-ra-güi-ta.",
+              "tip": "Sombrilla pequeña = Paragüita (con diéresis)."
+            },
+            {
+              "id": "c28",
+              "type": "choice",
+              "question": "¿En cuál de las siguientes oraciones todas las palabras con gue, gui, güe, güi están escritas correctamente?",
+              "options": [
+                "El pingüino come un rico guiso cerca de la hoguera.",
+                "El pinguino come un rico güiso cerca de la hojüera.",
+                "El pinwino come un rico guiso con diéresis."
+              ],
+              "correct": "El pingüino come un rico guiso cerca de la hoguera.",
+              "feedback": "Pingüino lleva diéresis; guiso y hoguera llevan 'u' muda sin diéresis.",
+              "tip": "Pingüino (con diéresis) / Guiso y hoguera (sin diéresis)."
+            },
+            {
+              "id": "c29",
+              "type": "write",
+              "question": "Ave de patas largas que hace nidos en los tejados y lleva diéresis en su nombre: C i _ _ _ ñ a.",
+              "correct": "cigüeña",
+              "feedback": "¡Excelente! Cigüeña lleva diéresis en la U.",
+              "tip": "Palabra clave: Cigüeña."
+            },
+            {
+              "id": "c30",
+              "type": "write",
+              "question": "Persona que combate en el campo de batalla; la 'u' no suena y va sin diéresis: G u _ _ _ _ r o.",
+              "correct": "guerrero",
+              "feedback": "Guerrero se escribe con 'gue' y la U es muda.",
+              "tip": "Palabra clave: Guerrero."
+            }
+          ]
+        },
+        {
+          "title": "Bloque 4: Vocabulario y Creación: Polisemia, Anécdota, Guión Teatral y Acróstico",
+          "emoji": "🎭",
+          "tag": "Lenguaje & Creación",
+          "svg": `<svg class="diagram-svg" viewBox="0 0 180 120" width="160" height="110" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="20" width="140" height="80" rx="10" fill="#f8efba" stroke="#fbc531" stroke-width="2"/>
+                    <circle cx="65" cy="55" r="22" fill="#e74c3c"/>
+                    <circle cx="115" cy="55" r="22" fill="#3498db"/>
+                    <path d="M57,62 Q65,72 73,62" stroke="#fff" stroke-width="2.5" fill="none"/>
+                    <path d="M107,67 Q115,57 123,67" stroke="#fff" stroke-width="2.5" fill="none"/>
+                    <text x="35" y="112" font-size="8" font-weight="bold" fill="#2c3e50">Teatro • Anécdota • Polisemia</text>
+                  </svg>`,
+          "questions": [
+            {
+              "id": "c31",
+              "type": "choice",
+              "question": "¿Qué son las palabras POLISÉMICAS según lo estudiado en Razonamiento Verbal?",
+              "options": [
+                "Son aquellas palabras que tienen más de un significado.",
+                "Son palabras que significan lo opuesto a otra palabra.",
+                "Son palabras inventadas que no tienen sentido."
+              ],
+              "correct": "Son aquellas palabras que tienen más de un significado.",
+              "feedback": "Poli significa 'muchos' y semia significa 'significados': palabras con múltiples significados.",
+              "tip": "Palabras polisémicas = Poseen MÁS DE UN SIGNIFICADO."
+            },
+            {
+              "id": "c32",
+              "type": "choice",
+              "question": "En la situación: 'Sonia fue al banco a depositar dinero y luego descansó en un banco del parque', la palabra 'banco' es polisémica porque:",
+              "options": [
+                "Primero se refiere a una entidad financiera y luego a un asiento para descansar.",
+                "Ambas se refieren a un banco de peces marinos.",
+                "Es un error ortográfico del autor."
+              ],
+              "correct": "Primero se refiere a una entidad financiera y luego a un asiento para descansar.",
+              "feedback": "La misma palabra 'banco' tiene significados completamente distintos según la frase.",
+              "tip": "Banco = Entidad financiera / Asiento para sentarse."
+            },
+            {
+              "id": "c33",
+              "type": "choice",
+              "question": "¿Cómo podemos descubrir el significado correcto de una palabra polisémica (como lima, hoja o ratón)?",
+              "options": [
+                "Leyendo con atención el CONTEXTO de la oración en la que se encuentra.",
+                "Mirando únicamente la primera letra de la palabra.",
+                "Cerrando los ojos y adivinando al azar."
+              ],
+              "correct": "Leyendo con atención el CONTEXTO de la oración en la que se encuentra.",
+              "feedback": "El contexto (las palabras que acompañan a la oración) nos indica qué significado tiene.",
+              "tip": "El CONTEXTO revela el significado exacto de la palabra polisémica."
+            },
+            {
+              "id": "c34",
+              "type": "choice",
+              "question": "¿Qué es una ANÉCDOTA y cuál es su característica principal?",
+              "options": [
+                "Es un texto narrativo breve que relata un hecho real, curioso o divertido ocurrido en el pasado.",
+                "Es una noticia inventada que nunca ocurrió.",
+                "Es un manual de instrucciones para armar juguetes."
+              ],
+              "correct": "Es un texto narrativo breve que relata un hecho real, curioso o divertido ocurrido en el pasado.",
+              "feedback": "La anécdota relata un suceso verídico y gracioso que le ocurrió a una persona.",
+              "tip": "Anécdota = Texto narrativo breve de un HECHO REAL curioso o divertido."
+            },
+            {
+              "id": "c35",
+              "type": "choice",
+              "question": "¿Cuáles son las tres partes estructurales de una anécdota?",
+              "options": [
+                "Inicio (presenta lugar y personajes), Nudo (cuenta lo que sucedió) y Desenlace (cómo terminó).",
+                "Ingredientes, preparación y servido.",
+                "Título, versos y rimas únicamente."
+              ],
+              "correct": "Inicio (presenta lugar y personajes), Nudo (cuenta lo que sucedió) y Desenlace (cómo terminó).",
+              "feedback": "Como todo texto narrativo, se estructura en Inicio, Nudo y Desenlace.",
+              "tip": "Estructura de la anécdota: Inicio ➔ Nudo ➔ Desenlace."
+            },
+            {
+              "id": "c36",
+              "type": "choice",
+              "question": "¿Qué es un GUIÓN TEATRAL?",
+              "options": [
+                "Es un texto escrito que contiene los diálogos y las indicaciones para representar una obra en el escenario.",
+                "Es una carta enviada por correo electrónico.",
+                "Es un diccionario con definiciones de palabras."
+              ],
+              "correct": "Es un texto escrito que contiene los diálogos y las indicaciones para representar una obra en el escenario.",
+              "feedback": "El guión teatral guía a los actores y al director en el escenario.",
+              "tip": "Guión teatral = Texto con diálogos y acotaciones para actuar en teatro."
+            },
+            {
+              "id": "c37",
+              "type": "choice",
+              "question": "En un guión teatral, ¿qué son las ACOTACIONES?",
+              "options": [
+                "Son las indicaciones del autor (entre paréntesis) que explican cómo actuar, gestos y movimientos.",
+                "Son las palabras que el público debe gritar.",
+                "Son los nombres de los amigos del actor."
+              ],
+              "correct": "Son las indicaciones del autor (entre paréntesis) que explican cómo actuar, gestos y movimientos.",
+              "feedback": "Las acotaciones van entre paréntesis y señalan actitudes, entradas, salidas y tonos de voz.",
+              "tip": "Acotaciones (entre paréntesis) = Indicaciones de gestos y movimientos."
+            },
+            {
+              "id": "c38",
+              "type": "choice",
+              "question": "¿Qué tipo de guión teatral utiliza el humor para divertir y hacer reír al público espectador?",
+              "options": ["La Comedia", "La Tragedia", "El Drama"],
+              "correct": "La Comedia",
+              "feedback": "La comedia se enfoca en situaciones humorísticas y alegres.",
+              "tip": "Comedia = Usa el humor para divertir y entretener."
+            },
+            {
+              "id": "c39",
+              "type": "choice",
+              "question": "¿Qué es un ACRÓSTICO según lo aprendido en clase?",
+              "options": [
+                "Es una composición poética en la que las letras iniciales de cada verso leídas de arriba a abajo forman una palabra.",
+                "Es una lista de compras de supermercado.",
+                "Es una adivinanza sin respuesta."
+              ],
+              "correct": "Es una composición poética en la que las letras iniciales de cada verso leídas de arriba a abajo forman una palabra.",
+              "feedback": "El acróstico toma una palabra base (ej. PERÚ, MAMÁ) escrita verticalmente para crear versos poéticos.",
+              "tip": "Acróstico = Letras iniciales leídas de arriba hacia abajo forman una palabra."
+            },
+            {
+              "id": "c40",
+              "type": "write",
+              "question": "En el guión de teatro, la conversación que mantienen dos o más personajes en escena se llama: D i á l _ _ o.",
+              "correct": "dialogo",
+              "feedback": "¡Excelente! Los diálogos son las líneas habladas por los personajes.",
+              "tip": "Palabra clave: Diálogo."
+            }
+          ]
+        }
+      ]
+    };
+
+    let comodinUsado = false;
+    let logDudas = {};
+
+    function trackDuda(id) { 
+        logDudas[id] = (logDudas[id] || 0) + 1; 
+    }
+
+    function renderQuiz() {
+        const container = document.getElementById('quizContainer');
+        let questionCounter = 1;
+        examData.sections.forEach(section => {
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.innerText = section.title;
+            container.appendChild(header);
+
+            const layoutDiv = document.createElement('div');
+            layoutDiv.className = 'main-layout';
+
+            const questionsColumn = document.createElement('div');
+            questionsColumn.className = 'questions-column';
+
+            section.questions.forEach(q => {
+                const secDiv = document.createElement('div');
+                secDiv.className = 'section';
+                secDiv.id = 'sec_' + q.id;
+
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'question-title';
+                titleSpan.innerText = `${questionCounter}. ${q.question}`;
+                secDiv.appendChild(titleSpan);
+
+                if (q.type === 'choice') {
+                    const optDiv = document.createElement('div');
+                    optDiv.className = 'options';
+                    optDiv.id = 'opts_' + q.id;
+                    q.options.forEach(opt => {
+                        const lbl = document.createElement('label');
+                        lbl.innerHTML = `<input type="radio" name="${q.id}" value="${opt}" onclick="trackDuda('${q.id}'); saveProgress('${q.id}', '${opt}')"> <span>${opt}</span>`;
+                        optDiv.appendChild(lbl);
+                    });
+                    secDiv.appendChild(optDiv);
+                } else {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = q.id;
+                    input.placeholder = 'Escribe tu respuesta aquí...';
+                    input.oninput = function() { 
+                        trackDuda(q.id); 
+                        saveProgress(q.id, this.value); 
+                    };
+                    secDiv.appendChild(input);
+                }
+                questionsColumn.appendChild(secDiv);
+                questionCounter++;
+            });
+
+            const visualCard = document.createElement('div');
+            visualCard.className = 'visual-side-card';
+            visualCard.innerHTML = `
+                <span class="visual-emoji">${section.emoji}</span>
+                <span class="visual-tag">${section.tag}</span>
+                <div class="diagram-container">${section.svg}</div>
+                <p style="font-size:0.85em; color:#555; margin-top:8px;">¡Demuestra tu talento en Comunicación, Edward!</p>
+            `;
+
+            layoutDiv.appendChild(questionsColumn);
+            layoutDiv.appendChild(visualCard);
+            container.appendChild(layoutDiv);
+        });
+        loadSavedProgress();
+    }
+
+    function saveProgress(id, val) {
+        localStorage.setItem('exam_oct26_comu_' + id, val);
+        const sec = document.getElementById('sec_' + id);
+        if (sec) sec.classList.remove('incomplete');
+        if (document.querySelectorAll('.incomplete').length === 0) {
+            document.getElementById('missing-msg').style.display = 'none';
+        }
+    }
+
+    function loadSavedProgress() {
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                const saved = localStorage.getItem('exam_oct26_comu_' + q.id);
+                if (saved) {
+                    if (q.type === 'choice') {
+                        const radio = document.querySelector(`input[name="${q.id}"][value="${saved}"]`);
+                        if (radio) radio.checked = true;
+                    } else {
+                        const txtInput = document.getElementById(q.id);
+                        if (txtInput) txtInput.value = saved;
+                    }
+                }
+            });
+        });
+    }
+
+    function usarCincuentaCincuentaGlobal() {
+        if (comodinUsado) return;
+        let seleccionada = prompt("Edward, introduce el número de pregunta (1-40) donde deseas descartar una opción incorrecta:");
+        let qNum = parseInt(seleccionada);
+        if (isNaN(qNum) || qNum < 1 || qNum > 40) {
+            alert("Por favor ingresa un número de pregunta válido entre 1 y 40.");
+            return;
+        }
+        let currentIdx = 1, targetId = null, targetQObj = null;
+        for (let s of examData.sections) {
+            for (let q of s.questions) {
+                if (currentIdx === qNum) { 
+                    targetId = q.id; 
+                    targetQObj = q; 
+                    break; 
+                }
+                currentIdx++;
+            }
+            if (targetId) break;
+        }
+        if (!targetQObj || targetQObj.type !== 'choice') {
+            alert("El comodín solo aplica para preguntas de opción múltiple.");
+            return;
+        }
+        let labels = document.getElementById('opts_' + targetId).querySelectorAll('label');
+        let incorrectasBorradas = 0;
+        labels.forEach(lbl => {
+            let radio = lbl.querySelector('input');
+            if (radio.value !== targetQObj.correct && incorrectasBorradas < 1) { 
+                lbl.style.display = 'none'; 
+                incorrectasBorradas++; 
+            }
+        });
+        comodinUsado = true;
+        const btn = document.getElementById('global-5050');
+        btn.disabled = true;
+        btn.innerText = "⚡ Súper Poder Usado";
+    }
+
+    function validarExamen() {
+        let vacios = [];
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                let r = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`) : document.getElementById(q.id).value.trim();
+                if (!r) { 
+                    const c = document.getElementById('sec_' + q.id); 
+                    c.classList.add('incomplete'); 
+                    vacios.push(c); 
+                }
+            });
+        });
+
+        if (vacios.length > 0) { 
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100]);
+            }
+            document.getElementById('missing-msg').style.display = 'block'; 
+            vacios[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); 
+            return; 
+        }
+        calificarExamen();
+    }
+
+    let globalReportData = null;
+
+    function calificarExamen() {
+        let notaTotal = 0, questionIndex = 1;
+        let itemsHTML = "";
+        let topicStats = [];
+        let errorList = [];
+        let doubtList = [];
+
+        examData.sections.forEach(section => {
+            let aciertosSeccion = 0;
+            let totalSeccion = section.questions.length;
+            let erroresSeccion = [];
+
+            section.questions.forEach(q => {
+                let uVal = q.type === 'choice' ? document.querySelector(`input[name="${q.id}"]:checked`).value : document.getElementById(q.id).value.trim();
+                let cleanU = uVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let cleanC = q.correct.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.?!,']/g, "").replace(/\s+/g, ' ').trim();
+                let esOk = (cleanU === cleanC) || (q.type === 'write' && cleanU.includes(cleanC));
+                
+                if (esOk) {
+                    aciertosSeccion++;
+                    notaTotal++;
+                } else {
+                    erroresSeccion.push({
+                        numero: questionIndex,
+                        pregunta: q.question,
+                        tuRespuesta: uVal,
+                        correcta: q.correct,
+                        tip: q.tip
+                    });
+                    errorList.push({
+                        tema: section.title,
+                        pregunta: q.question,
+                        respuestaDada: uVal,
+                        respuestaCorrecta: q.correct,
+                        tip: q.tip
+                    });
+                }
+
+                if (logDudas[q.id] > 2) {
+                    doubtList.push({
+                        numero: questionIndex,
+                        pregunta: q.question,
+                        correcciones: logDudas[q.id]
+                    });
+                }
+
+                itemsHTML += `
+                    <div class="item-revision" style="border-left:8px solid ${esOk ? '#2ed573' : '#ff4757'}">
+                        <p><strong>Pregunta ${questionIndex}: ${q.question}</strong></p>
+                        <p>Tu respuesta: <span class="resp-usuario">${uVal}</span> ${esOk ? '✅' : '❌'}</p>
+                        ${!esOk ? `<p class="resp-correcta">Respuesta Correcta: ${q.correct}</p>` : ''}
+                        <p class="explicacion">💡 Pizarra didáctica: ${q.feedback}</p>
+                        <div class="tip-box">${q.tip}</div>
+                        ${logDudas[q.id] > 2 ? `<p style="color:#e67e22; font-weight:bold; font-size:0.88em; margin-top:5px;">⚠️ Se detectaron varias correcciones en esta pregunta (${logDudas[q.id]} intentos). ¡Repasar este punto!</p>` : ''}
+                    </div>
+                `;
+                questionIndex++;
+            });
+
+            topicStats.push({
+                tema: section.title,
+                etiqueta: section.tag,
+                aciertos: aciertosSeccion,
+                total: totalSeccion,
+                porcentaje: Math.round((aciertosSeccion / totalSeccion) * 100),
+                errores: erroresSeccion
+            });
+        });
+
+        const finalScore = Math.round((notaTotal / 40) * 20);
+        const rb = document.getElementById('result-box');
+        rb.style.display = 'block';
+        document.getElementById('score-text').innerText = `Calificación Final: ${finalScore} / 20 (${notaTotal} de 40 aciertos)`;
+        document.getElementById('lista-items').innerHTML = itemsHTML;
+        rb.className = finalScore >= 11 ? "correct-box" : "error-box";
+
+        let mensajeMotivacional = "";
+        if (finalScore >= 18) {
+            mensajeMotivacional = "<h4>🌟 ¡Extraordinario trabajo, Edward! Tienes un dominio sobresaliente de la carta, dípticos, ortografía (C-S-Z, diéresis) y textos narrativos. ¡A por ese 20 mañana!</h4>";
+        } else if (finalScore >= 14) {
+            mensajeMotivacional = "<h4>👏 ¡Muy buen esfuerzo, Edward! Estás cerca de la excelencia. Revisa abajo los temas marcados en amarillo o rojo para asegurar tu máxima nota.</h4>";
+        } else {
+            mensajeMotivacional = "<h4>📚 ¡Buen intento, Edward! Identificamos puntos clave para reforzar hoy con Papá. Revisa los tips verdes y practiquen las preguntas con error.</h4>";
+        }
+        document.getElementById('feedback-content').innerHTML = mensajeMotivacional;
+
+        // Renderizar Cuadrícula de Diagnóstico por Temas
+        let summaryHTML = "";
+        topicStats.forEach(ts => {
+            let badgeClass = ts.porcentaje >= 80 ? "status-mastered" : (ts.porcentaje >= 50 ? "status-review" : "status-danger");
+            let badgeText = ts.porcentaje >= 80 ? "✅ Dominado" : (ts.porcentaje >= 50 ? "⚠️ Repasar" : "🚨 Refuerzo Urgente");
+            summaryHTML += `
+                <div class="topic-summary-card">
+                    <span class="topic-badge ${badgeClass}">${badgeText}</span>
+                    <h5 style="margin: 4px 0 6px 0; font-size: 0.95em; color: #2f3542;">${ts.etiqueta}</h5>
+                    <p style="font-size: 0.88em; color: #57606f;">Aciertos: <strong>${ts.aciertos} / ${ts.total}</strong> (${ts.porcentaje}%)</p>
+                    <p style="font-size: 0.82em; color: ${ts.errores.length > 0 ? '#c0392b' : '#27ae60'}; margin-top: 4px;">
+                        ${ts.errores.length > 0 ? `⚠️ ${ts.errores.length} error(es) detectado(s)` : '🎉 ¡Sin errores en este bloque!'}
+                    </p>
+                </div>
+            `;
+        });
+        document.getElementById('topics-summary').innerHTML = summaryHTML;
+
+        // Preparar Datos Globales para Exportación (JSON y Texto para Chat)
+        globalReportData = {
+            alumno: "Edward Diaz",
+            grado: "3.° Primaria B - Colegio San Luis",
+            materia: "Comunicación - III Bimestre",
+            fecha: new Date().toLocaleDateString('es-PE'),
+            hora: new Date().toLocaleTimeString('es-PE'),
+            calificacionVigesimal: `${finalScore} / 20`,
+            aciertosTotales: `${notaTotal} de 40`,
+            desglosePorTemas: topicStats.map(t => ({
+                tema: t.etiqueta,
+                aciertos: `${t.aciertos}/${t.total}`,
+                porcentaje: `${t.porcentaje}%`,
+                estado: t.porcentaje >= 80 ? "Dominado" : (t.porcentaje >= 50 ? "Requiere repaso" : "Refuerzo urgente"),
+                cantidadErrores: t.errores.length
+            })),
+            listaErroresParaReforzar: errorList,
+            preguntasConDudasOVacilacion: doubtList
+        };
+
+        document.getElementById('json-output').value = JSON.stringify(globalReportData, null, 2);
+
+        // Limpiar progreso guardado
+        examData.sections.forEach(section => {
+            section.questions.forEach(q => {
+                localStorage.removeItem('exam_oct26_comu_' + q.id);
+            });
+        });
+
+        window.scrollTo({ top: rb.offsetTop, behavior: 'smooth' });
+    }
+
+    function generarTextoReporte() {
+        if (!globalReportData) return "";
+        let txt = `📊 *REPORTE DE EVALUACIÓN: COMUNICACIÓN (3.° PRIMARIA)*\n`;
+        txt += `👤 Estudiante: ${globalReportData.alumno}\n`;
+        txt += `📅 Fecha: ${globalReportData.fecha} - ${globalReportData.hora}\n`;
+        txt += `🏆 Nota Obtenida: *${globalReportData.calificacionVigesimal}* (${globalReportData.aciertosTotales} aciertos)\n\n`;
+        txt += `📋 *DESGLOSE POR TEMAS:*\n`;
+        globalReportData.desglosePorTemas.forEach(d => {
+            let icono = d.estado === "Dominado" ? "🟢" : (d.estado === "Requiere repaso" ? "🟡" : "🔴");
+            txt += `${icono} ${d.tema}: ${d.aciertos} (${d.porcentaje}) - ${d.estado}\n`;
+        });
+
+        if (globalReportData.listaErroresParaReforzar.length > 0) {
+            txt += `\n🚨 *PREGUNTAS A REFORZAR (${globalReportData.listaErroresParaReforzar.length}):*\n`;
+            globalReportData.listaErroresParaReforzar.forEach((e, idx) => {
+                txt += `${idx + 1}. [${e.tema}] ${e.pregunta}\n`;
+                txt += `   ❌ Edward marcó: "${e.respuestaDada}"\n`;
+                txt += `   ✅ Correcta: "${e.respuestaCorrecta}"\n`;
+                txt += `   💡 Tip: ${e.tip}\n\n`;
+            });
+        } else {
+            txt += `\n🌟 ¡Felicitaciones! No tuvo errores en la evaluación.\n`;
+        }
+        return txt;
+    }
+
+    function copiarReporteTexto() {
+        const texto = generarTextoReporte();
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(texto).then(() => {
+                alert("✅ ¡Reporte copiado al portapapeles! Puedes pegarlo directamente en Google Chat o Facebook Messenger para enviárselo a Papá.");
+            }).catch(() => {
+                alert("Copia el texto manualmente.");
+            });
+        } else {
+            alert("Portapapeles no soportado, copia desde el visor JSON.");
+        }
+    }
+
+    function abrirGoogleChat() {
+        copiarReporteTexto();
+        window.open('https://chat.google.com/', '_blank');
+    }
+
+    function toggleJsonView() {
+        const box = document.getElementById('json-box');
+        box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function copiarJson() {
+        const jsonText = document.getElementById('json-output').value;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(jsonText).then(() => {
+                alert("💻 ¡JSON con datos detallados de errores copiado al portapapeles!");
+            });
+        }
+    }
+
+    window.onload = renderQuiz;
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('../sw.js', { scope: '../' }).catch(() => {});
+        });
+    }
+</script>
+</body>
+</html>
