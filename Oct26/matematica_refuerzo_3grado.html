@@ -1,0 +1,1163 @@
+<!-- Examen 360° Refuerzo de Matemática - Octubre 2026 -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#16a085">
+    <link rel="manifest" href="../manifest.json">
+    <title>Refuerzo 360° Matemática - Edward (III Bimestre)</title>
+    <style>
+        :root {
+            --primary: #16a085;
+            --primary-dark: #117a65;
+            --accent: #27ae60;
+            --accent-orange: #e67e22;
+            --bg-color: #f4f9f7;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --border: #d1f2eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
+            background-color: var(--bg-color);
+            padding: 15px;
+            color: var(--text);
+            padding-bottom: 60px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 6px solid var(--primary);
+            position: relative;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #e8f8f5;
+            padding: 12px 18px;
+            border-radius: 15px;
+            border: 2px dashed #a3e4d7;
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            background: var(--primary-dark);
+        }
+
+        .badge-student {
+            font-weight: bold;
+            color: var(--primary-dark);
+            background: #d1f2eb;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 4px solid var(--primary);
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.1rem;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: #566573;
+            font-weight: bold;
+        }
+
+        .topic-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 14px 20px;
+            border-radius: 15px;
+            margin: 30px 0 18px 0;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(22, 160, 133, 0.25);
+        }
+
+        .question-card {
+            background: white;
+            border: 3px solid #e5e8e8;
+            border-radius: 18px;
+            padding: 18px 22px;
+            margin-bottom: 20px;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+            position: relative;
+        }
+
+        .question-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+        }
+
+        .question-card.incomplete {
+            border: 3px solid #e74c3c !important;
+            background-color: #fdf2e9 !important;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .q-num {
+            font-weight: 900;
+            color: var(--primary);
+            font-size: 1.15rem;
+        }
+
+        .q-tools {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tool-btn {
+            background: #eaeded;
+            border: 1px solid #bdc3c7;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tool-btn:hover {
+            background: #d5dbdb;
+        }
+
+        .tool-btn.active {
+            background: #f39c12;
+            color: white;
+            font-weight: bold;
+            border-color: #e67e22;
+        }
+
+        .q-text {
+            font-size: 1.08rem;
+            margin-bottom: 14px;
+            line-height: 1.5;
+            color: #2c3e50;
+        }
+
+        .math-box {
+            background: #e8f8f5;
+            border-left: 5px solid var(--primary);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 1.18rem;
+            color: #117a65;
+            display: inline-block;
+        }
+
+        .visual-cue {
+            margin: 12px auto;
+            text-align: center;
+            background: #fafafa;
+            border: 2px dashed #bdc3c7;
+            border-radius: 12px;
+            padding: 12px;
+            max-width: 480px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            background: #f8f9f9;
+            border: 2px solid #eaeded;
+            padding: 11px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            font-size: 1rem;
+        }
+
+        .option-label:hover {
+            background: #e8f8f5;
+            border-color: #a3e4d7;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.3);
+            accent-color: var(--primary);
+        }
+
+        .option-label.disabled-50 {
+            opacity: 0.25;
+            pointer-events: none;
+            text-decoration: line-through;
+            background: #d5dbdb;
+        }
+
+        .feedback {
+            margin-top: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: none;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .feedback.correct {
+            background-color: #d4efdf;
+            color: #196f3d;
+            border: 2px solid #a9dfbf;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background-color: #fadbd8;
+            color: #943126;
+            border: 2px solid #f5b7b1;
+            display: block;
+        }
+
+        .atajo-badge {
+            display: inline-block;
+            background: #fef9e7;
+            color: #b7950b;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-top: 6px;
+            border: 1px solid #f9e79f;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--accent) 0%, #1e8449 100%);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            font-size: 1.35rem;
+            font-weight: bold;
+            border-radius: 18px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.35);
+            transition: all 0.2s;
+            margin: 30px 0 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(39, 174, 96, 0.45);
+        }
+
+        /* RESULTADOS Y DIAGNÓSTICO */
+        .results-card {
+            display: none;
+            background: white;
+            border: 5px solid var(--primary);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 3.2rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 15px 0;
+        }
+
+        .topic-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .topic-stat-card {
+            background: #f4f9f7;
+            border: 2px solid #d1f2eb;
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .topic-stat-title {
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+        }
+
+        .topic-stat-score {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .topic-stat-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 8px;
+            margin-top: 4px;
+        }
+
+        .tag-perfect { background: #d4efdf; color: #196f3d; }
+        .tag-review { background: #fcf3cf; color: #7d6608; }
+        .tag-danger { background: #fadbd8; color: #943126; }
+
+        .share-actions {
+            margin-top: 25px;
+            background: #e8f8f5;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .btn-main-chat {
+            background: linear-gradient(135deg, #00832d 0%, #006622 100%);
+            color: white;
+            padding: 16px 28px;
+            border-radius: 16px;
+            border: none;
+            font-size: 1.15rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.25s;
+            box-shadow: 0 6px 16px rgba(0, 131, 45, 0.3);
+        }
+
+        .btn-main-chat:hover {
+            transform: scale(1.04);
+            box-shadow: 0 10px 22px rgba(0, 131, 45, 0.45);
+        }
+
+        /* SEGUIMIENTO DE PROGRESO DE PREGUNTAS */
+        .progress-tracker-box {
+            background: #ffffff;
+            border: 2px solid #a3e4d7;
+            border-radius: 16px;
+            padding: 14px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(22, 160, 133, 0.08);
+        }
+
+        .tracker-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .stat-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+        }
+
+        .stat-answered { color: #1e8449; }
+        .stat-pending { color: #d35400; }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 14px;
+            background: #eaeded;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1abc9c, #27ae60);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        /* BARRA FLOTANTE STICKY DE SCROLL */
+        .sticky-results-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #117a65;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            z-index: 9999;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sticky-results-bar.visible {
+            transform: translateY(0);
+        }
+
+        .sticky-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.05rem;
+            font-weight: bold;
+        }
+
+        .sticky-badge {
+            background: #f1c40f;
+            color: #2c3e50;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+        }
+
+        .sticky-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .sticky-btn-chat {
+            background: #00832d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .sticky-btn-chat:hover {
+            background: #006622;
+            transform: scale(1.05);
+        }
+
+        .sticky-btn-up {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sticky-btn-up:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        @media (max-width: 650px) {
+            .sticky-results-bar {
+                flex-direction: column;
+                gap: 8px;
+                padding: 8px 12px;
+            }
+            .sticky-info {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- BARRA STICKY FLOTANTE AL SCROLLEAR -->
+<div id="sticky-results-bar" class="sticky-results-bar">
+    <div class="sticky-info">
+        <span>👦 Edward:</span>
+        <span class="sticky-badge" id="sticky-score-badge">-- / 20</span>
+        <span id="sticky-correct-txt">-- aciertos</span>
+    </div>
+    <div class="sticky-actions">
+        <button class="sticky-btn-chat" onclick="abrirGoogleChat()">
+            💬 Abrir Google Chat
+        </button>
+        <button class="sticky-btn-up" onclick="subirAlResumen()">
+            ⬆ Ver Resumen
+        </button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="nav-bar">
+        <a href="../index.html" class="nav-btn">⬅ Volver a la Agenda</a>
+        <div class="badge-student">👦 Alumno: Edward | 3.° de Primaria</div>
+        <div style="font-size: 0.9rem; font-weight: bold; color: var(--primary);">⚡ Refuerzo Focalizado (15 Preguntas)</div>
+    </div>
+
+    <header>
+        <h1>🎯 Refuerzo Quirúrgico de Matemática</h1>
+        <p class="subtitle">15 preguntas clave basadas en los hallazgos de división, operadores y razonamiento</p>
+    </header>
+
+    <!-- SEGUIMIENTO DE PROGRESO DE PREGUNTAS -->
+    <div id="progress-tracker-box" class="progress-tracker-box">
+        <div class="tracker-stats">
+            <span class="stat-item stat-answered">
+                <span>✅</span> Resueltas: <strong id="count-answered">0</strong> de <span id="count-total">15</span>
+            </span>
+            <span class="stat-item stat-pending">
+                <span>⏳</span> Faltan responder: <strong id="count-pending">15</strong>
+            </span>
+        </div>
+        <div class="progress-bar-bg">
+            <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+        </div>
+    </div>
+
+    <form id="quiz-form">
+        <div id="quiz-container"></div>
+        <button type="button" class="submit-btn" onclick="submitExam()">
+            <span>🚀 Finalizar Refuerzo y Ver Resultados</span>
+        </button>
+    </form>
+
+    <div id="results" class="results-card">
+        <h2>🎉 ¡Excelente Trabajo de Refuerzo, Edward!</h2>
+        <div class="score-display" id="final-score">-- / 20</div>
+        <p id="score-msg" style="font-size: 1.15rem; font-weight: bold; margin-bottom: 20px;"></p>
+
+        <h3 style="color: var(--primary-dark); text-align: left; margin-bottom: 10px;">📊 Diagnóstico por Áreas de Reforzamiento:</h3>
+        <div class="topic-summary-grid" id="topic-summary"></div>
+
+        <div class="share-actions">
+            <h4 style="color: var(--primary-dark); margin-bottom: 8px;">📲 Comparte tus resultados con Papá:</h4>
+            <p style="color: #566573; font-size: 0.95rem; margin-bottom: 15px;">Al pulsar el botón se copiará tu reporte completo con los atajos aprendidos y se abrirá Google Chat para pegarlo de inmediato.</p>
+            <button class="btn-main-chat" onclick="abrirGoogleChat()">
+                <span>💬 Abrir Google Chat y Enviar Reporte a Papá</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Banco de 15 preguntas de refuerzo focalizado
+    const questions = [
+        // ==================== BLOQUE 1: DIVISIÓN MENTAL Y PROPIEDADES (4 Preguntas) ====================
+        {
+            id: 1,
+            block: 1,
+            blockName: "División Mental y Ceros",
+            text: "Calcula mentalmente el resultado de la siguiente división:<br><div class='math-box'>350 ÷ 5</div>",
+            options: ["70", "75", "50", "35"],
+            answer: 0, // 70
+            explanation: "¡Atajo de los ceros! Olvida el cero por un momento: 35 ÷ 5 = 7. Luego le vuelves a colocar el cero al final: 70.",
+            atajo: "💡 Atajo Mental: Tapa el cero -> 35 ÷ 5 = 7 -> Devuelve el cero -> 70. ¡Nunca 75!"
+        },
+        {
+            id: 2,
+            block: 1,
+            blockName: "División Mental y Ceros",
+            text: "Aplica el atajo de los ceros para resolver:<br><div class='math-box'>480 ÷ 6</div>",
+            options: ["70", "80", "85", "60"],
+            answer: 1, // 80
+            explanation: "Tapamos el cero: 48 ÷ 6 = 8 (porque 6 × 8 = 48). Al final agregamos el cero que tapamos: 80.",
+            atajo: "💡 Atajo Mental: 48 ÷ 6 = 8, agregas el 0 -> 80."
+        },
+        {
+            id: 3,
+            block: 1,
+            blockName: "División Mental y Ceros",
+            text: "Al dividir 45 entre 7, ¿cuál es el cociente y el residuo?",
+            options: [
+                "Cociente = 6, Residuo = 3",
+                "Cociente = 5, Residuo = 10",
+                "Cociente = 6, Residuo = 5",
+                "Cociente = 7, Residuo = 0"
+            ],
+            answer: 0, // 6 r 3
+            explanation: "En la tabla del 7: 7 × 6 = 42. Para llegar a 45 sobran 3 (45 - 42 = 3). Recuerda que el residuo 3 siempre debe ser menor que el divisor 7.",
+            atajo: "💡 Regla de Oro: 7 × 6 = 42; faltan 3 para 45. Residuo = 3."
+        },
+        {
+            id: 4,
+            block: 1,
+            blockName: "División Mental y Ceros",
+            text: "Un colegio reparte 240 cuadernos en partes iguales entre 4 aulas de tercer grado. ¿Cuántos cuadernos recibe cada aula?",
+            options: ["60 cuadernos", "50 cuadernos", "70 cuadernos", "65 cuadernos"],
+            answer: 0, // 60
+            explanation: "Dividimos 240 ÷ 4. Tapamos el cero: 24 ÷ 4 = 6. Le devolvemos el cero: 60 cuadernos para cada aula.",
+            atajo: "💡 Reparto Rápido: 24 ÷ 4 = 6 con su cero = 60."
+        },
+
+        // ==================== BLOQUE 2: OPERADORES MATEMÁTICOS (5 Preguntas) ====================
+        {
+            id: 5,
+            block: 2,
+            blockName: "Operadores Matemáticos",
+            text: "Se define el operador estrella:<br><div class='math-box'>m ★ n = m + n + 4</div>Calcula el valor de: <b>5 ★ 3</b>",
+            options: ["8", "12", "15", "11"],
+            answer: 1, // 12
+            explanation: "¡Paso a paso sin olvidar el final! Reemplazamos m = 5 y n = 3: Primero sumas 5 + 3 = 8. ¡Y ahora sumas el + 4! -> 8 + 4 = 12.",
+            atajo: "💡 ¡Ojo con el distractor!: No te detengas en 5 + 3 = 8. ¡Falta sumar el 4 final! 8 + 4 = 12."
+        },
+        {
+            id: 6,
+            block: 2,
+            blockName: "Operadores Matemáticos",
+            text: "Se define el operador pelota:<br><div class='math-box'>x ⚽ y = (x + y) × 2</div>Calcula el valor de: <b>3 ⚽ 4</b>",
+            options: ["7", "14", "12", "10"],
+            answer: 1, // 14
+            explanation: "1.° Sumamos lo que está entre paréntesis: 3 + 4 = 7. 2.° ¡Multiplicamos por 2!: 7 × 2 = 14.",
+            atajo: "💡 ¡Atención al paréntesis!: Primero sumas (3 + 4 = 7) y luego lo duplicas (7 × 2 = 14). ¡No marques 7!"
+        },
+        {
+            id: 7,
+            block: 2,
+            blockName: "Operadores Matemáticos",
+            text: "Se define el operador rayo:<br><div class='math-box'>a ⚡ b = (a + b) × 3</div>Calcula el valor de: <b>2 ⚡ 5</b>",
+            options: ["7", "18", "21", "25"],
+            answer: 2, // 21
+            explanation: "Primero sumamos el paréntesis: 2 + 5 = 7. Luego multiplicamos por 3: 7 × 3 = 21.",
+            atajo: "💡 Paso 1: 2 + 5 = 7. Paso 2: 7 × 3 = 21."
+        },
+        {
+            id: 8,
+            block: 2,
+            blockName: "Operadores Matemáticos",
+            text: "Se define el operador cajita:<br><div class='math-box'>[ x ] = 2 × x + 7</div>Calcula el valor de: <b>[ 6 ]</b>",
+            options: ["19", "12", "15", "26"],
+            answer: 0, // 19
+            explanation: "Reemplazamos x = 6: 2 × 6 + 7 = 12 + 7 = 19.",
+            atajo: "💡 Jerarquía del operador: Primero multiplica (2 × 6 = 12) y luego suma (+ 7) = 19."
+        },
+        {
+            id: 9,
+            block: 2,
+            blockName: "Operadores Matemáticos",
+            text: "Se define el operador cohete:<br><div class='math-box'>p 🚀 q = (p - q) × 5</div>Calcula el valor de: <b>9 🚀 5</b>",
+            options: ["4", "20", "25", "15"],
+            answer: 1, // 20
+            explanation: "1.° Restamos el paréntesis: 9 - 5 = 4. 2.° Multiplicamos por 5: 4 × 5 = 20.",
+            atajo: "💡 Resta primero: 9 - 5 = 4. Luego multiplica: 4 × 5 = 20."
+        },
+
+        // ==================== BLOQUE 3: CONTEO DE FIGURAS Y JERARQUÍA (3 Preguntas) ====================
+        {
+            id: 10,
+            block: 3,
+            blockName: "Conteo y Operaciones Combinadas",
+            text: "¿Cuántos cuadriláteros hay en total en esta figura de 4 franjas consecutivas?<div class='visual-cue'><svg width='280' height='75' viewBox='0 0 280 75'><rect x='5' y='5' width='60' height='65' fill='#d1f2eb' stroke='#16a085' stroke-width='3'/><rect x='65' y='5' width='60' height='65' fill='#fcf3cf' stroke='#f39c12' stroke-width='3'/><rect x='125' y='5' width='60' height='65' fill='#d6eaf8' stroke='#2980b9' stroke-width='3'/><rect x='185' y='5' width='60' height='65' fill='#fadbd8' stroke='#c0392b' stroke-width='3'/><text x='30' y='46' font-size='22' font-weight='bold' fill='#117a65'>1</text><text x='90' y='46' font-size='22' font-weight='bold' fill='#b7950b'>2</text><text x='150' y='46' font-size='22' font-weight='bold' fill='#1f618d'>3</text><text x='210' y='46' font-size='22' font-weight='bold' fill='#922b21'>4</text></svg></div>",
+            options: ["4", "8", "10", "12"],
+            answer: 2, // 10
+            explanation: "¡Atajo de figuras en fila! Sumamos los números de las partes: 1 + 2 + 3 + 4 = 10 cuadriláteros en total.",
+            atajo: "💡 Atajo de Gauss: 1 + 2 + 3 + 4 = 10. ¡Fácil y rápido!"
+        },
+        {
+            id: 11,
+            block: 3,
+            blockName: "Conteo y Operaciones Combinadas",
+            text: "Calcula el resultado de la siguiente operación combinada:<br><div class='math-box'>30 - 4 × 5 + 18 ÷ 2</div>",
+            options: ["19", "25", "15", "23"],
+            answer: 0, // 19
+            explanation: "1.° Multiplicación y división: 4 × 5 = 20, y 18 ÷ 2 = 9. 2.° De izquierda a derecha: 30 - 20 = 10. 3.° 10 + 9 = 19.",
+            atajo: "💡 Primero el centro: 4 × 5 = 20 y 18 ÷ 2 = 9. Luego: 30 - 20 + 9 = 19."
+        },
+        {
+            id: 12,
+            block: 3,
+            blockName: "Conteo y Operaciones Combinadas",
+            text: "Edward compra 3 cuadernos a S/ 6 cada uno y 1 cartuchera a S/ 12. Si paga con un billete de S/ 50, ¿cuánto recibe de vuelto?",
+            options: ["S/ 20", "S/ 30", "S/ 18", "S/ 22"],
+            answer: 0, // S/ 20
+            explanation: "Cuadernos: 3 × 6 = S/ 18. Cartuchera: S/ 12. Gasto total: 18 + 12 = S/ 30. Vuelto: 50 - 30 = S/ 20.",
+            atajo: "💡 18 + 12 = 30. De 30 a 50 faltan 20."
+        },
+
+        // ==================== BLOQUE 4: FRACCIONES Y LONGITUD (3 Preguntas) ====================
+        {
+            id: 13,
+            block: 4,
+            blockName: "Fracciones y Longitud",
+            text: "Resuelve la suma de fracciones homogéneas:<br><div class='math-box'>5/12 + 4/12</div>",
+            options: ["9/24", "9/12", "1/12", "9/0"],
+            answer: 1, // 9/12
+            explanation: "Al tener el mismo denominador (12), solo se suman los numeradores: 5 + 4 = 9. El denominador queda intacto: 9/12 (nueve doceavos).",
+            atajo: "💡 ¡Trampa evitada! El denominador 12 nunca se suma, solo los de arriba: 5 + 4 = 9/12."
+        },
+        {
+            id: 14,
+            block: 4,
+            blockName: "Fracciones y Longitud",
+            text: "¿Cuál de las siguientes fracciones es una <b>fracción propia</b> (menor a la unidad)?",
+            options: ["8/5", "7/3", "4/9", "6/6"],
+            answer: 2, // 4/9
+            explanation: "Una fracción propia tiene el numerador MENOR que el denominador (4 < 9). En las impropias el numerador es mayor.",
+            atajo: "💡 Fracción Propia: Arriba es menor que abajo (4 < 9)."
+        },
+        {
+            id: 15,
+            block: 4,
+            blockName: "Fracciones y Longitud",
+            text: "Una cinta mide <b>2 metros con 45 centímetros</b>. ¿Cuántos centímetros mide en total?",
+            options: ["245 cm", "2045 cm", "65 cm", "2450 cm"],
+            answer: 0, // 245 cm
+            explanation: "2 metros = 2 × 100 = 200 cm. Sumamos los 45 cm: 200 + 45 = 245 cm.",
+            atajo: "💡 Atajo Directo: Escribe los metros y luego los centímetros juntos: 2 y 45 -> 245 cm."
+        }
+    ];
+
+    // Variables de estado
+    const userAnswers = {};
+    const dudas = {};
+    const fiftyUsed = {};
+    let globalReportData = null;
+    let isExamFinished = false;
+
+    function updateProgressTracker() {
+        const total = questions.length;
+        let answered = 0;
+        for (let qId in userAnswers) {
+            if (userAnswers[qId] !== undefined) answered++;
+        }
+        const pending = total - answered;
+        const pct = Math.round((answered / total) * 100);
+
+        const answeredEl = document.getElementById('count-answered');
+        const pendingEl = document.getElementById('count-pending');
+        const totalEl = document.getElementById('count-total');
+        const fillEl = document.getElementById('progress-bar-fill');
+
+        if (answeredEl) answeredEl.innerText = answered;
+        if (pendingEl) pendingEl.innerText = pending;
+        if (totalEl) totalEl.innerText = total;
+        if (fillEl) fillEl.style.width = pct + '%';
+    }
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        let currentBlock = 0;
+        let html = '';
+
+        questions.forEach((q, index) => {
+            if (q.block !== currentBlock) {
+                currentBlock = q.block;
+                html += `
+                    <div class="topic-header">
+                        <span>🎯 Bloque ${q.block}: ${q.blockName}</span>
+                    </div>
+                `;
+            }
+
+            html += `
+                <div class="question-card" id="card-${q.id}">
+                    <div class="q-header">
+                        <span class="q-num">Pregunta ${index + 1} de 15</span>
+                        <div class="q-tools">
+                            <button type="button" class="tool-btn" id="btn-50-${q.id}" onclick="useFifty(${q.id})">
+                                ⚡ 50/50
+                            </button>
+                            <button type="button" class="tool-btn" id="btn-duda-${q.id}" onclick="trackDuda(${q.id})">
+                                ❓ Tengo Duda
+                            </button>
+                        </div>
+                    </div>
+                    <div class="q-text">${q.text}</div>
+                    <div class="options-grid" id="options-${q.id}">
+                        ${q.options.map((opt, optIdx) => `
+                            <label class="option-label" id="opt-label-${q.id}-${optIdx}">
+                                <input type="radio" name="q${q.id}" value="${optIdx}" onchange="selectOption(${q.id}, ${optIdx})">
+                                <span>${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div class="feedback" id="feedback-${q.id}"></div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+        loadSavedState();
+        updateProgressTracker();
+    }
+
+    function selectOption(qId, optIdx) {
+        userAnswers[qId] = optIdx;
+        const card = document.getElementById(`card-${qId}`);
+        card.classList.remove('incomplete');
+        updateProgressTracker();
+        saveState();
+    }
+
+    function trackDuda(qId) {
+        dudas[qId] = !dudas[qId];
+        const btn = document.getElementById(`btn-duda-${qId}`);
+        if (dudas[qId]) {
+            btn.classList.add('active');
+            btn.innerHTML = '❓ Marcada con Duda';
+        } else {
+            btn.classList.remove('active');
+            btn.innerHTML = '❓ Tengo Duda';
+        }
+        saveState();
+    }
+
+    function useFifty(qId) {
+        if (fiftyUsed[qId]) return;
+        fiftyUsed[qId] = true;
+
+        const q = questions.find(item => item.id === qId);
+        const correctIdx = q.answer;
+        const incorrectIndices = [0, 1, 2, 3].filter(idx => idx !== correctIdx);
+        
+        incorrectIndices.sort(() => Math.random() - 0.5);
+        const toDisable = incorrectIndices.slice(0, 2);
+
+        toDisable.forEach(idx => {
+            const label = document.getElementById(`opt-label-${qId}-${idx}`);
+            if (label) {
+                label.classList.add('disabled-50');
+            }
+        });
+
+        const btn = document.getElementById(`btn-50-${qId}`);
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.innerHTML = '⚡ Usado';
+        saveState();
+    }
+
+    function saveState() {
+        const state = {
+            answers: userAnswers,
+            dudas: dudas,
+            fifty: fiftyUsed
+        };
+        localStorage.setItem('mate_refuerzo_edward_state', JSON.stringify(state));
+    }
+
+    function loadSavedState() {
+        const saved = localStorage.getItem('mate_refuerzo_edward_state');
+        if (!saved) return;
+        try {
+            const state = JSON.parse(saved);
+            if (state.answers) {
+                for (let qId in state.answers) {
+                    const optIdx = state.answers[qId];
+                    userAnswers[qId] = optIdx;
+                    const radio = document.querySelector(`input[name="q${qId}"][value="${optIdx}"]`);
+                    if (radio) radio.checked = true;
+                }
+            }
+            if (state.dudas) {
+                for (let qId in state.dudas) {
+                    if (state.dudas[qId]) {
+                        trackDuda(parseInt(qId));
+                    }
+                }
+            }
+            if (state.fifty) {
+                for (let qId in state.fifty) {
+                    if (state.fifty[qId]) {
+                        useFifty(parseInt(qId));
+                    }
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        updateProgressTracker();
+    }
+
+    function submitExam() {
+        let firstIncomplete = null;
+        let incompleteCount = 0;
+
+        questions.forEach(q => {
+            const card = document.getElementById(`card-${q.id}`);
+            if (userAnswers[q.id] === undefined) {
+                card.classList.add('incomplete');
+                incompleteCount++;
+                if (!firstIncomplete) firstIncomplete = card;
+            } else {
+                card.classList.remove('incomplete');
+            }
+        });
+
+        if (incompleteCount > 0) {
+            if (navigator.vibrate) navigator.vibrate([150, 80, 150]);
+            alert(`⚠️ Edward, te faltan responder ${incompleteCount} preguntas del refuerzo. ¡Revisa las tarjetas marcadas en rojo!`);
+            firstIncomplete.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+
+        // Calificación Vigesimal sobre 15 preguntas
+        let correctCount = 0;
+        const blockStats = {
+            1: { total: 0, correct: 0, name: "División Mental y Ceros" },
+            2: { total: 0, correct: 0, name: "Operadores Matemáticos" },
+            3: { total: 0, correct: 0, name: "Conteo y Jerarquía" },
+            4: { total: 0, correct: 0, name: "Fracciones y Longitud" }
+        };
+
+        const errorList = [];
+
+        questions.forEach(q => {
+            const isCorrect = userAnswers[q.id] === q.answer;
+            const fb = document.getElementById(`feedback-${q.id}`);
+            blockStats[q.block].total++;
+
+            if (isCorrect) {
+                correctCount++;
+                blockStats[q.block].correct++;
+                fb.className = "feedback correct";
+                fb.innerHTML = `<strong>✅ ¡Excelente!</strong> ${q.explanation}<br><span class="atajo-badge">${q.atajo}</span>`;
+            } else {
+                fb.className = "feedback incorrect";
+                fb.innerHTML = `<strong>❌ Oportunidad de repaso.</strong> Respuesta correcta: <b>${q.options[q.answer]}</b>.<br>${q.explanation}<br><span class="atajo-badge">${q.atajo}</span>`;
+                
+                errorList.push({
+                    id: q.id,
+                    block: q.block,
+                    pregunta: q.text.replace(/<[^>]*>?/gm, ''),
+                    tuRespuesta: q.options[userAnswers[q.id]],
+                    respuestaCorrecta: q.options[q.answer],
+                    dudaMarcada: !!dudas[q.id],
+                    atajo: q.atajo
+                });
+            }
+        });
+
+        // Escala 0 a 20 (15 preguntas)
+        const scoreVigesimal = Math.round((correctCount / 15) * 20);
+        document.getElementById('final-score').innerText = `${scoreVigesimal} / 20`;
+
+        const msgElem = document.getElementById('score-msg');
+        if (scoreVigesimal >= 18) {
+            msgElem.innerText = `🌟 ¡Impresionante, Edward! Superaste los errores previos y dominas los trucos de división y operadores. (${correctCount}/15 aciertos)`;
+            msgElem.style.color = '#196f3d';
+        } else if (scoreVigesimal >= 14) {
+            msgElem.innerText = `👏 ¡Muy bien, Edward! Vas con paso firme. Revisa los atajos de las preguntas marcadas. (${correctCount}/15 aciertos)`;
+            msgElem.style.color = '#7d6608';
+        } else {
+            msgElem.innerText = `💪 ¡Sigue practicando, Edward! Los atajos de cálculo mental te ayudarán a asegurar el 20 el lunes. (${correctCount}/15 aciertos)`;
+            msgElem.style.color = '#943126';
+        }
+
+        // Resumen diagnóstico por bloques
+        const summaryGrid = document.getElementById('topic-summary');
+        let summaryHtml = '';
+        for (let b in blockStats) {
+            const stat = blockStats[b];
+            const pct = Math.round((stat.correct / stat.total) * 100);
+            let tagClass = 'tag-perfect';
+            let tagText = 'Dominado';
+
+            if (pct < 70) {
+                tagClass = 'tag-danger';
+                tagText = 'Reforzar urgente';
+            } else if (pct < 90) {
+                tagClass = 'tag-review';
+                tagText = 'Repasar detalles';
+            }
+
+            summaryHtml += `
+                <div class="topic-stat-card">
+                    <div class="topic-stat-title">Bloque ${b}: ${stat.name}</div>
+                    <div class="topic-stat-score">${stat.correct} / ${stat.total} (${pct}%)</div>
+                    <span class="topic-stat-tag ${tagClass}">${tagText}</span>
+                </div>
+            `;
+        }
+        summaryGrid.innerHTML = summaryHtml;
+
+        // Actualizar datos de la barra sticky flotante
+        document.getElementById('sticky-score-badge').innerText = `${scoreVigesimal} / 20`;
+        document.getElementById('sticky-correct-txt').innerText = `${correctCount}/15 aciertos`;
+
+        // Guardar estructura global del reporte
+        globalReportData = {
+            alumno: "Edward Diaz",
+            grado: "3.° de Primaria",
+            colegio: "San Luis",
+            tipo: "Refuerzo Quirúrgico de Matemática",
+            fecha: new Date().toLocaleString('es-PE'),
+            notaVigesimal: `${scoreVigesimal} / 20`,
+            aciertos: `${correctCount} de 15 aciertos`,
+            diagnosticoBloques: blockStats,
+            totalErrores: errorList.length,
+            detalleErrores: errorList
+        };
+
+        // Marcar examen como finalizado y ocultar barra de progreso
+        isExamFinished = true;
+        const tracker = document.getElementById('progress-tracker-box');
+        if (tracker) tracker.style.display = 'none';
+
+        const resultsCard = document.getElementById('results');
+        resultsCard.style.display = 'block';
+        resultsCard.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function generarTextoReporte() {
+        if (!globalReportData) return "No hay reporte disponible.";
+        const data = globalReportData;
+
+        let txt = `📊 *REPORTE DE REFUERZO MATEMÁTICO (3.° PRIMARIA)*\n`;
+        txt += `👤 *Estudiante:* ${data.alumno}\n`;
+        txt += `📅 *Fecha:* ${data.fecha}\n`;
+        txt += `🏆 *Nota Obtenida:* ${data.notaVigesimal} (${data.aciertos})\n\n`;
+        
+        txt += `📋 *DESGLOSE POR BLOQUES:*\n`;
+        for (let b in data.diagnosticoBloques) {
+            const st = data.diagnosticoBloques[b];
+            const pct = Math.round((st.correct / st.total) * 100);
+            const icono = pct >= 90 ? '🟢' : (pct >= 70 ? '🟡' : '🔴');
+            txt += `${icono} ${st.name}: ${st.correct}/${st.total} (${pct}%)\n`;
+        }
+
+        if (data.totalErrores > 0) {
+            txt += `\n🚨 *EJERCICIOS A REFORZAR CON PAPÁ (${data.totalErrores}):*\n`;
+            data.detalleErrores.forEach((err, idx) => {
+                txt += `\n${idx + 1}. [${err.pregunta.substring(0, 75)}...]\n`;
+                txt += `   ❌ Edward respondió: "${err.tuRespuesta}"\n`;
+                txt += `   ✅ Correcta: "${err.respuestaCorrecta}"\n`;
+                if (err.dudaMarcada) txt += `   ⚠️ Marcó que tenía dudas en esta pregunta.\n`;
+                txt += `   💡 ${err.atajo}\n`;
+            });
+        } else {
+            txt += `\n🌟 ¡Impecable! Edward resolvió todas las 15 preguntas correctamente sin ningún error.\n`;
+        }
+        return txt;
+    }
+
+    function abrirGoogleChat() {
+        const texto = generarTextoReporte();
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(texto).then(() => {
+                alert("✅ ¡Reporte copiado con éxito! Ahora puedes pegarlo directamente en el chat con Papá.");
+                window.open('https://chat.google.com/', '_blank');
+            }).catch(() => {
+                window.open('https://chat.google.com/', '_blank');
+            });
+        } else {
+            window.open('https://chat.google.com/', '_blank');
+        }
+    }
+
+    function subirAlResumen() {
+        const results = document.getElementById('results');
+        if (results) {
+            results.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // Detector de scroll para la barra flotante sticky
+    window.addEventListener('scroll', () => {
+        const stickyBar = document.getElementById('sticky-results-bar');
+        if (!stickyBar) return;
+
+        // SÓLO disponible si Edward ya finalizó el examen
+        if (!isExamFinished) {
+            stickyBar.classList.remove('visible');
+            return;
+        }
+
+        const quizSection = document.getElementById('quiz-container');
+        if (!quizSection) {
+            stickyBar.classList.remove('visible');
+            return;
+        }
+
+        const rect = quizSection.getBoundingClientRect();
+        // Aparece SÓLO mientras se desplaza por la sección de preguntas del examen
+        if (rect.top <= 80 && rect.bottom >= 120) {
+            stickyBar.classList.add('visible');
+        } else {
+            stickyBar.classList.remove('visible');
+        }
+    });
+
+    window.onload = renderQuiz;
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('../sw.js', { scope: '../' }).catch(() => {});
+        });
+    }
+</script>
+</body>
+</html>
