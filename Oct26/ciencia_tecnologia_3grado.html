@@ -1,0 +1,1616 @@
+<!-- Examen 360° Ciencia y Tecnología - Octubre 2026 -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#27ae60">
+    <link rel="manifest" href="../manifest.json">
+    <title>Examen 360° Ciencia y Tecnología - III Bimestre (Edward)</title>
+    <style>
+        :root {
+            --primary: #27ae60;
+            --primary-dark: #1e8449;
+            --accent: #2ecc71;
+            --accent-orange: #e67e22;
+            --bg-color: #f4fbf7;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --border: #d4efdf;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Comic Neue', cursive, sans-serif;
+            background-color: var(--bg-color);
+            padding: 15px;
+            color: var(--text);
+            padding-bottom: 70px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 6px solid var(--primary);
+            position: relative;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #eafaf1;
+            padding: 12px 18px;
+            border-radius: 15px;
+            border: 2px dashed #a9dfbf;
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            background: var(--primary-dark);
+        }
+
+        .badge-student {
+            font-weight: bold;
+            color: var(--primary-dark);
+            background: #d4efdf;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 4px solid var(--primary);
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: #566573;
+            font-weight: bold;
+        }
+
+        /* SEGUIMIENTO DE PROGRESO FLOTANTE (STICKY DURANTE EXAMEN) */
+        .progress-tracker-box {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: #ffffff;
+            border: 3px solid #27ae60;
+            border-radius: 18px;
+            padding: 14px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.2);
+            backdrop-filter: blur(8px);
+        }
+
+        .tracker-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .stat-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+        }
+
+        .stat-answered { color: #1e8449; }
+        .stat-pending { color: #d35400; }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 14px;
+            background: #eaeded;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .topic-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e8449 100%);
+            color: white;
+            padding: 14px 20px;
+            border-radius: 15px;
+            margin: 30px 0 18px 0;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.25);
+        }
+
+        .question-card {
+            background: white;
+            border: 3px solid #e5e8e8;
+            border-radius: 18px;
+            padding: 18px 22px;
+            margin-bottom: 20px;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+            position: relative;
+        }
+
+        .question-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+        }
+
+        .question-card.incomplete {
+            border: 3px solid #e74c3c !important;
+            background-color: #fdf2e9 !important;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .q-num {
+            font-weight: 900;
+            color: var(--primary);
+            font-size: 1.15rem;
+        }
+
+        .q-tools {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tool-btn {
+            background: #eaeded;
+            border: 1px solid #bdc3c7;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tool-btn:hover {
+            background: #d5dbdb;
+        }
+
+        .tool-btn.active {
+            background: #f39c12;
+            color: white;
+            font-weight: bold;
+            border-color: #e67e22;
+        }
+
+        .q-text {
+            font-size: 1.08rem;
+            margin-bottom: 14px;
+            line-height: 1.5;
+            color: #2c3e50;
+        }
+
+        .science-cue {
+            margin: 12px auto;
+            text-align: center;
+            background: #fafafa;
+            border: 2px dashed #a9dfbf;
+            border-radius: 12px;
+            padding: 12px;
+            max-width: 520px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            background: #f8f9f9;
+            border: 2px solid #eaeded;
+            padding: 11px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            font-size: 1rem;
+        }
+
+        .option-label:hover {
+            background: #eafaf1;
+            border-color: #a9dfbf;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.3);
+            accent-color: var(--primary);
+        }
+
+        .option-label.disabled-50 {
+            opacity: 0.25;
+            pointer-events: none;
+            text-decoration: line-through;
+            background: #d5dbdb;
+        }
+
+        .feedback {
+            margin-top: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: none;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .feedback.correct {
+            background-color: #d4efdf;
+            color: #196f3d;
+            border: 2px solid #a9dfbf;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background-color: #fadbd8;
+            color: #943126;
+            border: 2px solid #f5b7b1;
+            display: block;
+        }
+
+        .tip-badge {
+            display: inline-block;
+            background: #fef9e7;
+            color: #b7950b;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-top: 6px;
+            border: 1px solid #f9e79f;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e8449 100%);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            font-size: 1.35rem;
+            font-weight: bold;
+            border-radius: 18px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.35);
+            transition: all 0.2s;
+            margin: 30px 0 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(39, 174, 96, 0.45);
+        }
+
+        /* RESULTADOS Y DIAGNÓSTICO */
+        .results-card {
+            display: none;
+            background: white;
+            border: 5px solid var(--primary);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 3.2rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 15px 0;
+        }
+
+        .topic-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .topic-stat-card {
+            background: #f4fbf7;
+            border: 2px solid #d4efdf;
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .topic-stat-title {
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+        }
+
+        .topic-stat-score {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .topic-stat-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 8px;
+            margin-top: 4px;
+        }
+
+        .tag-perfect { background: #d4efdf; color: #196f3d; }
+        .tag-review { background: #fcf3cf; color: #7d6608; }
+        .tag-danger { background: #fadbd8; color: #943126; }
+
+        .share-actions {
+            margin-top: 25px;
+            background: #eafaf1;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .btn-main-share {
+            background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+            color: white;
+            padding: 16px 30px;
+            border-radius: 16px;
+            border: none;
+            font-size: 1.15rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.25s;
+            box-shadow: 0 6px 16px rgba(39, 174, 96, 0.35);
+        }
+
+        .btn-main-share:hover {
+            transform: scale(1.04);
+            box-shadow: 0 10px 22px rgba(39, 174, 96, 0.45);
+        }
+
+        /* BARRA FLOTANTE STICKY DE SCROLL (POST EVALUACIÓN) */
+        .sticky-results-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #1e8449;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            z-index: 9999;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out;
+            box-sizing: border-box;
+        }
+
+        .sticky-results-bar.visible {
+            transform: translateY(0);
+        }
+
+        .sticky-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.05rem;
+            font-weight: bold;
+        }
+
+        .sticky-badge {
+            background: #f1c40f;
+            color: #2c3e50;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+        }
+
+        .sticky-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .sticky-btn-share {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .sticky-btn-share:hover {
+            background: #1e8449;
+            transform: scale(1.05);
+        }
+
+        .sticky-btn-up {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sticky-btn-up:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        @media (max-width: 650px) {
+            .sticky-results-bar {
+                flex-direction: column;
+                gap: 8px;
+                padding: 8px 12px;
+            }
+            .sticky-info {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- BARRA STICKY FLOTANTE AL SCROLLEAR (POST-EVALUACIÓN) -->
+<div id="sticky-results-bar" class="sticky-results-bar">
+    <div class="sticky-info">
+        <span>🌿 Edward:</span>
+        <span class="sticky-badge" id="sticky-score-badge">-- / 20</span>
+        <span id="sticky-correct-txt">-- aciertos</span>
+    </div>
+    <div class="sticky-actions">
+        <button class="sticky-btn-share" onclick="compartirEvaluacion()">
+            📲 Compartir Evaluación
+        </button>
+        <button class="sticky-btn-up" onclick="subirAlResumen()">
+            ⬆ Ver Resumen
+        </button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="nav-bar">
+        <a href="../index.html" class="nav-btn">⬅ Volver a la Agenda</a>
+        <div class="badge-student">👦 Alumno: Edward | 3.° de Primaria</div>
+        <div style="font-size: 0.9rem; font-weight: bold; color: var(--primary);">📅 Martes 06 Octubre 2026</div>
+    </div>
+
+    <header>
+        <h1>🌿 Evaluación 360° de Ciencia y Tecnología</h1>
+        <p class="subtitle">III Bimestre • El Agua, El Aire, Las Plantas, Ecosistemas y Cadenas Alimenticias</p>
+    </header>
+
+    <!-- SEGUIMIENTO DE PROGRESO FLOTANTE -->
+    <div id="progress-tracker-box" class="progress-tracker-box">
+        <div class="tracker-stats">
+            <span class="stat-item stat-answered">
+                <span>✅</span> Resueltas: <strong id="count-answered">0</strong> de <span id="count-total">40</span>
+            </span>
+            <span class="stat-item stat-pending">
+                <span>⏳</span> Faltan responder: <strong id="count-pending">40</strong>
+            </span>
+        </div>
+        <div class="progress-bar-bg">
+            <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+        </div>
+    </div>
+
+    <form id="quiz-form">
+        <div id="quiz-container"></div>
+        <button type="button" class="submit-btn" onclick="submitExam()">
+            <span>🚀 Terminar y Evaluar Examen de Ciencia</span>
+        </button>
+    </form>
+
+    <div id="results" class="results-card">
+        <h2>🎉 ¡Evaluación Completada, Edward!</h2>
+        <div class="score-display" id="final-score">-- / 20</div>
+        <p id="score-msg" style="font-size: 1.15rem; font-weight: bold; margin-bottom: 20px;"></p>
+
+        <h3 style="color: var(--primary-dark); text-align: left; margin-bottom: 10px;">📊 Diagnóstico Científico por Bloques Temáticos:</h3>
+        <div class="topic-summary-grid" id="topic-summary"></div>
+
+        <div class="share-actions">
+            <h4 style="color: var(--primary-dark); margin-bottom: 8px;">📲 Comparte tus resultados con Papá:</h4>
+            <p style="color: #566573; font-size: 0.95rem; margin-bottom: 15px;">Pulsa el botón para abrir la bandeja de compartir de tu dispositivo y enviar tu reporte a WhatsApp, Google Chat, Messenger o la app que elijas.</p>
+            <button class="btn-main-share" onclick="compartirEvaluacion()">
+                <span>📲 Compartir Evaluación con Papá</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Banco completo de 40 preguntas basadas en el temario oficial del Colegio San Luis (III Bimestre)
+    const questions = [
+        // ==================== BLOQUE 1: EL AGUA, SUS ESTADOS Y CAMBIOS FÍSICOS ====================
+        {
+            id: 1,
+            block: 1,
+            blockName: "El Agua y sus Estados",
+            text: "El agua se puede encontrar en la naturaleza en tres estados físicos. ¿Cuáles son?",
+            options: [
+                "Sólido, líquido y gaseoso",
+                "Duro, suave y caliente",
+                "Río, lago y mar",
+                "Lluvia, nube y granizo"
+            ],
+            answer: 0,
+            explanation: "El agua se presenta en tres estados fundamentales de la materia: sólido (hielo), líquido (agua que bebemos) y gaseoso (vapor).",
+            tip: "💡 Tip Clave: Recuerda los 3 estados: Sólido, Líquido y Gaseoso."
+        },
+        {
+            id: 2,
+            block: 1,
+            blockName: "El Agua y sus Estados",
+            text: "¿Qué característica describe correctamente al agua en <b>estado sólido</b> (hielo)?",
+            options: [
+                "Es dura y tiene una forma propia definida",
+                "No tiene forma y se dispersa en el aire",
+                "Toma la forma del vaso que la contiene",
+                "Es completamente invisible a la vista"
+            ],
+            answer: 0,
+            explanation: "El hielo es agua en estado sólido: es duro y mantiene su propia forma definida, sin depender del recipiente.",
+            tip: "💡 En sólido: Las partículas están muy juntas y ordenadas, por eso tiene forma propia y es duro."
+        },
+        {
+            id: 3,
+            block: 1,
+            blockName: "El Agua y sus Estados",
+            text: "María colocó cubitos de hielo en un plato. Después de un rato, los cubitos se derritieron y se convirtieron en agua líquida. ¿Cómo se llama este cambio de estado?<div class='science-cue'><svg width='220' height='70' viewBox='0 0 220 70'><rect x='10' y='15' width='40' height='40' fill='#a0e7e5' stroke='#00b4d8' stroke-width='2' rx='5'/><text x='18' y='42' font-size='22'>🧊</text><text x='70' y='42' font-size='20' fill='#e67e22'>+ Calor ➔</text><circle cx='170' cy='35' r='22' fill='#90e0ef' stroke='#0077b6' stroke-width='2'/><text x='158' y='42' font-size='22'>💧</text></svg></div>",
+            options: [
+                "Fusión",
+                "Evaporación",
+                "Condensación",
+                "Solidificación"
+            ],
+            answer: 0,
+            explanation: "El paso de estado sólido (hielo) a estado líquido al recibir calor se llama FUSIÓN.",
+            tip: "💡 Sólido a Líquido = FUSIÓN (el hielo se funde o derrite con calor)."
+        },
+        {
+            id: 4,
+            block: 1,
+            blockName: "El Agua y sus Estados",
+            text: "La mamá de Edward puso a hervir agua en una olla y comenzó a salir vapor hacia el aire. ¿Cómo se llama el cambio de agua líquida a vapor de agua?",
+            options: [
+                "Evaporación",
+                "Fusión",
+                "Congelación",
+                "Condensación"
+            ],
+            answer: 0,
+            explanation: "Cuando el agua líquida recibe suficiente calor y pasa a estado gaseoso (vapor), ocurre la EVAPORACIÓN.",
+            tip: "💡 Líquido a Gas = EVAPORACIÓN (el agua líquida se convierte en vapor)."
+        },
+        {
+            id: 5,
+            block: 1,
+            blockName: "El Agua y sus Estados",
+            text: "Cuando el vapor caliente toca la tapa fría de una olla o el espejo del baño, se enfría y se transforma nuevamente en gotitas de agua líquida. Este cambio se llama:",
+            options: [
+                "Condensación",
+                "Evaporación",
+                "Fusión",
+                "Filtración"
+            ],
+            answer: 0,
+            explanation: "La CONDENSACIÓN ocurre cuando el vapor de agua se enfría y regresa al estado líquido (formando gotas en la tapa, rocío o nubes).",
+            tip: "💡 Gas a Líquido = CONDENSACIÓN (el vapor se enfría y forma gotitas líquidas)."
+        },
+        {
+            id: 6,
+            block: 1,
+            blockName: "El Agua y sus Estados",
+            text: "¿Cuál es una propiedad fundamental del agua en <b>estado líquido</b>?",
+            options: [
+                "No tiene forma propia y adopta la forma del recipiente que la contiene",
+                "Tiene una forma fija que nunca cambia",
+                "Flota libremente dispersándose por todo el aire",
+                "Es dura y rígida"
+            ],
+            answer: 0,
+            explanation: "El agua líquida no tiene forma fija: si la viertes en una jarra, vaso o plato, toma la forma de ese recipiente.",
+            tip: "💡 Estado Líquido: Fluye y se adapta a la forma del recipiente."
+        },
+        {
+            id: 7,
+            block: 1,
+            blockName: "El Agua y sus Estados",
+            text: "¿Cuál de los siguientes ejemplos representa agua en <b>estado gaseoso</b>?",
+            options: [
+                "El vapor que sale de una taza de chocolate caliente",
+                "El granizo que cae en la sierra",
+                "El agua de un río de la selva",
+                "La nieve de un nevado"
+            ],
+            answer: 0,
+            explanation: "El vapor que asciende de una bebida caliente o de una olla es agua en estado gaseoso dispersa en el aire.",
+            tip: "💡 Estado Gaseoso: Es el vapor de agua en el aire."
+        },
+        {
+            id: 8,
+            block: 1,
+            blockName: "El Agua y sus Estados",
+            text: "Aproximadamente, ¿qué porcentaje de nuestro cuerpo humano está compuesto por agua?",
+            options: [
+                "Alrededor del 70%",
+                "Solo el 10%",
+                "Casi el 100% de metal",
+                "Menos del 25%"
+            ],
+            answer: 0,
+            explanation: "Cerca del 70% de nuestro cuerpo está formado por agua, siendo vital para nuestra sangre, células y órganos.",
+            tip: "💡 Dato Curioso: Somos aproximadamente un 70% de agua."
+        },
+        {
+            id: 9,
+            block: 1,
+            blockName: "El Agua y sus Estados",
+            text: "Si ponemos agua líquida en la hielera del refrigerador a temperaturas muy bajas, ¿qué cambio de estado experimentará?",
+            options: [
+                "Se solidifica (se convierte en hielo)",
+                "Se evapora en vapor",
+                "Se fusiona en vapor",
+                "Se condensa en aceite"
+            ],
+            answer: 0,
+            explanation: "Al enfriarse bajo 0 °C, el agua líquida pasa a estado sólido (hielo), proceso conocido como solidificación o congelación.",
+            tip: "💡 Frío extremo: Convierte el agua líquida en cubos de hielo sólido."
+        },
+        {
+            id: 10,
+            block: 1,
+            blockName: "El Agua y sus Estados",
+            text: "¿Por qué decimos que el agua es un recurso natural indispensable para los seres vivos?",
+            options: [
+                "Porque personas, plantas y animales la necesitan para hidratarse, alimentarse y sobrevivir",
+                "Porque solo sirve para limpiar las calles",
+                "Porque los seres vivos pueden vivir meses sin agua",
+                "Porque únicamente las plantas acuáticas la utilizan"
+            ],
+            answer: 0,
+            explanation: "El agua es indispensable para la vida: sin agua no hay fotosíntesis, ni transporte de nutrientes, ni supervivencia.",
+            tip: "💡 El agua es vida: Ningún ser vivo puede sobrevivir sin ella."
+        },
+
+        // ==================== BLOQUE 2: EL AIRE, SUS PROPIEDADES Y CONTAMINACIÓN ====================
+        {
+            id: 11,
+            block: 2,
+            blockName: "El Aire y su Cuidado",
+            text: "¿Qué es el <b>aire</b>?",
+            options: [
+                "Una mezcla de gases que rodea a nuestro planeta y que necesitamos para respirar",
+                "Un líquido transparente que corre por los ríos",
+                "Un tipo de roca volcánica flotante",
+                "El calor que produce el fuego"
+            ],
+            answer: 0,
+            explanation: "El aire es una mezcla invisible de varios gases (como oxígeno, nitrógeno y dióxido de carbono) que forma la atmósfera terrestre.",
+            tip: "💡 Definición: El aire es una mezcla de gases indispensable para la respiración."
+        },
+        {
+            id: 12,
+            block: 2,
+            blockName: "El Aire y su Cuidado",
+            text: "En el experimento del aula, se colocó una servilleta seca dentro del fondo de un vaso y se metió boca abajo verticalmente en un recipiente con agua. ¿Por qué la servilleta <b>NO se mojó</b>?<div class='science-cue'><svg width='200' height='90' viewBox='0 0 200 90'><rect x='20' y='10' width='160' height='70' fill='#e0f2fe' stroke='#0284c7' stroke-width='2' rx='10'/><rect x='65' y='20' width='70' height='55' fill='#ffffff' stroke='#334155' stroke-width='3'/><rect x='80' y='25' width='40' height='15' fill='#fef08a' stroke='#ca8a04' stroke-width='1'/><text x='85' y='36' font-size='10' font-weight='bold'>Papel seco</text><text x='85' y='60' font-size='12' fill='#0284c7' font-weight='bold'>Aire ocupa</text></svg></div>",
+            options: [
+                "Porque el aire ocupaba el espacio dentro del vaso e impidió que el agua entrara",
+                "Porque la servilleta tenía un plástico protector mágico",
+                "Porque el agua se evaporó al instante",
+                "Porque el vaso no tenía fondo"
+            ],
+            answer: 0,
+            explanation: "El experimento demuestra que el aire existe y OCUPA UN LUGAR EN EL ESPACIO, impidiendo que el agua llene el vaso.",
+            tip: "💡 Conclusión del Experimento: El aire ocupa un espacio, aunque no podamos verlo."
+        },
+        {
+            id: 13,
+            block: 2,
+            blockName: "El Aire y su Cuidado",
+            text: "¿Cuál de las siguientes es una característica comprobada del aire?",
+            options: [
+                "Tiene peso, ocupa un lugar y no tiene forma propia",
+                "Tiene un color verde brillante muy fácil de ver",
+                "Es un sólido duro que podemos tocar directamente",
+                "No tiene masa ni ejerce presión"
+            ],
+            answer: 0,
+            explanation: "El aire es invisible, ocupa un espacio, tiene peso (un globo inflado pesa más que uno desinflado) y adopta la forma de lo que lo contiene.",
+            tip: "💡 Propiedades del Aire: Ocupa espacio, tiene peso y toma la forma del recipiente."
+        },
+        {
+            id: 14,
+            block: 2,
+            blockName: "El Aire y su Cuidado",
+            text: "¿Qué es el <b>viento</b>?",
+            options: [
+                "El aire en movimiento",
+                "El agua cuando llueve muy fuerte",
+                "El humo de una chimenea",
+                "La sombra que dan las nubes"
+            ],
+            answer: 0,
+            explanation: "El viento es simplemente aire que se está desplazando de un lugar a otro en la atmósfera.",
+            tip: "💡 Aire en movimiento = Viento (lo sentimos cuando hace volar las cometas y mueve las hojas)."
+        },
+        {
+            id: 15,
+            block: 2,
+            blockName: "El Aire y su Cuidado",
+            text: "¿Cuál de las siguientes actividades humanas es una causa directa de la <b>contaminación del aire</b>?",
+            options: [
+                "Quemar basura, plásticos y hojas secas",
+                "Sembrar plantitas en el biohuerto",
+                "Montar bicicleta para ir al parque",
+                "Apagar las luces que no usamos"
+            ],
+            answer: 0,
+            explanation: "La quema de basura y plásticos genera humos negros y gases tóxicos altamente contaminantes para el aire.",
+            tip: "💡 Contaminante: Quemar basura libera sustancias tóxicas a la atmósfera."
+        },
+        {
+            id: 16,
+            block: 2,
+            blockName: "El Aire y su Cuidado",
+            text: "¿Qué consecuencia en la salud de las personas puede ocasionar respirar aire contaminado con humo de vehículos?",
+            options: [
+                "Problemas respiratorios (como tos, asma) e irritación de ojos y garganta",
+                "Hacer que los pulmones se vuelvan más fuertes",
+                "Mejorar la vista y el sentido del oído",
+                "Ninguna, el humo no afecta el cuerpo humano"
+            ],
+            answer: 0,
+            explanation: "El humo y los gases irritan las vías respiratorias causando asma, alergias, tos e irritación en los ojos.",
+            tip: "💡 Salud: El aire contaminado perjudica los pulmones y la respiración."
+        },
+        {
+            id: 17,
+            block: 2,
+            blockName: "El Aire y su Cuidado",
+            text: "¿Por qué los árboles y las áreas verdes son llamados los <b>pulmones de la ciudad</b>?",
+            options: [
+                "Porque absorben dióxido de carbono y liberan oxígeno limpio al aire",
+                "Porque producen humo que limpia el ambiente",
+                "Porque hacen que sople más viento caliente",
+                "Porque guardan el agua de las lluvias en sus ramas"
+            ],
+            answer: 0,
+            explanation: "Durante la fotosíntesis, los árboles toman dióxido de carbono (aire impuro) y devuelven oxígeno puro que los seres vivos respiramos.",
+            tip: "💡 Árboles = Pulmones Verdes: Purifican el aire produciendo oxígeno."
+        },
+        {
+            id: 18,
+            block: 2,
+            blockName: "El Aire y su Cuidado",
+            text: "¿Qué acción podemos practicar diariamente para ayudar a mantener el aire más limpio?",
+            options: [
+                "Caminar, usar bicicleta o usar transporte público en lugar de muchos autos individuales",
+                "Prender fogatas en los parques",
+                "Tirar bolsas de plástico al fuego",
+                "Viajar siempre en autos viejos con tubo de escape averiado"
+            ],
+            answer: 0,
+            explanation: "Caminar, usar bicicleta y compartir transporte disminuye drásticamente la emisión de humos vehiculares.",
+            tip: "💡 Acción Ecológica: Movilidad activa (caminar o bicicleta) no contamina el aire."
+        },
+        {
+            id: 19,
+            block: 2,
+            blockName: "El Aire y su Cuidado",
+            text: "En clase elaboraron un <b>filtro casero para el aire</b> con una botella, algodón y gasa. ¿Qué partículas <b>SÍ puede atrapar</b> este filtro?",
+            options: [
+                "Polvo, pelusas y partículas grandes de hollín",
+                "Gases tóxicos y olores químicos",
+                "Cualquier tipo de virus y radiación",
+                "Luz solar y calor"
+            ],
+            answer: 0,
+            explanation: "El material filtrante mecánico (algodón y gasa) retiene partículas sólidas visibles como polvo, pelusas y hollín, pero no gases.",
+            tip: "💡 Filtro Casero: Atrapa partículas sólidas (polvo, pelusa), pero NO gases tóxicos."
+        },
+        {
+            id: 20,
+            block: 2,
+            blockName: "El Aire y su Cuidado",
+            text: "¿Qué le sucede a las hojas de las plantas cuando están expuestas a un aire constantemente contaminado por humo?",
+            options: [
+                "Se manchan, se ponen amarillas o secas y no pueden realizar bien la fotosíntesis",
+                "Se vuelven mucho más verdes y dan más frutos dulces",
+                "Crecen el triple de rápido en pocos días",
+                "No les pasa nada porque las plantas no usan aire"
+            ],
+            answer: 0,
+            explanation: "El hollín y los gases tapan los poros de las hojas, impidiendo que respiren adecuadamente y tornándolas amarillentas.",
+            tip: "💡 Daño botánico: El hollín bloquea las hojas e interrumpe la fotosíntesis."
+        },
+
+        // ==================== BLOQUE 3: LAS PLANTAS: PARTES, FUNCIONES Y CLASIFICACIÓN ====================
+        {
+            id: 21,
+            block: 3,
+            blockName: "Las Plantas y sus Partes",
+            text: "¿Cuál es la función principal de la <b>raíz</b> en una planta?<div class='science-cue'><svg width='180' height='90' viewBox='0 0 180 90'><line x1='10' y1='30' x2='170' y2='30' stroke='#8d6e63' stroke-width='3'/><path d='M90 30 Q80 60 60 80 M90 30 Q95 60 110 85 M90 30 L90 85 M90 50 L70 65 M90 60 L120 75' stroke='#5d4037' stroke-width='3' fill='none'/><text x='110' y='50' font-size='12' fill='#3e2723' font-weight='bold'>Raíz</text></svg></div>",
+            options: [
+                "Fijar la planta al suelo y absorber agua con sales minerales",
+                "Producir flores coloridas para atraer abejas",
+                "Crecer hacia arriba buscando la luz del sol",
+                "Guardar las semillas para que los pájaros coman"
+            ],
+            answer: 0,
+            explanation: "La raíz ancla firmemente la planta a la tierra y funciona como sorbete absorbiendo agua y sales minerales del suelo.",
+            tip: "💡 Función de la Raíz: Sujetar la planta + absorber agua y nutrientes del suelo."
+        },
+        {
+            id: 22,
+            block: 3,
+            blockName: "Las Plantas y sus Partes",
+            text: "El <b>tallo</b> es conocido como la 'carretera' de la planta. ¿Por qué?",
+            options: [
+                "Porque transporta el agua y nutrientes desde la raíz hacia las hojas, y sostiene las ramas",
+                "Porque es de color verde y fabrica comida",
+                "Porque produce las semillas de la fruta",
+                "Porque vive bajo la tierra escondido de la luz"
+            ],
+            answer: 0,
+            explanation: "El tallo sostiene las hojas, flores y frutos, y conduce la savia (agua y sales minerales) hacia toda la planta.",
+            tip: "💡 Función del Tallo: Sostiene la planta y transporta agua y nutrientes."
+        },
+        {
+            id: 23,
+            block: 3,
+            blockName: "Las Plantas y sus Partes",
+            text: "¿En qué parte de la planta se realiza principalmente la <b>fotosíntesis</b> (la fábrica de su propio alimento)?",
+            options: [
+                "En las hojas",
+                "En la raíz subterránea",
+                "En la semilla del fruto",
+                "En la madera del tronco"
+            ],
+            answer: 0,
+            explanation: "Las hojas contienen clorofila y captan la luz del sol, aire y agua para elaborar su propio alimento mediante fotosíntesis.",
+            tip: "💡 Hoja = Fábrica de Alimento y Pulmón de la planta."
+        },
+        {
+            id: 24,
+            block: 3,
+            blockName: "Las Plantas y sus Partes",
+            text: "¿Qué sustancia le da el color verde característico a las hojas de las plantas?",
+            options: [
+                "La clorofila",
+                "El polen",
+                "La madera",
+                "El néctar"
+            ],
+            answer: 0,
+            explanation: "La clorofila es el pigmento verde que capta la energía solar para la fotosíntesis.",
+            tip: "💡 Clorofila: Pigmento verde que atrapa la luz solar."
+        },
+        {
+            id: 25,
+            block: 3,
+            blockName: "Las Plantas y sus Partes",
+            text: "¿Cuál es el <b>órgano reproductor</b> de la mayoría de las plantas con flores?",
+            options: [
+                "La flor",
+                "La raíz",
+                "El tallo",
+                "La corteza"
+            ],
+            answer: 0,
+            explanation: "La flor es el órgano reproductor; gracias a la polinización en la flor, se formarán los frutos y las semillas.",
+            tip: "💡 Flor = Órgano reproductor de la planta."
+        },
+        {
+            id: 26,
+            block: 3,
+            blockName: "Las Plantas y sus Partes",
+            text: "¿Cuál es la función principal del <b>fruto</b>?",
+            options: [
+                "Contener y proteger las semillas en su interior",
+                "Absorber agua de la tierra",
+                "Respirar aire durante la noche",
+                "Sujetar la planta contra el viento"
+            ],
+            answer: 0,
+            explanation: "El fruto resguarda a las semillas. Cuando el fruto madura y cae o es consumido, las semillas germinan dando origen a otra planta.",
+            tip: "💡 Fruto: Protege las semillas de las que nacerán nuevas plantas."
+        },
+        {
+            id: 27,
+            block: 3,
+            blockName: "Las Plantas y sus Partes",
+            text: "Las plantas se clasifican según su tamaño y tipo de tallo en tres grupos. ¿Cuáles son?",
+            options: [
+                "Hierbas, arbustos y árboles",
+                "Rosas, margaritas y claveles",
+                "Grandes, medianas y microscópicas",
+                "Frutales, venenosas y carnívoras"
+            ],
+            answer: 0,
+            explanation: "La clasificación botánica escolar según el porte y tallo es: hierbas (blandas), arbustos (medianos con ramas desde el suelo) y árboles (grandes con tronco).",
+            tip: "💡 3 Tipos por Tallo y Tamaño: Hierbas, Arbustos y Árboles."
+        },
+        {
+            id: 28,
+            block: 3,
+            blockName: "Las Plantas y sus Partes",
+            text: "La manzanilla, el pasto y la lechuga son plantas pequeñas con tallos verdes, delgados y flexibles. ¿A qué grupo pertenecen?",
+            options: [
+                "Hierbas",
+                "Árboles",
+                "Arbustos",
+                "Coníferas"
+            ],
+            answer: 0,
+            explanation: "Las hierbas tienen tallos tiernos, delgados, verdes y flexibles, y suelen tener una vida más corta.",
+            tip: "💡 Hierba: Tallo tierno, verde y flexible (pasto, lechuga, perejil)."
+        },
+        {
+            id: 29,
+            block: 3,
+            blockName: "Las Plantas y sus Partes",
+            text: "Un rosal o una planta de hortensia tiene varios tallos duros y leñosos que nacen directamente cerca del suelo. ¿Qué tipo de planta es?",
+            options: [
+                "Un arbusto",
+                "Una hierba",
+                "Un árbol gigante",
+                "Un hongo"
+            ],
+            answer: 0,
+            explanation: "Los arbustos son de tamaño mediano y sus tallos duros y leñosos se ramifican desde la misma base del suelo (sin un tronco único alto).",
+            tip: "💡 Arbusto: Tamaño mediano, ramas leñosas nacen desde el suelo."
+        },
+        {
+            id: 30,
+            block: 3,
+            blockName: "Las Plantas y sus Partes",
+            text: "¿Cómo se llama el tallo grueso, duro y leñoso característico de los <b>árboles</b>?",
+            options: [
+                "Tronco",
+                "Pecíolo",
+                "Espina",
+                "Raicilla"
+            ],
+            answer: 0,
+            explanation: "Los árboles tienen un tallo principal robusto y leñoso llamado tronco, del cual nacen las ramas en lo alto.",
+            tip: "💡 Árbol: Tallo grueso y leñoso llamado TRONCO."
+        },
+
+        // ==================== BLOQUE 4: ECOSISTEMAS Y CADENAS ALIMENTICIAS ====================
+        {
+            id: 31,
+            block: 4,
+            blockName: "Ecosistemas y Cadena Alimenticia",
+            text: "¿Qué es un <b>ecosistema</b>?",
+            options: [
+                "Un lugar donde interactúan los seres vivos (bióticos) con los elementos no vivos (abióticos)",
+                "Un zoológico cerrado con jaulas de metal",
+                "Solo el agua de los mares sin ningún animal",
+                "Un dibujo que hacemos en el cuaderno"
+            ],
+            answer: 0,
+            explanation: "Un ecosistema es la comunidad de seres vivos (plantas, animales, bacterias) que interactúan con su medio físico (agua, suelo, aire, luz).",
+            tip: "💡 Ecosistema: Seres vivos + Elementos no vivos interactuando juntos."
+        },
+        {
+            id: 32,
+            block: 4,
+            blockName: "Ecosistemas y Cadena Alimenticia",
+            text: "Los bosques, desiertos y praderas son ejemplos de ecosistemas de tipo:",
+            options: [
+                "Terrestre",
+                "Acuático de agua salada",
+                "Aéreo puro",
+                "Submarino profundo"
+            ],
+            answer: 0,
+            explanation: "Los ecosistemas terrestres se ubican sobre el suelo y la tierra firme (bosques, desiertos, selvas, montañas).",
+            tip: "💡 Ecosistema Terrestre: Se desarrolla sobre la tierra firme."
+        },
+        {
+            id: 33,
+            block: 4,
+            blockName: "Ecosistemas y Cadena Alimenticia",
+            text: "¿Cuáles son ejemplos de seres vivos que habitan un ecosistema <b>acuático</b>?",
+            options: [
+                "Peces, delfines, algas y cangrejos",
+                "Leones, cebras y jirafas",
+                "Águilas, palomas y cóndores",
+                "Conejos, zorros y pasto"
+            ],
+            answer: 0,
+            explanation: "En ríos, lagos y océanos encontramos vida acuática como peces, moluscos, mamíferos marinos y algas.",
+            tip: "💡 Ecosistema Acuático: Viven y se desarrollan dentro del agua."
+        },
+        {
+            id: 34,
+            block: 4,
+            blockName: "Ecosistemas y Cadena Alimenticia",
+            text: "¿Qué es una <b>cadena alimenticia</b>?",
+            options: [
+                "La relación que muestra cómo los seres vivos se alimentan unos de otros para obtener energía",
+                "Una cuerda de metal para amarrar animales",
+                "Una lista de compras del supermercado",
+                "La receta para cocinar un plato típico"
+            ],
+            answer: 0,
+            explanation: "La cadena trófica o alimenticia describe el paso de energía y nutrientes de un ser vivo a otro mediante la alimentación.",
+            tip: "💡 Cadena Alimenticia: Muestra quién se alimenta de quién para recibir energía."
+        },
+        {
+            id: 35,
+            block: 4,
+            blockName: "Ecosistemas y Cadena Alimenticia",
+            text: "En una cadena alimenticia, ¿qué ser vivo ocupa siempre el lugar de los <b>productores</b> al inicio?<div class='science-cue'><svg width='240' height='70' viewBox='0 0 240 70'><text x='15' y='45' font-size='26'>🌱</text><text x='55' y='42' font-size='18' fill='#16a085' font-weight='bold'>➔</text><text x='85' y='45' font-size='26'>🦗</text><text x='125' y='42' font-size='18' fill='#16a085' font-weight='bold'>➔</text><text x='155' y='45' font-size='26'>🐸</text><text x='195' y='42' font-size='18' fill='#16a085' font-weight='bold'>➔</text><text x='215' y='45' font-size='26'>🦅</text></svg></div>",
+            options: [
+                "Las plantas (y algas), porque fabrican su propio alimento con la luz solar",
+                "Los leones y tigres cazadores",
+                "Las bacterias y hongos descompuestos",
+                "Los saltamontes y conejos"
+            ],
+            answer: 0,
+            explanation: "Los productores son organismos autótrofos (plantas, fitoplancton) que inician la cadena produciendo biomasa a partir del sol.",
+            tip: "💡 Primer Eslabón: Los Productores (plantas) siempre inician la cadena."
+        },
+        {
+            id: 36,
+            block: 4,
+            blockName: "Ecosistemas y Cadena Alimenticia",
+            text: "¿Cómo se llama a los animales que se alimentan directamente de las plantas (como el conejo, el venado o el saltamontes)?",
+            options: [
+                "Consumidores primarios (herbívoros)",
+                "Consumidores terciarios (superdepredadores)",
+                "Descomponedores minerales",
+                "Productores solares"
+            ],
+            answer: 0,
+            explanation: "Los animales que comen plantas son herbívoros y en la cadena alimenticia actúan como consumidores primarios.",
+            tip: "💡 Consumidores Primarios = Herbívoros (se alimentan de los productores)."
+        },
+        {
+            id: 37,
+            block: 4,
+            blockName: "Ecosistemas y Cadena Alimenticia",
+            text: "Una rana se come al saltamontes, o un zorro se come al conejo. ¿Qué tipo de consumidores son la rana y el zorro?",
+            options: [
+                "Consumidores secundarios (carnívoros que comen herbívoros)",
+                "Productores autótrofos",
+                "Descomponedores subterráneos",
+                "Consumidores primarios herbívoros"
+            ],
+            answer: 0,
+            explanation: "Los carnívoros que se alimentan de herbívoros (consumidores primarios) se denominan consumidores secundarios.",
+            tip: "💡 Consumidores Secundarios: Carnívoros que comen consumidores primarios."
+        },
+        {
+            id: 38,
+            block: 4,
+            blockName: "Ecosistemas y Cadena Alimenticia",
+            text: "¿Cuál es el trabajo fundamental de los <b>descomponedores</b> (hongos y bacterias) en la naturaleza?",
+            options: [
+                "Transformar los restos de seres vivos muertos en nutrientes para fertilizar el suelo",
+                "Cazar animales vivos en la selva",
+                "Fabricar sombra para las plantas",
+                "Evaporar el agua de los ríos"
+            ],
+            answer: 0,
+            explanation: "Los descomponedores reciclan la materia orgánica muerta, devolviendo minerales y nutrientes al suelo para que las plantas vuelvan a crecer.",
+            tip: "💡 Descomponedores (Hongos/Bacterias): Reciclan la materia orgánica y enriquecen el suelo."
+        },
+        {
+            id: 39,
+            block: 4,
+            blockName: "Ecosistemas y Cadena Alimenticia",
+            text: "Observa la siguiente cadena: <b>Pasto ➔ Conejo ➔ Zorro</b>. ¿Qué representan las flechas?",
+            options: [
+                "Indican 'sirve de alimento a' y muestran la dirección en que viaja la energía",
+                "Indican qué animal corre más rápido",
+                "Muestran qué animal tiene más patas",
+                "Indican el camino hacia la madriguera"
+            ],
+            answer: 0,
+            explanation: "Las flechas van del ser vivo que es comido hacia el que lo come (Pasto alimenta al conejo; conejo alimenta al zorro).",
+            tip: "💡 Sentido de la Flecha: Señala hacia quién recibe el alimento y la energía."
+        },
+        {
+            id: 40,
+            block: 4,
+            blockName: "Ecosistemas y Cadena Alimenticia",
+            text: "¿Qué sucedería en un bosque si desaparecieran todos los conejos de una cadena alimenticia?",
+            options: [
+                "El pasto crecería en exceso y los zorros tendrían menos alimento para sobrevivir",
+                "Todos los animales se convertirían en plantas",
+                "El agua de los ríos desaparecería",
+                "No pasaría nada porque todos comen piedras"
+            ],
+            answer: 0,
+            explanation: "En la naturaleza todos dependen entre sí: al faltar el conejo, el pasto no tiene quién lo consuma y los depredadores pasan hambre.",
+            tip: "💡 Equilibrio Ecológico: Cada ser vivo cumple un rol indispensable en el ecosistema."
+        }
+    ];
+
+    // Variables de control de estado
+    const userAnswers = {};
+    const dudas = {};
+    const fiftyUsed = {};
+    let globalReportData = null;
+    let isExamFinished = false;
+
+    function updateProgressTracker() {
+        const total = questions.length;
+        let answered = 0;
+        for (let qId in userAnswers) {
+            if (userAnswers[qId] !== undefined) answered++;
+        }
+        const pending = total - answered;
+        const pct = Math.round((answered / total) * 100);
+
+        const answeredEl = document.getElementById('count-answered');
+        const pendingEl = document.getElementById('count-pending');
+        const totalEl = document.getElementById('count-total');
+        const fillEl = document.getElementById('progress-bar-fill');
+
+        if (answeredEl) answeredEl.innerText = answered;
+        if (pendingEl) pendingEl.innerText = pending;
+        if (totalEl) totalEl.innerText = total;
+        if (fillEl) fillEl.style.width = pct + '%';
+    }
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        let currentBlock = 0;
+        let html = '';
+
+        questions.forEach((q, index) => {
+            if (q.block !== currentBlock) {
+                currentBlock = q.block;
+                html += `
+                    <div class="topic-header">
+                        <span>📚 Bloque ${q.block}: ${q.blockName}</span>
+                    </div>
+                `;
+            }
+
+            html += `
+                <div class="question-card" id="card-${q.id}">
+                    <div class="q-header">
+                        <span class="q-num">Pregunta ${index + 1} de 40</span>
+                        <div class="q-tools">
+                            <button type="button" class="tool-btn" id="btn-50-${q.id}" onclick="useFifty(${q.id})">
+                                ⚡ 50/50
+                            </button>
+                            <button type="button" class="tool-btn" id="btn-duda-${q.id}" onclick="trackDuda(${q.id})">
+                                ❓ Tengo Duda
+                            </button>
+                        </div>
+                    </div>
+                    <div class="q-text">${q.text}</div>
+                    <div class="options-grid" id="options-${q.id}">
+                        ${q.options.map((opt, optIdx) => `
+                            <label class="option-label" id="opt-label-${q.id}-${optIdx}">
+                                <input type="radio" name="q${q.id}" value="${optIdx}" onchange="selectOption(${q.id}, ${optIdx})">
+                                <span>${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div class="feedback" id="feedback-${q.id}"></div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+        loadSavedState();
+        updateProgressTracker();
+    }
+
+    function selectOption(qId, optIdx) {
+        userAnswers[qId] = optIdx;
+        const card = document.getElementById(`card-${qId}`);
+        card.classList.remove('incomplete');
+        updateProgressTracker();
+        saveState();
+    }
+
+    function trackDuda(qId) {
+        dudas[qId] = !dudas[qId];
+        const btn = document.getElementById(`btn-duda-${qId}`);
+        if (dudas[qId]) {
+            btn.classList.add('active');
+            btn.innerHTML = '❓ Marcada con Duda';
+        } else {
+            btn.classList.remove('active');
+            btn.innerHTML = '❓ Tengo Duda';
+        }
+        saveState();
+    }
+
+    function useFifty(qId) {
+        if (fiftyUsed[qId]) return;
+        fiftyUsed[qId] = true;
+
+        const q = questions.find(item => item.id === qId);
+        const correctIdx = q.answer;
+        const incorrectIndices = [0, 1, 2, 3].filter(idx => idx !== correctIdx);
+        
+        incorrectIndices.sort(() => Math.random() - 0.5);
+        const toDisable = incorrectIndices.slice(0, 2);
+
+        toDisable.forEach(idx => {
+            const label = document.getElementById(`opt-label-${qId}-${idx}`);
+            if (label) {
+                label.classList.add('disabled-50');
+            }
+        });
+
+        const btn = document.getElementById(`btn-50-${qId}`);
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.innerHTML = '⚡ Usado';
+        saveState();
+    }
+
+    function saveState() {
+        const state = {
+            answers: userAnswers,
+            dudas: dudas,
+            fifty: fiftyUsed
+        };
+        localStorage.setItem('ciencia3_edward_state', JSON.stringify(state));
+    }
+
+    function loadSavedState() {
+        const saved = localStorage.getItem('ciencia3_edward_state');
+        if (!saved) return;
+        try {
+            const state = JSON.parse(saved);
+            if (state.answers) {
+                for (let qId in state.answers) {
+                    const optIdx = state.answers[qId];
+                    userAnswers[qId] = optIdx;
+                    const radio = document.querySelector(`input[name="q${qId}"][value="${optIdx}"]`);
+                    if (radio) radio.checked = true;
+                }
+            }
+            if (state.dudas) {
+                for (let qId in state.dudas) {
+                    if (state.dudas[qId]) {
+                        trackDuda(parseInt(qId));
+                    }
+                }
+            }
+            if (state.fifty) {
+                for (let qId in state.fifty) {
+                    if (state.fifty[qId]) {
+                        useFifty(parseInt(qId));
+                    }
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        updateProgressTracker();
+    }
+
+    function submitExam() {
+        let firstIncomplete = null;
+        let incompleteCount = 0;
+
+        questions.forEach(q => {
+            const card = document.getElementById(`card-${q.id}`);
+            if (userAnswers[q.id] === undefined) {
+                card.classList.add('incomplete');
+                incompleteCount++;
+                if (!firstIncomplete) firstIncomplete = card;
+            } else {
+                card.classList.remove('incomplete');
+            }
+        });
+
+        if (incompleteCount > 0) {
+            if (navigator.vibrate) navigator.vibrate([150, 80, 150]);
+            alert(`⚠️ Edward, te faltan responder ${incompleteCount} preguntas. ¡Revisa las tarjetas marcadas en rojo!`);
+            firstIncomplete.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+
+        // Calificación Vigesimal (20 puntos sobre 40 preguntas)
+        let correctCount = 0;
+        const blockStats = {
+            1: { total: 0, correct: 0, name: "El Agua y sus Estados" },
+            2: { total: 0, correct: 0, name: "El Aire y su Cuidado" },
+            3: { total: 0, correct: 0, name: "Las Plantas y sus Partes" },
+            4: { total: 0, correct: 0, name: "Ecosistemas y Cadena Alimenticia" }
+        };
+
+        const errorList = [];
+
+        questions.forEach(q => {
+            const isCorrect = userAnswers[q.id] === q.answer;
+            const fb = document.getElementById(`feedback-${q.id}`);
+            blockStats[q.block].total++;
+
+            if (isCorrect) {
+                correctCount++;
+                blockStats[q.block].correct++;
+                fb.className = "feedback correct";
+                fb.innerHTML = `<strong>✅ ¡Correcto, Edward!</strong> ${q.explanation}<br><span class="tip-badge">${q.tip}</span>`;
+            } else {
+                fb.className = "feedback incorrect";
+                fb.innerHTML = `<strong>❌ Necesita refuerzo.</strong> Respuesta correcta: <b>${q.options[q.answer]}</b>.<br>${q.explanation}<br><span class="tip-badge">${q.tip}</span>`;
+                
+                errorList.push({
+                    id: q.id,
+                    block: q.block,
+                    bloqueNombre: q.blockName,
+                    pregunta: q.text.replace(/<[^>]*>?/gm, ''),
+                    tuRespuesta: q.options[userAnswers[q.id]],
+                    respuestaCorrecta: q.options[q.answer],
+                    dudaMarcada: !!dudas[q.id],
+                    tip: q.tip
+                });
+            }
+        });
+
+        const scoreVigesimal = Math.round((correctCount / 40) * 20);
+        document.getElementById('final-score').innerText = `${scoreVigesimal} / 20`;
+
+        const msgElem = document.getElementById('score-msg');
+        if (scoreVigesimal >= 18) {
+            msgElem.innerText = `🌟 ¡Sobresaliente, Edward! Eres un científico de primera. Dominas el agua, el aire, las plantas y los ecosistemas. (${correctCount}/40 aciertos)`;
+            msgElem.style.color = '#196f3d';
+        } else if (scoreVigesimal >= 14) {
+            msgElem.innerText = `👏 ¡Gran trabajo, Edward! Aprobaste con éxito tu examen de Ciencia. Repasa los tips didácticos de las preguntas que fallaste. (${correctCount}/40 aciertos)`;
+            msgElem.style.color = '#7d6608';
+        } else {
+            msgElem.innerText = `💪 ¡Ánimo Edward! Vamos a revisar juntos los conceptos de las plantas y cadenas alimenticias para asegurar el 20 en el cole. (${correctCount}/40 aciertos)`;
+            msgElem.style.color = '#943126';
+        }
+
+        // Resumen diagnóstico por bloques temáticos
+        const summaryGrid = document.getElementById('topic-summary');
+        let summaryHtml = '';
+        for (let b in blockStats) {
+            const stat = blockStats[b];
+            const pct = Math.round((stat.correct / stat.total) * 100);
+            let tagClass = 'tag-perfect';
+            let tagText = 'Dominado';
+
+            if (pct < 70) {
+                tagClass = 'tag-danger';
+                tagText = 'Reforzar urgente';
+            } else if (pct < 90) {
+                tagClass = 'tag-review';
+                tagText = 'Repasar detalles';
+            }
+
+            summaryHtml += `
+                <div class="topic-stat-card">
+                    <div class="topic-stat-title">Bloque ${b}: ${stat.name}</div>
+                    <div class="topic-stat-score">${stat.correct} / ${stat.total} (${pct}%)</div>
+                    <span class="topic-stat-tag ${tagClass}">${tagText}</span>
+                </div>
+            `;
+        }
+        summaryGrid.innerHTML = summaryHtml;
+
+        // Actualizar barra sticky flotante post-evaluación
+        document.getElementById('sticky-score-badge').innerText = `${scoreVigesimal} / 20`;
+        document.getElementById('sticky-correct-txt').innerText = `${correctCount}/40 aciertos`;
+
+        // Datos para compartir
+        globalReportData = {
+            alumno: "Edward Diaz",
+            grado: "3.° de Primaria",
+            colegio: "San Luis",
+            materia: "Ciencia y Tecnología - III Bimestre",
+            fecha: new Date().toLocaleDateString('es-PE'),
+            hora: new Date().toLocaleTimeString('es-PE'),
+            notaVigesimal: `${scoreVigesimal} / 20`,
+            aciertos: `${correctCount} de 40 aciertos`,
+            diagnosticoBloques: blockStats,
+            totalErrores: errorList.length,
+            detalleErrores: errorList
+        };
+
+        // Marcar examen como finalizado y ocultar contador de progreso previo
+        isExamFinished = true;
+        const tracker = document.getElementById('progress-tracker-box');
+        if (tracker) tracker.style.display = 'none';
+
+        const resultsCard = document.getElementById('results');
+        resultsCard.style.display = 'block';
+        resultsCard.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function generarTextoReporte() {
+        if (!globalReportData) return "No hay reporte disponible.";
+        const d = globalReportData;
+
+        let txt = `📊 *REPORTE DE EVALUACIÓN: CIENCIA Y TECNOLOGÍA (3.° PRIMARIA)*\n`;
+        txt += `👤 *Estudiante:* ${d.alumno}\n`;
+        txt += `📅 *Fecha:* ${d.fecha} - ${d.hora}\n`;
+        txt += `🏆 *Nota Obtenida:* ${d.notaVigesimal} (${d.aciertos})\n\n`;
+        
+        txt += `📋 *DESGLOSE CIENTÍFICO POR BLOQUES:*\n`;
+        for (let b in d.diagnosticoBloques) {
+            const st = d.diagnosticoBloques[b];
+            const pct = Math.round((st.correct / st.total) * 100);
+            const icono = pct >= 90 ? '🟢' : (pct >= 70 ? '🟡' : '🔴');
+            txt += `${icono} Bloque ${b} (${st.name}): ${st.correct}/${st.total} (${pct}%)\n`;
+        }
+
+        if (d.totalErrores > 0) {
+            txt += `\n🚨 *EJERCICIOS A REFORZAR CON PAPÁ (${d.totalErrores}):*\n`;
+            d.detalleErrores.forEach((err, idx) => {
+                txt += `\n${idx + 1}. [${err.bloqueNombre}] ${err.pregunta.substring(0, 75)}...\n`;
+                txt += `   ❌ Edward marcó: "${err.tuRespuesta}"\n`;
+                txt += `   ✅ Correcta: "${err.respuestaCorrecta}"\n`;
+                if (err.dudaMarcada) txt += `   ⚠️ Edward indicó que tenía dudas en esta pregunta.\n`;
+                txt += `   💡 ${err.tip}\n`;
+            });
+        } else {
+            txt += `\n🌟 ¡Impecable! Edward dominó todas las 40 preguntas sin cometer errores.\n`;
+        }
+        return txt;
+    }
+
+    function compartirEvaluacion() {
+        const texto = generarTextoReporte();
+        const shareData = {
+            title: "Evaluación de Ciencia y Tecnología - Edward Diaz (3.° Primaria)",
+            text: texto
+        };
+
+        if (navigator.share) {
+            navigator.share(shareData).catch(() => {
+                // Fallback automático si cancela o no concreta el share
+                copiarAlPortapapeles(texto);
+            });
+        } else {
+            copiarAlPortapapeles(texto);
+        }
+    }
+
+    function copiarAlPortapapeles(texto) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(texto).then(() => {
+                alert("📋 ¡Reporte copiado al portapapeles! Puedes pegarlo en WhatsApp, Google Chat o cualquier aplicación para enviárselo a Papá.");
+            }).catch(() => {
+                alert("Por favor copia el reporte manualmente.");
+            });
+        } else {
+            alert("Portapapeles no soportado.");
+        }
+    }
+
+    function subirAlResumen() {
+        const results = document.getElementById('results');
+        if (results) {
+            results.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // Detector de scroll para la barra flotante sticky (solo activa tras evaluar y en la sección de preguntas)
+    window.addEventListener('scroll', () => {
+        const stickyBar = document.getElementById('sticky-results-bar');
+        if (!stickyBar) return;
+
+        // SÓLO disponible si ya finalizó el examen
+        if (!isExamFinished) {
+            stickyBar.classList.remove('visible');
+            return;
+        }
+
+        const quizSection = document.getElementById('quiz-container');
+        if (!quizSection) {
+            stickyBar.classList.remove('visible');
+            return;
+        }
+
+        const rect = quizSection.getBoundingClientRect();
+        // Aparece SÓLO mientras se desplaza por las preguntas resueltas
+        if (rect.top <= 80 && rect.bottom >= 120) {
+            stickyBar.classList.add('visible');
+        } else {
+            stickyBar.classList.remove('visible');
+        }
+    });
+
+    window.onload = renderQuiz;
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('../sw.js', { scope: '../' }).catch(() => {});
+        });
+    }
+</script>
+</body>
+</html>
