@@ -110,17 +110,73 @@
             background: #ffffff;
             border: 3px solid #27ae60;
             border-radius: 18px;
-            padding: 14px 20px;
+            padding: 12px 18px;
             margin-bottom: 25px;
             box-shadow: 0 6px 20px rgba(39, 174, 96, 0.2);
             backdrop-filter: blur(8px);
+        }
+
+        .tracker-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px dashed #d4efdf;
+            flex-wrap: wrap;
+        }
+
+        .current-block-badge {
+            background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+            color: white;
+            font-weight: 800;
+            font-size: 0.95rem;
+            padding: 6px 14px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(39, 174, 96, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .powerup-btn {
+            background: #f39c12;
+            color: white;
+            border: 2px solid #e67e22;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.88rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(243, 156, 18, 0.3);
+        }
+
+        .powerup-btn:hover:not(:disabled) {
+            background: #d68910;
+            transform: scale(1.04);
+        }
+
+        .powerup-btn:disabled {
+            background: #bdc3c7;
+            border-color: #95a5a6;
+            color: #ffffff;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            opacity: 0.85;
         }
 
         .tracker-stats {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 1.05rem;
+            font-size: 1.02rem;
             margin-bottom: 8px;
             flex-wrap: wrap;
             gap: 10px;
@@ -565,8 +621,16 @@
         <p class="subtitle">III Bimestre • El Agua, El Aire, Las Plantas, Ecosistemas y Cadenas Alimenticias</p>
     </header>
 
-    <!-- SEGUIMIENTO DE PROGRESO FLOTANTE -->
+    <!-- SEGUIMIENTO DE PROGRESO FLOTANTE CON TÍTULO DE BLOQUE Y COMODÍN 50/50 -->
     <div id="progress-tracker-box" class="progress-tracker-box">
+        <div class="tracker-header-row">
+            <div class="current-block-badge" id="tracker-current-block">
+                <span id="tracker-block-name">📚 Bloque 1: El Agua y sus Estados</span>
+            </div>
+            <button type="button" class="powerup-btn" id="global-5050" onclick="usarCincuentaCincuentaGlobal()">
+                ⚡ Usar Comodín 50/50 (1 vez)
+            </button>
+        </div>
         <div class="tracker-stats">
             <span class="stat-item stat-answered">
                 <span>✅</span> Resueltas: <strong id="count-answered">0</strong> de <span id="count-total">40</span>
@@ -1220,9 +1284,17 @@
     // Variables de control de estado
     const userAnswers = {};
     const dudas = {};
-    const fiftyUsed = {};
+    let comodinUsado = false;
+    let comodinPreguntaId = null;
     let globalReportData = null;
     let isExamFinished = false;
+
+    const blockNames = {
+        1: "📚 Bloque 1: El Agua y sus Estados",
+        2: "🍃 Bloque 2: El Aire y su Cuidado",
+        3: "🌱 Bloque 3: Las Plantas y sus Partes",
+        4: "🦊 Bloque 4: Ecosistemas y Cadena Alimenticia"
+    };
 
     function updateProgressTracker() {
         const total = questions.length;
@@ -1244,6 +1316,42 @@
         if (fillEl) fillEl.style.width = pct + '%';
     }
 
+    function updateActiveBlockOnScroll() {
+        if (isExamFinished) return;
+        let activeBlock = 1;
+        for (let b = 1; b <= 4; b++) {
+            const firstQInBlock = (b - 1) * 10 + 1;
+            const el = document.getElementById(`topic-header-${b}`) || document.getElementById(`card-${firstQInBlock}`);
+            if (el) {
+                const rect = el.getBoundingClientRect();
+                if (rect.top <= 180) {
+                    activeBlock = b;
+                }
+            }
+        }
+        const blockEl = document.getElementById('tracker-block-name');
+        if (blockEl && blockNames[activeBlock]) {
+            blockEl.innerText = blockNames[activeBlock];
+        }
+    }
+
+    function getVisibleQuestionId() {
+        const cards = document.querySelectorAll('.question-card');
+        let bestId = 1;
+        let minDistance = Infinity;
+        cards.forEach(card => {
+            const rect = card.getBoundingClientRect();
+            if (rect.bottom > 120 && rect.top < window.innerHeight) {
+                const dist = Math.abs(rect.top - 120);
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    bestId = parseInt(card.id.replace('card-', ''));
+                }
+            }
+        });
+        return bestId;
+    }
+
     function renderQuiz() {
         const container = document.getElementById('quiz-container');
         let currentBlock = 0;
@@ -1253,8 +1361,8 @@
             if (q.block !== currentBlock) {
                 currentBlock = q.block;
                 html += `
-                    <div class="topic-header">
-                        <span>📚 Bloque ${q.block}: ${q.blockName}</span>
+                    <div class="topic-header" id="topic-header-${q.block}">
+                        <span>${blockNames[q.block]} (Preguntas ${(q.block - 1) * 10 + 1} a ${q.block * 10})</span>
                     </div>
                 `;
             }
@@ -1264,9 +1372,6 @@
                     <div class="q-header">
                         <span class="q-num">Pregunta ${index + 1} de 40</span>
                         <div class="q-tools">
-                            <button type="button" class="tool-btn" id="btn-50-${q.id}" onclick="useFifty(${q.id})">
-                                ⚡ 50/50
-                            </button>
                             <button type="button" class="tool-btn" id="btn-duda-${q.id}" onclick="trackDuda(${q.id})">
                                 ❓ Tengo Duda
                             </button>
@@ -1289,6 +1394,7 @@
         container.innerHTML = html;
         loadSavedState();
         updateProgressTracker();
+        updateActiveBlockOnScroll();
     }
 
     function selectOption(qId, optIdx) {
@@ -1312,36 +1418,62 @@
         saveState();
     }
 
-    function useFifty(qId) {
-        if (fiftyUsed[qId]) return;
-        fiftyUsed[qId] = true;
+    function usarCincuentaCincuentaGlobal() {
+        if (comodinUsado) {
+            alert(`⚡ Edward, ya utilizaste tu comodín 50/50 en la Pregunta ${comodinPreguntaId}. ¡Solo se puede usar 1 vez en todo el examen!`);
+            return;
+        }
 
-        const q = questions.find(item => item.id === qId);
+        const visibleQ = getVisibleQuestionId() || 1;
+        const resp = prompt(`⚡ COMODÍN 50/50 (USO ÚNICO EN TODO EL EXAMEN)\n\n¿En qué número de pregunta (del 1 al 40) deseas descartar 2 opciones incorrectas?`, visibleQ);
+        if (resp === null) return;
+
+        const qNum = parseInt(resp);
+        if (isNaN(qNum) || qNum < 1 || qNum > 40) {
+            alert("⚠️ Por favor ingresa un número de pregunta válido entre 1 y 40.");
+            return;
+        }
+
+        const q = questions.find(item => item.id === qNum);
+        if (!q) return;
+
         const correctIdx = q.answer;
         const incorrectIndices = [0, 1, 2, 3].filter(idx => idx !== correctIdx);
-        
         incorrectIndices.sort(() => Math.random() - 0.5);
         const toDisable = incorrectIndices.slice(0, 2);
 
         toDisable.forEach(idx => {
-            const label = document.getElementById(`opt-label-${qId}-${idx}`);
+            const label = document.getElementById(`opt-label-${q.id}-${idx}`);
             if (label) {
                 label.classList.add('disabled-50');
             }
         });
 
-        const btn = document.getElementById(`btn-50-${qId}`);
-        btn.disabled = true;
-        btn.style.opacity = '0.5';
-        btn.innerHTML = '⚡ Usado';
+        comodinUsado = true;
+        comodinPreguntaId = qNum;
+
+        const btn = document.getElementById('global-5050');
+        if (btn) {
+            btn.disabled = true;
+            btn.innerText = `⚡ Comodín Usado (Preg. ${qNum})`;
+        }
+
         saveState();
+
+        const targetCard = document.getElementById(`card-${qNum}`);
+        if (targetCard) {
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        alert(`✨ ¡Súper poder activado! En la Pregunta ${qNum} se eliminaron 2 alternativas incorrectas.`);
     }
 
     function saveState() {
         const state = {
             answers: userAnswers,
             dudas: dudas,
-            fifty: fiftyUsed
+            comodinUsado: comodinUsado,
+            comodinPreguntaId: comodinPreguntaId
         };
         localStorage.setItem('ciencia3_edward_state', JSON.stringify(state));
     }
@@ -1362,15 +1494,32 @@
             if (state.dudas) {
                 for (let qId in state.dudas) {
                     if (state.dudas[qId]) {
-                        trackDuda(parseInt(qId));
+                        dudas[qId] = true;
+                        const btn = document.getElementById(`btn-duda-${qId}`);
+                        if (btn) {
+                            btn.classList.add('active');
+                            btn.innerHTML = '❓ Marcada con Duda';
+                        }
                     }
                 }
             }
-            if (state.fifty) {
-                for (let qId in state.fifty) {
-                    if (state.fifty[qId]) {
-                        useFifty(parseInt(qId));
-                    }
+            if (state.comodinUsado && state.comodinPreguntaId) {
+                comodinUsado = true;
+                comodinPreguntaId = state.comodinPreguntaId;
+                const q = questions.find(item => item.id === comodinPreguntaId);
+                if (q) {
+                    const correctIdx = q.answer;
+                    const incorrectIndices = [0, 1, 2, 3].filter(idx => idx !== correctIdx);
+                    const toDisable = incorrectIndices.slice(0, 2);
+                    toDisable.forEach(idx => {
+                        const label = document.getElementById(`opt-label-${q.id}-${idx}`);
+                        if (label) label.classList.add('disabled-50');
+                    });
+                }
+                const btn = document.getElementById('global-5050');
+                if (btn) {
+                    btn.disabled = true;
+                    btn.innerText = `⚡ Comodín Usado (Preg. ${comodinPreguntaId})`;
                 }
             }
         } catch (e) {
@@ -1578,8 +1727,12 @@
         }
     }
 
-    // Detector de scroll para la barra flotante sticky (solo activa tras evaluar y en la sección de preguntas)
+    // Detector de scroll para actualización de bloque activo y barra flotante post-evaluación
     window.addEventListener('scroll', () => {
+        // 1. Durante el examen: actualizar el título del bloque activo en la barra flotante
+        updateActiveBlockOnScroll();
+
+        // 2. Post-evaluación: mostrar la barra sticky de resultados al scrollear preguntas
         const stickyBar = document.getElementById('sticky-results-bar');
         if (!stickyBar) return;
 
