@@ -661,7 +661,7 @@
 
         <div class="share-actions">
             <h4 style="color: var(--primary-dark); margin-bottom: 8px;">📲 Comparte tus resultados con Papá:</h4>
-            <p style="color: #566573; font-size: 0.95rem; margin-bottom: 15px;">Pulsa el botón para abrir la bandeja de compartir de tu dispositivo y enviar tu reporte a WhatsApp, Google Chat, Messenger o la app que elijas.</p>
+            <p style="color: #566573; font-size: 0.95rem; margin-bottom: 15px;">Pulsa el botón para enviar tu reporte a Papá. Si estás en tu laptop abrirá Google Chat directamente con el reporte copiado; y si estás en tu tablet podrás elegir Google Chat o WhatsApp.</p>
             <button class="btn-main-share" onclick="compartirEvaluacion()">
                 <span>📲 Compartir Evaluación con Papá</span>
             </button>
@@ -1693,18 +1693,29 @@
 
     function compartirEvaluacion() {
         const texto = generarTextoReporte();
-        const shareData = {
-            title: "Evaluación de Ciencia y Tecnología - Edward Diaz (3.° Primaria)",
-            text: texto
-        };
 
-        if (navigator.share) {
+        // Detección de dispositivo: ¿Es Tablet o Celular? (Android, iPad, iPhone)
+        const ua = navigator.userAgent || '';
+        const esTabletOMovil = /Android|iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+        if (esTabletOMovil && navigator.share) {
+            // EN TABLET / CELULAR: Abrir menú nativo de compartir (permite elegir Google Chat, WhatsApp, etc.)
+            const shareData = {
+                title: "Evaluación de Ciencia y Tecnología - Edward Diaz (3.° Primaria)",
+                text: texto
+            };
             navigator.share(shareData).catch(() => {
-                // Fallback automático si cancela o no concreta el share
                 copiarAlPortapapeles(texto);
             });
         } else {
-            copiarAlPortapapeles(texto);
+            // EN LAPTOP / COMPUTADORA: Copiar reporte al portapapeles y abrir Google Chat Web en Chrome
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(texto).catch(() => {});
+            }
+            window.open('https://chat.google.com/', '_blank');
+            setTimeout(() => {
+                alert("💬 ¡Reporte copiado con éxito, Edward!\n\nSe está abriendo Google Chat en una pestaña nueva.\nSolo entra al chat con Papá y presiona Ctrl + V (o clic derecho 'Pegar') para enviárselo.");
+            }, 100);
         }
     }
 
